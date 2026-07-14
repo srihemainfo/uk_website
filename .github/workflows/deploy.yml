@@ -17,12 +17,26 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: 22
           script: |
-            # 1. Navigate to the directory where your website is hosted on the server
-            #    (Change this to your actual server path)
             cd /home/londonserver/uk.goride.run
             
-            # 2. Pull the latest changes from the master branch
-            git pull origin master
+            # Log all output to deploy.log
+            exec > >(tee -a deploy.log) 2>&1
+            echo "=== Deployment started at $(date) ==="
             
-            # 3. Optional: Run Laravel specific build commands (uncomment if needed)            
+            # 1. Initialize git if it's not a repository yet
+            if [ ! -d ".git" ]; then
+                echo "Not a git repository. Initializing..."
+                git init
+                git remote add origin https://github.com/srihemainfo/uk_website.git
+            fi
+            
+            # 2. Fetch and force reset to ensure the server perfectly matches GitHub
+            echo "Pulling latest changes..."
+            git fetch origin master
+            git reset --hard origin/master
+            
+            # 3. Run Laravel specific build commands          
+            echo "Clearing cache..."
             php artisan optimize:clear
+            
+            echo "=== Deployment finished successfully ==="

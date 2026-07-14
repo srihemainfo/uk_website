@@ -5349,7 +5349,7 @@
             </button>
         </div>
     </div>
-    <section class="fleet-section pt-5">
+    <!-- <section class="fleet-section pt-5">
         <div class="container">
             <div class="section-head text-center mb-4">
                 <h2 class="section-title">Available Fleets</h2>
@@ -5388,7 +5388,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <section class="reviews-section section-padding" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>

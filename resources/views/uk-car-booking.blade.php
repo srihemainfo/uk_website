@@ -445,6 +445,7 @@
             display: flex;
             min-height: calc(100vh - 70px);
             position: relative;
+            margin-bottom: 80px;
         }
         .hero-form-section {
             /* width: 100%; */
@@ -3379,6 +3380,11 @@
     width: 100%;
     cursor: pointer;
             }
+            .mobile-from.expanded-text,
+            .mobile-to.expanded-text {
+                white-space: normal;
+                word-wrap: break-word;
+            }
             .mobile-trip-item {
                 font-size: 17px;
             }
@@ -3900,6 +3906,7 @@
             .hero-container {
                 min-height: auto;
                 flex-direction: column;
+                margin-bottom: 0px;
             }
             .hero-map-section {
                 min-height: auto;
@@ -5905,7 +5912,7 @@
                 case 'school':
                     return 'school';
                 case 'landmark':
-                    return 'monument';
+                    return 'location-dot';
                 case 'city':
                     return 'city';
                 case 'area':
@@ -7567,6 +7574,7 @@
         function toggleTripSummary() {
             $('#mobileTripBody').slideToggle(200);
             $('#tripSummaryArrow').toggleClass('rotate');
+            $('.mobile-from, .mobile-to').toggleClass('expanded-text');
         }
         function updateTripDateTimeCard() {
     $('#tripSelectedDate').text(bookingData.date || '--');

@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/css/intlTelInput.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         rel="stylesheet">
@@ -4239,6 +4240,278 @@
             font-size: 16px;
             color: #000;
         }
+
+        /* ===== AUTH LOGIN MODAL ===== */
+        #authLoginModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.25s ease;
+        }
+        #authLoginModal.show {
+            display: flex;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        .auth-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .auth-modal-card {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            margin: 16px;
+            padding: 36px 32px 32px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+            animation: slideUpModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes slideUpModal {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0)  scale(1);    }
+        }
+        .auth-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: #f4f4f4;
+            color: #555;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .auth-modal-close:hover { background: #e8e8e8; }
+        .auth-modal-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .auth-modal-logo img {
+            height: 38px;
+            object-fit: contain;
+        }
+        .auth-modal-headline {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+        .auth-modal-sub {
+            text-align: center;
+            font-size: 13.5px;
+            color: #777;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+        /* Google button */
+        .auth-google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 20px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 14px;
+            background: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            color: #111;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-decoration: none;
+        }
+        .auth-google-btn:hover {
+            border-color: #4285f4;
+            background: #f8f9ff;
+            box-shadow: 0 4px 16px rgba(66,133,244,0.15);
+            transform: translateY(-1px);
+            color: #111;
+        }
+        .auth-google-btn:active { transform: translateY(0); }
+        .auth-google-icon {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+        /* divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ebebeb;
+        }
+        .auth-divider span {
+            font-size: 12px;
+            color: #aaa;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        /* email/phone input row - REMOVED (replaced by intl-tel-input) */
+        /* ===== intl-tel-input overrides for auth modal ===== */
+        #authPhoneWrapper {
+            position: relative;
+        }
+        #authPhoneWrapper .iti {
+            width: 100%;
+        }
+        #authPhoneWrapper .iti__tel-input {
+            width: 100%;
+            padding: 14px 14px 14px 6px;
+            padding-left: 119px !important; /* beats intl-tel-input JS inline style */
+            border: 1.5px solid #e0e0e0;
+            border-radius: 14px;
+            font-size: 15px;
+            color: #111;
+            background: #fafafa;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            height: 52px;
+            box-sizing: border-box;
+        }
+        #authPhoneWrapper .iti__tel-input:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+            background: #fff;
+        }
+        #authPhoneWrapper .iti__tel-input::placeholder { color: #bbb; }
+        /* Flag button styling */
+        #authPhoneWrapper .iti__flag-container {
+            padding: 0;
+        }
+        #authPhoneWrapper .iti__selected-country {
+            padding: 0 10px 0 14px;
+            border-right: 1.5px solid #e0e0e0;
+            border-radius: 14px 0 0 14px;
+            height: 52px;
+            /* background: #fafafa; */
+            gap: 6px;
+        }
+        #authPhoneWrapper .iti__selected-country:hover {
+            background: #f2f2f2;
+        }
+        #authPhoneWrapper .iti__selected-country-primary {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #authPhoneWrapper .iti__selected-dial-code {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+        #authPhoneWrapper .iti__arrow {
+            border-top-color: #999;
+        }
+        /* Dropdown list — appended to <body> so must be targeted globally */
+        .iti.iti--container {
+            z-index: 9999999 !important;
+        }
+        .iti.iti--container .iti__dropdown-content {
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            border: 1px solid #eee;
+            overflow: hidden;
+        }
+        #authPhoneWrapper .iti__search-input {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .iti.iti--container .iti__search-input {
+            padding: 10px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #authPhoneWrapper .iti__country,
+        .iti.iti--container .iti__country {
+            padding: 10px 14px;
+            font-size: 14px;
+        }
+        #authPhoneWrapper .iti__country.iti__highlight,
+        .iti.iti--container .iti__country.iti__highlight {
+            background: #f5f5f5;
+        }
+        #authPhoneWrapper .iti__flag-box {
+            margin-right: 8px;
+        }
+        /* Logo fix: light/white logo needs to be dark on white card */
+        .auth-modal-logo img {
+            height: 38px;
+            object-fit: contain;
+            /* filter: brightness(0); */
+        }
+        .auth-continue-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 14px;
+            padding: 15px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        }
+        .auth-continue-btn:hover {
+            background: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+        }
+        .auth-continue-btn:active { transform: translateY(0); }
+        .auth-modal-terms {
+            text-align: center;
+            font-size: 11.5px;
+            color: #aaa;
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+        .auth-modal-terms a {
+            color: #777;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -4528,7 +4801,7 @@
                                 <label>Pickup Location</label>
                                 <div style="position: relative;">
                                     <input type="text" id="pickupInput" placeholder="Enter pickup location"
-                                        class="location-input-field"
+                                        class="location-input-field" autocomplete="off"
                                         onkeyup="handleLocationSearch(this.value, 'pickupSuggestions', 'pickup')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'pickupSuggestions', 'pickup')">
                                     <div class="location-suggestions" id="pickupSuggestions"></div>
@@ -4541,7 +4814,7 @@
                                 <label> Dropoff Location</label>
                                 <div style="position: relative;">
                                     <input type="text" id="dropoffInput" placeholder="Enter dropoff location"
-                                        class="location-input-field"
+                                        class="location-input-field" autocomplete="off"
                                         onkeyup="handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff')">
                                     <div class="location-suggestions" id="dropoffSuggestions"></div>
@@ -5282,7 +5555,7 @@
                     const endLng = -0.142377;
                     const endLat = 51.502205;
                     try {
-                        const response = await fetch('https://mobapi.goride.run/api/get-route-polyline', {
+                        const response = await fetch('{{ env('API_URL') }}/get-route-polyline', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -5925,7 +6198,7 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch('https://mobapi.goride.run/api/web-get-location', {
+                    const response = await fetch('{{ env('API_URL') }}/web-get-location', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -6379,6 +6652,23 @@
                 $("#addViaBtn").css('display', 'inline-flex');
             }
         }
+        // ===== AUTH HELPERS =====
+        function getCookieValue(name) {
+            const match = document.cookie.match(new RegExp('(?:^|;\\s*)' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)'));
+            return match ? decodeURIComponent(match[1]) : null;
+        }
+        function isAuthenticated() {
+            return !!getCookieValue('auth_token');
+        }
+        function openAuthModal() {
+            document.getElementById('authLoginModal').classList.add('show');
+        }
+        function closeAuthModal() {
+            document.getElementById('authLoginModal').classList.remove('show');
+        }
+        // Store pending action so we can resume after login
+        let _pendingAfterAuth = null;
+
         // ===== FORM NAVIGATION =====
         function proceedToTripDetails() {
             const pickup = $('#pickupInput').val();
@@ -6396,6 +6686,17 @@
                 else if (!dropoff) $('#dropoffInput').focus();
                 return;
             }
+            // ---- AUTH GATE ----
+            if (!isAuthenticated()) {
+                _pendingAfterAuth = _doTripDetails;
+                openAuthModal();
+                return;
+            }
+            _doTripDetails();
+        }
+        function _doTripDetails() {
+            const pickup = $('#pickupInput').val();
+            const dropoff = $('#dropoffInput').val();
             bookingData.pickup = pickup;
             bookingData.dropoff = dropoff;
             $('#summaryPickup').text(pickup);
@@ -6760,7 +7061,7 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             btn.disabled = true;
             const num = 'GR-2026-' + Math.floor(10000 + Math.random() * 90000);
-            fetch('https://mobapi.goride.run/api/book', {
+            fetch('{{ env('API_URL') }}/book', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -7579,6 +7880,103 @@ $('#mcsPickup')
 $('#mcsDropoff')
     .text(bookingData.dropoff)
     .attr('title', bookingData.dropoff);
+    </script>
+
+    <!-- ===== AUTH LOGIN MODAL ===== -->
+    <div id="authLoginModal" role="dialog" aria-modal="true" aria-labelledby="authModalHeadline">
+        <div class="auth-modal-backdrop" onclick="closeAuthModal()"></div>
+        <div class="auth-modal-card">
+            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Logo -->
+            <div class="auth-modal-logo">
+                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+            </div>
+
+            <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>
+            <p class="auth-modal-sub">See prices and book your ride in seconds.<br>No card required to browse.</p>
+
+            <!-- Continue with Google -->
+            <button class="auth-google-btn" id="authGoogleBtn" onclick="handleGoogleSignIn()">
+                <!-- Google SVG icon -->
+                <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    <path fill="none" d="M0 0h48v48H0z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <!-- Divider -->
+            <div class="auth-divider"><span>or continue with email / mobile</span></div>
+
+            <!-- Email / Phone input (intl-tel-input) -->
+            <div id="authPhoneWrapper">
+                <input
+                    type="tel"
+                    id="authContactInput"
+                    placeholder="Email or phone number"
+                    autocomplete="off"
+                >
+            </div>
+
+            <button class="auth-continue-btn" onclick="handleAuthContinue()">
+                <i class="fas fa-arrow-right"></i> Continue
+            </button>
+
+            <p class="auth-modal-terms">
+                By continuing, you agree to our
+                <a href="/uk-terms" target="_blank">Terms of Service</a> &amp;
+                <a href="/uk-privacy" target="_blank">Privacy Policy</a>.
+            </p>
+        </div>
+    </div>
+
+    <!-- intl-tel-input JS -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
+    <script>
+        // ===== AUTH MODAL: intl-tel-input init =====
+        let _itiInstance = null;
+        (function initIti() {
+            const inputEl = document.getElementById('authContactInput');
+            if (!inputEl) return;
+            _itiInstance = window.intlTelInput(inputEl, {
+                initialCountry: 'gb',
+                separateDialCode: true,
+                countrySearch: true,
+                showFlags: true,
+                loadUtilsOnInit: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js',
+                preferredCountries: ['gb', 'us', 'in', 'au', 'ca', 'de', 'fr', 'ae', 'sg', 'za'],
+                dropdownContainer: document.body,
+            });
+        })();
+        // Google Sign-In handler
+        function handleGoogleSignIn() {
+            const btn = document.getElementById('authGoogleBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Redirecting to Google…`;
+            // TODO: Replace with actual Google OAuth URL / your backend route
+            // Example: window.location.href = '/auth/google';
+            // For now, simulate success after 1.5 s (remove in production)
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = `<svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg> Continue with Google`;
+            }, 1500);
+        }
+        // Email / phone continue handler
+        function handleAuthContinue() {
+            const contact = document.getElementById('authContactInput').value.trim();
+            if (!contact) {
+                document.getElementById('authContactInput').focus();
+                return;
+            }
+            // TODO: implement OTP / email flow
+            alert('Email/phone flow coming soon! For now, please use Continue with Google.');
+        }
     </script>
 </body>
 </html>

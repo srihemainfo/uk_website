@@ -19,12 +19,10 @@ jobs:
           script: |
             # 1. Navigate to the directory where your website is hosted on the server
             #    (Change this to your actual server path)
-            cd /var/www/uk_website
+            cd /home/londonserver/uk.goride.run
             
             # 2. Pull the latest changes from the master branch
             git pull origin master
             
-            # 3. Optional: Run Laravel specific build commands (uncomment if needed)
-            # composer install --no-interaction --prefer-dist --optimize-autoloader
-            # php artisan migrate --force
-            # php artisan optimize:clear
+            # 3. Optional: Run Laravel specific build commands (uncomment if needed)            
+            php artisan optimize:clear

@@ -1,0 +1,335 @@
+
+================================================================
+   GOOGLE CLOUD - GOOGLE AUTH SETUP GUIDE
+   Project: GoRide UK Website
+   Date: July 2026
+================================================================
+
+
+OVERVIEW
+--------
+To use Google Sign-In in your website, you need to create an
+OAuth 2.0 Client ID in Google Cloud Console. This ID is what
+allows your website to talk to Google's login system.
+
+Your current Client ID (already in .env):
+  1068992532063-96edr7a1942sji55smuprhit48nrm5ob.apps.googleusercontent.com
+
+Follow the steps below to verify or recreate the setup.
+
+
+================================================================
+STEP 1: GO TO GOOGLE CLOUD CONSOLE
+================================================================
+
+1. Open your browser and go to:
+   https://console.cloud.google.com
+
+2. Sign in with your Google account (use the account that owns
+   the GoRide project).
+
+3. At the top of the page, click the PROJECT DROPDOWN
+   (next to "Google Cloud" logo).
+
+4. Select your existing project OR click "NEW PROJECT" to create
+   one fresh.
+
+   If creating new:
+   - Project Name: GoRide UK  (or any name you like)
+   - Click "CREATE"
+   - Wait 10-15 seconds for it to create
+   - Then select it from the dropdown
+
+
+================================================================
+STEP 2: ENABLE THE REQUIRED APIs
+================================================================
+
+1. In the left sidebar, click "APIs & Services"
+   Then click "Library"
+
+2. Search for: "Google+ API"
+   Click it → Click "ENABLE"
+
+3. Search for: "Google Identity"
+   Click "Google Identity Toolkit API" → Click "ENABLE"
+
+4. Also search for: "People API"
+   Click it → Click "ENABLE"
+
+   NOTE: These APIs allow your app to read the user's
+   name, email, and profile picture after they sign in.
+
+
+================================================================
+STEP 3: CONFIGURE OAUTH CONSENT SCREEN
+================================================================
+
+Before creating credentials, you must set up the consent screen
+(the popup Google shows users before they sign in).
+
+1. In the left sidebar go to:
+   "APIs & Services" → "OAuth consent screen"
+
+2. Choose User Type:
+   - Select "EXTERNAL"  (for any Google account user)
+   - Click "CREATE"
+
+3. Fill in App Information:
+   - App name:          GoRide
+   - User support email: your-email@gmail.com
+   - App logo:          (optional - upload GoRide logo)
+
+4. App Domain (fill these):
+   - Application home page:    https://www.goride.net.in
+   - Application privacy policy: https://www.goride.net.in/uk-privacy
+   - Application terms of service: https://www.goride.net.in/uk-terms
+
+5. Authorized Domains:
+   Click "ADD DOMAIN"
+   Add:  goride.net.in
+   Add:  ukapi.goride.net.in
+
+   Click "SAVE AND CONTINUE"
+
+6. Scopes Page:
+   Click "ADD OR REMOVE SCOPES"
+   Check these scopes:
+   - .../auth/userinfo.email
+   - .../auth/userinfo.profile
+   - openid
+
+   Click "UPDATE" → Click "SAVE AND CONTINUE"
+
+7. Test Users (optional for development):
+   - If your app is in "Testing" mode, add your email here
+   - You can skip this for production
+   Click "SAVE AND CONTINUE"
+
+8. Review the summary and click "BACK TO DASHBOARD"
+
+
+================================================================
+STEP 4: CREATE OAUTH 2.0 CLIENT ID (CREDENTIALS)
+================================================================
+
+1. In the left sidebar go to:
+   "APIs & Services" → "Credentials"
+
+2. Click the "+ CREATE CREDENTIALS" button at the top
+
+3. Choose "OAuth client ID"
+
+4. Application type:
+   Select "Web application"
+
+5. Name:
+   GoRide UK Website  (or any descriptive name)
+
+6. AUTHORIZED JAVASCRIPT ORIGINS
+   (These are the domains where the login popup can open from)
+
+   Click "ADD URI" and add each one:
+
+   For Production (Live website):
+   - https://www.goride.net.in
+   - https://goride.net.in
+   - https://ukapi.goride.net.in
+
+   For Local Development:
+   - http://localhost
+   - http://localhost:8000
+   - http://uk-website.test
+   - http://127.0.0.1:8000
+
+7. AUTHORIZED REDIRECT URIs
+   (These are URLs Google sends the user back to after login)
+
+   Click "ADD URI" and add:
+
+   For Production:
+   - https://ukapi.goride.net.in/auth/google-login
+   - https://ukapi.goride.net.in/auth/google/callback
+
+   For Local Development:
+   - http://localhost:8000/auth/google-login
+   - http://localhost:8000/auth/google/callback
+   - http://uk-website.test/auth/google-login
+
+8. Click "CREATE"
+
+9. A popup will appear showing:
+   - Client ID:     (long string ending in .apps.googleusercontent.com)
+   - Client Secret: (starts with GOCSPX-)
+
+   IMPORTANT: Copy both values and save them safely!
+
+
+================================================================
+STEP 5: UPDATE YOUR .ENV FILE
+================================================================
+
+Open your .env file at:
+   d:\Elavarasan\UK_Website\.env
+
+Update these lines with the values from Step 4:
+
+   GOOGLE_CLIENT_ID="paste-your-client-id-here"
+   GOOGLE_CLIENT_SECRET="paste-your-client-secret-here"
+   GOOGLE_REDIRECT_URI="https://ukapi.goride.net.in/auth/google-login"
+
+Your current .env values (already set):
+   GOOGLE_CLIENT_ID="1068992532063-96edr7a1942sji55smuprhit48nrm5ob.apps.googleusercontent.com"
+   GOOGLE_CLIENT_SECRET="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"
+   GOOGLE_REDIRECT_URI="https://ukapi.goride.net.in/auth/google-login"
+
+If these values are already correct, no changes needed here.
+
+
+================================================================
+STEP 6: PUBLISH YOUR APP (MOVE FROM TESTING TO PRODUCTION)
+================================================================
+
+By default, your OAuth app is in "Testing" mode.
+In testing mode, only the test users you added can sign in.
+
+To allow ALL Google users to sign in:
+
+1. Go to: "APIs & Services" → "OAuth consent screen"
+
+2. Click "PUBLISH APP"
+
+3. Google will ask if you want to submit for verification.
+   - For basic scopes (email, profile) you do NOT need verification
+   - Click "CONFIRM"
+
+4. Your app status will change from "Testing" to "In production"
+
+Now any Google account user can sign in to your website!
+
+
+================================================================
+STEP 7: VERIFY THE SETUP IS WORKING
+================================================================
+
+Test the flow:
+
+1. Open your website: https://www.goride.net.in/uk
+2. Click "See prices" without logging in
+3. The Sign-In popup should appear
+4. Click "Continue with Google"
+5. Google account chooser should open
+6. Select your Google account
+7. You should be redirected back and logged in
+
+If you see any errors, check the browser Console (F12) for
+error messages.
+
+Common Errors:
+--------------
+Error: "redirect_uri_mismatch"
+  Fix: Add the exact redirect URI to your Google Cloud credentials
+       (Step 4, point 7 above)
+
+Error: "origin not allowed"
+  Fix: Add the exact domain to "Authorized JavaScript Origins"
+       (Step 4, point 6 above)
+
+Error: "invalid_client"
+  Fix: Your Client ID or Secret is wrong. Double check .env file.
+
+Error: "access_blocked"
+  Fix: Your app is in Testing mode. Either publish it (Step 6)
+       or add your email as a test user (Step 3, point 7)
+
+
+================================================================
+STEP 8: API BACKEND VERIFICATION (LARAVEL)
+================================================================
+
+Your Laravel backend (ukapi.goride.net.in) needs these in its .env:
+
+   GOOGLE_CLIENT_ID=1068992532063-96edr7a1942sji55smuprhit48nrm5ob.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=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
+   GOOGLE_REDIRECT=https://ukapi.goride.net.in/auth/google-login
+
+And in config/services.php:
+   'google' => [
+       'client_id'     => env('GOOGLE_CLIENT_ID'),
+       'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+       'redirect'      => env('GOOGLE_REDIRECT'),
+   ],
+
+And Laravel Socialite must be installed:
+   composer require laravel/socialite
+
+In config/app.php providers:
+   Laravel\Socialite\SocialiteServiceProvider::class,
+
+In config/app.php aliases:
+   'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
+
+================================================================
+QUICK REFERENCE - URLs
+================================================================
+
+Google Cloud Console:
+   https://console.cloud.google.com
+
+OAuth Consent Screen:
+   https://console.cloud.google.com/apis/credentials/consent
+
+Credentials Page:
+   https://console.cloud.google.com/apis/credentials
+
+API Library:
+   https://console.cloud.google.com/apis/library
+
+
+================================================================
+QUICK REFERENCE - YOUR CURRENT CONFIG
+================================================================
+
+Client ID:
+   1068992532063-96edr7a1942sji55smuprhit48nrm5ob.apps.googleusercontent.com
+
+Client Secret:
+   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
+
+Redirect URI (Backend):
+   https://ukapi.goride.net.in/auth/google-login
+
+API Base URL:
+   https://ukapi.goride.net.in/api
+
+Frontend Website:
+   https://www.goride.net.in/uk
+
+
+================================================================
+NOTES & TIPS
+================================================================
+
+1. NEVER share your Client Secret publicly or commit it to Git.
+   Add .env to your .gitignore file.
+
+2. The Client ID (not secret) is safe to use in frontend HTML/JS.
+   It is visible in the browser source code - that is normal.
+
+3. If you change the Redirect URI, update it in BOTH:
+   - Google Cloud Console credentials
+   - Your .env file
+
+4. Google caches domain changes. After adding a new domain,
+   wait 5-10 minutes before testing.
+
+5. For production, always use HTTPS URLs. HTTP only works on
+   localhost during development.
+
+6. If using multiple environments (staging, production), create
+   separate OAuth Client IDs for each environment.
+
+================================================================
+END OF GUIDE
+================================================================

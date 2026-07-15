@@ -859,17 +859,17 @@
             </a>
         </div>
         <ul class="navbar-menu">
-            <!--<li><button onclick="toggleDropdown('language')">-->
-            <!--    <i class="fas fa-globe me-2"></i>EN-->
-            <!--</button></li>-->
+            <li><button onclick="toggleDropdown('language')">
+                <i class="fas fa-globe me-2"></i>EN
+            </button></li>
             <li><a href="#faq">Help</a></li>
-            <!--<li style="position:relative;">-->
-            <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
-            <!--        <i class="fas fa-user-circle"></i>-->
-            <!--        Mogana-->
-            <!--        <i class="fas fa-chevron-down"></i>-->
-            <!--    </button>-->
-            <!--</li>-->
+            <li style="position:relative;">
+                <button class="user-btn" onclick="toggleDropdown('user')">
+                    <i class="fas fa-user-circle"></i>
+                    Mogana
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </li>
         </ul>
 
         <div id="language-dropdown" class="dropdown-menu-navbar">
@@ -901,9 +901,9 @@
             </div>
         </div>
 
-        <!--<button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">-->
-        <!--    <i class="fas fa-bars"></i>-->
-        <!--</button>-->
+        <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
 
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 
@@ -1080,13 +1080,13 @@
                     <!-- Social Icons -->
                     <div class="footer-section">
                         <div class="footer-social-icons">
-                            <a href="https://www.facebook.com/people/Goride-Run/pfbid0jVh2iGFREVFLyTYRQFybaLXW3ECbUrgR9kJqcN4EMVYbSzPzFr7SRRLWgsTWf1BJl/" class="social-icon" title="Facebook">
+                            <a href="#" class="social-icon" title="Facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
                             <a href="#" class="social-icon" title="Twitter">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="https://www.instagram.com/goride.run_uk/" class="social-icon" title="Instagram">
+                            <a href="#" class="social-icon" title="Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
                             <a href="#" class="social-icon" title="LinkedIn">

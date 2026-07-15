@@ -1052,47 +1052,47 @@
             <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
         </a>
         <ul class="navbar-menu">
-            <!--<li><button onclick="toggleDropdown('language')">-->
-            <!--        <i class="fas fa-globe me-2"></i>EN-->
-            <!--    </button></li>-->
+            <li><button onclick="toggleDropdown('language')">
+                    <i class="fas fa-globe me-2"></i>EN
+                </button></li>
             <li><a href="#help">Help</a></li>
-            <!--<li style="position:relative;">-->
-            <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
-            <!--        <i class="fas fa-user-circle"></i>-->
-            <!--        Mogana-->
-            <!--        <i class="fas fa-chevron-down"></i>-->
-            <!--    </button>-->
-            <!--</li>-->
+            <li style="position:relative;">
+                <button class="user-btn" onclick="toggleDropdown('user')">
+                    <i class="fas fa-user-circle"></i>
+                    Mogana
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </li>
         </ul>
 
-        <!--<div id="language-dropdown" class="dropdown-menu-navbar">-->
-        <!--    <button onclick="selectLanguage('en')">English</button>-->
-        <!--    <button onclick="selectLanguage('hi')">हिंदी</button>-->
-        <!--    <button onclick="selectLanguage('ta')">தமிழ்</button>-->
-        <!--    <button onclick="selectLanguage('te')">తెలుగు</button>-->
-        <!--    <button onclick="selectLanguage('kn')">ಕನ್ನಡ</button>-->
-        <!--</div>-->
+        <div id="language-dropdown" class="dropdown-menu-navbar">
+            <button onclick="selectLanguage('en')">English</button>
+            <button onclick="selectLanguage('hi')">हिंदी</button>
+            <button onclick="selectLanguage('ta')">தமிழ்</button>
+            <button onclick="selectLanguage('te')">తెలుగు</button>
+            <button onclick="selectLanguage('kn')">ಕನ್ನಡ</button>
+        </div>
 
-        <!--<div id="user-dropdown" class="account-dropdown">-->
-        <!--    <div class="account-header">-->
-        <!--        <div class="account-avatar">MG</div>-->
-        <!--        <div class="account-info">-->
-        <!--            <h5>Mogana Priya</h5>-->
-        <!--            <span>mogana@email.com</span>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--    <div class="account-menu">-->
-        <!--        <a href="#"><i class="fas fa-user"></i><span>My Profile</span></a>-->
-        <!--        <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>-->
-        <!--        <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>-->
-        <!--        <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>-->
-        <!--        <a href="#"><i class="fas fa-tag"></i><span>Offers</span></a>-->
-        <!--        <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>-->
-        <!--    </div>-->
-        <!--    <div class="account-footer">-->
-        <!--        <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>-->
-        <!--    </div>-->
-        <!--</div>-->
+        <div id="user-dropdown" class="account-dropdown">
+            <div class="account-header">
+                <div class="account-avatar">MG</div>
+                <div class="account-info">
+                    <h5>Mogana Priya</h5>
+                    <span>mogana@email.com</span>
+                </div>
+            </div>
+            <div class="account-menu">
+                <a href="#"><i class="fas fa-user"></i><span>My Profile</span></a>
+                <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>
+                <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
+                <a href="#"><i class="fas fa-tag"></i><span>Offers</span></a>
+                <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
+            </div>
+            <div class="account-footer">
+                <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            </div>
+        </div>
 
         <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
@@ -1100,41 +1100,41 @@
 
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 
-        <!--<div class="mobile-menu" id="mobileMenu">-->
-        <!--    <div class="mobile-menu-header">-->
-        <!--        <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">-->
-        <!--        <button onclick="toggleMobileMenu()">-->
-        <!--            <i class="fas fa-times"></i>-->
-        <!--        </button>-->
-        <!--    </div>-->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <button onclick="toggleMobileMenu()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
-        <!--    <div class="mobile-user">-->
-        <!--        <div class="mobile-avatar">MG</div>-->
-        <!--        <div>-->
-        <!--            <h5>Mogana Priya</h5>-->
-        <!--            <span>mogana@email.com</span>-->
-        <!--        </div>-->
-        <!--    </div>-->
+            <div class="mobile-user">
+                <div class="mobile-avatar">MG</div>
+                <div>
+                    <h5>Mogana Priya</h5>
+                    <span>mogana@email.com</span>
+                </div>
+            </div>
 
-        <!--    <div class="mobile-menu-links">-->
-        <!--        <a href="/uk-car-booking"><i class="fas fa-home"></i>Home</a>-->
-        <!--        <a href="/uk-about"><i class="fas fa-info-circle"></i>About Us</a>-->
-        <!--        <a href="/uk-operator-registration"><i class="fas fa-briefcase"></i>Operator Registration</a>-->
-        <!--        <a href="#"><i class="fas fa-user"></i>My Profile</a>-->
-        <!--        <a href="#"><i class="fas fa-car"></i>My Rides</a>-->
-        <!--        <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>-->
-        <!--        <a href="#"><i class="fas fa-wallet"></i>Wallet</a>-->
-        <!--        <a href="#"><i class="fas fa-tag"></i>Offers</a>-->
-        <!--        <a href="#"><i class="fas fa-language"></i>Language</a>-->
-        <!--        <a href="/uk-terms"><i class="fas fa-file-contract"></i>Terms</a>-->
-        <!--        <a href="/uk-privacy"><i class="fas fa-shield-alt"></i>Privacy</a>-->
-        <!--        <a href="#"><i class="fas fa-gear"></i>Settings</a>-->
-        <!--    </div>-->
+            <div class="mobile-menu-links">
+                <a href="/uk-car-booking"><i class="fas fa-home"></i>Home</a>
+                <a href="/uk-about"><i class="fas fa-info-circle"></i>About Us</a>
+                <a href="/uk-operator-registration"><i class="fas fa-briefcase"></i>Operator Registration</a>
+                <a href="#"><i class="fas fa-user"></i>My Profile</a>
+                <a href="#"><i class="fas fa-car"></i>My Rides</a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
+                <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
+                <a href="#"><i class="fas fa-tag"></i>Offers</a>
+                <a href="#"><i class="fas fa-language"></i>Language</a>
+                <a href="/uk-terms"><i class="fas fa-file-contract"></i>Terms</a>
+                <a href="/uk-privacy"><i class="fas fa-shield-alt"></i>Privacy</a>
+                <a href="#"><i class="fas fa-gear"></i>Settings</a>
+            </div>
 
-        <!--    <div class="mobile-menu-footer">-->
-        <!--        <button><i class="fas fa-right-from-bracket"></i>Logout</button>-->
-        <!--    </div>-->
-        <!--</div>-->
+            <div class="mobile-menu-footer">
+                <button><i class="fas fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
     </nav>
 
     <!-- PAGE HEADER -->

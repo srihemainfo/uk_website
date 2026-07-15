@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +17,16 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Minus+Inlier+Sans&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
                 "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -30,16 +34,19 @@
             background: #fff;
             overflow-x: hidden;
         }
+
         #bookingMap {
             width: 100%;
             height: 100%;
             min-height: calc(100vh - 70px);
         }
+
         .date-time-screen {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
+
         .selectdate {
             display: none;
             font-size: 13px;
@@ -48,24 +55,29 @@
             margin-top: -8px;
             margin-bottom: 15px;
         }
+
         #mapCloseBtn {
             display: none !important;
         }
+
         .confirm-modal-content {
             text-align: center;
             padding: 0px 0;
         }
+
         .confirm-icon {
             font-size: 36px;
             color: #000;
             margin-bottom: 0px;
         }
+
         .confirm-title {
             font-size: 24px;
             font-weight: 700;
             margin: 4px 0;
             color: #000;
         }
+
         .confirm-booking-id {
             background: #f5f5f5;
             padding: 12px;
@@ -73,26 +85,31 @@
             margin-bottom: 10px;
             border: 2px solid #ddd;
         }
+
         .confirm-booking-id small {
             color: #999;
             font-size: 12px;
             display: block;
             margin-bottom: 4px;
         }
+
         .confirm-booking-id .id-value {
             font-weight: 700;
             font-size: 16px;
             color: #000;
         }
+
         .confirm-details-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 16px;
             margin: 12px;
         }
+
         .confirm-detail-item {
             text-align: left;
         }
+
         .confirm-detail-item small {
             /*color: #999;*/
             display: flex;
@@ -101,11 +118,13 @@
             font-size: 12px;
             margin-bottom: 6px;
         }
+
         .confirm-detail-item .detail-value {
             font-weight: 600;
             font-size: 14px;
             color: #000;
         }
+
         .confirm-fare-summary {
             background: #f9f9f9;
             padding: 16px;
@@ -113,19 +132,23 @@
             margin-bottom: 10px;
             text-align: left;
         }
+
         .fare-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
             font-size: 14px;
         }
+
         .fare-row span:first-child {
             color: #666;
         }
+
         .fare-row span:last-child {
             font-weight: 600;
             color: #000;
         }
+
         .fare-total {
             border-top: 2px solid #ddd;
             padding-top: 8px;
@@ -134,21 +157,25 @@
             font-weight: 700;
             font-size: 16px;
         }
+
         .fare-total .total-amount {
             font-size: 18px;
             color: #000;
         }
+
         .confirm-info-text {
             font-size: 13px;
             color: #666;
             text-align: center;
             margin-bottom: 0px;
         }
+
         .confirm-btn-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
+
         .confirm-btn-group .btn-modal-secondary,
         .confirm-btn-group .btn-modal-primary {
             display: flex;
@@ -156,11 +183,13 @@
             justify-content: center;
             gap: 8px;
         }
+
         button:active,
         a:active,
         .btn:active {
             color: #000 !important;
         }
+
         .location-type-badge {
             display: inline-flex;
             align-items: center;
@@ -173,6 +202,7 @@
             /*color: #666;*/
             margin-top: 4px;
         }
+
         .location-suggestions {
             position: absolute;
             top: calc(100% + 5px);
@@ -187,9 +217,11 @@
             z-index: 10000;
             border: 1px solid #eee;
         }
+
         .location-suggestions.show {
             display: block;
         }
+
         .suggestion-item {
             padding: 6px 15px;
             cursor: pointer;
@@ -200,16 +232,19 @@
             gap: 10px;
             font-size: 17px;
         }
+
         .suggestion-item:hover {
             background: #f5f5f5;
             padding-left: 20px;
         }
+
         .payment-summary {
             background: #f5f5f5;
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 20px;
         }
+
         .payment-item {
             display: flex;
             justify-content: space-between;
@@ -218,9 +253,11 @@
             border-bottom: 1px dashed #d9d9d9;
             font-size: 14px;
         }
+
         .payment-item:last-of-type {
             border-bottom: none;
         }
+
         .payment-total {
             display: flex;
             justify-content: space-between;
@@ -229,11 +266,13 @@
             font-size: 16px;
             font-weight: 700;
         }
+
         .grand-total {
             margin-top: 10px;
             padding-top: 14px;
             border-top: 2px solid #d5d5d5;
         }
+
         .navbar-uber {
             background: white;
             height: 70px;
@@ -245,6 +284,7 @@
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
         .navbar-brand-uber {
             font-size: 24px;
             font-weight: 700;
@@ -252,11 +292,13 @@
             margin-right: auto;
             cursor: pointer;
         }
+
         .navbar-brand-uber img {
             height: 50px;
             width: auto;
             display: block;
         }
+
         .account-dropdown {
             display: none;
             position: absolute;
@@ -270,19 +312,23 @@
             z-index: 9999;
             animation: slideDown 0.3s ease;
         }
+
         @keyframes slideDown {
             from {
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .account-dropdown.show {
             display: block;
         }
+
         .account-header {
             display: flex;
             align-items: center;
@@ -290,6 +336,7 @@
             padding: 20px;
             border-bottom: 1px solid #ececec;
         }
+
         .account-avatar {
             width: 60px;
             height: 60px;
@@ -302,15 +349,18 @@
             color: #fff;
             font-weight: 700;
         }
+
         .account-info h5 {
             margin: 0;
             font-size: 18px;
             font-weight: 700;
         }
+
         .account-info span {
             color: #777;
             font-size: 13px;
         }
+
         .account-menu a {
             display: flex;
             align-items: center;
@@ -320,21 +370,26 @@
             text-decoration: none;
             transition: .3s;
         }
+
         .account-menu a i:first-child {
             width: 22px;
             text-align: center;
             font-size: 16px;
         }
+
         .account-menu a span {
             flex: 1;
             font-size: 15px;
         }
+
         .account-menu a:hover {
             background: #f7f7f7;
         }
+
         .account-footer {
             border-top: 1px solid #ececec;
         }
+
         .meet-greet-option {
             display: flex;
             align-items: center;
@@ -342,28 +397,34 @@
             border-radius: 12px;
             cursor: pointer;
         }
+
         .meet-greet-option:hover {
             border-color: #000;
         }
+
         .meet-greet-option input {
             width: 18px;
             height: 18px;
             accent-color: #000;
         }
+
         .meet-greet-content {
             flex: 1;
         }
+
         .meet-greet-content small {
             display: block;
             margin-top: 4px;
             color: #666;
             font-size: 13px;
         }
+
         .meet-price {
             font-weight: 700;
             font-size: 15px;
             color: #000;
         }
+
         .account-footer a {
             display: flex;
             align-items: center;
@@ -373,9 +434,11 @@
             font-weight: 600;
             text-decoration: none;
         }
+
         .account-footer a:hover {
             background: #fff4f4;
         }
+
         .navbar-menu {
             display: flex;
             gap: 2rem;
@@ -383,6 +446,7 @@
             margin: 0;
             list-style: none;
         }
+
         .navbar-menu a,
         .navbar-menu button {
             color: black;
@@ -394,10 +458,12 @@
             cursor: pointer;
             transition: color 0.3s;
         }
+
         .navbar-menu a:hover,
         .navbar-menu button:hover {
             color: #000;
         }
+
         /*.navbar-menu .user-btn {*/
         /*    background: #fff;*/
         /*    color: #000;*/
@@ -421,9 +487,11 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1001;
         }
+
         .dropdown-menu-navbar.show {
             display: block;
         }
+
         .dropdown-menu-navbar a,
         .dropdown-menu-navbar button {
             display: block;
@@ -437,16 +505,19 @@
             font-size: 14px;
             transition: background 0.2s;
         }
+
         .dropdown-menu-navbar a:hover,
         .dropdown-menu-navbar button:hover {
             background: #f5f5f5;
         }
+
         .hero-container {
             display: flex;
             min-height: calc(100vh - 70px);
             position: relative;
-            margin-bottom: 80px;
+
         }
+
         .hero-form-section {
             /* width: 100%; */
             background: #fff;
@@ -461,6 +532,7 @@
             min-height: calc(100vh - 70px);
             max-width: 600px;
         }
+
         .hero-form-section::before {
             content: "";
             position: absolute;
@@ -468,6 +540,7 @@
             background: white;
             z-index: -1;
         }
+
         .hero-map-section {
             flex: 1;
             background: linear-gradient(135deg, #f5f5f517 0%, #e8e8e81c 100%);
@@ -478,27 +551,32 @@
             color: #999;
             min-height: calc(100vh - 70px);
         }
+
         .hero-map-section iframe {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         #bookingMap {
             width: 100%;
             height: 100%;
         }
+
         #bookingImage {
             position: relative;
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
+
         .hero-side-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
+
         .hero-banner-content {
             position: absolute;
             top: 50%;
@@ -508,16 +586,19 @@
             max-width: 550px;
             color: #fff;
         }
+
         .hero-banner-content h1 {
             font-size: 52px;
             line-height: 1.15;
             margin-bottom: 18px;
         }
+
         .hero-banner-content p {
             font-size: 18px;
             line-height: 1.7;
             color: rgba(255, 255, 255, .9);
         }
+
         .hero-badge {
             display: inline-block;
             padding: 8px 16px;
@@ -529,6 +610,7 @@
             font-size: 14px;
             font-weight: 600;
         }
+
         #bookingImage::before {
             content: "";
             position: absolute;
@@ -536,6 +618,7 @@
             background: rgba(0, 0, 0, .72);
             z-index: 1;
         }
+
         .offer-credits-section {
             background: #a9a9a980;
             border-radius: 12px;
@@ -546,6 +629,7 @@
             align-items: center;
             gap: 12px;
         }
+
         .offer-icon {
             font-size: 20px;
             /*color: grey;*/
@@ -558,19 +642,23 @@
             justify-content: center;
             flex-shrink: 0;
         }
+
         .offer-content {
             flex: 1;
         }
+
         .offer-title {
             font-size: 13px;
             font-weight: 700;
             color: #333;
             margin-bottom: 2px;
         }
+
         .offer-subtitle {
             font-size: 12px;
             color: black;
         }
+
         .offer-apply-btn {
             background: black;
             color: white;
@@ -583,30 +671,132 @@
             transition: all 0.3s;
             white-space: nowrap;
         }
+
         .offer-apply-btn:hover {
             background: #f9c106;
             transform: translateY(-2px);
         }
+
         .location-input-field {
             width: 100% !important;
-            padding: 12px 15px !important;
-            border: 2px solid #ddd !important;
-            border-radius: 8px !important;
+            padding: 12px 15px 12px 15px !important;
+            border: 2px solid #e0e0e0 !important;
+            border-radius: 10px !important;
             font-size: 17px !important;
-            background: #f5f5f5 !important;
-            transition: all 0.3s ease !important;
-            cursor: pointer !important;
+            background: #f7f7f7 !important;
+            transition: border-color 0.25s ease;
+            /* box-shadow 0.25s ease; */
+            background 0.25s ease !important;
+            cursor: text !important;
         }
+
         .location-input-field:focus {
             outline: none !important;
             background: #fff !important;
-            border-color: #000 !important;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+            border-color: #111 !important;
+
         }
+
+        .location-input-wrapper {
+            position: relative;
+        }
+
+        .location-input-wrapper .loc-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #bbb;
+            font-size: 15px;
+            pointer-events: none;
+            transition: color 0.25s;
+            z-index: 1;
+        }
+
+        .location-input-wrapper:focus-within .loc-icon {
+            color: #111;
+        }
+
+        .location-input-wrapper.is-loading::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 10px;
+            pointer-events: none;
+            animation: locInputPulse 0.9s ease-in-out infinite;
+            border: 2px solid #f9c106;
+        }
+
+        @keyframes locInputPulse {
+            0% {
+                opacity: 0.8;
+                box-shadow: 0 0 0 0px rgba(249, 193, 6, 0.3);
+            }
+
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 0 5px rgba(249, 193, 6, 0);
+            }
+
+            100% {
+                opacity: 0.8;
+                box-shadow: 0 0 0 0px rgba(249, 193, 6, 0);
+            }
+        }
+
+        /* Skeleton shimmer for loading state in suggestions */
+        .suggestion-skeleton {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .suggestion-skeleton .sk-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.2s infinite;
+            flex-shrink: 0;
+        }
+
+        .suggestion-skeleton .sk-line {
+            height: 13px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.2s infinite;
+        }
+
+        .suggestion-skeleton .sk-line.long {
+            width: 70%;
+        }
+
+        .suggestion-skeleton .sk-line.short {
+            width: 45%;
+        }
+
+        .suggestion-skeleton .sk-line.medium {
+            width: 58%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
         .find-trip-locations .route-indicator {
             padding-top: 19px;
             padding-bottom: 25px;
         }
+
         .location-suggestions {
             position: absolute;
             top: calc(100% + 5px);
@@ -621,10 +811,12 @@
             z-index: 10000;
             border: 1px solid #eee;
         }
+
         .location-suggestions.show {
             display: block;
             animation: slideDown 0.3s ease;
         }
+
         .suggestion-item {
             padding: 10px 15px;
             cursor: pointer;
@@ -635,22 +827,27 @@
             gap: 10px;
             font-size: 17px;
         }
+
         .suggestion-item:last-child {
             border-bottom: none;
         }
+
         .suggestion-item:hover {
             background: #f5f5f5;
             padding-left: 20px;
         }
+
         .suggestion-item i {
             color: #000;
             font-size: 14px;
             width: 18px;
         }
+
         .time-dropdown-wrapper {
             position: relative;
             width: 100%;
         }
+
         .time-dropdown-btn {
             width: 100%;
             padding: 12px 18px 12px 15px;
@@ -666,14 +863,17 @@
             transition: all 0.3s;
             text-align: left;
         }
+
         .time-dropdown-btn:hover {
             border-color: #000;
             background: #fff;
         }
+
         .time-dropdown-btn.active {
             border-color: #000;
             background: #fff;
         }
+
         .time-dropdown-list {
             position: absolute;
             top: 100%;
@@ -689,9 +889,11 @@
             display: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         .time-dropdown-list.show {
             display: block;
         }
+
         .time-dropdown-item {
             padding: 12px 16px;
             cursor: pointer;
@@ -701,25 +903,31 @@
             font-weight: 500;
             color: #333;
         }
+
         .time-dropdown-item:last-child {
             border-bottom: none;
         }
+
         .time-dropdown-item:hover {
             background: #f5f5f5;
             padding-left: 20px;
         }
+
         .time-dropdown-item.selected {
             background: #f0f0f0;
             color: #000;
             font-weight: 700;
         }
+
         .time-dropdown-icon {
             font-size: 12px;
             transition: transform 0.3s;
         }
+
         .time-dropdown-btn.active .time-dropdown-icon {
             transform: rotate(180deg);
         }
+
         .via-point-row {
             position: relative;
             display: flex;
@@ -728,16 +936,19 @@
             margin-bottom: 10px;
             animation: slideInUp .3s ease;
         }
+
         @keyframes slideInUp {
             from {
                 opacity: 0;
                 transform: translateY(15px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .via-point-row input {
             flex: 1;
             padding: 10px 12px !important;
@@ -747,11 +958,13 @@
             background: #f5f5f5 !important;
             transition: all 0.3s ease !important;
         }
+
         .via-point-row input:focus {
             outline: none !important;
             background: #fff !important;
             border-color: #000 !important;
         }
+
         .via-point-row .remove-via {
             background: #f5f5f5;
             border: 1px solid #ddd;
@@ -766,10 +979,12 @@
             justify-content: center;
             font-size: 10px;
         }
+
         .via-point-row .remove-via:hover {
             background: black;
             color: white;
         }
+
         .btn-add-via {
             background: transparent;
             border: 2px dashed #ddd;
@@ -781,14 +996,17 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
+
         .btn-add-via:hover {
             color: black;
             background: rgba(102, 126, 234, 0.05);
         }
+
         .form-group-uber {
             margin-bottom: 15px;
             position: relative;
         }
+
         .form-group-uber label {
             display: block;
             font-size: 18px;
@@ -797,6 +1015,7 @@
             margin-bottom: 6px;
             letter-spacing: 0.5px;
         }
+
         .form-group-uber input,
         .form-group-uber select {
             width: 100%;
@@ -807,11 +1026,13 @@
             transition: all 0.3s ease;
             background: #f5f5f5;
         }
+
         .form-group-uber input:focus,
         .form-group-uber select:focus {
             outline: none;
             background: #fff;
         }
+
         .btn-search-uber {
             padding: 10px;
             background: linear-gradient(135deg, #000 0%, #000 100%);
@@ -824,9 +1045,11 @@
             transition: all 0.3s ease;
             width: 100%;
         }
+
         .btn-search-uber:hover {
             transform: translateY(-2px);
         }
+
         .form-section {
             display: none;
             animation: fadeIn 0.4s ease;
@@ -834,55 +1057,39 @@
             flex: 1;
             min-height: 100%;
         }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         .form-section.active {
             display: flex;
             flex-direction: column;
             flex: 1;
             min-height: 100%;
         }
+
         .step-bottom-btns {
             margin-top: auto;
             padding-top: 12px;
             padding-bottom: 0px;
         }
+
         .vehicle-grid-uber {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 9px;
             margin: 20px 0;
         }
-        .vehicle-item {
-            display: flex;
-            align-items: center;
-            gap: 0px;
-            border: 1px solid #ddd;
-            border-radius: 16px;
-            padding: 5px;
-            background: #fff;
-            cursor: pointer;
-            transition: .3s;
-            justify-content: space-around;
-        }
-        .vehicle-item:hover {
-            border-color: #000;
-        }
-        .vehicle-item.selected {
-            border: 2px solid #000;
-            background-color: #fafafa;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: scale(1.02);
-            transition: all 0.3s ease;
-        }
+
         .vehicle-info-section h6 {
             font-size: 16px;
             font-weight: 700;
@@ -892,14 +1099,17 @@
             gap: 8px;
             color: #111;
         }
+
         .vehicle-info-section h6 i {
             color: #000;
         }
+
         .vehicle-recommended-list {
             list-style: none;
             padding: 0;
             margin: 0 0 20px 0;
         }
+
         .vehicle-recommended-list li {
             margin-bottom: 8px;
             font-size: 14px;
@@ -909,18 +1119,22 @@
             gap: 10px;
             line-height: 1.4;
         }
+
         .vehicle-recommended-list li i.fa-check-circle {
             color: #28a745;
             margin-top: 3px;
         }
+
         .vehicle-recommended-list li i.fa-exclamation-triangle {
             color: #dc3545;
             margin-top: 3px;
         }
+
         .vehicle-recommended-list li i.fa-star {
             color: #f8be00;
             margin-top: 3px;
         }
+
         .child-seat-status {
             font-size: 14px;
             font-weight: 600;
@@ -929,14 +1143,17 @@
             border-radius: 20px;
             margin-bottom: 25px;
         }
+
         .child-seat-status.available {
             background-color: #e6f4ea;
             color: #1e8e3e;
         }
+
         .child-seat-status.unavailable {
             background-color: #fce8e6;
             color: #d93025;
         }
+
         .vehicle-modal-price-btn {
             width: 100%;
             background: #000;
@@ -949,9 +1166,11 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+
         .vehicle-modal-price-btn:hover {
             background: #333;
         }
+
         .vehicle-modal-price-range {
             display: flex;
             align-items: center;
@@ -963,27 +1182,32 @@
             font-size: 15px;
             color: #333;
         }
+
         .vehicle-modal-price-range i {
             color: #f8be00;
             font-size: 16px;
         }
+
         .vehicle-image img {
             width: 100%;
             height: 110px;
             object-fit: cover;
         }
+
         .vehicle-name {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 8px;
             max-width: 100px;
         }
+
         .vehicle-name-row {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 8px;
         }
+
         .vehicle-info-btn {
             width: 24px;
             height: 24px;
@@ -996,32 +1220,39 @@
             justify-content: center;
             transition: .3s;
         }
+
         .vehicle-info-btn:hover {
             background: #000;
             color: #fff;
         }
+
         .vehicle-info-btn i {
             font-size: 13px;
         }
+
         .vehicle-features {
             display: flex;
             gap: 18px;
             color: #666;
             font-size: 15px;
         }
+
         .vehicle-features span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         .vehicle-features i {
             font-size: 14px;
         }
+
         .vehicle-price {
             font-size: 23px;
             font-weight: 700;
             white-space: nowrap;
         }
+
         .driver-item {
             background: #fff;
             border: 2px solid #e8e8e8;
@@ -1031,6 +1262,7 @@
             transition: .3s;
             cursor: pointer;
         }
+
         .rc-car-image {
             background: #f9f9f9;
             border-radius: 14px;
@@ -1044,31 +1276,37 @@
             justify-content: center;
             position: relative;
         }
+
         .rc-car-image img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             max-width: 100%;
         }
+
         .driver-item:hover {
             border-color: #000;
             box-shadow: 0 12px 30px rgba(0, 0, 0, .08);
             transform: translateY(-3px);
         }
+
         .driver-item.selected {
             border: 2px solid #000;
             background: #fafafa;
         }
+
         .driver-top {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 15px;
         }
+
         .driver-left {
             display: flex;
             gap: 15px;
         }
+
         .driver-avatar {
             width: 55px;
             height: 55px;
@@ -1076,56 +1314,67 @@
             overflow: hidden;
             flex-shrink: 0;
         }
+
         .driver-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .driver-name {
             margin: 0;
             font-size: 18px;
             font-weight: 700;
         }
+
         .driver-rating {
             margin-top: 4px;
             color: #777;
             font-size: 14px;
         }
+
         .driver-rating i {
             color: #FFC107;
         }
+
         .driver-vehicle {
             margin-top: 5px;
             font-size: 14px;
             color: #444;
         }
+
         .driver-eta {
             margin-top: 6px;
             color: #0d6efd;
             font-size: 13px;
             font-weight: 600;
         }
+
         .driver-price-box {
             text-align: right;
             min-width: 110px;
         }
+
         .driver-price-box span {
             display: block;
             font-size: 12px;
             color: #888;
         }
+
         .driver-price-box h3 {
             margin: 3px 0 0;
             font-size: 32px;
             font-weight: 800;
             color: #000;
         }
+
         .driver-tags {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             margin-top: 18px;
         }
+
         .driver-tag {
             padding: 7px 12px;
             background: #f5f5f5;
@@ -1133,10 +1382,12 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .driver-tag.lowest {
             background: #dff5df;
             color: #0a7b0a;
         }
+
         .driver-footer {
             margin-top: 18px;
             padding-top: 18px;
@@ -1145,16 +1396,19 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .driver-total {
             font-size: 14px;
             color: #666;
         }
+
         .driver-total strong {
             display: block;
             font-size: 22px;
             color: #000;
             margin-top: 3px;
         }
+
         .select-driver-btn {
             background: #000;
             color: #fff;
@@ -1164,14 +1418,17 @@
             font-weight: 700;
             transition: .3s;
         }
+
         .select-driver-btn:hover {
             background: #222;
         }
+
         .btn-group-uber {
             display: flex;
             gap: 10px;
             justify-content: space-between;
         }
+
         .btn-back-uber {
             padding: 11px;
             background: #f5f5f5;
@@ -1188,10 +1445,12 @@
             gap: 6px;
             text-decoration: none;
         }
+
         .btn-back-uber:hover {
             background: #eee;
             border-color: #999;
         }
+
         .passenger-form-uber {
             background: #f9f9f9;
             padding: 12px;
@@ -1199,6 +1458,7 @@
             margin-bottom: 12px;
             border: 1px solid #eee;
         }
+
         .passenger-form-uber input {
             width: 100%;
             padding: 9px;
@@ -1207,25 +1467,30 @@
             border-radius: 6px;
             font-size: 12px;
         }
+
         .passenger-form-uber input:last-child {
             margin-bottom: 0;
         }
+
         #passengerFields {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-bottom: 20px;
         }
+
         #passengerFields .passenger-form-uber {
             margin-bottom: 0;
         }
+
         .booking-title {
             font-size: 30px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: black;
             font-family: 'Poppins', sans-serif;
         }
+
         .modal-uber {
             display: none;
             position: fixed;
@@ -1239,9 +1504,11 @@
             justify-content: center;
             animation: fadeIn 0.3s ease;
         }
+
         .modal-uber.show {
             display: flex;
         }
+
         .modal-content-uber {
             background: #fff;
             border-radius: 16px;
@@ -1251,28 +1518,33 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
+
         @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(30px) scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
         }
+
         .modal-header-uber {
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 16px;
             color: #000;
         }
+
         .modal-body-uber {
             margin-bottom: 20px;
             color: #666;
             font-size: 14px;
             line-height: 1.5;
         }
+
         .otp-input-uber {
             width: 100%;
             padding: 14px;
@@ -1285,11 +1557,13 @@
             font-weight: 700;
             transition: all 0.3s ease;
         }
+
         .otp-input-uber:focus {
             outline: none;
             border-color: #000;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
+
         .btn-modal-primary {
             width: 100%;
             padding: 12px;
@@ -1302,10 +1576,12 @@
             margin-top: 12px;
             transition: all 0.3s ease;
         }
+
         .btn-modal-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
+
         .btn-modal-secondary {
             width: 100%;
             padding: 12px;
@@ -1318,35 +1594,42 @@
             margin-top: 8px;
             transition: all 0.3s ease;
         }
+
         .btn-modal-secondary:hover {
             background: #eee;
         }
+
         .otp-btn-group {
             display: flex;
             gap: 12px;
             margin-top: 20px;
         }
+
         .otp-btn-group .btn-modal-primary,
         .otp-btn-group .btn-modal-secondary {
             flex: 1;
             margin-top: 0;
         }
+
         .app-promo-modal-content {
             text-align: center;
             position: relative;
         }
+
         .app-promo-title {
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 12px;
             color: #000;
         }
+
         .app-promo-subtitle {
             font-size: 14px;
             color: #666;
             margin-bottom: 24px;
             line-height: 1.6;
         }
+
         .app-promo-benefits {
             background: #f9f9f9;
             padding: 16px;
@@ -1354,6 +1637,7 @@
             margin-bottom: 20px;
             text-align: left;
         }
+
         .app-promo-benefit {
             display: flex;
             align-items: center;
@@ -1362,6 +1646,7 @@
             font-size: 14px;
             color: #333;
         }
+
         .btn-modal-primary,
         .btn-modal-secondary {
             flex: 1;
@@ -1374,35 +1659,43 @@
             transition: all 0.25s ease;
             text-decoration: none;
         }
+
         .btn-modal-primary {
             background: #000;
             color: #fff;
         }
+
         .btn-modal-primary:hover {
             background: #222;
         }
+
         .btn-modal-secondary {
             background: #f3f3f3;
             color: #000;
         }
+
         .btn-modal-secondary:hover {
             background: #e7e7e7;
         }
+
         .app-promo-benefit:last-child {
             margin-bottom: 0;
         }
+
         .app-promo-benefit i {
             color: #f9c106;
             font-size: 16px;
             width: 20px;
         }
+
         .find-trip-card {
             background: #f9f9f9;
-            padding: 16px;
+            padding: 12px;
             border-radius: 12px;
             border: 1px solid #e0e0e0;
             margin-bottom: 16px;
         }
+
         .find-trip-card h4 {
             display: block;
             font-size: 18px;
@@ -1411,11 +1704,13 @@
             margin-bottom: 6px;
             letter-spacing: 0.5px;
         }
+
         .find-trip-locations {
             display: flex;
             flex-direction: column;
             gap: 8px;
         }
+
         .trip-location-item {
             background: #fff;
             padding: 10px 12px;
@@ -1424,27 +1719,32 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 17px;
+            font-size: 16px;
             cursor: pointer;
             justify-content: space-between;
         }
+
         .trip-location-item.dropoff {
             justify-content: space-between;
         }
+
         .trip-location-icon {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .location-dot {
             font-size: 8px;
         }
+
         .location-square {
             font-size: 10px;
         }
+
         /* FIXED TIME PANEL */
         .time-selection-panel {
-    display: none;
+            display: none;
             position: absolute;
             top: 0;
             left: 0;
@@ -1454,19 +1754,20 @@
             z-index: 100;
             padding: 20px 40px;
             overflow-y: auto;
-            z-index:99999;
-}
+            z-index: 99999;
+        }
 
-.time-selection-panel.show {
-    display: block;
-}
-     
+        .time-selection-panel.show {
+            display: block;
+        }
+
         .time-panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 16px;
         }
+
         .time-panel-header-back {
             cursor: pointer;
             padding: 4px;
@@ -1474,6 +1775,7 @@
             border: none;
             font-size: 16px;
         }
+
         .time-panel-header-clear {
             font-weight: 600;
             font-size: 14px;
@@ -1482,32 +1784,38 @@
             border: none;
             color: #000;
         }
+
         .time-panel-title {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 16px;
             line-height: 1.2;
         }
+
         .time-panel-subtitle {
             font-size: 14px;
             color: #666;
             margin-bottom: 16px;
         }
+
         .time-inputs {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-bottom: 16px;
         }
+
         .time-input-wrapper {
             position: relative;
         }
+
         .time-input-icon {
             position: absolute;
             left: 12px;
             top: 14px;
             color: #333;
         }
+
         .time-input-field {
             width: 100%;
             padding: 12px 35px;
@@ -1519,6 +1827,7 @@
             cursor: pointer;
             color: #000;
         }
+
         .form-group-uber textarea {
             width: 100%;
             padding: 12px 15px;
@@ -1528,11 +1837,13 @@
             /*resize:vertical;*/
             /*min-height:120px;*/
         }
+
         .form-group-uber textarea:focus {
             outline: none;
             border-color: #000;
             background: #fff;
         }
+
         .time-input-chevron {
             position: absolute;
             right: 12px;
@@ -1541,6 +1852,7 @@
             font-size: 12px;
             pointer-events: none;
         }
+
         .time-hint {
             font-size: 15px;
             color: #666;
@@ -1549,6 +1861,7 @@
             gap: 8px;
             margin-bottom: 20px;
         }
+
         .for-me-modal-header {
             display: flex;
             justify-content: center;
@@ -1556,11 +1869,13 @@
             margin-bottom: 16px;
             position: relative;
         }
+
         .for-me-modal-title {
             font-size: 21px;
             font-weight: 700;
             text-align: center;
         }
+
         .for-me-close-btn {
             cursor: pointer;
             background: none;
@@ -1569,12 +1884,14 @@
             position: absolute;
             right: 0;
         }
+
         .for-me-options {
             display: flex;
             flex-direction: column;
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .for-me-option {
             display: flex;
             align-items: center;
@@ -1586,11 +1903,13 @@
             text-align: left;
             width: 100%;
         }
+
         .for-me-option-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .for-me-option-avatar {
             width: 36px;
             height: 36px;
@@ -1602,22 +1921,28 @@
             color: #ccc;
             font-size: 18px;
         }
+
         .for-me-option-avatar.user-plus {
             color: #000;
         }
+
         .for-me-option-text {
             font-weight: 500;
             font-size: 14px;
         }
+
         .for-me-radio {
             font-size: 16px;
         }
+
         .reviews-section {
             background: #ddddddd9;
         }
+
         .section-padding {
             padding: 50px 0;
         }
+
         .section-title {
             font-size: 32px;
             font-weight: 700;
@@ -1625,22 +1950,26 @@
             color: #000;
             font-family: 'Poppins', sans-serif;
         }
+
         .review-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
+
         .review-card {
             background: #fff;
             padding: 24px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
+
         .review-rating {
             color: #ffc107;
             font-size: 14px;
             margin-bottom: 12px;
         }
+
         .review-text {
             font-size: 14px;
             color: #666;
@@ -1648,11 +1977,13 @@
             line-height: 1.6;
             font-style: italic;
         }
+
         .review-author {
             display: flex;
             gap: 12px;
             align-items: center;
         }
+
         .review-avatar {
             width: 44px;
             height: 44px;
@@ -1666,38 +1997,46 @@
             font-size: 12px;
             flex-shrink: 0;
         }
+
         .review-name {
             font-weight: 600;
             font-size: 13px;
             color: #000;
         }
+
         .review-title {
             font-size: 12px;
             color: #999;
         }
+
         .app-download-section {
             background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
             color: #fff;
             padding: 60px 0;
         }
+
         .app-download-content {
             text-align: center;
         }
+
         .app-download-title {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 16px;
         }
+
         .app-download-subtitle {
             font-size: 18px;
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 40px;
         }
+
         .app-store-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
         }
+
         .app-store-btn {
             display: flex;
             align-items: center;
@@ -1711,79 +2050,96 @@
             font-size: 14px;
             transition: all 0.3s;
         }
+
         .app-store-btn i {
             font-size: 24px;
             color: white;
         }
+
         .app-store-btn-text {
             display: flex;
             flex-direction: column;
             text-align: left;
         }
+
         .app-store-btn-label {
             font-size: 11px;
             opacity: 0.8;
             color: white;
         }
+
         .app-store-btn-name {
             font-size: 16px;
             font-weight: 700;
             color: white;
         }
+
         .owl-carousel {
             display: none;
         }
+
         footer {
             background: #000;
             color: #fff;
             padding: 60px 0 20px;
         }
+
         .footer-logo-section {
             margin-bottom: 40px;
         }
+
         .footer-logo {
             font-size: 28px;
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 8px;
         }
+
         .footer-logo img {
             height: 70px;
             width: auto;
             object-fit: contain;
         }
+
         .footer-tagline {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.7);
         }
+
         .footer-section {
             margin-bottom: 30px;
         }
+
         .footer-section-title {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 16px;
             color: #fff;
         }
+
         .footer-links-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+
         .footer-links-list a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s;
         }
+
         .footer-links-list a:hover {
             color: #fff;
         }
+
         .footer-social-icons {
             display: flex;
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .social-icon {
             width: 40px;
             height: 40px;
@@ -1798,24 +2154,29 @@
             transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
+
         .social-icon:hover {
             background: #fff;
             color: #000;
             transform: translateY(-3px);
         }
+
         .footer-app-section {
             margin-bottom: 30px;
         }
+
         .footer-app-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 12px;
         }
+
         .footer-app-buttons {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
         }
+
         .footer-app-btn {
             display: flex;
             align-items: center;
@@ -1832,10 +2193,12 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
         }
+
         .footer-app-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
+
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
@@ -1843,6 +2206,7 @@
             font-size: 15px;
             color: rgba(255, 255, 255, 0.6);
         }
+
         .app-promo-close {
             position: absolute;
             top: -16px;
@@ -1860,26 +2224,33 @@
             transition: all 0.2s ease;
             z-index: 10;
         }
+
         .app-promo-close i {
             font-size: 14px;
         }
+
         .app-promo-close:hover {
             background: #e9e9e9;
             transform: scale(1.05);
         }
+
         .app-promo-close:active {
             transform: scale(0.95);
         }
+
         .faq-section {
             background: #ddddddd9;
         }
+
         .faq-item {
             border-bottom: 1px solid white;
             padding: 20px;
         }
+
         .faq-item:last-child {
             border-bottom: none;
         }
+
         .faq-question {
             font-weight: 600;
             font-size: 16px;
@@ -1896,14 +2267,17 @@
             width: 100%;
             text-align: left;
         }
+
         .faq-question:hover {
             color: #000;
         }
+
         .faq-icon {
             font-size: 12px;
             /*color: #999;*/
             transition: all 0.3s;
         }
+
         .faq-answer {
             display: none;
             font-size: 16px;
@@ -1911,10 +2285,12 @@
             margin-top: 12px;
             line-height: 1.6;
         }
+
         .faq-answer.show {
             display: block;
             animation: slideDown 0.3s ease;
         }
+
         .ride-dropdown-btn {
             width: 100%;
             height: 42px;
@@ -1930,17 +2306,21 @@
             font-weight: 600;
             transition: .3s;
         }
+
         .ride-dropdown-btn:hover {
             border-color: #000;
         }
+
         .ride-dropdown-btn span {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
         .ride-dropdown-btn i {
             font-size: 13px;
         }
+
         .ride-dropdown-menu {
             position: absolute;
             top: 48px;
@@ -1953,9 +2333,11 @@
             display: none;
             z-index: 10000;
         }
+
         .ride-dropdown-menu.show {
             display: block;
         }
+
         .ride-dropdown-item {
             display: flex;
             align-items: center;
@@ -1964,12 +2346,15 @@
             cursor: pointer;
             transition: .25s;
         }
+
         .ride-dropdown-item:hover {
             background: #f6f6f6;
         }
+
         .ride-dropdown-item.active {
             background: #f3f3f3;
         }
+
         .ride-dropdown-item i:first-child {
             width: 32px;
             height: 32px;
@@ -1981,26 +2366,31 @@
             color: #000;
             font-size: 13px;
         }
+
         .ride-dropdown-item strong {
             display: block;
             font-size: 14px;
             color: #111;
         }
+
         .ride-dropdown-item small {
             display: block;
             font-size: 12px;
             color: #777;
             margin-top: 2px;
         }
+
         .confirm-modal-content {
             text-align: center;
             padding: 0px 0;
         }
+
         .confirm-icon {
             font-size: 36px;
             color: #000;
             margin-bottom: 0px;
         }
+
         .confirm-details {
             background: #f5f5f5;
             padding: 16px;
@@ -2009,21 +2399,26 @@
             text-align: left;
             font-size: 13px;
         }
+
         .confirm-detail-row {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
         }
+
         .confirm-detail-row:last-child {
             margin-bottom: 0;
         }
+
         .confirm-detail-label {
             color: #999;
         }
+
         .confirm-detail-value {
             font-weight: 600;
             color: #000;
         }
+
         input[type="radio"] {
             width: 16px;
             height: 16px;
@@ -2031,12 +2426,14 @@
             margin: 0;
             accent-color: #000;
         }
+
         .booking-title-group {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
         }
+
         .phone-input-wrapper {
             display: flex;
             align-items: center;
@@ -2046,6 +2443,7 @@
             overflow: hidden;
             transition: .3s;
         }
+
         .country-code {
             padding: 11px 14px;
             background: #ececec;
@@ -2055,6 +2453,7 @@
             color: #000;
             white-space: nowrap;
         }
+
         .phone-number-input {
             flex: 1;
             border: none !important;
@@ -2062,9 +2461,11 @@
             box-shadow: none !important;
             padding: 11px 14px !important;
         }
+
         .phone-number-input:focus {
             outline: none;
         }
+
         .mobile-menu-btn {
             display: none;
             width: 42px;
@@ -2078,14 +2479,17 @@
             align-items: center;
             justify-content: center;
         }
+
         .goride-app-section {
             padding: 45px 0;
         }
+
         .goride-app-wrapper {
             background: #111;
             border-radius: 24px;
             overflow: hidden;
         }
+
         .goride-app-left {
             padding: 35px;
             color: #fff;
@@ -2094,6 +2498,7 @@
             flex-direction: column;
             justify-content: center;
         }
+
         .goride-app-badge {
             display: inline-flex;
             align-items: center;
@@ -2106,32 +2511,38 @@
             margin-bottom: 10px;
             color: black;
         }
+
         .goride-app-heading {
             font-size: 34px;
             font-weight: 800;
             line-height: 1.2;
         }
+
         .goride-app-heading span {
             color: #f9c106;
         }
+
         .goride-app-text {
             font-size: 16px;
             color: #d6d6d6;
             line-height: 1.8;
             margin-bottom: 15px;
         }
+
         .goride-app-features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 18px;
             margin-bottom: 25px;
         }
+
         .goride-feature-item {
             display: flex;
             align-items: center;
             gap: 12px;
             color: #fff;
         }
+
         .goride-feature-item i {
             width: 42px;
             height: 42px;
@@ -2142,10 +2553,12 @@
             justify-content: center;
             align-items: center;
         }
+
         .goride-download-btns {
             display: flex;
             justify-content: center;
         }
+
         .goride-store-btn {
             display: flex;
             align-items: center;
@@ -2158,32 +2571,39 @@
             border-radius: 14px;
             transition: .3s;
         }
+
         .goride-store-btn:hover {
             transform: translateY(-4px);
             color: #111;
         }
+
         .goride-store-btn i {
             font-size: 28px;
         }
+
         .goride-store-btn small {
             display: block;
             font-size: 11px;
             color: #777;
         }
+
         .goride-store-btn strong {
             display: block;
             font-size: 16px;
         }
+
         .goride-app-right {
             height: 500px;
             width: 100%;
         }
+
         .goride-app-right img {
             width: 100%;
             height: 100%;
             display: block;
             object-fit: cover;
         }
+
         .goride-app-overlay {
             position: absolute;
             inset: 0;
@@ -2192,9 +2612,11 @@
                     rgba(0, 0, 0, .15) 45%,
                     rgba(0, 0, 0, .05) 100%);
         }
+
         .mobile-menu-btn:hover {
             background: #ececec;
         }
+
         .mobile-menu-overlay {
             position: fixed;
             inset: 0;
@@ -2204,14 +2626,17 @@
             transition: .35s;
             z-index: 9998;
         }
+
         .fleet-section {
             background: #fff;
         }
+
         .section-head p {
             color: #777;
             font-size: 16px;
             margin-bottom: 0px;
         }
+
         .fleet-card {
             background: #fff;
             border: 1px solid #ececec;
@@ -2220,44 +2645,55 @@
             text-align: center;
             transition: .3s;
         }
+
         .fleet-card:hover {
             transform: translateY(-8px);
             cursor: pointer;
         }
+
         .fleet-card img {
             width: 100%;
             height: 130px;
             object-fit: contain;
         }
+
         .fleet-card h5 {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 0px;
         }
+
         .fleet-card span {
             color: #777;
             font-size: 14px;
         }
+
         .fleet-carousel .owl-stage {
             display: flex;
         }
+
         .fleet-carousel .owl-item {
             display: flex;
         }
+
         .fleet-carousel .fleet-card {
             width: 100%;
         }
+
         .fleet-carousel .owl-dot span {
             width: 10px;
             height: 10px;
         }
+
         .fleet-carousel .owl-dot.active span {
             background: #000 !important;
         }
+
         .mobile-menu-overlay.show {
             visibility: visible;
             opacity: 1;
         }
+
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -2271,9 +2707,11 @@
             flex-direction: column;
             box-shadow: 5px 0 30px rgba(0, 0, 0, .15);
         }
+
         .mobile-menu.show {
             left: 0;
         }
+
         .mobile-menu-header {
             display: flex;
             justify-content: space-between;
@@ -2281,15 +2719,18 @@
             padding: 20px;
             border-bottom: 1px solid #eee;
         }
+
         .mobile-menu-header img {
             height: 45px;
         }
+
         .mobile-menu-header button {
             border: none;
             background: none;
             font-size: 22px;
             cursor: pointer;
         }
+
         .mobile-user {
             display: flex;
             align-items: center;
@@ -2297,6 +2738,7 @@
             padding: 20px;
             border-bottom: 1px solid #eee;
         }
+
         .mobile-avatar {
             width: 55px;
             height: 55px;
@@ -2309,20 +2751,24 @@
             font-weight: 700;
             font-size: 18px;
         }
+
         .mobile-user h5 {
             margin: 0;
             font-size: 17px;
             font-weight: 700;
         }
+
         .mobile-user span {
             color: #777;
             font-size: 13px;
         }
+
         .mobile-menu-links {
             flex: 1;
             padding: 10px 0;
             overflow-y: auto;
         }
+
         .mobile-menu-links a {
             display: flex;
             align-items: center;
@@ -2333,17 +2779,21 @@
             font-size: 15px;
             transition: .25s;
         }
+
         .mobile-menu-links a:hover {
             background: #f7f7f7;
         }
+
         .mobile-menu-links i {
             width: 22px;
             text-align: center;
         }
+
         .mobile-menu-footer {
             padding: 20px;
             border-top: 1px solid #eee;
         }
+
         .mobile-menu-footer button {
             width: 100%;
             height: 46px;
@@ -2354,41 +2804,51 @@
             font-weight: 600;
             cursor: pointer;
         }
+
         .mobile-menu-footer button:hover {
             opacity: .9;
         }
+
         .sections-hidden {
             display: none !important;
         }
+
         .flatpickr-calendar {
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border: 1px solid #eee;
         }
+
         .flatpickr-day.selected {
             background: #000 !important;
             border-color: #000 !important;
         }
+
         .flatpickr-time input:hover,
         .flatpickr-time .flatpickr-am-pm:hover,
         .flatpickr-time input:focus,
         .flatpickr-time .flatpickr-am-pm:focus {
             background: #f5f5f5;
         }
+
         .owl-carousel.review-carousel {
             padding: 10px 0;
             display: none;
         }
+
         .owl-carousel.review-carousel .owl-item {
             padding: 0 10px;
         }
+
         .owl-dots {
             margin-top: 20px;
         }
+
         .owl-dots .owl-dot.active span {
             background: #000 !important;
         }
+
         .booking-form-section {
             background: #f9f9f9;
             border: 1px solid #e7e7e7;
@@ -2396,6 +2856,7 @@
             padding: 18px;
             margin-bottom: 8px;
         }
+
         .booking-section-title {
             font-size: 13px;
             font-weight: 700;
@@ -2404,18 +2865,22 @@
             letter-spacing: .6px;
             margin-bottom: 10px;
         }
+
         .booking-form-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
             margin-bottom: 15px;
         }
+
         .booking-form-group {
             margin-bottom: 0;
         }
+
         .booking-checkbox-wrapper {
             margin-top: 15px;
         }
+
         .booking-checkbox-label {
             display: flex;
             align-items: center;
@@ -2424,16 +2889,19 @@
             font-size: 14px;
             font-weight: 500;
         }
+
         .booking-checkbox {
             width: 18px;
             height: 18px;
             accent-color: #000;
         }
+
         .booking-form-group input,
         .booking-form-group select,
         .booking-form-group textarea {
             width: 100%;
         }
+
         .driver-confirm-card {
             background: #f9f9f9;
             padding: 24px;
@@ -2444,6 +2912,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .driver-confirm-image {
             width: 100px;
             height: 100px;
@@ -2451,23 +2920,27 @@
             object-fit: cover;
             margin-bottom: 16px;
         }
+
         .driver-confirm-card h3 {
             font-size: 18px;
             font-weight: 700;
             margin: 8px 0;
             color: #000;
         }
+
         .driver-vehicle {
             color: #666;
             font-size: 14px;
             margin: 4px 0;
         }
+
         .driver-confirm-rating {
             color: #f39c12;
             font-size: 16px;
             font-weight: 600;
             margin-top: 8px;
         }
+
         .edit-icon-btn {
             display: inline-flex;
             align-items: center;
@@ -2484,107 +2957,140 @@
             transition: all 0.25s ease;
             border-radius: 23px;
         }
+
         .edit-icon-btn i {
             font-size: 11px;
         }
+
         .edit-icon-btn:active {
             transform: scale(0.95);
         }
+
         .selected-car-summary,
         .booking-summary {
             display: none;
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid #e5e5e5;
         }
+
         .summary-title {
             font-size: 15px;
-            font-weight: 700;
-            color: #666;
-            margin-bottom: 15px;
+    /* font-weight: 700; */
+    /* color: #666; */
+    margin-bottom: 15px;
         }
+
         .selected-car-row {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 7px;
+            justify-content: center;
         }
+
         .summary-car-image {
-            width: 90px;
+            width: 70px;
             height: 70px;
             object-fit: contain;
             border-radius: 10px;
         }
+
         .summary-car-details {
             flex: 1;
         }
+
         .summary-car-name {
-            margin: 0;
+            margin-bottom: 0px !important;
             font-size: 18px;
             font-weight: 700;
             color: #111;
         }
+
         .summary-car-info {
             display: flex;
             gap: 18px;
-            margin-top: 8px;
+
             color: #666;
             font-size: 14px;
         }
+
         .summary-car-info span {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         .summary-car-price {
-            margin-left: auto;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: #000;
             white-space: nowrap;
         }
+
         .booking-summary-list {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(1, 1fr);
             gap: 10px;
         }
+
         .booking-summary-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
         }
+
+        .summary-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .summary-label i {
+            width: 16px;
+            text-align: center;
+            color: #666;
+        }
+
         .summary-label {
             color: #666;
         }
+
         .summary-value {
             color: #111;
             font-weight: 600;
             text-align: right;
         }
+
         .driver-info {
             display: flex;
             gap: 15px;
             width: 100%;
             align-items: center;
         }
+
         .driver-card {
             cursor: default;
         }
+
         .driver-info {
             display: flex;
             align-items: center;
             gap: 18px;
         }
+
         .driver-car-image {
             flex-shrink: 0;
             cursor: pointer;
         }
+
         .driver-car-image img {
             width: 80px;
             height: 80px;
             object-fit: contain;
             border-radius: 10px;
         }
+
         /* 
         .driver-car-banner {
             align-items: center;
@@ -2600,17 +3106,21 @@
             object-fit: cover;
             flex-shrink: 0;
         }
+
         .driver-car-banner-details {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
         }
+
         .driver-car-banner-name {
             font-size: 15px;
             font-weight: 700;
             color: #111;
             margin-bottom: 4px;
         }
+
         .driver-car-banner-meta {
             display: flex;
             flex-wrap: wrap;
@@ -2618,33 +3128,41 @@
             font-size: 13px;
             color: #555;
         }
+
         .driver-car-banner-meta span {
             display: flex;
             align-items: center;
             gap: 5px;
         }
+
         .driver-details {
             flex: 1;
         }
+
         .driver-header {
             display: flex;
             align-items: baseline;
             margin-bottom: 8px;
             justify-content: space-around;
+            align-items: center;
         }
+
         .driver-text h4 {
             margin: 0;
             font-size: 16px;
             font-weight: 600;
         }
+
         .driver-rating-info {
             margin-top: 3px;
             font-size: 12px;
             color: #666;
         }
+
         .driver-rating-info i {
             color: #f59e0b;
         }
+
         .driver-vehicle-info {
             display: flex;
             align-items: center;
@@ -2653,22 +3171,27 @@
             font-weight: 500;
             color: #333;
         }
+
         .driver-vehicle-info .fa-car {
             color: #666;
             width: 15px;
         }
+
         .fare-info-icon {
             color: #007bff;
             cursor: pointer;
             transition: .3s;
         }
+
         .fare-info-icon:hover {
             color: #0056b3;
         }
+
         .driver-bid-box {
             flex-shrink: 0;
             text-align: right;
         }
+
         .driver-price-row {
             display: flex;
             align-items: center;
@@ -2676,19 +3199,23 @@
             gap: 15px;
             margin-bottom: 6px;
         }
+
         .bid-amount {
             font-size: 20px;
             font-weight: 700;
         }
+
         .driver-accept-btn {
             padding: 6px 18px;
             min-height: auto;
             font-size: 14px;
         }
+
         .bid-eta {
             font-size: 13px;
             color: #666;
         }
+
         .rc-header {
             display: flex;
             align-items: center;
@@ -2697,6 +3224,7 @@
             border-bottom: 1px solid #f0f0f0;
             margin-bottom: 20px;
         }
+
         .rc-back-btn {
             width: 36px;
             height: 36px;
@@ -2712,14 +3240,17 @@
             flex-shrink: 0;
             transition: background 0.2s;
         }
+
         .rc-back-btn:hover {
             background: #f5f5f5;
         }
+
         .rc-title {
             margin: 0;
             font-size: 18px;
             font-weight: 700;
         }
+
         .rc-driver-card {
             background: #fafafa;
             border: 1px solid #eee;
@@ -2727,6 +3258,7 @@
             padding: 14px 16px;
             margin-bottom: 16px;
         }
+
         .rc-driver-label {
             font-size: 11px;
             text-transform: uppercase;
@@ -2735,26 +3267,31 @@
             margin-bottom: 10px;
             font-weight: 600;
         }
+
         .rc-driver-row {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .rc-driver-avatar img {
             width: 54px;
             height: 54px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #f9c106;
+            /* border: 2px solid #f9c106; */
         }
+
         .rc-driver-info {
             flex: 1;
         }
+
         .rc-driver-name {
             font-size: 16px;
             font-weight: 700;
             color: #111;
         }
+
         .rc-driver-stars {
             display: flex;
             align-items: center;
@@ -2763,12 +3300,14 @@
             font-size: 14px;
             color: #f59e0b;
         }
+
         .rc-driver-stars span {
             font-size: 13px;
             font-weight: 600;
             color: #333;
             margin-left: 4px;
         }
+
         .rc-driver-badge {
             background: #e8f5e9;
             color: #2e7d32;
@@ -2777,9 +3316,11 @@
             padding: 4px 10px;
             border-radius: 20px;
         }
+
         .rc-info-block {
             margin-bottom: 14px;
         }
+
         .rc-info-label {
             font-size: 12px;
             text-transform: uppercase;
@@ -2788,35 +3329,42 @@
             font-weight: 600;
             margin-bottom: 6px;
         }
+
         .rc-info-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .rc-info-sub {
             font-size: 13px;
             color: #666;
         }
+
         .rc-fare-amount {
             font-size: 26px;
             font-weight: 800;
             color: #111;
         }
+
         .rc-divider {
             height: 1px;
             background: #f0f0f0;
             margin: 14px 0;
         }
+
         .rc-journey-row {
             display: flex;
             align-items: flex-start;
             gap: 10px;
             margin-top: 6px;
         }
+
         .rc-journey-row>i {
             margin-top: 3px;
             font-size: 16px;
         }
+
         .rc-journey-route {
             font-size: 14px;
             font-weight: 600;
@@ -2826,11 +3374,13 @@
             align-items: center;
             gap: 4px;
         }
+
         .rc-journey-sub {
             font-size: 12px;
             color: #888;
             margin-top: 4px;
         }
+
         .rc-accept-btn {
             display: flex;
             align-items: center;
@@ -2847,22 +3397,378 @@
             cursor: pointer;
             transition: background 0.2s, transform 0.15s;
         }
+
+        .rc-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .rc-details-grid .rc-detail-row {
+            display: flex;
+            /* flex-direction: column; */
+            gap: 13px;
+            /* padding: 12px; */
+            /* border: 1px solid #e9ecef; */
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .rc-details-grid .rc-detail-row span {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .rc-details-grid .rc-detail-row strong {
+            font-size: 15px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .trip-details {
+            color: #000;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        /* NEW STEP 7 CLASSES */
+        .rc-new-driver-card,
+        .rc-vehicle-card,
+        .rc-bid-card {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+        }
+
+        .rc-driver-top-flex {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .rc-driver-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #f9c106;
+            position: relative;
+        }
+
+        .rc-driver-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rc-driver-info-main {
+            flex: 1;
+        }
+
+        .rc-driver-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+
+        .rc-driver-name-row h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .rc-driver-badge-top {
+            background: #e6f7eb;
+            color: #128741;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rc-driver-rating-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rc-driver-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .rc-driver-stat-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rc-driver-stat-col.border-left-right {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+        }
+
+        .rc-driver-stat-col i {
+            color: #444;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .rc-driver-stat-col strong {
+            display: block;
+            font-size: 14px;
+            color: #111;
+        }
+
+        .rc-driver-stat-col span {
+            font-size: 14px;
+        }
+
+        .rc-card-subtitle {
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .rc-vehicle-top {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .rc-vehicle-img-wrapper {
+            width: 140px;
+            height: 90px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rc-vehicle-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .rc-vehicle-info-right h4 {
+            margin: 0 0 6px 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .rc-vehicle-tag {
+            display: inline-block;
+            border: 1px solid #f9c106;
+            color: #d77f00;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .rc-vehicle-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .rc-vehicle-features span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rc-vehicle-amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .rc-amenity-box {
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 10px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+
+        .rc-amenity-box i {
+            color: #444;
+            font-size: 16px;
+        }
+
+        .rc-amenity-box span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .rc-bid-card {
+            background: #fafafa;
+        }
+
+        .rc-bid-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .rc-bid-badge {
+            background: #e6f7eb;
+            color: #128741;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rc-bid-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rc-bid-amount {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rc-bid-amount strong {
+            font-size: 24px;
+            color: #111;
+        }
+
+        .rc-bid-total-tag {
+            background: #f9c106;
+            color: #000;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 12px;
+        }
+
+        .rc-bid-note {
+            font-size: 11px;
+            color: #111;
+            font-weight: 600;
+        }
+        .help-modal{
+    border:0;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.help-modal .modal-header{
+    border-bottom:1px solid #eee;
+    padding:16px 20px;
+}
+
+.help-modal .modal-title{
+    font-size:20px;
+    font-weight:700;
+}
+
+.help-modal .btn-close{
+    font-size:14px;
+    opacity:1;
+}
+
+.help-modal .modal-body{
+    padding:28px 20px;
+}
+
+.help-icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:#f8be00;
+    color:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+.help-modal a{
+    color:#111;
+    text-decoration:none;
+    font-weight:600;
+}
+
+        @media (max-width: 576px) {
+            .rc-vehicle-amenities-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .rc-vehicle-top {
+                /* flex-direction: column; */
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .rc-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .rc-accept-btn:hover {
             background: #e6b000;
             transform: scale(1.01);
         }
+
         .operator-register-section {
             position: relative;
             padding: 50px 0;
             background: white;
             overflow: hidden;
         }
+
         .operator-register-content {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 30px;
         }
+
         .operator-register-text h2 {
             font-size: 32px;
             font-weight: 700;
@@ -2870,13 +3776,16 @@
             margin: 0;
             line-height: 1.3;
         }
+
         .operator-register-text h2 span {
             color: #000;
         }
+
         .operator-register-text p {
             font-size: 18px;
             margin: 8px 0 0 0;
         }
+
         .operator-register-btn {
             display: inline-flex;
             align-items: center;
@@ -2894,6 +3803,7 @@
             white-space: nowrap;
             flex-shrink: 0;
         }
+
         .pickup-now-btn {
             display: inline-flex;
             align-items: center;
@@ -2910,46 +3820,57 @@
             transition: all 0.3s ease;
             white-space: nowrap;
         }
+
         .pickup-now-btn:hover {
             background: #e7e7e7;
         }
+
         .pickup-now-btn i:first-child {
             font-size: 15px;
         }
+
         .pickup-now-btn i:last-child {
             font-size: 12px;
         }
+
         .privacy-modal {
             max-width: 520px;
         }
+
         .privacy-intro {
             font-size: 15px;
             color: #222;
             margin-bottom: 15px;
         }
+
         .privacy-text {
             font-size: 17px;
             /*color:#666;*/
             line-height: 1.8;
             margin-bottom: 15px;
         }
+
         .privacy-text:last-child {
             margin-bottom: 0;
         }
+
         .privacy-btn-group {
             display: flex;
             gap: 12px;
             margin-top: 25px;
         }
+
         .privacy-btn-group button {
             flex: 1;
         }
+
         .footer-contact-icon {
             width: 18px;
             margin-right: 8px;
             color: #fff;
             flex-shrink: 0;
         }
+
         .footer-address {
             display: flex;
             align-items: flex-start;
@@ -2959,9 +3880,11 @@
             line-height: 1.8;
             margin-top: 10px;
         }
+
         .footer-address div {
             flex: 1;
         }
+
         .passenger-luggage-card {
             background: #f9f9f9;
             border: 1px solid #e5e5e5;
@@ -2969,6 +3892,7 @@
             padding: 18px;
             margin-bottom: 18px;
         }
+
         .passenger-card-title {
             font-size: 14px;
             font-weight: 700;
@@ -2977,11 +3901,13 @@
             color: #555;
             margin-bottom: 18px;
         }
+
         .passenger-counter-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
+
         .passenger-counter-item label {
             display: block;
             font-size: 13px;
@@ -2989,11 +3915,13 @@
             margin-bottom: 8px;
             color: #222;
         }
+
         .car-seat-toggle {
             margin-top: 18px;
             padding-top: 18px;
             border-top: 1px solid #e5e5e5;
         }
+
         .car-seat-label {
             display: flex;
             align-items: center;
@@ -3002,32 +3930,39 @@
             font-weight: 600;
             cursor: pointer;
         }
+
         .child-seat-wrapper {
             display: none;
             margin-top: 18px;
             padding-top: 18px;
             border-top: 1px solid #e5e5e5;
         }
+
         .child-seat-counter {
             margin-bottom: 18px;
         }
+
         .child-seat-counter label {
             display: block;
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 10px;
         }
+
         .child-seat-dropdowns {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
         }
+
         #personalInfoSection .booking-form-grid {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
+
         .child-seat-counter .counter-widget {
             width: 35%;
         }
+
         .location-group-wrapper {
             display: flex;
             gap: 10px;
@@ -3035,6 +3970,7 @@
             z-index: 1000;
             overflow: visible;
         }
+
         .route-indicator {
             display: flex;
             flex-direction: column;
@@ -3046,6 +3982,7 @@
             padding-bottom: 40px;
             /* aligns pin with center of dropoff input */
         }
+
         .route-dot-start {
             border-radius: 50%;
             border: 2px solid #fff;
@@ -3053,6 +3990,7 @@
             color: #f9c106;
             font-size: 21px;
         }
+
         .route-line {
             flex: 1;
             width: 0;
@@ -3060,27 +3998,33 @@
             min-height: 30px;
             margin: 6px 0;
         }
+
         .route-dot-end {
             color: #000;
             font-size: 21px;
             flex-shrink: 0;
         }
+
         .location-fields {
             flex: 1;
             min-width: 0;
             overflow: visible;
             position: relative;
         }
+
         #mobileActionBar {
             display: none;
         }
+
         * {
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
         *::-webkit-scrollbar {
             display: none;
         }
+
         .cookie-consent-banner {
             position: fixed;
             bottom: 0px;
@@ -3090,15 +4034,18 @@
             width: 100%;
             background-color: #f3ba00;
         }
+
         .cookie-consent-banner__inner {
             margin: 0 auto;
             padding: 20px 20px;
             background: #000;
         }
+
         .cookie-consent-banner__description {
             color: #fff;
             font-size: 19px;
         }
+
         .cookie-consent-banner__cta--secondary {
             padding: 9px 13px;
             background-color: #fff;
@@ -3110,6 +4057,7 @@
             display: inline-block;
             font-weight: 600;
         }
+
         .cookie-consent-banner__cta {
             box-sizing: border-box;
             display: inline-block;
@@ -3127,6 +4075,7 @@
             cursor: pointer;
             font-weight: 600;
         }
+
         .finding-drivers-loader {
             display: flex;
             flex-direction: column;
@@ -3135,6 +4084,7 @@
             min-height: 350px;
             text-align: center;
         }
+
         .search-circle {
             width: 90px;
             height: 90px;
@@ -3148,24 +4098,29 @@
             margin-bottom: 25px;
             animation: searchPulse 1.5s infinite;
         }
+
         .search-circle i {
             animation: searchRotate 2s linear infinite;
         }
+
         .finding-drivers-loader h4 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 8px;
             color: #111;
         }
+
         .finding-drivers-loader p {
             color: #777;
             font-size: 15px;
         }
+
         .loading-dots {
             display: flex;
             gap: 8px;
             margin-top: 20px;
         }
+
         .loading-dots span {
             width: 8px;
             height: 8px;
@@ -3173,55 +4128,100 @@
             border-radius: 50%;
             animation: bounce .8s infinite alternate;
         }
+
         .loading-dots span:nth-child(2) {
             animation-delay: .2s;
         }
+
         .loading-dots span:nth-child(3) {
             animation-delay: .4s;
         }
+
         @keyframes searchPulse {
             0% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(0, 0, 0, .25);
             }
+
             70% {
                 transform: scale(1.08);
                 box-shadow: 0 0 0 18px rgba(0, 0, 0, 0);
             }
+
             100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
             }
         }
+
         @keyframes searchRotate {
             from {
                 transform: rotate(-10deg);
             }
+
             to {
                 transform: rotate(10deg);
             }
         }
+
         @keyframes bounce {
             from {
                 transform: translateY(0);
                 opacity: .4;
             }
+
             to {
                 transform: translateY(-8px);
                 opacity: 1;
             }
         }
+
+        .iti {
+            width: 100%;
+        }
+
+        .iti input {
+            width: 100%;
+            height: 48px;
+            padding-left: 100px !important;
+            padding-right: 12px;
+            border: 2px solid #ddd !important;
+            border-radius: 8px;
+            background: #f5f5f5 !important;
+            font-size: 16px;
+            transition: .3s;
+        }
+
+        .iti input:focus {
+            outline: none;
+            border-color: #000;
+            background: #fff;
+        }
+
+        .iti__flag-container {
+            border-right: 1px solid #ddd;
+        }
+
+        .iti__selected-country {
+            padding: 0 10px;
+        }
+
+        .iti__country-list {
+            z-index: 999999;
+        }
+
         /* ===========================
    MOBILE COLLAPSIBLE TRIP SUMMARY
 =========================== */
         .mobile-trip-summary {
             background: #fff;
             border: 1px solid #e9e9e9;
-            border-radius: 14px;
+            /* border-radius: 14px; */
             overflow: hidden;
             margin-bottom: 16px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
         }
+
         .mobile-trip-header {
             display: flex;
             justify-content: space-between;
@@ -3230,12 +4230,14 @@
             cursor: pointer;
             transition: .3s;
         }
+
         /*.mobile-trip-header:hover {*/
         /*    background: #fafafa;*/
         /*}*/
         .mobile-route {
             flex: 1;
         }
+
         .mobile-from,
         .mobile-to {
             display: flex;
@@ -3246,47 +4248,59 @@
             color: #222;
             line-height: 1.5;
         }
+
         .mobile-from {
             margin-bottom: 6px;
         }
+
         .mobile-from i {
             color: #f8be00;
             width: 16px;
         }
+
         .mobile-to i {
             color: #ff4d4f;
             width: 16px;
         }
+
         #tripSummaryArrow {
             font-size: 15px;
             color: #666;
             transition: transform .3s ease;
         }
+
         #tripSummaryArrow.rotate {
             transform: rotate(180deg);
         }
+
         /* Hidden by default */
         .mobile-trip-body {
             display: none;
             border-top: 1px solid #eee;
             padding: 14px 16px;
-            background: #fafafa;
+            background: white;
         }
+
         .mobile-trip-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 0;
+            /* padding: 8px 0; */
             font-size: 14px;
             color: #444;
+            font-weight: 600;
+            color: #222;
         }
+
         .mobile-trip-item i {
             width: 18px;
             color: #f8be00;
         }
+
         .mobile-trip-item:last-child {
             padding-bottom: 0;
         }
+
         .rc-info-title {
             font-size: 18px;
             font-weight: 700;
@@ -3296,105 +4310,111 @@
             align-items: center;
             gap: 8px;
         }
-        .rc-detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f1f1;
-            font-size: 14px;
-        }
-        .rc-detail-row:last-child {
-            border-bottom: none;
-        }
+
         .rc-detail-row span {
             color: #666;
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
         .rc-detail-row span i {
             color: #f8be00;
             width: 18px;
         }
+
         .rc-detail-row strong {
             color: #222;
             font-weight: 600;
         }
+
         .rc-fare-amount {
             font-size: 22px;
             color: #0b8b35;
             font-weight: 700;
         }
-        
-        .trip-datetime-card{
-        display:flex;
-        align-items:center;
-        gap:12px;
-        margin-top:14px;
-        padding:14px;
-        border:1px solid #e5e5e5;
-        border-radius:10px;
-        background:#fff;
-    }
-    
-    .trip-datetime-icon{
-        width:42px;
-        height:42px;
-        border-radius:50%;
-        background:#f8f8f8;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:#000;
-        font-size:18px;
-    }
-    
-    .trip-datetime-title{
-        font-size:12px;
-        color:#777;
-        font-weight:600;
-    }
-    
-    .trip-datetime-value{
-        font-size:15px;
-        font-weight:700;
-        color:#111;
-        margin-top:2px;
-    }
+
+        .trip-datetime-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trip-datetime-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 18px;
+        }
+
+        .trip-datetime-title {
+            font-size: 13px;
+           
+            font-weight: 600;
+        }
+
+        .trip-datetime-value {
+            font-size: 16px;
+            /* font-weight:700; */
+            color: #111;
+            margin-top: 2px;
+        }
+
         /* Mobile only */
         @media (max-width:768px) {
+            .driver-divider {
+                display: none;
+            }
+
+            .driver-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
             .mobile-trip-summary {
                 display: block;
             }
+
             .mobile-trip-header {
                 padding: 12px 14px;
             }
+
             .mobile-from,
             .mobile-to {
-                 font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-    width: 100%;
-    cursor: pointer;
+                font-size: 13px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: block;
+                width: 100%;
+                cursor: pointer;
+                max-width: 300px;
             }
+
             .mobile-from.expanded-text,
             .mobile-to.expanded-text {
                 white-space: normal;
                 word-wrap: break-word;
             }
+
             .mobile-trip-item {
                 font-size: 17px;
             }
         }
+
         /* Hide on desktop */
         @media (min-width:769px) {
             .mobile-trip-summary {
                 display: none;
             }
         }
+
         /*#step8 .confirm-details-grid {*/
         /*    display: none !important;*/
         /*}*/
@@ -3405,71 +4425,89 @@
             .cookie-consent-banner__description {
                 font-size: 12px;
             }
+
             .cookie-consent-banner__actions {
                 display: flex;
                 gap: 10px;
             }
+
             .cookie-consent-banner__cta {
                 min-width: auto;
                 padding: 8px 12px;
                 font-size: 12px;
                 margin-top: 10px;
             }
+
             .cookie-consent-banner__cta--secondary {
                 padding: 8px 12px;
                 font-size: 12px;
             }
         }
+
         @media (max-width: 480px) {
             .booking-form-section {
                 padding: 12px;
             }
+
             .booking-checkbox {
                 width: 16px;
                 height: 16px;
             }
+
             .booking-checkbox-label {
                 font-size: 12px;
             }
+
             .navbar-uber {
                 padding: 0 12px;
             }
+
             .navbar-brand-uber img {
                 height: 40px;
             }
+
             .hero-form-section {
                 padding: 12px 10px;
             }
+
             .booking-title {
                 font-size: 23px;
             }
+
             .modal-content-uber {
                 width: 95%;
                 padding: 20px;
             }
+
             .app-download-title {
                 font-size: 20px;
             }
+
             .section-title {
                 font-size: 20px;
             }
+
             .app-store-btn {
                 padding: 4px 10px;
                 font-size: 13px;
             }
+
             .app-store-btn-name {
                 font-size: 14px;
             }
+
             .time-dropdown-list {
                 max-height: 150px;
             }
+
             .time-dropdown-btn {
                 padding: 10px 30px 10px 35px;
                 font-size: 14px;
             }
-            .selected-car-row {
-                flex-wrap: wrap;
-            }
+
+            /*.selected-car-row {*/
+            /*    flex-wrap: wrap;*/
+            /*}*/
             .summary-car-price {
                 width: 100%;
                 margin-left: 0;
@@ -3477,141 +4515,177 @@
                 margin-top: 10px;
                 font-size: 22px;
             }
+
             .summary-car-image {
                 width: 65px;
                 height: 50px;
             }
+
             .summary-car-name {
                 font-size: 15px;
             }
+
             .summary-car-info {
                 font-size: 12px;
                 gap: 8px;
             }
+
             .booking-summary-item {
                 font-size: 12px;
             }
         }
+
         @media (max-width: 576px) {
             .passenger-luggage-card {
                 padding: 14px;
                 border-radius: 10px;
             }
+
             .passenger-card-title {
                 font-size: 13px;
             }
+
             .passenger-counter-item label {
                 font-size: 13px;
             }
+
             .car-seat-label {
                 font-size: 13px;
             }
         }
+
         @media (max-width: 767px) {
             .driver-car-banner-details {
                 flex-direction: column;
             }
+
             .booking-form-section {
                 padding: 14px;
                 margin-bottom: 14px;
                 border-radius: 10px;
             }
+
             .booking-form-grid {
                 gap: 12px;
             }
+
             .booking-section-title {
                 font-size: 17px;
                 margin-bottom: 12px;
             }
+
             .booking-checkbox-label {
                 font-size: 13px;
             }
         }
+
         @media (max-width: 768px) {
             .edit-icon-btn {
                 padding: 8px 10px;
                 font-size: 12px;
             }
+
             .edit-icon-btn i {
                 font-size: 10px;
             }
+
             .pickup-now-btn {
                 padding: 10px 18px;
                 font-size: 15px;
                 gap: 8px;
                 border-radius: 25px;
             }
+
             .pickup-now-btn i:first-child {
                 font-size: 14px;
             }
+
             .pickup-now-btn i:last-child {
                 font-size: 11px;
             }
+
             .operator-register-section {
                 padding: 30px 0;
             }
+
             .operator-register-content {
                 flex-direction: column;
                 text-align: center;
                 gap: 20px;
             }
+
             .operator-register-text h2 {
                 font-size: 24px;
             }
+
             .operator-register-text p {
                 font-size: 14px;
             }
+
             .operator-register-btn {
                 width: 100%;
                 justify-content: center;
             }
+
             .vehicle-grid-uber {
                 grid-template-columns: repeat(1, 1fr);
             }
+
             .vehicle-image img {
                 width: 100%;
                 height: 85px;
                 object-fit: contain;
             }
+
             .vehicle-item {
                 gap: 10px;
             }
+
             .vehicle-name {
                 font-size: 17px;
             }
+
             .form-group-uber label {
                 font-size: 16px;
             }
+
             .hero-form-section {
                 display: flex;
                 flex-direction: column;
                 min-height: calc(100vh - 70px);
                 padding: 16px 12px;
             }
+
             #tripMainContent {
                 display: flex;
                 flex-direction: column;
                 flex: 1;
             }
+
             .step-bottom-btns {
                 margin-top: auto !important;
                 padding-top: 20px;
                 padding-bottom: 20px;
             }
+
             .form-group-uber label {
                 font-size: 15px;
             }
+
             .return-journey-label {
                 font-size: 17px;
             }
+
             .offer-subtitle {
                 font-size: 14px;
             }
+
             .offer-title,
             .app-promo-subtitle,
             .app-promo-benefit {
                 font-size: 16px;
             }
+
             .step-bottom-btns {
                 position: fixed;
                 left: 0;
@@ -3623,16 +4697,20 @@
                 border-top: 1px solid #e5e5e5;
                 box-shadow: 0 -5px 15px rgba(0, 0, 0, .08);
             }
+
             .btn-group-uber {
                 display: flex;
                 gap: 10px;
             }
+
             .form-section {
                 padding-bottom: 90px;
             }
+
             .hero-map-section {
                 display: none !important;
             }
+
             #mobileCompactSummary {
                 position: fixed !important;
                 top: 70px !important;
@@ -3642,14 +4720,16 @@
                 background: #fff;
                 border-bottom: 1px solid #eee;
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-                padding: 12px 16px;
+                /* padding: 12px 16px; */
                 display: none;
                 flex-direction: column;
                 gap: 6px;
             }
+
             #mobileCompactSummary.visible {
                 display: flex !important;
             }
+
             .mcs-route {
                 display: flex;
                 align-items: center;
@@ -3658,14 +4738,17 @@
                 font-weight: 500;
                 color: #000;
             }
+
             .mcs-route i {
                 font-size: 12px;
                 color: #f9c106;
             }
+
             .mcs-route-arrow {
                 color: #999;
                 font-size: 10px;
             }
+
             .mcs-details {
                 display: flex;
                 flex-wrap: wrap;
@@ -3673,18 +4756,22 @@
                 font-size: 16px;
                 color: #555;
             }
+
             .mcs-details-item {
                 display: flex;
                 align-items: center;
                 gap: 4px;
             }
+
             .mcs-details-item i {
                 color: #f9c106;
             }
+
             .hero-form-section {
                 width: 100% !important;
                 max-width: 100% !important;
             }
+
             #bookingMap.mobile-fullscreen {
                 position: fixed;
                 top: 70px;
@@ -3694,11 +4781,13 @@
                 z-index: 5000;
                 display: block !important;
             }
+
             #bookingMap.mobile-fullscreen iframe {
                 width: 100%;
                 height: 100%;
                 border: 0;
             }
+
             #mapCloseBtn {
                 position: fixed;
                 top: 80px;
@@ -3716,9 +4805,11 @@
                 justify-content: center;
                 font-size: 16px;
             }
+
             #mapCloseBtn.visible {
                 display: flex !important;
             }
+
             #mobileMapBtn {
                 display: none;
                 align-items: center;
@@ -3732,6 +4823,7 @@
                 font-weight: 600;
                 cursor: pointer;
             }
+
             #mobileMapBar {
                 display: flex;
                 align-items: center;
@@ -3743,6 +4835,7 @@
                 font-size: 13px;
                 color: #333;
             }
+
             #mobileMapBar button {
                 background: #000;
                 color: #fff;
@@ -3756,15 +4849,18 @@
                 align-items: center;
                 gap: 5px;
             }
+
             .driver-item {
                 padding: 12px;
             }
+
             .driver-top {
                 display: flex;
                 align-items: flex-start;
                 justify-content: space-between;
                 gap: 10px;
             }
+
             .driver-left {
                 display: flex;
                 align-items: flex-start;
@@ -3772,23 +4868,28 @@
                 flex: 1;
                 min-width: 0;
             }
+
             .driver-avatar {
                 width: 45px;
                 height: 45px;
                 flex-shrink: 0;
             }
+
             .driver-name {
                 font-size: 16px;
                 line-height: 1.2;
                 margin-bottom: 2px;
             }
+
             .driver-rating {
                 font-size: 11px;
             }
+
             .driver-vehicle {
                 font-size: 12px;
                 margin-top: 2px;
             }
+
             .driver-price-box {
                 min-width: auto;
                 text-align: right;
@@ -3797,71 +4898,92 @@
                 align-items: flex-end;
                 gap: 6px;
             }
+
             .driver-price-box h3 {
                 font-size: 18px;
                 margin: 0;
             }
+
             .driver-price-box span {
                 font-size: 11px;
             }
+
             .select-driver-btn {
                 padding: 6px 12px;
                 font-size: 12px;
                 border-radius: 8px;
             }
+
             .driver-eta {
                 font-size: 11px;
                 margin-top: 0;
             }
+
             .goride-app-right {
                 height: 400px;
             }
+
             .vehicle-image {
                 flex-direction: column;
             }
+
             .vehicle-features {
                 display: flex;
             }
+
             .owl-carousel.review-carousel {
                 display: block !important;
             }
+
             .section-head h2 {
                 font-size: 28px;
             }
+
             .fleet-card {
                 padding: 18px;
             }
+
             .fleet-card img {
                 height: 150px;
             }
+
             .date-time-screen {
                 grid-template-columns: 1fr;
             }
+
             .hero-banner-content {
                 left: 8px;
             }
+
             .hero-banner-content h1 {
                 font-size: 24px;
             }
+
             .footer {
                 padding: 33px 0 20px !important;
             }
+
             .footer-bottom {
                 font-size: 17px;
             }
+
             .footer-app-btn {
                 width: auto;
             }
+
             .footer-app-buttons {
                 justify-content: center;
                 align-items: center;
             }
+
             .app-store-btn-label {
                 font-size: 14px;
             }
+
             #bookingImage {
                 display: none;
             }
+
             .hero-form-section {
                 width: 100%;
                 max-width: 100%;
@@ -3869,191 +4991,246 @@
                 padding: 16px 12px;
                 display: block;
             }
+
             .goride-app-overlay {
                 display: none;
             }
+
             .hero-container {
                 display: block;
             }
+
             .form-section.active {
                 flex: unset !important;
                 display: flex !important;
                 flex-direction: column !important;
             }
+
             .step-bottom-btns {
                 margin-top: auto !important;
                 padding-bottom: 30px !important;
             }
+
             .navbar-menu {
                 display: none;
             }
+
             .section-title {
                 font-size: 24px;
                 margin-bottom: 24px;
             }
+
             .section-padding {
                 padding: 40px 0;
             }
+
             .booking-title {
                 margin-bottom: 12px;
             }
+
             .review-grid {
                 display: none;
             }
+
             .owl-carousel {
                 display: block;
             }
+
             .hero-container {
                 min-height: auto;
                 flex-direction: column;
-                margin-bottom: 0px;
+                /*margin-bottom: 0px;*/
             }
+
             .hero-map-section {
                 min-height: auto;
             }
+
             .app-download-section {
                 padding: 40px 0;
             }
+
             .app-download-title {
                 font-size: 24px;
                 margin-bottom: 12px;
             }
+
             .app-download-subtitle {
                 font-size: 14px;
                 margin-bottom: 24px;
             }
+
             .app-store-buttons {
                 gap: 12px;
             }
+
             .app-store-btn {
                 justify-content: center;
             }
+
             .footer-links {
                 flex-direction: column;
                 gap: 12px;
             }
+
             .mobile-menu-btn {
                 display: flex;
             }
+
             .navbar-uber {
                 justify-content: space-between;
             }
+
             .time-dropdown-list {
                 max-height: 180px;
             }
+
             .location-suggestions {
                 right: 0;
             }
+
             .review-carousel .owl-carousel {
                 display: block !important;
             }
+
             .selected-car-row {
                 align-items: flex-start;
                 gap: 12px;
             }
+
             .summary-car-image {
                 width: 70px;
                 height: 55px;
             }
+
             .summary-car-name {
                 font-size: 16px;
             }
+
             .summary-car-info {
                 flex-wrap: wrap;
                 gap: 10px;
                 font-size: 13px;
             }
+
             .summary-car-price {
                 font-size: 20px;
             }
+
             .booking-summary-item {
                 font-size: 13px;
             }
+
             .summary-title {
                 font-size: 14px;
             }
+
             .driver-info {
                 display: flex;
                 flex-wrap: wrap;
-                align-items: end;
+                align-items: center;
                 gap: 12px;
             }
+
             .driver-car-image {
                 width: 80px;
                 flex-shrink: 0;
             }
+
             .driver-car-image img {
                 width: 80px;
                 height: 60px;
                 object-fit: contain;
             }
+
             .driver-details {
                 flex: 1;
                 min-width: 0;
             }
+
             .driver-header {
                 display: flex;
                 align-items: center;
                 gap: 8px;
                 margin-bottom: 5px;
             }
+
             .driver-avatar {
                 width: 40px;
                 height: 40px;
             }
+
             .driver-text h4 {
                 font-size: 15px;
                 margin: 0;
             }
+
             .driver-rating-info {
                 font-size: 11px;
+                display: flex;
+                flex-direction: column;
             }
+
             .driver-vehicle-info {
                 font-size: 12px;
                 margin-top: 4px;
             }
+
             .driver-price-row {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
+
             .bid-amount {
                 font-size: 22px;
             }
+
             .driver-accept-btn {
                 width: 150px;
             }
+
             .bid-eta {
                 margin-top: 6px;
             }
+
             .operator-login-section {
                 padding: 40px 0;
             }
+
             .operator-login-strip {
                 padding: 30px 20px;
             }
+
             .operator-login-content h2 {
                 font-size: 28px;
             }
+
             .operator-login-content p {
                 font-size: 15px;
             }
+
             .operator-login-btn {
                 width: 100%;
                 justify-content: center;
             }
+
             .privacy-modal {
                 width: 95%;
             }
+
             .privacy-btn-group {
                 flex-direction: column;
             }
+
             .passenger-counter-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
             .passenger-luggage-card {
                 padding: 16px;
             }
+
             #mobileActionBar {
                 display: flex;
                 position: fixed;
@@ -4069,16 +5246,19 @@
                 align-items: center;
                 animation: slideUpBar 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             }
+
             @keyframes slideUpBar {
                 from {
                     transform: translateY(100%);
                     opacity: 0;
                 }
+
                 to {
                     transform: translateY(0);
                     opacity: 1;
                 }
             }
+
             .mob-action-btn {
                 display: flex;
                 flex-direction: column;
@@ -4096,74 +5276,427 @@
                 border: none;
                 background: none;
             }
+
             .mob-action-btn:hover,
             .mob-action-btn:active {
                 transform: scale(1.12);
                 color: #f9c106;
             }
+
             .mob-action-icon {
-                width: 46px;
-                height: 46px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-                transition: box-shadow 0.2s ease, transform 0.2s ease;
+                width: 43px;
+        height: 43px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+        background: black;
+        color: white;
             }
+
             .mob-action-btn:hover .mob-action-icon {
                 transform: translateY(-4px);
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             }
-            .mob-icon-call {
-                color: white;
-                background: #2373e8;
-            }
-            .mob-icon-wa {
-                color: white;
-                background: #25D366;
-            }
-            .mob-icon-book {
-                background: #000;
-                color: #f9c106;
-                animation: pulse-book 2s infinite;
-            }
+
+
             @keyframes pulse-book {
                 0% {
                     box-shadow: 0 0 0 0 rgba(249, 193, 6, 0.5);
                 }
+
                 60% {
                     box-shadow: 0 0 0 10px rgba(249, 193, 6, 0);
                 }
+
                 100% {
                     box-shadow: 0 0 0 0 rgba(249, 193, 6, 0);
                 }
             }
+
             #mobileActionBar.hidden {
                 display: none !important;
             }
         }
+
         @media (max-width: 991px) {
             .booking-form-section {
                 padding: 16px;
             }
+
             .goride-app-left {
                 padding: 35px 15px;
             }
+
             .goride-app-heading {
                 font-size: 32px;
             }
+
             .goride-app-features {
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
+
             .goride-store-btn {
                 width: 100%;
                 padding: 7px 13px;
                 gap: 0px;
             }
+
             .goride-app-right img {
                 object-fit: contain;
+            }
+        }
+
+        .vehicle-item {
+            position: relative;
+            display: flex;
+            background: #fff;
+            border: 2px solid #eaeaea;
+            border-radius: 12px;
+            padding: 9px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            gap: 20px;
+        }
+
+        .vehicle-item:hover {
+            border-color: #d0d0d0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .vehicle-item.selected {
+            border-color: #f9c106;
+            background: #fffbf0;
+        }
+
+        .vehicle-left {
+            position: relative;
+            width: 185px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .vehicle-left img {
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .badge-recommended {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background: #f9c106;
+            color: #000;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            z-index: 2;
+        }
+
+        .vehicle-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .v-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .v-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+        }
+
+        .v-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .v-sub {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .v-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .v-rating i {
+            color: #f9c106;
+            font-size: 12px;
+        }
+
+        .v-features {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #111;
+            /* margin-bottom: 12px; */
+            flex-wrap: wrap;
+        }
+
+        .v-features span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        .v-features i {
+            color: #444;
+            font-size: 14px;
+        }
+
+        .v-tag {
+            margin-left: auto;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .v-tag-pill {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .v-tag-pill.cheapest {
+            background: #e6f7eb;
+            color: #0b8c4c;
+        }
+
+        .v-tag-pill.popular {
+            background: #f1ecff;
+            color: #7b4dfb;
+        }
+
+        .v-tag-pill.families {
+            background: #e8f3ff;
+            color: #1a73e8;
+        }
+
+        .v-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .v-amenities {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .v-amenity-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #444;
+            border: 1px solid #e0e0e0;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .btn-v-select {
+            background: black;
+            color: white;
+            border: 1px solid #d0d0d0;
+            padding: 4px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .vehicle-item.selected .btn-v-select {
+            background: #101828;
+            color: #fff;
+            border-color: #101828;
+            padding: 4px 8px;
+        }
+
+        @media (max-width: 768px) {
+            .vehicle-item {
+                flex-direction: row;
+                gap: 10px;
+                padding: 10px;
+                align-items: flex-start;
+                margin-bottom: 0px;
+            }
+
+            .vehicle-left {
+                width: 100px;
+                height: 80px;
+                margin: 0;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .vehicle-left img {
+                width: 100%;
+                height: 80px;
+                object-fit: contain;
+            }
+
+            .badge-recommended {
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+
+            .vehicle-right {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 3px;
+            }
+
+            .v-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 0;
+            }
+
+            .v-name {
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 0;
+            }
+
+            .v-price {
+                font-size: 15px;
+                font-weight: 700;
+                white-space: nowrap;
+            }
+
+            .v-sub {
+                display: flex;
+                justify-content: flex-start;
+                font-size: 10px;
+                margin-bottom: 0;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .v-rating {
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                white-space: nowrap;
+            }
+
+            .v-rating i {
+                font-size: 10px;
+            }
+
+            .v-tag {
+                margin-left: 0;
+                margin-top: 0;
+            }
+
+            .v-tag-pill {
+                font-size: 9px;
+                padding: 2px 6px;
+                border-radius: 8px;
+            }
+
+            .v-features {
+                display: flex;
+                gap: 6px;
+                font-size: 10px;
+                margin-bottom: 0;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .v-features span {
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            .v-features i {
+                font-size: 11px;
+            }
+
+            .v-amenities {
+                display: flex;
+                gap: 4px;
+                flex-wrap: wrap;
+            }
+
+            .v-amenity-pill {
+                display: flex;
+                align-items: center;
+                gap: 2px;
+                font-size: 8px;
+                padding: 2px 5px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                white-space: nowrap;
+            }
+
+            .v-footer {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 8px;
+                margin-top: 2px;
+            }
+
+            .btn-v-select {
+                background: black;
+                color: white;
+                border: none;
+                padding: 7px 14px;
+                border-radius: 6px;
+                font-size: 11px;
+                font-weight: 600;
+                cursor: pointer;
+                width: auto;
+                flex-shrink: 0;
+            }
+
+            .vehicle-item.selected .btn-v-select {
+                background: #101828;
             }
         }
     </style>
@@ -4172,20 +5705,30 @@
             max-width: 100% !important;
             display: flex !important;
             flex-direction: row !important;
-            gap: 20px;
+            gap: 0px;
             height: calc(100vh - 70px) !important;
             overflow: hidden !important;
             padding-bottom: 0 !important;
         }
+
         .hero-form-section.three-column-mode .form-section.active.side-by-side {
-            flex: 1;
-            width: 50%;
             display: flex;
             flex-direction: column;
             height: 100%;
             padding-bottom: 0;
             overflow: hidden;
         }
+
+        .hero-form-section.three-column-mode #step2.active.side-by-side {
+            flex: 3;
+            width: auto;
+        }
+
+        .hero-form-section.three-column-mode .form-section.active.side-by-side:not(#step2) {
+            flex: 5;
+            width: auto;
+        }
+
         .hero-form-section.three-column-mode .form-section.active.side-by-side>.container {
             display: flex;
             flex-direction: column;
@@ -4195,6 +5738,7 @@
             padding-bottom: 0;
             position: relative;
         }
+
         .hero-form-section.three-column-mode .form-section.active.side-by-side>.container>.step-bottom-btns {
             position: sticky;
             bottom: 0;
@@ -4204,15 +5748,19 @@
             padding-top: 15px;
             padding-bottom: 15px;
         }
+
         .hero-form-section.three-column-mode #step3 .container>.vehicle-grid-uber {
             margin-bottom: 15px;
         }
+
         .hero-form-section.three-column-mode #step2 .container>#tripMainContent {
             margin-bottom: 15px;
         }
+
         .vehicle-grid-uber.single-col {
             grid-template-columns: 1fr !important;
         }
+
         .counter-widget {
             display: flex;
             align-items: center;
@@ -4224,6 +5772,7 @@
             height: 48px;
             width: 100%;
         }
+
         .counter-btn {
             background: #f8f9fa;
             border: 1px solid #ced4da;
@@ -4238,9 +5787,11 @@
             font-size: 16px;
             transition: background 0.2s;
         }
+
         .counter-btn:hover {
             background: #e9ecef;
         }
+
         .counter-val {
             font-weight: 600;
             font-size: 16px;
@@ -4248,6 +5799,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
@@ -4257,7 +5809,11 @@
             <!--<li><button onclick="toggleDropdown('language')">-->
             <!--        <i class="fas fa-globe me-2"></i>EN-->
             <!--    </button></li>-->
-            <li><a href="#faq">Help</a></li>
+           <li>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
+        Help
+    </a>
+</li>
             <!--<li style="position:relative;">-->
             <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
             <!--        <i class="fas fa-user-circle"></i>-->
@@ -4321,7 +5877,7 @@
                 <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
                 <a href="#"><i class="fas fa-tag"></i>Offers</a>
                 <a href="#"><i class="fas fa-language"></i>Language</a>
-                <a href="#faq"><i class="fas fa-circle-question"></i>Help</a>
+                <a href="#"><i class="fas fa-circle-question"></i>Help</a>
                 <a href="#"><i class="fas fa-gear"></i>Settings</a>
             </div>
             <div class="mobile-menu-footer">
@@ -4331,19 +5887,19 @@
     </nav>
     <div id="mobileActionBar">
         <a href="tel:+441234567890" class="mob-action-btn">
-            <div class="mob-action-icon mob-icon-call">
+            <div class="mob-action-icon">
                 <i class="fas fa-phone"></i>
             </div>
             <span>Call Us</span>
         </a>
         <a href="https://wa.me/441234567890" target="_blank" class="mob-action-btn">
-            <div class="mob-action-icon mob-icon-wa">
+            <div class="mob-action-icon">
                 <i class="fab fa-whatsapp"></i>
             </div>
             <span>WhatsApp</span>
         </a>
         <button class="mob-action-btn" onclick="document.getElementById('pickupInput').focus()">
-            <div class="mob-action-icon mob-icon-book">
+            <div class="mob-action-icon">
                 <i class="fas fa-car-side"></i>
             </div>
             <span>Book a Ride</span>
@@ -4361,23 +5917,97 @@
             </div>
             <!-- COMPACT MOBILE SUMMARY -->
             <div id="mobileCompactSummary" class="mobile-trip-summary">
-                <div class="mobile-trip-header" onclick="toggleTripSummary()">
-                    <div class="mobile-route">
-                        <div class="mobile-from">
-                            <i class="fas fa-circle-dot"></i>
-                            <span id="mcsPickup"></span>
+                <div class="mobile-trip-header" onclick="toggleTripSummary()" style="align-items: flex-start;">
+                    <div class="location-group-wrapper" style="width: 100%; gap: 12px; margin-right: 15px;">
+                        <div class="route-indicator"
+                            style="padding-top: 4px; padding-bottom: 4px; justify-content: space-between;">
+                            <i class="fas fa-location-dot route-dot-start" style="font-size: 15px;"></i>
+                            <div class="route-line" style="min-height: 18px; margin: 4px 0;"></div>
+                            <i class="fas fa-location-dot route-dot-end" style="font-size: 15px;"></i>
                         </div>
-                        <div class="mobile-to">
-                            <i class="fas fa-location-dot"></i>
-                            <span id="mcsDropoff"></span>
+                        <div class="location-fields"
+                            style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 2px 0;">
+                            <div class="mobile-from"
+                                style="font-weight: 600; font-size: 14px; color: #111; display: flex; align-items: center; gap: 0;">
+                                <span id="mcsPickup" class="text-truncate"></span>
+                            </div>
+                            <div class="mobile-to"
+                                style="font-weight: 600; font-size: 14px; color: #111; margin-top: 10px; display: flex; align-items: center; gap: 0;">
+                                <span id="mcsDropoff" class="text-truncate"></span>
+                            </div>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-down" id="tripSummaryArrow"></i>
+                    <i class="fas fa-chevron-down" id="tripSummaryArrow" style="margin-top: 6px;"></i>
                 </div>
                 <div class="mobile-trip-body" id="mobileTripBody">
                     <div class="mobile-trip-item">
                         <i class="fas fa-calendar"></i>
                         <span id="mcsDateTime"></span>
+                    </div>
+                    <div id="mcsCarDetails"
+                        style="display:none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                        <div class="selected-car-row" style="margin-bottom: 15px;">
+                            <div class="summary-car-details">
+                                <h4 class="summary-car-name" id="mcsCarName"
+                                    style="font-size: 16px; margin-bottom: 6px; font-weight: 700;">-</h4>
+
+                            </div>
+                            <div class="summary-car-price" id="mcsCarPrice"
+                                style="font-size: 17px; font-weight: 700; margin-left: auto;">£0</div>
+                        </div>
+                        <div class="booking-summary-list" id="mcsEnteredDetails"
+                            style="font-size: 14px; display:none; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                            <div class="booking-summary-item" id="mcsPassengerNameContainer"
+                                style="display:none;  border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-user"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsPassengerName"
+                                    style="font-weight: 700; font-size: 14px; text-align: right; word-break: break-word;">-</span>
+                            </div>
+                            <div class="booking-summary-item" id="mcsPassengerPhoneContainer"
+                                style="display:none;  border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-phone"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsPassengerPhone"
+                                    style="font-weight: 700; font-size: 14px; text-align: right; word-break: break-word;">-</span>
+                            </div>
+                            <div class="booking-summary-item" id="mcsPassengerEmailContainer"
+                                style="display:none;   border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-envelope"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsPassengerEmail"
+                                    style="font-weight: 700; font-size: 14px; text-transform: none; text-align: right; word-break: break-word;">-</span>
+                            </div>
+                            <div class="booking-summary-item"
+                                style=" border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-users"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsPassengerCount"
+                                    style="font-weight: 700; font-size: 15px;">1</span>
+                            </div>
+                            <div class="booking-summary-item" id="mcsLuggageContainer"
+                                style="display:none;  border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-suitcase"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsLuggageCount"
+                                    style="font-weight: 700; font-size: 15px;">0</span>
+                            </div>
+                            <div class="booking-summary-item" id="mcsHandLuggageContainer"
+                                style="display:none; border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-briefcase"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsHandLuggageCount"
+                                    style="font-weight: 700; font-size: 15px;">0</span>
+                            </div>
+                            <div class="booking-summary-item" id="mcsBabySeatContainer"
+                                style="display:none; border-radius: 8px; justify-content: space-between;">
+                                <span class="summary-label"><i class="fas fa-baby-carriage"
+                                        style="color: #666; font-size: 15px;"></i></span>
+                                <span class="summary-value" id="mcsBabySeats"
+                                    style="font-weight: 700; font-size: 15px;">0</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -4533,11 +6163,12 @@
                             <!-- PICKUP -->
                             <div class="form-group-uber">
                                 <label>Pickup Location</label>
-                                <div style="position: relative;">
+                                <div class="location-input-wrapper" id="pickupWrapper">
+
                                     <input type="text" id="pickupInput" placeholder="Enter pickup location"
                                         class="location-input-field"
-                                        onkeyup="handleLocationSearch(this.value, 'pickupSuggestions', 'pickup')"
-                                        onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'pickupSuggestions', 'pickup')">
+                                        onkeyup="handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')"
+                                        onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')">
                                     <div class="location-suggestions" id="pickupSuggestions"></div>
                                 </div>
                             </div>
@@ -4545,12 +6176,13 @@
                             <div id="viaPointsContainer"></div>
                             <!-- DROPOFF -->
                             <div class="form-group-uber">
-                                <label> Dropoff Location</label>
-                                <div style="position: relative;">
+                                <label>Dropoff Location</label>
+                                <div class="location-input-wrapper" id="dropoffWrapper">
+
                                     <input type="text" id="dropoffInput" placeholder="Enter dropoff location"
                                         class="location-input-field"
-                                        onkeyup="handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff')"
-                                        onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff')">
+                                        onkeyup="handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')"
+                                        onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')">
                                     <div class="location-suggestions" id="dropoffSuggestions"></div>
                                 </div>
                             </div>
@@ -4588,7 +6220,7 @@
                             <div class="find-trip-locations">
                                 <!-- SINGLE EDIT AT TOP & LOCATIONS LIKE STEP 1 -->
                                 <div
-                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                                     <span
                                         style="display: block;font-size: 20px;font-weight: 600;color: black;margin-bottom: 6px;letter-spacing: 0.5px;">Trip
                                         Details</span>
@@ -4596,7 +6228,7 @@
                                         <i class="fas fa-pencil"></i> Edit
                                     </button>
                                 </div>
-                                <div class="location-group-wrapper" style="pointer-events: none;">
+                                <div class="location-group-wrapper">
                                     <div class="route-indicator">
                                         <i class="fas fa-location-dot route-dot-start"></i>
                                         <div class="route-line"></div>
@@ -4604,14 +6236,10 @@
                                     </div>
                                     <div class="location-fields">
                                         <div class="form-group-uber">
-                                            <div class="location-input-field"
-                                                style="background: transparent; border: 1px solid #e5e5e5; padding: 12px 15px; border-radius: 8px; font-weight: 500; font-size: 15px; color: #000; min-height: 48px; display: flex; align-items: center;"
-                                                id="summaryPickup">–</div>
+                                            <div class="trip-details" id="summaryPickup">–</div>
                                         </div>
                                         <div class="form-group-uber" style="margin-top: 15px;">
-                                            <div class="location-input-field"
-                                                style="background: transparent; border: 1px solid #e5e5e5; padding: 12px 15px; border-radius: 8px; font-weight: 500; font-size: 15px; color: #000; min-height: 48px; display: flex; align-items: center;"
-                                                id="summaryDropoff">–</div>
+                                            <div class="trip-details" id="summaryDropoff">–</div>
                                         </div>
                                     </div>
                                 </div>
@@ -4622,7 +6250,7 @@
                                         <div class="d-flex flex-column text-start">
                                             <span id="forMeTitle">For me</span>
                                             <small id="forMeDetails"
-                                                style="display:none;color:#666;font-size:18px;line-height:1.4;"></small>
+                                                style="display:none;font-size:18px;line-height:1.4;"></small>
                                         </div>
                                     </div>
                                     <i class="fas fa-chevron-down"></i>
@@ -4631,7 +6259,7 @@
                                     <div class="trip-datetime-icon">
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
-                                
+
                                     <div class="trip-datetime-content">
                                         <div class="trip-datetime-title">Pickup Date & Time</div>
                                         <div class="trip-datetime-value">
@@ -4666,60 +6294,93 @@
                             </div>
                             <!-- Entered Details Summary -->
                             <div id="enteredDetailsSummary" class="booking-summary">
-                                <h5 class="summary-title">Booking Details</h5>
+                                <h5 class="summary-title">
+                                    <i class="fas fa-clipboard-list"></i> Booking Details
+                                </h5>
+
                                 <div class="booking-summary-list">
+
                                     <div class="booking-summary-item" id="summaryPassengerContainer">
-                                        <span class="summary-label">Passenger</span>
+                                        <span class="summary-label"><i class="fas fa-user"></i> Passenger</span>
                                         <span id="summaryPassengerName" class="summary-value">–</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryContactContainer">
-                                        <span class="summary-label">Contact</span>
+                                        <span class="summary-label"><i class="fas fa-phone"></i> Contact</span>
                                         <span id="summaryPassengerContact" class="summary-value">–</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryEmailContainer">
-                                        <span class="summary-label">Email</span>
+                                        <span class="summary-label"><i class="fas fa-envelope"></i> Email</span>
                                         <span id="summaryPassengerEmail" class="summary-value">–</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryPassengersCountContainer">
-                                        <span class="summary-label">Passengers</span>
+                                        <span class="summary-label"><i class="fas fa-users"></i> Passengers</span>
                                         <span id="summaryPassengerCount" class="summary-value">1</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryLuggageCountContainer">
-                                        <span class="summary-label">Luggage</span>
+                                        <span class="summary-label"><i class="fas fa-suitcase"></i> Luggage</span>
                                         <span id="summaryLuggageCount" class="summary-value">0</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryHandLuggageContainer">
-                                        <span class="summary-label">Hand Luggage</span>
+                                        <span class="summary-label"><i class="fas fa-briefcase"></i> Hand Luggage</span>
                                         <span id="summaryHandLuggageCount" class="summary-value">0</span>
                                     </div>
-                                    <div class="booking-summary-item" id="summaryBabySeatContainer" style="display:none;">
-                                        <span class="summary-label">Baby Seats</span>
+
+                                    <div class="booking-summary-item" id="summaryBabySeatContainer"
+                                        style="display:none;">
+                                        <span class="summary-label"><i class="fas fa-child"></i> Baby Seats</span>
                                         <span id="summaryBabySeats" class="summary-value">None</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryDateContainer">
-                                        <span class="summary-label" id="summaryDateLabel">Date</span>
+                                        <span class="summary-label" id="summaryDateLabel">
+                                            <i class="fas fa-calendar-alt"></i> Date
+                                        </span>
                                         <span id="summaryBookingDate" class="summary-value">–</span>
                                     </div>
+
                                     <div class="booking-summary-item" id="summaryTimeContainer">
-                                        <span class="summary-label" id="summaryTimeLabel">Time</span>
+                                        <span class="summary-label" id="summaryTimeLabel">
+                                            <i class="fas fa-clock"></i> Time
+                                        </span>
                                         <span id="summaryBookingTime" class="summary-value">–</span>
                                     </div>
+
                                     <div id="summaryFlightContainer" class="booking-summary-item" style="display:none;">
-                                        <span class="summary-label" id="summaryFlightLabel">Flight No.</span>
+                                        <span class="summary-label" id="summaryFlightLabel">
+                                            <i class="fas fa-plane"></i> Flight No.
+                                        </span>
                                         <span id="summaryFlightNumber" class="summary-value">–</span>
                                     </div>
-                                    <div id="summaryComingFromContainer" class="booking-summary-item" style="display:none;">
-                                        <span class="summary-label" id="summaryComingFromLabel">Coming From</span>
+
+                                    <div id="summaryComingFromContainer" class="booking-summary-item"
+                                        style="display:none;">
+                                        <span class="summary-label" id="summaryComingFromLabel">
+                                            <i class="fas fa-map-marker-alt"></i> Coming From
+                                        </span>
                                         <span id="summaryComingFrom" class="summary-value">–</span>
                                     </div>
-                                    <div id="summaryDropoffAddressContainer" class="booking-summary-item" style="display:none;">
-                                        <span class="summary-label" id="summaryDropoffAddressLabel">Destination</span>
+
+                                    <div id="summaryDropoffAddressContainer" class="booking-summary-item"
+                                        style="display:none;">
+                                        <span class="summary-label" id="summaryDropoffAddressLabel">
+                                            <i class="fas fa-location-dot"></i> Destination
+                                        </span>
                                         <span id="summaryDropoffAddress" class="summary-value">–</span>
                                     </div>
-                                    <div id="summarySpecialReqContainer" class="booking-summary-item" style="display:none;">
-                                        <span class="summary-label">Special Req.</span>
+
+                                    <div id="summarySpecialReqContainer" class="booking-summary-item"
+                                        style="display:none;">
+                                        <span class="summary-label">
+                                            <i class="fas fa-comment-dots"></i> Special Req.
+                                        </span>
                                         <span id="summarySpecialRequirements" class="summary-value">–</span>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -4788,9 +6449,9 @@
                         <label><i class="fas fa-credit-card"></i> Payment Method *</label>
                         <select id="paymentMethod" required>
                             <option value="">Select payment method</option>
-                            <!--<option value="card">Cash to Driver</option>-->
-                            <option value="upi" selected>Online Payment</option>
-                            <!--<option value="wallet"> Wallet Payment.</option>-->
+                            <option value="card">Pay Cash to the Driver</option>
+                            <option value="upi" selected>Credit/Debit Card</option>
+                            <option value="wallet">Confirm Now, Pay Later</option>
                             <!-- <option value="cash">Cash</option> -->
                         </select>
                     </div>
@@ -4826,11 +6487,9 @@
                             </div> -->
                             <div class="form-group-uber booking-form-group">
                                 <label>Contact Number</label>
-                                <div class="phone-input-wrapper">
-                                    <span class="country-code">+44</span>
-                                    <input type="tel" id="passengerPhone" class="phone-number-input"
-                                        placeholder="7123456789" maxlength="10">
-                                </div>
+
+                                <input type="tel" id="passengerPhone" class="phone-number-input"
+                                    placeholder="Enter phone number">
                             </div>
                             <div class="form-group-uber booking-form-group">
                                 <label>Email Address</label>
@@ -5077,7 +6736,7 @@
                     </div>
                     <div id="driverList" style="display:none;"></div>
                     <div class="btn-group-uber step-bottom-btns">
-                        <button class="btn-back-uber" onclick="goBack(5)">
+                        <button class="btn-back-uber" onclick="goBack(4)">
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
                     </div>
@@ -5094,79 +6753,81 @@
                         <h3 class="rc-title">Review & Confirm</h3>
                     </div>
                     <!-- Driver Card -->
-                    <div class="rc-driver-card">
-                        <div class="rc-driver-label">Driver</div>
-                        <div class="rc-driver-row">
+                    <div class="rc-new-driver-card">
+                        <div class="rc-driver-top-flex">
                             <div class="rc-driver-avatar" id="rcDriverAvatar"></div>
-                            <div class="rc-driver-info">
-                                <div class="rc-driver-name" id="rcDriverName">-</div>
-                                <div class="rc-driver-stars" id="rcDriverStars"></div>
-                            </div>
-                            <div class="rc-driver-badge" id="rcDriverBadge">On Route</div>
-                        </div>
-                    </div>
-                    <!-- Car Image (click to open carousel) -->
-                    <div class="rc-car-image" onclick="showCarDetailsModal(bookingData.selectedDriver)"
-                        style="cursor:pointer; position:relative;">
-                        <img id="rcCarImage" src="goride/img/fleet1.png" alt="Car">
-                        <div
-                            style="position:absolute; bottom:10px; right:12px; background:rgba(0,0,0,0.55); color:#fff; font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; display:flex; align-items:center; gap:5px;">
-                            <i class="fas fa-images"></i> View Photos
-                        </div>
-                    </div>
-                    <!-- Fare -->
-                    <div class="rc-info-block">
-                        <div class="rc-info-title">
-                            <i class="fas fa-car-side"></i>
-                            Vehicle Details
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-car"></i> Vehicle</span>
-                            <strong id="rcCarName">-</strong>
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-gas-pump"></i> Fuel Type</span>
-                            <strong id="rcFuelType">Hybrid</strong>
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-user"></i> Passenger Capacity</span>
-                            <strong id="rcPassengerCapacity">4</strong>
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-suitcase"></i> Luggage</span>
-                            <strong id="rcLuggageCapacity">2</strong>
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-child"></i> Child Seat</span>
-                            <strong id="rcChildSeat">Available</strong>
-                        </div>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-id-badge"></i> Driver Experience</span>
-                            <strong id="rcDriverExperience">8+ Years</strong>
-                        </div>
-                        <hr>
-                        <div class="rc-detail-row">
-                            <span><i class="fas fa-tag"></i> Fare</span>
-                            <strong class="rc-fare-amount" id="rcFareAmount">£0</strong>
-                        </div>
-                    </div>
-                    <div class="rc-divider"></div>
-                    <!-- Journey -->
-                    <div class="rc-info-block">
-                        <div class="rc-info-label">Journey Details</div>
-                        <div class="rc-journey-row">
-                            <i class="fas fa-location-dot" style="color:#f9c106"></i>
-                            <div>
-                                <div class="rc-journey-route">
-                                    <span id="rcJourneyFrom">-</span>
-                                    <i class="fas fa-arrow-right" style="font-size:10px;color:#999;margin:0 4px;"></i>
-                                    <span id="rcJourneyTo">-</span>
+                            <div class="rc-driver-info-main">
+                                <div class="rc-driver-name-row">
+                                    <h4 id="rcDriverName">-</h4>
+                                    <div class="rc-driver-badge-top" id="rcDriverBadge" style="display:none;"></div>
                                 </div>
-                                <div class="rc-journey-sub" id="rcJourneyDateTime">-</div>
+                                <div class="rc-driver-rating-row" id="rcDriverStars"></div>
+                            </div>
+                        </div>
+                        <div class="rc-driver-stats-grid">
+                            <div class="rc-driver-stat-col">
+                                <i class="fas fa-medal"></i>
+                                <div>
+                                    <strong id="rcDriverExperience">6+ Years</strong>
+                                    <span>Experience</span>
+                                </div>
+                            </div>
+                            <div class="rc-driver-stat-col border-left-right">
+                                <i class="far fa-user"></i>
+                                <div>
+                                    <strong id="rcDriverTrips">2,145</strong>
+                                    <span>Trips Completed</span>
+                                </div>
+                            </div>
+                            <div class="rc-driver-stat-col">
+                                <i class="far fa-comment-dots"></i>
+                                <div>
+                                    <strong id="rcDriverReviewsPct">98%</strong>
+                                    <span>Positive Reviews</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="rc-divider"></div>
+
+                    <!-- Vehicle Details Card -->
+                    <div class="rc-vehicle-card">
+                        <div class="rc-card-subtitle">VEHICLE DETAILS</div>
+                        <div class="rc-vehicle-top">
+                            <div class="rc-vehicle-img-wrapper"
+                                onclick="showCarDetailsModal(bookingData.selectedDriver)" style="cursor:pointer;">
+                                <img id="rcCarImage" src="goride/img/fleet1.png" alt="Car">
+                            </div>
+                            <div class="rc-vehicle-info-right">
+                                <h4 id="rcCarName">-</h4>
+                                <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
+                                <div class="rc-vehicle-features">
+                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span>
+                                        Seats</span>
+                                    <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span>
+                                        Large</span>
+                                    <span><i class="fas fa-cogs"></i> <span id="rcTransmission">Automatic</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
+                            <!-- populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Bidded Amount Card -->
+                    <div class="rc-bid-card">
+                        <div class="rc-bid-top">
+                            <div class="rc-card-subtitle">BIDDED AMOUNT</div>
+                            <div class="rc-bid-badge"><i class="fas fa-check-circle"></i> Includes all fees</div>
+                        </div>
+                        <div class="rc-bid-bottom">
+                            <div class="rc-bid-amount">
+                                <strong id="rcFareAmount">£0</strong>
+                                <span class="rc-bid-total-tag">Total</span>
+                            </div>
+                            <div class="rc-bid-note">No hidden charges</div>
+                        </div>
+                    </div>
                     <!-- Accept Button -->
                     <div class="btn-group-uber step-bottom-btns rc-accept-wrap">
                         <button class="btn-search-uber" onclick="acceptDriver()" style="flex:1;">
@@ -5260,10 +6921,13 @@
                     <p>Airport transfers, city rides, executive travel and long-distance journeys with professional
                         drivers at fixed prices.</p>
                 </div>
-                <img src="goride/img/day.jpg" alt="Airport Transfer" class="hero-side-img">
+                <img src="https://goride-media.s3.ap-south-1.amazonaws.com/cus_app/images/day_6a561ea0b63e7.webp"
+                    alt="Airport Transfer" class="hero-side-img">
             </div>
             <div id="bookingMap" style="display: none; width: 100%; height: 100%; min-height: 400px;"></div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtkJtXBZPLBZIgjgpu-eAG5WQ1HwW4EwE&libraries=geometry"></script>
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtkJtXBZPLBZIgjgpu-eAG5WQ1HwW4EwE&libraries=geometry"></script>
+
             <script>
                 let bookingGoogleMap = null;
                 let routeBounds = null;
@@ -5289,7 +6953,7 @@
                     const endLng = -0.142377;
                     const endLat = 51.502205;
                     try {
-                        const response = await fetch('https://mobapi.goride.run/api/get-route-polyline', {
+                        const response = await fetch('{{env('API_URL')}}/get-route-polyline', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -5396,7 +7060,7 @@
             </div>
         </div>
     </section> -->
-    <section class="reviews-section section-padding" id="reviews">
+    <section class="reviews-section section-padding mt-5" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>
             <div class="review-grid">
@@ -5564,13 +7228,14 @@
                     <!-- Social Icons -->
                     <div class="footer-section">
                         <div class="footer-social-icons">
-                            <a href="#" class="social-icon" title="Facebook">
+                            <a href="https://www.facebook.com/people/Goride-Run/pfbid0jVh2iGFREVFLyTYRQFybaLXW3ECbUrgR9kJqcN4EMVYbSzPzFr7SRRLWgsTWf1BJl/"
+                                class="social-icon" title="Facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
                             <a href="#" class="social-icon" title="Twitter">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="#" class="social-icon" title="Instagram">
+                            <a href="https://www.instagram.com/goride.run_uk/" class="social-icon" title="Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
                             <a href="#" class="social-icon" title="LinkedIn">
@@ -5658,6 +7323,45 @@
             <div id="vehicleModalContent"></div>
         </div>
     </div>
+
+<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content help-modal">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+
+                <div class="help-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+
+                <h6>Need Assistance?</h6>
+
+                <p class="mb-3 text-muted">
+                    Our support team is here to help.
+                </p>
+
+                <p class="mb-2">
+                    <i class="fas fa-phone-alt me-2 text-warning"></i>
+                    <a href="tel:+442083373777">+44 208 337 3777</a>
+                </p>
+
+                <p class="mb-0">
+                    <i class="fas fa-envelope me-2 text-warning"></i>
+                    <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
     <div id="appPromoModal" class="modal-uber">
         <div class="modal-content-uber">
             <div class="app-promo-modal-content">
@@ -5830,12 +7534,12 @@
                     </div>
                     <i class="fas fa-dot-circle for-me-radio" id="forMeRadioMe" style="color: #000;"></i>
                 </button>
-                <button class="for-me-option" onclick="selectForMe('Order a trip for someone else')">
+                <button class="for-me-option" onclick="selectForMe('Book a trip for someone else')">
                     <div class="for-me-option-left">
                         <div class="for-me-option-avatar user-plus">
                             <i class="fas fa-user-plus"></i>
                         </div>
-                        <span class="for-me-option-text">Order a trip for someone else</span>
+                        <span class="for-me-option-text">Book a trip for someone else</span>
                     </div>
                     <i class="far fa-circle for-me-radio" id="forMeRadioOther" style="color: #999;"></i>
                 </button>
@@ -5894,6 +7598,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
+
     <script>
         function getIconForType(type) {
             switch (type) {
@@ -5923,31 +7629,41 @@
                     return 'map-marker-alt';
             }
         }
-        async function handleLocationSearch(query, containerId, target) {
+        async function handleLocationSearch(query, containerId, target, wrapperId) {
             const suggestions = document.getElementById(containerId);
+            const wrapper = wrapperId ? document.getElementById(wrapperId) : null;
             if (!query || query.length < 2) {
                 suggestions.classList.remove('show');
+                if (wrapper) wrapper.classList.remove('is-loading');
                 return;
             }
+            // Show skeleton immediately for visual feedback
+            const skeletonHtml = `
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line long"></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line medium"></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line short"></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line long"></div></div>
+            `;
+            suggestions.innerHTML = skeletonHtml;
+            suggestions.classList.add('show');
+            if (wrapper) wrapper.classList.add('is-loading');
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch('https://mobapi.goride.run/api/web-get-location', {
+                    const response = await fetch('{{env('API_URL')}}/web-get-location', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({
-                            search: query
-                        })
+                        body: JSON.stringify({ search: query })
                     });
                     const result = await response.json();
+                    if (wrapper) wrapper.classList.remove('is-loading');
                     if (result.status === 200 && result.data.length > 0) {
                         let clickFunction = '';
                         if (target === 'pickup') clickFunction = 'selectPickup';
                         else if (target === 'dropoff') clickFunction = 'selectDropoff';
-                        // Add other targets if needed (inlinePickup etc.)
                         const html = result.data.map(loc => `
                         <div class="suggestion-item" onclick="${clickFunction}('${loc.name.replace(/'/g, "\\'")}', '${loc.types}')">
                             <i class="fas fa-${getIconForType(loc.types)}"></i>
@@ -5957,10 +7673,12 @@
                         suggestions.innerHTML = html;
                         suggestions.classList.add('show');
                     } else {
-                        suggestions.classList.remove('show');
+                        suggestions.innerHTML = `<div class="suggestion-skeleton" style="justify-content:center; color:#999; font-size:13px;">No results found</div>`;
                     }
                 } catch (error) {
+                    if (wrapper) wrapper.classList.remove('is-loading');
                     console.error(error);
+                    suggestions.classList.remove('show');
                 }
             }, 300);
         }
@@ -5980,96 +7698,125 @@
             returnDropoffType: ''
         };
         const vehicles = [{
-                id: 1,
-                name: "Saloon",
-                capacity: 4,
-                luggage: 2,
-                price: 45,
-                priceMax: 65,
-                image: "/goride/img/saloon.png",
-                details: "Toyota Prius or Similar",
-                fuel: "Hybrid",
-                transmission: "Automatic",
-                airCondition: "Yes",
-                childSeat: true,
-                vehicleYear: "2023",
-                inclusions: [
-                    "Meet & Greet",
-                    "Flight Monitoring",
-                    "60 Minutes Airport Waiting",
-                    "Free Cancellation",
-                    "24/7 Customer Support",
-                    "Door to Door Service"
-                ]
-            },
-            {
-                id: 2,
-                name: "Estate",
-                capacity: 4,
-                luggage: 4,
-                price: 55,
-                priceMax: 80,
-                image: "/goride/img/estate.png",
-                details: "Skoda Octavia Estate",
-                fuel: "Diesel",
-                transmission: "Automatic",
-                airCondition: "Yes",
-                childSeat: true,
-                vehicleYear: "2022",
-                inclusions: [
-                    "Meet & Greet",
-                    "Flight Monitoring",
-                    "60 Minutes Airport Waiting",
-                    "Free Cancellation",
-                    "Extra Luggage Space"
-                ]
-            },
-            {
-                id: 3,
-                name: "Executive",
-                capacity: 4,
-                luggage: 3,
-                price: 75,
-                priceMax: 110,
-                image: "/goride/img/executive.png",
-                details: "Mercedes E-Class",
-                fuel: "Hybrid",
-                transmission: "Automatic",
-                airCondition: "Yes",
-                childSeat: true,
-                vehicleYear: "2024",
-                inclusions: [
-                    "Meet & Greet",
-                    "Professional Chauffeur",
-                    "Flight Monitoring",
-                    "60 Minutes Waiting",
-                    "Luxury Interior"
-                ]
-            },
-            {
-                id: 4,
-                name: "MPV",
-                capacity: 6,
-                luggage: 6,
-                price: 85,
-                priceMax: 125,
-                image: "/goride/img/mpv.png",
-                details: "VW Sharan or Similar",
-                fuel: "Diesel",
-                transmission: "Automatic",
-                airCondition: "Yes",
-                childSeat: true,
-                vehicleYear: "2023",
-                inclusions: [
-                    "Meet & Greet",
-                    "Flight Monitoring",
-                    "Large Luggage Capacity",
-                    "Free Cancellation",
-                    "Family Friendly"
-                ]
-            }
+            id: 1,
+            name: "Standard",
+            capacity: 4,
+            luggage: 2,
+            price: 45,
+            priceMax: 65,
+            image: "/goride/img/saloon.png",
+            details: "Toyota Prius or Similar",
+            fuel: "Hybrid",
+            transmission: "Automatic",
+            airCondition: "Yes",
+            childSeat: true,
+            vehicleYear: "2023",
+            rating: 4.9,
+            reviews: "320+",
+            arrivalTime: "12 min",
+            recommended: true,
+            tag: "Cheapest",
+            tagDesc: "Save up to £18",
+            amenities: ["WiFi", "Air Con", "Child Seat"],
+            inclusions: [
+                "Meet & Greet",
+                "Flight Monitoring",
+                "60 Minutes Airport Waiting",
+                "Free Cancellation",
+                "24/7 Customer Support",
+                "Door to Door Service"
+            ]
+        },
+        {
+            id: 2,
+            name: "Estate",
+            capacity: 4,
+            luggage: 4,
+            price: 55,
+            priceMax: 80,
+            image: "/goride/img/estate.png",
+            details: "Skoda Octavia Estate",
+            fuel: "Diesel",
+            transmission: "Automatic",
+            airCondition: "Yes",
+            childSeat: true,
+            vehicleYear: "2022",
+            rating: 4.8,
+            reviews: "210+",
+            arrivalTime: "15 min",
+            recommended: false,
+            tag: "Most Popular",
+            tagDesc: "",
+            amenities: ["WiFi", "Air Con", "Child Seat"],
+            inclusions: [
+                "Meet & Greet",
+                "Flight Monitoring",
+                "60 Minutes Airport Waiting",
+                "Free Cancellation",
+                "Extra Luggage Space"
+            ]
+        },
+        {
+            id: 3,
+            name: "Executive",
+            capacity: 4,
+            luggage: 3,
+            price: 75,
+            priceMax: 110,
+            image: "/goride/img/executive.png",
+            details: "Mercedes E-Class",
+            fuel: "Hybrid",
+            transmission: "Automatic",
+            airCondition: "Yes",
+            childSeat: true,
+            vehicleYear: "2024",
+            rating: 4.9,
+            reviews: "180+",
+            arrivalTime: "12 min",
+            recommended: false,
+            tag: "",
+            tagDesc: "",
+            amenities: ["WiFi", "Air Con", "Child Seat"],
+            inclusions: [
+                "Meet & Greet",
+                "Professional Chauffeur",
+                "Flight Monitoring",
+                "60 Minutes Waiting",
+                "Luxury Interior"
+            ]
+        },
+        {
+            id: 4,
+            name: "MPV",
+            capacity: 6,
+            luggage: 6,
+            price: 85,
+            priceMax: 125,
+            image: "/goride/img/mpv.png",
+            details: "VW Sharan or Similar",
+            fuel: "Diesel",
+            transmission: "Automatic",
+            airCondition: "Yes",
+            childSeat: true,
+            vehicleYear: "2023",
+            rating: 4.7,
+            reviews: "150+",
+            arrivalTime: "18 min",
+            recommended: false,
+            tag: "Best for Families",
+            tagDesc: "",
+            amenities: ["WiFi", "Air Con", "Child Seat"],
+            inclusions: [
+                "Meet & Greet",
+                "Flight Monitoring",
+                "Large Luggage Capacity",
+                "Free Cancellation",
+                "Family Friendly"
+            ]
+        }
         ];
-        const drivers = [{
+        const drivers = [
+            {
                 id: 1,
                 name: "Rajesh Kumar",
                 rating: 4.9,
@@ -6126,7 +7873,7 @@
         const totalCarImages = 4;
         const MAX_VIA_POINTS = 3;
         // ===== INITIALIZE =====
-        $(document).ready(function() {
+        $(document).ready(function () {
             showCookieConsentIfNeeded();
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
@@ -6193,7 +7940,7 @@
             localStorage.removeItem('gorideAcceptCookieTime');
             document.getElementById('cookiecontent').style.display = 'block';
         }
-        $(document).on('click', function(e) {
+        $(document).on('click', function (e) {
             if (!$(e.target).closest('.navbar-menu').length && !$(e.target).closest('.dropdown-menu-navbar').length) {
                 $('.dropdown-menu-navbar').removeClass('show');
             }
@@ -6221,7 +7968,7 @@
             $('#timeDropdownValue').text(time);
             $('#timeDropdownList').removeClass('show');
             $('#timeDropdownBtn').removeClass('active');
-            $('.time-dropdown-item').each(function() {
+            $('.time-dropdown-item').each(function () {
                 $(this).removeClass('selected');
                 if ($(this).text() === time) {
                     $(this).addClass('selected');
@@ -6235,14 +7982,17 @@
         }
         function toggleMobileMap() {
             $('.hero-form-section').hide();
-            $('.hero-map-section').css('display', 'block').attr('style', function(i, s) {
+            $('.hero-map-section').css('display', 'block').attr('style', function (i, s) {
                 return (s || '') + ';display:block !important;';
             });
             $('#bookingMap').addClass('mobile-fullscreen').show();
             $('#mapCloseBtn').addClass('visible');
+            if (typeof initSingleRouteMap === 'function') {
+                initSingleRouteMap();
+            }
         }
         function closeMobileMap() {
-            $('.hero-map-section').attr('style', function(i, s) {
+            $('.hero-map-section').attr('style', function (i, s) {
                 return (s || '') + ';display:none !important;';
             });
             $('#bookingMap').removeClass('mobile-fullscreen').hide();
@@ -6392,7 +8142,7 @@
             const dropoff = $('#dropoffInput').val();
             if (!pickup || !dropoff) {
                 $("#timeSelectionPanel").removeClass("show");
-                $('section').each(function() {
+                $('section').each(function () {
                     if (!$(this).hasClass('hero-container')) {
                         $(this).removeClass('sections-hidden');
                     }
@@ -6413,7 +8163,7 @@
             let selDate = $('#date').val() || 'Today';
             let selTime = $('#timeDropdownValue').text() || 'Now';
             $('#mcsDateTime').text(selDate + ' ' + selTime);
-            $('section').each(function() {
+            $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
                     $(this).addClass('sections-hidden');
                 }
@@ -6456,7 +8206,7 @@
         }
         function goBackToLocations() {
             $('#vehicleGrid').removeClass('single-col');
-            $('section').each(function() {
+            $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
                     $(this).removeClass('sections-hidden');
                 }
@@ -6543,7 +8293,7 @@
                 $("#pickupNowBtn").html(`<i class="fas fa-calendar"></i> ${date} &nbsp; <i class="fas fa-clock"></i> ${selectedTime} <i class="fas fa-chevron-down ms-2"></i>`);
             }
             $("#timeSelectionPanel").removeClass("show");
-            $('section').each(function() {
+            $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
                     $(this).removeClass('sections-hidden');
                 }
@@ -6590,34 +8340,66 @@
             const grid = $('#vehicleGrid');
             grid.html('');
             vehicles.forEach(v => {
+                const amenitiesHtml = (v.amenities || []).map(a => {
+                    let icon = 'fa-check';
+                    if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi';
+                    if (a.toLowerCase().includes('air')) icon = 'fa-snowflake';
+                    if (a.toLowerCase().includes('charg')) icon = 'fa-bolt';
+                    if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage';
+                    return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> ${a}</span>`;
+                }).join('');
+
+                let tagClass = 'popular';
+                if (v.tag && v.tag.toLowerCase().includes('cheapest')) tagClass = 'cheapest';
+                if (v.tag && v.tag.toLowerCase().includes('families')) tagClass = 'families';
+
+                const tagHtml = v.tag ? `
+    <div class="v-tag">
+        <span class="v-tag-pill ${tagClass}">${v.tag}</span>
+    </div>
+` : '';
+
+                const recommendedBadge = v.recommended ? `<div class="badge-recommended">Recommended</div>` : '';
+
                 const html = `
-<div class="vehicle-item"
-    onclick="selectVehicle(this, ${JSON.stringify(v).replace(/"/g, '&quot;')})">
-    <div class="vehicle-image">
+<div class="vehicle-item" onclick="selectVehicle(this, ${JSON.stringify(v).replace(/"/g, '&quot;')})">
+    <div class="vehicle-left">
+        ${recommendedBadge}
         <img src="${v.image}" alt="${v.name}">
     </div>
-    <div class="vehicle-content">
-<div class="vehicle-name-row">
-    <div class="vehicle-name">${v.name}</div>
-</div>
-        <div class="vehicle-features">
-            <span>
-                <i class="fas fa-user"></i>
-                ${v.capacity}
-            </span>
-            <span>
-                <i class="fas fa-suitcase"></i>
-                ${v.luggage}
-            </span>
-            <button
-        class="vehicle-info-btn"
-        onclick="event.stopPropagation();openVehicleInfo(${v.id})">
-        <i class="fas fa-circle-info"></i>
-    </button>
-        </div>
+    <div class="vehicle-right">
+       <div class="v-header">
+    <div class="v-name">
+        ${v.name}
+        <button
+            type="button"
+            class="vehicle-info-btn"
+            onclick="event.stopPropagation(); openVehicleInfo(${v.id})"
+            title="Vehicle Details">
+            <i class="fas fa-info-circle"></i>
+        </button>
+
+      
     </div>
-    <div class="vehicle-price">
-        £${v.price} – £${v.priceMax}
+
+    <div class="v-price">£${v.price} – £${v.priceMax}</div>
+</div>
+        <div class="v-sub">
+            <div class="v-rating"><i class="fas fa-star"></i> ${v.rating || '4.8'} | ${v.reviews || '100+ reviews'}</div>
+              ${tagHtml}
+        </div>
+        <div class="v-features">
+            <span><i class="fas fa-user"></i> ${v.capacity} </span>
+            <span><i class="fas fa-suitcase"></i> ${v.luggage} </span>
+            <span><i class="fas fa-clock"></i> ${v.arrivalTime || '10 min'} Arrival</span>
+           
+        </div>
+        <div class="v-footer">
+            <div class="v-amenities">
+                ${amenitiesHtml}
+            </div>
+            <button class="btn-v-select">Select</button>
+        </div>
     </div>
 </div>
 `;
@@ -6627,7 +8409,9 @@
         function selectVehicle(el, vehicle) {
             bookingData.vehicle = vehicle;
             $('.vehicle-item').removeClass('selected');
+            $('.btn-v-select').html('Select');
             $(el).addClass('selected');
+            $(el).find('.btn-v-select').html('<i class="fas fa-check"></i> Selected');
             // Update sidebar selected vehicle summary immediately
             $('#summaryCarImage').attr('src', vehicle.image);
             $('#summaryCarName').text(vehicle.name);
@@ -6640,12 +8424,16 @@
             }
             $('#selectedCarSummary').show();
             // Update mobile compact summary
-            $('#mcsCar').text(vehicle.name);
-            $('#mcsPassengers').text(vehicle.capacity);
-            $('#mcsPrice').text('£' + vehicle.price);
-            $('#mcsCarItem').css('display', 'flex');
-            $('#mcsPassengersItem').css('display', 'flex');
-            $('#mcsPriceItem').css('display', 'flex');
+            $('#mcsCarImage').attr('src', vehicle.image);
+            $('#mcsCarName').text(vehicle.name);
+            $('#mcsCarCapacity').text(vehicle.capacity);
+            $('#mcsCarLuggage').text(vehicle.luggage);
+            if (vehicle.priceMax) {
+                $('#mcsCarPrice').text('£' + vehicle.price + ' – £' + vehicle.priceMax);
+            } else {
+                $('#mcsCarPrice').text('£' + vehicle.price);
+            }
+            $('#mcsCarDetails').show();
             // NEW: Show confirmation message
             console.log('Vehicle selected:', vehicle.name, '- Price: £' + vehicle.price);
         }
@@ -6702,7 +8490,7 @@
             }
         }
         // Fallback for showToast if it's not defined globally
-        window.showToast = window.showToast || function(msg, type) {
+        window.showToast = window.showToast || function (msg, type) {
             alert(msg);
         };
         function verifyPersonalInfoAndRequestOTP() {
@@ -6767,21 +8555,21 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             btn.disabled = true;
             const num = 'GR-2026-' + Math.floor(10000 + Math.random() * 90000);
-            fetch('https://mobapi.goride.run/api/book', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        name: name,
-                        phone: phone,
-                        bookingId: num,
-                        pickup: bookingData.pickup || 'Not specified',
-                        dropoff: bookingData.dropoff || 'Not specified'
-                    })
+            fetch('{{env('API_URL')}}/book', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    name: name,
+                    phone: phone,
+                    bookingId: num,
+                    pickup: bookingData.pickup || 'Not specified',
+                    dropoff: bookingData.dropoff || 'Not specified'
                 })
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -6814,22 +8602,60 @@
         function updateBookingSummary() {
             // 1. Passenger Name
             const fname = $('#passengerFirstName').val() || '';
+            const lname = $('#passengerLastName').val() || '';
+            const pName = (fname + ' ' + lname).trim();
             $('#summaryPassengerName').text(fname.trim() || '–');
+
+            if (pName) {
+                $('#mcsPassengerName').text(pName);
+                $('#mcsPassengerNameContainer').css('display', 'flex');
+            } else {
+                $('#mcsPassengerNameContainer').hide();
+            }
             // 2. Contact
             const phone = $('#passengerPhone').val() || '';
             $('#summaryPassengerContact').text(phone.trim() ? ('+44 ' + phone.trim()) : '–');
+            if (phone.trim()) {
+                $('#mcsPassengerPhone').text('+44 ' + phone.trim());
+                $('#mcsPassengerPhoneContainer').css('display', 'flex');
+            } else {
+                $('#mcsPassengerPhoneContainer').hide();
+            }
             // 3. Email
             const email = $('#passengerEmail').val() || '';
             $('#summaryPassengerEmail').text(email.trim() || '–');
+            if (email.trim()) {
+                $('#mcsPassengerEmail').text(email.trim());
+                $('#mcsPassengerEmailContainer').css('display', 'flex');
+            } else {
+                $('#mcsPassengerEmailContainer').hide();
+            }
+            let showEnteredDetails = false;
             // 4. Passengers count
             const pCount = $('#passengerCount').val() || '1';
             $('#summaryPassengerCount').text(pCount);
+            $('#mcsPassengerCount').text(pCount);
+            if (parseInt(pCount) > 1 || pName !== '' || email.trim() !== '' || phone.trim() !== '') showEnteredDetails = true;
             // 5. Luggage count
             const lCount = $('#luggageCount').val() || '0';
             $('#summaryLuggageCount').text(lCount);
+            $('#mcsLuggageCount').text(lCount);
+            if (parseInt(lCount) > 0) {
+                $('#mcsLuggageContainer').show();
+                showEnteredDetails = true;
+            } else {
+                $('#mcsLuggageContainer').hide();
+            }
             // 6. Hand Luggage count
             const hlCount = $('#handLuggageCount').val() || '0';
             $('#summaryHandLuggageCount').text(hlCount);
+            $('#mcsHandLuggageCount').text(hlCount);
+            if (parseInt(hlCount) > 0) {
+                $('#mcsHandLuggageContainer').show();
+                showEnteredDetails = true;
+            } else {
+                $('#mcsHandLuggageContainer').hide();
+            }
             // 7. Baby Seats
             const isBabySeat = $('#carSeatCheckbox').is(':checked');
             if (isBabySeat) {
@@ -6844,12 +8670,23 @@
                     }
                     const seatTypesStr = seatTypes.length > 0 ? ` (${seatTypes.join(', ')})` : '';
                     $('#summaryBabySeats').text(bsCount + seatTypesStr);
+                    $('#mcsBabySeats').text(bsCount + seatTypesStr);
+                    showEnteredDetails = true;
                 } else {
                     $('#summaryBabySeats').text('0');
+                    $('#mcsBabySeats').text('0');
                 }
                 $('#summaryBabySeatContainer').show();
+                $('#mcsBabySeatContainer').show();
             } else {
                 $('#summaryBabySeatContainer').hide();
+                $('#mcsBabySeatContainer').hide();
+            }
+
+            if (showEnteredDetails) {
+                $('#mcsEnteredDetails').css('display', 'grid');
+            } else {
+                $('#mcsEnteredDetails').hide();
             }
             // 8. Date & Time & Journey Info depending on pickupType
             const pickupType = bookingData.pickupType;
@@ -6927,9 +8764,9 @@
             $('#findingDriversLoader').show();
             $('#driverList').hide();
             $('#moreDriversLoader').hide();
-            setTimeout(function() {
+            setTimeout(function () {
                 // Fade out main loader and show driver list area
-                $('#findingDriversLoader').fadeOut(300, function() {
+                $('#findingDriversLoader').fadeOut(300, function () {
                     $('#driverList').fadeIn(300);
                     $('#moreDriversLoader').fadeIn(300);
                     // Load drivers dynamically one by one
@@ -6946,7 +8783,7 @@
             const d = drivers[index];
             const vehicle = bookingData.vehicle;
             const vehicleImg = vehicle?.image || '/goride/img/saloon.png';
-            const vehicleName = vehicle?.name || 'Saloon';
+            const vehicleName = vehicle?.name || 'Standard';
             const vehicleCapacity = vehicle?.capacity || 4;
             const vehicleLuggage = vehicle?.luggage || 2;
             const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
@@ -6965,15 +8802,27 @@
                         </div>
                     </div>
                 </div>
+                <div class="driver-wrap">
                 <div class="driver-avatar">
                     ${d.avatar}
                 </div>
-                <div class="driver-text">
+               <div class="driver-text">
                     <h4>${d.name}</h4>
+                
                     <div class="driver-rating-info">
-                        <i class="fas fa-star"></i>
-                        ${d.rating} (${d.trips} trips)
+                        <span>
+                            <i class="fas fa-star"></i>
+                            ${d.rating} (${d.trips} trips)
+                        </span>
+                
+                        <span class="driver-divider">•</span>
+                
+                        <span>
+                            <i class="fas fa-id-badge"></i>
+                            ${d.experience}
+                        </span>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -6994,7 +8843,7 @@
             $('#driverList').append(newElem);
             newElem.slideDown(400);
             // Set timeout for next driver
-            setTimeout(function() {
+            setTimeout(function () {
                 loadDriverDynamically(index + 1);
             }, 2000);
         }
@@ -7048,7 +8897,7 @@
             grid.html('');
             const vehicle = bookingData.vehicle;
             const vehicleImg = vehicle?.image || '/goride/img/saloon.png';
-            const vehicleName = vehicle?.name || 'Saloon';
+            const vehicleName = vehicle?.name || 'Standard';
             const vehicleCapacity = vehicle?.capacity || 4;
             const vehicleLuggage = vehicle?.luggage || 2;
             const vehiclePrice = vehicle?.price || '-';
@@ -7124,20 +8973,40 @@
             $('#rcCarImage').attr('src', vehicleImg);
             $('#rcFareAmount').text('\u00a3' + vehiclePrice);
             $('#rcCarName').text(vehicleName);
-            $('#rcFuelType').text(vehicle.fuel);
-            $('#rcTransmission').text(vehicle.transmission);
-            $('#rcCapacity').text(vehicle.capacity + ' Passengers');
-            $('#rcLuggage').text(vehicle.luggage + ' Bags');
-            $('#rcChildSeat').text(vehicle.childSeat ? 'Available' : 'Not Available');
-            $('#rcVehicleYear').text(vehicle.vehicleYear);
-            $('#rcDriverExperience').text(driver.experience);
-            $('#rcDriverLanguages').text(driver.languages);
-            $('#rcDriverLicence').text(driver.licence);
-            $('#rcJourneyFrom').text(bookingData.pickup || '-');
-            $('#rcJourneyTo').text(bookingData.dropoff || '-');
-            const dateVal = $('#date').val() || 'Today';
-            const timeVal = $('#timeDropdownValue').text() || 'Now';
-            $('#rcJourneyDateTime').text(dateVal + ' \u00b7 ' + timeVal);
+            $('#rcPassengerCapacity').text(vehicle.capacity);
+            $('#rcLuggageCapacity').text(vehicle.luggage);
+            $('#rcTransmission').text(vehicle.transmission || 'Automatic');
+
+            if (vehicle.tag) {
+                $('#rcVehicleTag').text(vehicle.tag).show();
+            } else {
+                $('#rcVehicleTag').hide();
+            }
+
+            $('#rcDriverExperience').text(driver.experience || '6+ Years');
+            $('#rcDriverTrips').text(driver.trips || '2,145');
+            $('#rcDriverReviewsPct').text(driver.positiveReviews || '98%');
+
+            const amenitiesGrid = $('#rcVehicleAmenitiesGrid');
+            amenitiesGrid.empty();
+            if (vehicle.amenities) {
+                vehicle.amenities.forEach(am => {
+                    let icon = 'fa-check';
+                    let label = am;
+                    if (am.toLowerCase().includes('wifi')) { icon = 'fa-wifi'; label = 'Free Wi-Fi'; }
+                    else if (am.toLowerCase().includes('air con') || am.toLowerCase().includes('a/c')) { icon = 'fa-snowflake'; label = 'A/C'; }
+                    else if (am.toLowerCase().includes('charg')) { icon = 'fa-usb'; label = 'USB Charger'; }
+                    else if (am.toLowerCase().includes('water')) { icon = 'fa-bottle-water'; label = 'Water'; }
+                    else if (am.toLowerCase().includes('child seat')) { icon = 'fa-baby-carriage'; label = 'Child Seat'; }
+
+                    amenitiesGrid.append(`
+                        <div class="rc-amenity-box">
+                            <i class="fas ${icon}"></i>
+                            <span>${label}</span>
+                        </div>
+                    `);
+                });
+            }
             showStep(7);
         }
         function acceptDriverFromList(driver) {
@@ -7168,7 +9037,7 @@
                 bookingData.selectedDriver = bookingData.tempDriver;
             }
             $('#carDetailsModal').removeClass('show');
-            setTimeout(function() {
+            setTimeout(function () {
                 showStep(5);
                 updatePaymentSummary();
             }, 300);
@@ -7201,34 +9070,34 @@
             $('#driverConfirmRating').text(driver.rating);
             $('#driverConfirmModal').addClass('show');
         }
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Bind input change events to update the booking summary live
             $(document).on('input change',
                 '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #comingFrom, #dropoffAddress, #ferryName, #dockingTimeSelect, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements, #date',
-                function() {
+                function () {
                     updateBookingSummary();
                 }
             );
             // Synchronize normal journey date/time inputs back to bookingData
-            $(document).on('change', '#normalJourneyDate', function() {
+            $(document).on('change', '#normalJourneyDate', function () {
                 bookingData.date = $(this).val();
                 updateBookingSummary();
             });
-            $(document).on('change', '#normalJourneyTime', function() {
+            $(document).on('change', '#normalJourneyTime', function () {
                 bookingData.time = $(this).val();
                 updateBookingSummary();
             });
-            $('#viewBookingBtn').on('click', function() {
+            $('#viewBookingBtn').on('click', function () {
                 const bookingId = $('#confirmNum').text();
                 alert('Booking Information:\n\nID: ' + bookingId + '\n\nBooking details saved successfully!');
             });
-            $('#pickDriverBtn').on('click', function() {
+            $('#pickDriverBtn').on('click', function () {
                 showStep(6);
                 startDynamicDriverSearch();
             });
-            $('#closeDriverConfirmBtn').on('click', function() {
+            $('#closeDriverConfirmBtn').on('click', function () {
                 $('#driverConfirmModal').removeClass('show');
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
                 }, 500);
             });
@@ -7244,6 +9113,7 @@
             }, 300);
         }
         function showStep(stepNumber) {
+            $('body').css('overflow', 'auto');
             const sections = $('.form-section');
             if (window.innerWidth > 768 && stepNumber >= 3) {
                 const formSection = $('.hero-form-section');
@@ -7256,7 +9126,7 @@
                 $('#step2Buttons').hide();
                 $('#bookingImage').hide();
                 $('#bookingMap').show();
-                setTimeout(function() {
+                setTimeout(function () {
                     if (typeof initSingleRouteMap === 'function') {
                         initSingleRouteMap();
                     }
@@ -7303,6 +9173,7 @@
             $('.hero-form-section').scrollTop(0);
             if (window.innerWidth <= 768) {
                 const actionBar = $('#mobileActionBar');
+
                 if (stepNumber === 1) {
                     $('#mobileHamburger').css('display', 'flex');
                     $('#mobileMapBtn').hide();
@@ -7329,7 +9200,7 @@
         }
         function toggleFaq(el) {
             const answer = $(el).next();
-            $('.faq-answer').each(function() {
+            $('.faq-answer').each(function () {
                 if (!$(this).is(answer)) $(this).removeClass('show');
             });
             answer.toggleClass('show');
@@ -7427,7 +9298,7 @@
             $("#vehicleModalTitle").html(vehicle.name);
             let recommendedHtml = '';
             switch (vehicle.name) {
-                case 'Saloon':
+                case 'Standard':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 1 Passenger + 3 Large Luggage</li>
@@ -7507,7 +9378,7 @@
                     ? `<div class="child-seat-status available">Available (Max ${Math.floor(vehicle.capacity / 2)})</div>`
                     : `<div class="child-seat-status unavailable">Not Available</div>`
                 }
-                    <button class="vehicle-modal-price-btn" onclick="closeModal('vehicleInfoModal')">See Prices</button>
+                    <button class="vehicle-modal-price-btn" onclick="closeModal('vehicleInfoModal')">Select Cabs</button>
                 </div>
             `);
             $("#vehicleInfoModal").addClass("show");
@@ -7575,18 +9446,33 @@
             $('#mobileTripBody').slideToggle(200);
             $('#tripSummaryArrow').toggleClass('rotate');
             $('.mobile-from, .mobile-to').toggleClass('expanded-text');
+            $('#mcsPickup, #mcsDropoff').toggleClass('text-truncate');
         }
         function updateTripDateTimeCard() {
-    $('#tripSelectedDate').text(bookingData.date || '--');
-    $('#tripSelectedTime').text(bookingData.time || '--');
-}
-$('#mcsPickup')
-    .text(bookingData.pickup)
-    .attr('title', bookingData.pickup);
+            $('#tripSelectedDate').text(bookingData.date || '--');
+            $('#tripSelectedTime').text(bookingData.time || '--');
+        }
+        $('#mcsPickup')
+            .text(bookingData.pickup)
+            .attr('title', bookingData.pickup);
 
-$('#mcsDropoff')
-    .text(bookingData.dropoff)
-    .attr('title', bookingData.dropoff);
+        $('#mcsDropoff')
+            .text(bookingData.dropoff)
+            .attr('title', bookingData.dropoff);
+
+        const phoneInput = document.querySelector("#passengerPhone");
+
+        const iti = window.intlTelInput(phoneInput, {
+            initialCountry: "gb", // Default UK
+            preferredCountries: ["gb", "us", "in", "ae", "au"],
+            separateDialCode: true,
+            nationalMode: true,
+            autoPlaceholder: "polite",
+            strictMode: true,
+            loadUtils: () =>
+                import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
+        });
     </script>
 </body>
+
 </html>

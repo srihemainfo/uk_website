@@ -3756,6 +3756,13 @@
     font-weight:600;
 }
 
+.driver-wrap{
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
         @media (max-width: 576px) {
             .rc-vehicle-amenities-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -5028,6 +5035,9 @@
                 display: flex !important;
                 flex-direction: column !important;
             }
+            .form-section#step1{
+                padding-bottom: 0px;
+            }
 
             .step-bottom-btns {
                 margin-top: auto !important;
@@ -5142,6 +5152,70 @@
 
             .booking-summary-item {
                 font-size: 13px;
+            }
+
+            #mcsEnteredDetails {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8px !important;
+            }
+
+            #mcsEnteredDetails .booking-summary-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: #f7f7f7;
+                border: 1px solid #efefef;
+                border-radius: 10px;
+                padding: 8px 10px;
+                justify-content: flex-start !important;
+                min-width: 0;
+                overflow: hidden;
+            }
+
+            #mcsEnteredDetails .summary-label {
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+            }
+
+            #mcsEnteredDetails .summary-label i {
+                font-size: 13px;
+                color: #555;
+                width: auto;
+            }
+
+            #mcsEnteredDetails .summary-value {
+                font-size: 12px !important;
+                font-weight: 700;
+                color: #111;
+                text-align: left !important;
+                word-break: break-all;
+                overflow-wrap: break-word;
+                min-width: 0;
+            }
+
+            #mcsCarDetails .selected-car-row {
+                background: #f9f9f9;
+                border-radius: 10px;
+                padding: 10px 12px;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+            }
+
+            #mcsCarDetails .summary-car-name {
+                font-size: 14px;
+                font-weight: 700;
+                color: #111;
+                margin-bottom: 0 !important;
+            }
+
+            #mcsCarDetails .summary-car-price {
+                font-size: 15px !important;
+                font-weight: 800;
+                color: #111;
+                white-space: nowrap;
             }
 
             .summary-title {
@@ -5597,7 +5671,7 @@
                 position: absolute;
                 top: -5px;
                 left: -5px;
-                font-size: 9px;
+                font-size: 12px;
                 padding: 2px 6px;
             }
 
@@ -5617,13 +5691,13 @@
             }
 
             .v-name {
-                font-size: 15px;
+                font-size: 17px;
                 font-weight: 700;
                 margin-bottom: 0;
             }
 
             .v-price {
-                font-size: 15px;
+                font-size: 17px;
                 font-weight: 700;
                 white-space: nowrap;
             }
@@ -5631,7 +5705,7 @@
             .v-sub {
                 display: flex;
                 justify-content: flex-start;
-                font-size: 10px;
+                font-size: 15px;
                 margin-bottom: 0;
                 gap: 8px;
                 align-items: center;
@@ -5654,7 +5728,7 @@
             }
 
             .v-tag-pill {
-                font-size: 9px;
+                font-size: 13px;
                 padding: 2px 6px;
                 border-radius: 8px;
             }
@@ -5662,7 +5736,7 @@
             .v-features {
                 display: flex;
                 gap: 6px;
-                font-size: 10px;
+                font-size: 15px;
                 margin-bottom: 0;
                 flex-wrap: wrap;
                 align-items: center;
@@ -5690,7 +5764,7 @@
                 display: flex;
                 align-items: center;
                 gap: 2px;
-                font-size: 8px;
+                font-size: 13px;
                 padding: 2px 5px;
                 border: 1px solid #ddd;
                 border-radius: 4px;
@@ -5706,20 +5780,78 @@
             }
 
             .btn-v-select {
-                background: black;
-                color: white;
-                border: none;
-                padding: 7px 14px;
-                border-radius: 6px;
-                font-size: 11px;
-                font-weight: 600;
-                cursor: pointer;
-                width: auto;
-                flex-shrink: 0;
+                      background: black;
+        color: white;
+        border: none;
+        padding: 7px 11px;
+        border-radius: 6px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        width: auto;
+        flex-shrink: 0;
             }
 
             .vehicle-item.selected .btn-v-select {
                 background: #101828;
+            }
+
+            .mob-trust-badges {
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-start;
+                background: #fff;
+                margin-top: 18px;
+            }
+
+            .mob-trust-badge {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex: 1;
+                padding: 0 6px;
+                flex-direction: column;
+            }
+
+            .mob-trust-badge:last-child {
+                border-right: none;
+            }
+
+            .mob-trust-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                background: #fffbe6;
+                border: 1.5px solid #f9c106;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .mob-trust-icon i {
+                color: #f9c106;
+                font-size: 15px;
+            }
+
+            .mob-trust-text {
+                        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+            }
+
+            .mob-trust-title {
+                       font-size: 13px;
+        font-weight: 500;
+        color: #111;
+        line-height: 1.3;
+            }
+
+            .mob-trust-sub {
+                font-size: 10.5px;
+                color: #777;
+                line-height: 1.3;
             }
         }
     </style>
@@ -6494,6 +6626,36 @@
                         <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 20px;">
                             <i class="fas fa-arrow-right me-2"></i> See prices
                         </button>
+                    </div>
+                    <!-- MOBILE TRUST BADGES -->
+                    <div class="mob-trust-badges d-md-none">
+                        <div class="mob-trust-badge">
+                            <div class="mob-trust-icon">
+                                <i class="fas fa-shield-halved"></i>
+                            </div>
+                            <div class="mob-trust-text">
+                                <span class="mob-trust-title">Safe &amp; Secure</span>
+                                <span class="mob-trust-sub">Verified drivers</span>
+                            </div>
+                        </div>
+                        <div class="mob-trust-badge">
+                            <div class="mob-trust-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="mob-trust-text">
+                                <span class="mob-trust-title">Quick &amp; Reliable</span>
+                                <span class="mob-trust-sub">On time, every time</span>
+                            </div>
+                        </div>
+                        <div class="mob-trust-badge">
+                            <div class="mob-trust-icon">
+                                <i class="fas fa-sterling-sign"></i>
+                            </div>
+                            <div class="mob-trust-text">
+                                <span class="mob-trust-title">No Hidden Charges</span>
+                                <span class="mob-trust-sub">Transparent pricing</span>
+                            </div>
+                        </div>
                     </div>
                     <!--<div class="offer-credits-section mt-3">-->
                     <!--    <div class="offer-icon">-->

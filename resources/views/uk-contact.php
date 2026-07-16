@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - GoRide</title>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
-    
+
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
@@ -22,7 +24,7 @@
 
         body {
             font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
             color: #333;
             background: #fff;
             overflow-x: hidden;
@@ -38,7 +40,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand-uber {
@@ -63,7 +65,8 @@
             list-style: none;
         }
 
-        .navbar-menu a, .navbar-menu button {
+        .navbar-menu a,
+        .navbar-menu button {
             color: black;
             text-decoration: none;
             font-size: 14px;
@@ -74,7 +77,8 @@
             transition: color 0.3s;
         }
 
-        .navbar-menu a:hover, .navbar-menu button:hover {
+        .navbar-menu a:hover,
+        .navbar-menu button:hover {
             color: #000;
         }
 
@@ -100,7 +104,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             min-width: 200px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1001;
         }
 
@@ -108,7 +112,8 @@
             display: block;
         }
 
-        .dropdown-menu-navbar a, .dropdown-menu-navbar button {
+        .dropdown-menu-navbar a,
+        .dropdown-menu-navbar button {
             display: block;
             width: 100%;
             padding: 12px 16px;
@@ -121,7 +126,8 @@
             transition: background 0.2s;
         }
 
-        .dropdown-menu-navbar a:hover, .dropdown-menu-navbar button:hover {
+        .dropdown-menu-navbar a:hover,
+        .dropdown-menu-navbar button:hover {
             background: #f5f5f5;
         }
 
@@ -134,7 +140,7 @@
             background: #fff;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,.18);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .18);
             z-index: 9999;
         }
 
@@ -239,7 +245,7 @@
         .mobile-menu-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.45);
+            background: rgba(0, 0, 0, .45);
             visibility: hidden;
             opacity: 0;
             transition: .35s;
@@ -250,6 +256,51 @@
             visibility: visible;
             opacity: 1;
         }
+
+        .help-modal {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .help-modal .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+        }
+
+        .help-modal .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .help-modal .btn-close {
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .help-modal .modal-body {
+            padding: 28px 20px;
+        }
+
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #f8be00;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
 
         .mobile-menu {
             position: fixed;
@@ -262,7 +313,7 @@
             transition: .35s;
             display: flex;
             flex-direction: column;
-            box-shadow: 5px 0 30px rgba(0,0,0,.15);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, .15);
         }
 
         .mobile-menu.show {
@@ -380,7 +431,7 @@
             content: "";
             position: absolute;
             inset: 0;
-           background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
             z-index: 1;
         }
 
@@ -466,7 +517,7 @@
         }
 
         .contact-info-item .info-text a {
-            color:inherit;
+            color: inherit;
             /*color: #666;*/
             text-decoration: none;
         }
@@ -480,7 +531,7 @@
             padding: 40px;
             border-radius: 16px;
             border: 1px solid #eee;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .contact-form-box h3 {
@@ -492,7 +543,7 @@
 
         .contact-form-box .form-subtitle {
             font-size: 14px;
-      
+
             margin-bottom: 30px;
         }
 
@@ -507,7 +558,7 @@
 
         .form-control-custom:focus {
             border-color: #000;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
             outline: none;
         }
 
@@ -538,14 +589,14 @@
         .btn-submit:hover {
             background: #1a1a1a;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         /* ===== SUCCESS POPUP ===== */
         .success-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             display: none;
             align-items: center;
             justify-content: center;
@@ -566,12 +617,19 @@
             width: 100%;
             text-align: center;
             animation: popIn 0.5s ease;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .success-popup .check-icon {
@@ -644,7 +702,7 @@
 
         .footer-tagline {
             font-size: 16px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer-section {
@@ -665,7 +723,7 @@
         }
 
         .footer-links-list a {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s;
@@ -685,7 +743,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -693,7 +751,7 @@
             text-decoration: none;
             font-size: 16px;
             transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .social-icon:hover {
@@ -703,33 +761,36 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
             text-align: center;
             font-size: 15px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .form-label-custom{
-                font-size:17px;
+            .form-label-custom {
+                font-size: 17px;
             }
+
             .contact-info-item .info-text p {
-                font-size:17px;
+                font-size: 17px;
             }
 
             .contact-info-text {
-                font-size:17px;
+                font-size: 17px;
             }
+
             .contact-info-item .info-text h4 {
-                font-size:18px;
+                font-size: 18px;
             }
 
 
-            .contact-info-box h3{
-                    font-size: 22px;
+            .contact-info-box h3 {
+                font-size: 22px;
             }
+
             .navbar-menu {
                 display: none;
             }
@@ -762,9 +823,11 @@
             .contact-form-box h3 {
                 font-size: 25px;
             }
-.contact-form-box .form-subtitle{
-    font-size:18px;
-}
+
+            .contact-form-box .form-subtitle {
+                font-size: 18px;
+            }
+
             .footer-tagline {
                 font-size: 14px;
             }
@@ -805,7 +868,7 @@
                 padding: 20px;
             }
 
-           
+
 
             .success-popup {
                 padding: 30px 20px;
@@ -850,6 +913,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar-uber">
@@ -859,17 +923,19 @@
             </a>
         </div>
         <ul class="navbar-menu">
-            <li><button onclick="toggleDropdown('language')">
+            <!-- <li><button onclick="toggleDropdown('language')">
                 <i class="fas fa-globe me-2"></i>EN
-            </button></li>
-            <li><a href="#faq">Help</a></li>
-            <li style="position:relative;">
+            </button></li> -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
+                Help
+            </a>
+            <!-- <li style="position:relative;">
                 <button class="user-btn" onclick="toggleDropdown('user')">
                     <i class="fas fa-user-circle"></i>
                     Mogana
                     <i class="fas fa-chevron-down"></i>
                 </button>
-            </li>
+            </li> -->
         </ul>
 
         <div id="language-dropdown" class="dropdown-menu-navbar">
@@ -901,9 +967,9 @@
             </div>
         </div>
 
-        <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
+        <!-- <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
 
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 
@@ -960,7 +1026,9 @@
                     <div class="contact-info-box">
                         <h3>Get in Touch</h3>
                         <p class="contact-info-text">
-                            Have questions about our AI dispatch software? Want to learn more about how GoRide can transform your transportation business? Contact us today, and our team of experts will be happy to assist you.
+                            Have questions about our AI dispatch software? Want to learn more about how GoRide can
+                            transform your transportation business? Contact us today, and our team of experts will be
+                            happy to assist you.
                         </p>
 
                         <div class="contact-info-item">
@@ -991,11 +1059,11 @@
                                 <h4>Address</h4>
                                 <p>
                                     Goride Plus Ltd<br>
-                                   83 1st Floor
-                                Surbiton Road
-                                Kingston Upon Thames
-                                KT1 2HW
-                                United Kingdom
+                                    83 1st Floor
+                                    Surbiton Road
+                                    Kingston Upon Thames
+                                    KT1 2HW
+                                    United Kingdom
 
                                 </p>
                             </div>
@@ -1014,12 +1082,14 @@
                             <div class="form-row">
                                 <div class="mb-3">
                                     <label class="form-label-custom">Full Name</label>
-                                    <input type="text" class="form-control-custom" id="fullName" placeholder="Enter your full name" required>
+                                    <input type="text" class="form-control-custom" id="fullName"
+                                        placeholder="Enter your full name" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label-custom">Email</label>
-                                    <input type="email" class="form-control-custom" id="email" placeholder="Enter your email address" required>
+                                    <input type="email" class="form-control-custom" id="email"
+                                        placeholder="Enter your email address" required>
                                 </div>
                             </div>
 
@@ -1027,19 +1097,23 @@
                             <div class="form-row">
                                 <div class="mb-3">
                                     <label class="form-label-custom">Phone Number</label>
-                                    <input type="tel" class="form-control-custom" id="phone" placeholder="+91 Enter your phone number" required>
+                                    <input type="tel" class="form-control-custom" id="phone"
+                                        placeholder="+91 Enter your phone number" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label-custom">Subject</label>
-                                    <input type="text" class="form-control-custom" id="subject" placeholder="Enter subject" required>
+                                    <input type="text" class="form-control-custom" id="subject"
+                                        placeholder="Enter subject" required>
                                 </div>
                             </div>
 
                             <!-- Row 3: Message (full width) -->
                             <div class="mb-4">
                                 <label class="form-label-custom">Message</label>
-                                <textarea class="form-control-custom" id="message" rows="4" placeholder="Write your message here..." required style="resize: vertical;"></textarea>
+                                <textarea class="form-control-custom" id="message" rows="4"
+                                    placeholder="Write your message here..." required
+                                    style="resize: vertical;"></textarea>
                             </div>
 
                             <button type="submit" class="btn-submit">
@@ -1059,7 +1133,8 @@
                 <i class="fas fa-check"></i>
             </div>
             <h3>Message Sent!</h3>
-            <p>Thank you for contacting us. Our team will get back to you within 24 hours. We appreciate your interest in GoRide.</p>
+            <p>Thank you for contacting us. Our team will get back to you within 24 hours. We appreciate your interest
+                in GoRide.</p>
             <button class="btn-close-popup" onclick="closePopup()">Got It</button>
         </div>
     </div>
@@ -1076,7 +1151,7 @@
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                     </div>
-                    
+
                     <!-- Social Icons -->
                     <div class="footer-section">
                         <div class="footer-social-icons">
@@ -1132,30 +1207,70 @@
                                 <i class="fas fa-envelope" style="margin-right: 8px;"></i>support.uk@goride.run
                             </a>
                             <a href="#">
-    <i class="fas fa-location-dot" style="margin-right:8px;"></i>
-    83 1st Floor,<br>
-    Surbiton Road,<br>
-    Kingston Upon Thames,<br>
-    KT1 2HW,<br>
-    United Kingdom
-</a>
+                                <i class="fas fa-location-dot" style="margin-right:8px;"></i>
+                                83 1st Floor,<br>
+                                Surbiton Road,<br>
+                                Kingston Upon Thames,<br>
+                                KT1 2HW,<br>
+                                United Kingdom
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p class="mb-0">&copy; 2026 Operated by Goride Plus Ltd. All rights reserved. | Privacy • Terms • Cookies</p>
+                <p class="mb-0">&copy; 2026 Operated by Goride Plus Ltd. All rights reserved. | Privacy • Terms •
+                    Cookies</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content help-modal">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+
+                    <h6>Need Assistance?</h6>
+
+                    <p class="mb-3 text-muted">
+                        Our support team is here to help.
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fas fa-phone-alt me-2 text-warning"></i>
+                        <a href="tel:+442083373777">+44 208 337 3777</a>
+                    </p>
+
+                    <p class="mb-0">
+                        <i class="fas fa-envelope me-2 text-warning"></i>
+                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
     <script>
         // Initialize AOS
         AOS.init({
@@ -1169,7 +1284,7 @@
             dropdown.classList.toggle('show');
         }
 
-        $(document).on('click', function(e) {
+        $(document).on('click', function (e) {
             if (!$(e.target).closest('.navbar-menu').length && !$(e.target).closest('.dropdown-menu-navbar').length) {
                 $('.dropdown-menu-navbar').removeClass('show');
             }
@@ -1189,14 +1304,14 @@
         }
 
         // Refresh AOS on resize
-        $(window).on('resize', function() {
+        $(window).on('resize', function () {
             AOS.refresh();
         });
 
         // Handle form submission
         function handleSubmit(event) {
             event.preventDefault();
-            
+
             // Get form values
             const name = document.getElementById('fullName').value;
             const email = document.getElementById('email').value;
@@ -1212,7 +1327,7 @@
 
             // Show success popup
             document.getElementById('successOverlay').classList.add('show');
-            
+
             // Reset form
             document.getElementById('contactForm').reset();
         }
@@ -1223,18 +1338,19 @@
         }
 
         // Close popup on overlay click
-        document.getElementById('successOverlay').addEventListener('click', function(e) {
+        document.getElementById('successOverlay').addEventListener('click', function (e) {
             if (e.target === this) {
                 closePopup();
             }
         });
 
         // Close popup with Escape key
-        $(document).on('keydown', function(e) {
+        $(document).on('keydown', function (e) {
             if (e.key === 'Escape') {
                 closePopup();
             }
         });
     </script>
 </body>
+
 </html>

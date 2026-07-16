@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - GoRide</title>
-    
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
-    
+
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
@@ -22,7 +24,7 @@
 
         body {
             font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
             color: #333;
             background: #fff;
             overflow-x: hidden;
@@ -38,7 +40,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .navbar-brand-uber {
@@ -63,7 +65,8 @@
             list-style: none;
         }
 
-        .navbar-menu a, .navbar-menu button {
+        .navbar-menu a,
+        .navbar-menu button {
             color: black;
             text-decoration: none;
             font-size: 14px;
@@ -74,7 +77,8 @@
             transition: color 0.3s;
         }
 
-        .navbar-menu a:hover, .navbar-menu button:hover {
+        .navbar-menu a:hover,
+        .navbar-menu button:hover {
             color: #000;
         }
 
@@ -100,7 +104,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             min-width: 200px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             z-index: 1001;
         }
 
@@ -108,7 +112,8 @@
             display: block;
         }
 
-        .dropdown-menu-navbar a, .dropdown-menu-navbar button {
+        .dropdown-menu-navbar a,
+        .dropdown-menu-navbar button {
             display: block;
             width: 100%;
             padding: 12px 16px;
@@ -121,7 +126,8 @@
             transition: background 0.2s;
         }
 
-        .dropdown-menu-navbar a:hover, .dropdown-menu-navbar button:hover {
+        .dropdown-menu-navbar a:hover,
+        .dropdown-menu-navbar button:hover {
             background: #f5f5f5;
         }
 
@@ -134,7 +140,7 @@
             background: #fff;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,.18);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .18);
             z-index: 9999;
         }
 
@@ -239,7 +245,7 @@
         .mobile-menu-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,.45);
+            background: rgba(0, 0, 0, .45);
             visibility: hidden;
             opacity: 0;
             transition: .35s;
@@ -262,7 +268,7 @@
             transition: .35s;
             display: flex;
             flex-direction: column;
-            box-shadow: 5px 0 30px rgba(0,0,0,.15);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, .15);
         }
 
         .mobile-menu.show {
@@ -396,7 +402,7 @@
             color: #fff;
         }
 
-       
+
 
         .section-padding {
             padding: 60px 0;
@@ -429,18 +435,20 @@
             margin-bottom: 12px;
         }
 
-        .privacy-section ul, .privacy-section ol {
+        .privacy-section ul,
+        .privacy-section ol {
             margin-left: 20px;
-            
+
             line-height: 1.8;
         }
 
-        .privacy-section ul li, .privacy-section ol li {
+        .privacy-section ul li,
+        .privacy-section ol li {
             margin-bottom: 12px;
             font-size: 16px;
         }
 
-      
+
 
         .privacy-section a {
             color: #000;
@@ -471,7 +479,7 @@
 
         .footer-tagline {
             font-size: 16px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer-section {
@@ -492,7 +500,7 @@
         }
 
         .footer-links-list a {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s;
@@ -512,7 +520,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -520,7 +528,7 @@
             text-decoration: none;
             font-size: 16px;
             transition: all 0.3s;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .social-icon:hover {
@@ -529,12 +537,56 @@
             transform: translateY(-3px);
         }
 
+        .help-modal {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .help-modal .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+        }
+
+        .help-modal .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .help-modal .btn-close {
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .help-modal .modal-body {
+            padding: 28px 20px;
+        }
+
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #f8be00;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
             text-align: center;
             font-size: 15px;
-            color: rgba(255,255,255,0.6);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* ===== RESPONSIVE ===== */
@@ -571,11 +623,14 @@
                 font-size: 17px;
             }
 
-            .privacy-section ul li, .privacy-section ol li {
+            .privacy-section ul li,
+            .privacy-section ol li {
                 font-size: 17px;
             }
-            .privacy-section ul, .privacy-section ol{
-                margin-left:0px;
+
+            .privacy-section ul,
+            .privacy-section ol {
+                margin-left: 0px;
             }
 
             .footer-tagline {
@@ -609,7 +664,7 @@
                 padding: 30px 0;
             }
 
-            
+
 
 
             .account-dropdown {
@@ -641,6 +696,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- ===== NAVBAR ===== -->
     <nav class="navbar-uber">
@@ -650,17 +706,19 @@
             </a>
         </div>
         <ul class="navbar-menu">
-            <li><button onclick="toggleDropdown('language')">
+            <!-- <li><button onclick="toggleDropdown('language')">
                 <i class="fas fa-globe me-2"></i>EN
-            </button></li>
-            <li><a href="#faq">Help</a></li>
-            <li style="position:relative;">
+            </button></li> -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
+                Help
+            </a>
+            <!-- <li style="position:relative;">
                 <button class="user-btn" onclick="toggleDropdown('user')">
                     <i class="fas fa-user-circle"></i>
                     Mogana
                     <i class="fas fa-chevron-down"></i>
                 </button>
-            </li>
+            </li> -->
         </ul>
 
         <div id="language-dropdown" class="dropdown-menu-navbar">
@@ -692,9 +750,9 @@
             </div>
         </div>
 
-        <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
+        <!-- <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
-        </button>
+        </button> -->
 
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
 
@@ -738,7 +796,7 @@
     <section class="page-header">
         <div class="container">
             <h1 data-aos="fade-up" data-aos-duration="800">Privacy Policy</h1>
-           
+
         </div>
     </section>
 
@@ -749,7 +807,9 @@
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
                 <h2>Introduction</h2>
-                <p>GoRide ("we", "our", or "us"), operated by GoRide Plus Ltd, is committed to protecting your privacy. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use the GoRide website, mobile application, and related services ("Platform").</p>
+                <p>GoRide ("we", "our", or "us"), operated by GoRide Plus Ltd, is committed to protecting your privacy.
+                    This Privacy Policy explains how we collect, use, store, and protect your personal information when
+                    you use the GoRide website, mobile application, and related services ("Platform").</p>
                 <p>By using the Platform, you agree to this Privacy Policy.</p>
             </div>
 
@@ -796,12 +856,14 @@
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
                 <h2>4. Cookies</h2>
-                <p>We use cookies and similar technologies to improve your experience, remember your preferences, and analyse Platform usage. You can manage cookies through your browser settings.</p>
+                <p>We use cookies and similar technologies to improve your experience, remember your preferences, and
+                    analyse Platform usage. You can manage cookies through your browser settings.</p>
             </div>
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="350" data-aos-duration="700">
                 <h2>5. Data Security</h2>
-                <p>We use appropriate technical and organisational measures to protect your personal information, including secure servers, encrypted communications, and restricted access.</p>
+                <p>We use appropriate technical and organisational measures to protect your personal information,
+                    including secure servers, encrypted communications, and restricted access.</p>
             </div>
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="400" data-aos-duration="700">
@@ -819,17 +881,20 @@
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="450" data-aos-duration="700">
                 <h2>7. Third-Party Websites</h2>
-                <p>Our Platform may contain links to third-party websites. We are not responsible for their privacy practices or content.</p>
+                <p>Our Platform may contain links to third-party websites. We are not responsible for their privacy
+                    practices or content.</p>
             </div>
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="500" data-aos-duration="700">
                 <h2>8. Children's Privacy</h2>
-                <p>The Platform is intended for users aged 18 years or over. We do not knowingly collect personal information from children.</p>
+                <p>The Platform is intended for users aged 18 years or over. We do not knowingly collect personal
+                    information from children.</p>
             </div>
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="550" data-aos-duration="700">
                 <h2>9. Changes to This Policy</h2>
-                <p>We may update this Privacy Policy from time to time. Any changes will be published on this page with the updated "Last Updated" date.</p>
+                <p>We may update this Privacy Policy from time to time. Any changes will be published on this page with
+                    the updated "Last Updated" date.</p>
             </div>
 
             <div class="privacy-section" data-aos="fade-up" data-aos-delay="600" data-aos-duration="700">
@@ -839,7 +904,9 @@
                     Email: <a href="mailto:support-uk@goride.run">support-uk@goride.run</a><br>
                     Phone: <a href="tel:+442083373777">+44 208 337 3777</a>
                 </p>
-                <p style="margin-top: 16px; font-size: 14px; color: #999;">If you have any concerns about our privacy practices or how we handle your data, please don't hesitate to reach out. We're committed to resolving any issues promptly and maintaining your trust in our platform.</p>
+                <p style="margin-top: 16px; font-size: 14px; color: #999;">If you have any concerns about our privacy
+                    practices or how we handle your data, please don't hesitate to reach out. We're committed to
+                    resolving any issues promptly and maintaining your trust in our platform.</p>
             </div>
         </div>
     </section>
@@ -858,7 +925,7 @@
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                     </div>
-                    
+
                     <!-- Social Icons -->
                     <div class="footer-section">
                         <div class="footer-social-icons">
@@ -914,31 +981,71 @@
                             <a href="mailto:support.uk@goride.run">
                                 <i class="fas fa-envelope" style="margin-right: 8px;"></i>support.uk@goride.run
                             </a>
-                                                  <a href="#">
-                                    <i class="fas fa-location-dot" style="margin-right:8px;"></i>
-                                    83 1st Floor,<br>
-                                    Surbiton Road,<br>
-                                    Kingston Upon Thames,<br>
-                                    KT1 2HW,<br>
-                                    United Kingdom
-                                </a>
+                            <a href="#">
+                                <i class="fas fa-location-dot" style="margin-right:8px;"></i>
+                                83 1st Floor,<br>
+                                Surbiton Road,<br>
+                                Kingston Upon Thames,<br>
+                                KT1 2HW,<br>
+                                United Kingdom
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p class="mb-0">&copy; 2026 Operated by Goride Plus Ltd. All rights reserved. | Privacy • Terms • Cookies</p>
+                <p class="mb-0">&copy; 2026 Operated by Goride Plus Ltd. All rights reserved. | Privacy • Terms •
+                    Cookies</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content help-modal">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center">
+
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+
+                    <h6>Need Assistance?</h6>
+
+                    <p class="mb-3 text-muted">
+                        Our support team is here to help.
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fas fa-phone-alt me-2 text-warning"></i>
+                        <a href="tel:+442083373777">+44 208 337 3777</a>
+                    </p>
+
+                    <p class="mb-0">
+                        <i class="fas fa-envelope me-2 text-warning"></i>
+                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
     <script>
         // Initialize AOS
         AOS.init({
@@ -952,7 +1059,7 @@
             dropdown.classList.toggle('show');
         }
 
-        $(document).on('click', function(e) {
+        $(document).on('click', function (e) {
             if (!$(e.target).closest('.navbar-menu').length && !$(e.target).closest('.dropdown-menu-navbar').length) {
                 $('.dropdown-menu-navbar').removeClass('show');
             }
@@ -972,9 +1079,10 @@
         }
 
         // Refresh AOS on resize
-        $(window).on('resize', function() {
+        $(window).on('resize', function () {
             AOS.refresh();
         });
     </script>
 </body>
+
 </html>

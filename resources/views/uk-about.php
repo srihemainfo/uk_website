@@ -746,9 +746,9 @@
                 font-size: 29px;
             }
 
-            .navbar-menu {
+            /* .navbar-menu {
                 display: none;
-            }
+            } */
 
             .mobile-menu-btn {
                 display: flex;

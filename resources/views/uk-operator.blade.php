@@ -40,7 +40,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 48px;
+            padding: 10px;
             background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQ94LgRgL5uqTqfcnX-DTr0sKPon4M9HGTN1Jg1Z2oY1uI42j01Z3M46X-QOnea9jkmVMtMsK0Lew-h69QgquxOA3GgD9ne4JfsL_mFirDxTekPvFo9Uc_gGzMVewmQ7UOOOFLa6mt7tOtL3O4fXrI5BUtZzVYehTSIkSDqpxWy8T5e23c7dE_YIKOxPJ0wVRcSqzbI55coAEDtzXkVqw0EAZVLlR5IS9IaZs0WP3mFGT2oI_TfQI0LckSybzwX2Pji5Tciqo-2wge');
             background-size: cover;
             background-position: center;
@@ -80,7 +80,7 @@
             font-size: 18px;
             font-weight: 400;
             color: #000000;
-            margin-bottom: 48px;
+            margin-bottom: 30px;
             line-height: 28px;
         }
 
@@ -127,7 +127,7 @@
         }
 
         .left-logo img {
-            height: 48px;
+            height: 65px;
             width: auto;
         }
 
@@ -212,19 +212,19 @@
 
         .verify-btn {
             position: absolute;
-            right: 2px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 3px 6px;
-            font-size: 11px;
-            font-weight: 600;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            background-color: transparent;
-            color: #000000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 9px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
         }
 
         .verify-btn:hover {
@@ -327,6 +327,9 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .left-logo img{
+                display: none;
+            }
             .main-container {
                 flex-direction: column;
             }
@@ -359,7 +362,7 @@
             }
 
             .benefit-list li {
-                font-size: 13px;
+                font-size: 14px;
                 margin-bottom: 6px;
                 gap: 10px;
             }
@@ -389,88 +392,29 @@
             }
 
             .form-card .form-subtitle {
-                font-size: 12px;
+                font-size: 14px;
                 margin-bottom: 14px;
             }
 
             .logo-container img {
-                height: 32px;
+                height: 44px;
             }
 
             .phone-input-wrapper .form-control {
                 padding-right: 80px;
             }
 
-            .verify-btn {
-                padding: 2px 5px;
-                font-size: 10px;
-            }
-
             .form-group label {
-                font-size: 13px;
+                font-size: 14px;
                 margin-bottom: 6px;
             }
+            .form-divider p{
+                  font-size: 14px;
+            }
+
         }
 
-        @media (max-width: 480px) {
-            .left-section {
-                padding: 16px 12px;
-            }
-
-            .right-section {
-                padding: 12px;
-            }
-
-            .left-content h1 {
-                font-size: 18px;
-                line-height: 24px;
-                margin-bottom: 10px;
-            }
-
-            .left-content p {
-                font-size: 13px;
-                line-height: 18px;
-                margin-bottom: 12px;
-            }
-
-            .benefit-list li {
-                font-size: 12px;
-                margin-bottom: 5px;
-            }
-
-            .form-card {
-                padding: 14px;
-            }
-
-            .form-card h2 {
-                font-size: 16px;
-                margin-bottom: 3px;
-            }
-
-            .form-card .form-subtitle {
-                font-size: 11px;
-                margin-bottom: 12px;
-            }
-
-            .form-spacing {
-                margin-bottom: 8px;
-            }
-
-            .logo-container img {
-                height: 28px;
-            }
-
-            .form-group label {
-                font-size: 12px;
-                margin-bottom: 5px;
-            }
-
-            .submit-btn {
-                height: 38px;
-                font-size: 13px;
-                margin-top: 8px;
-            }
-        }
+      
     </style>
 </head>
 <body>
@@ -511,7 +455,7 @@
             <div class="content-wrapper">
                 <!-- Login Card (Shown First) -->
                 <div id="loginCard" class="form-card">
-                    <div class="logo-container">
+                    <div class="logo-container d-block d-md-none">
                         <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide Logo">
                     </div>
                     <h2>Welcome Back</h2>
@@ -542,7 +486,7 @@
 
                 <!-- Register Card (Hidden) -->
                 <div id="registerCard" class="form-card hidden-form">
-                    <div class="logo-container">
+                    <div class="logo-container d-block d-md-none">
                         <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide Logo">
                     </div>
                     <h2>Create Your Operator Account</h2>

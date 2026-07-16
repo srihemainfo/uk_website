@@ -4397,6 +4397,26 @@
 
         /* Mobile only */
         @media (max-width:768px) {
+.iti input{
+        padding:   12px;
+        font-size: 17px;
+}
+
+            /* .time-hint {
+    font-size: 14px;
+   
+    margin-bottom: 7px;
+} */
+.time-inputs {
+    margin-bottom:0px;
+}
+
+.time-panel-header {
+    margin-bottom: 8px;
+}
+             .time-selection-panel {
+                            padding: 10px 40px;
+                    }
             .driver-divider {
                 display: none;
             }
@@ -6548,7 +6568,7 @@
                         </div> <!-- Close Time Column -->
                     </div> <!-- Close Grid -->
                     <!-- ONLY VISIBLE WHEN AIRPORT †’ AIRPORT -->
-                    <div id="airportLandingFields" style="display: none; margin-top: 15px;">
+                    <div id="airportLandingFields" style="display: none;">
                         <div class="form-group-uber">
                             <label><i class="fas fa-hourglass-end"></i> Pickup After Landing</label>
                             <select id="pickupAfterLanding">
@@ -6562,10 +6582,10 @@
                         </div>
                     </div>
                 </div>
-                <p class="time-hint">
+                <!-- <p class="time-hint">
                     <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
-                </p>
-                <button id="timePanelDoneBtn" class="btn-search-uber" onclick="saveSchedule()">
+                </p> -->
+                <button id="timePanelDoneBtn" class="btn-search-uber mt-5" onclick="saveSchedule()">
                     See Prices
                 </button>
             </div>

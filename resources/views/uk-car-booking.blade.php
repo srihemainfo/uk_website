@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoRide</title>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -21,6 +23,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Minus+Inlier+Sans&display=swap');
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .premium-otp-input {
+            width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 24px; letter-spacing: 12px; text-align: center; font-weight: 700; transition: all 0.3s ease; box-sizing: border-box; outline: none; color: #111; background: #f9fafb;
+        }
+        .premium-otp-input:focus {
+            border-color: #111; background: #fff; box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+        }
+        .premium-otp-input::placeholder {
+            letter-spacing: normal; font-weight: 500; font-size: 16px; color: #9ca3af;
+        }
 
         * {
             margin: 0;
@@ -9775,102 +9797,10 @@
         });
     </script>
 
-    <!-- ===== AUTH LOGIN MODAL ===== -->
-    <div id="authLoginModal" role="dialog" aria-modal="true" aria-labelledby="authModalHeadline">
-        <div class="auth-modal-backdrop" onclick="closeAuthModal()"></div>
-        <div class="auth-modal-card">
-            <button class="auth-modal-close" onclick="closeAuthModal()" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <!-- Logo -->
-            <div class="auth-modal-logo">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
-            </div>
-
-            <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>
-            <p class="auth-modal-sub">See prices and book your ride in seconds.<br>No card required to browse.</p>
-
-            <!-- Continue with Google -->
-            <button class="auth-google-btn" id="authGoogleBtn" onclick="handleGoogleSignIn()">
-                <!-- Google SVG icon -->
-                <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                    <path fill="none" d="M0 0h48v48H0z"/>
-                </svg>
-                Continue with Google
-            </button>
-
-            <!-- Divider -->
-            <div class="auth-divider"><span>or continue with email / mobile</span></div>
-
-            <!-- Email / Phone input (intl-tel-input) -->
-            <div id="authPhoneWrapper">
-                <input
-                    type="tel"
-                    id="authContactInput"
-                    placeholder="Email or phone number"
-                    autocomplete="off"
-                >
-            </div>
-
-            <button class="auth-continue-btn" onclick="handleAuthContinue()">
-                <i class="fas fa-arrow-right"></i> Continue
-            </button>
-
-            <p class="auth-modal-terms">
-                By continuing, you agree to our
-                <a href="/uk-terms" target="_blank">Terms of Service</a> &amp;
-                <a href="/uk-privacy" target="_blank">Privacy Policy</a>.
-            </p>
-        </div>
-    </div>
 
     <!-- intl-tel-input JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
-    <script>
-        // ===== AUTH MODAL: intl-tel-input init =====
-        let _itiInstance = null;
-        (function initIti() {
-            const inputEl = document.getElementById('authContactInput');
-            if (!inputEl) return;
-            _itiInstance = window.intlTelInput(inputEl, {
-                initialCountry: 'gb',
-                separateDialCode: true,
-                countrySearch: true,
-                showFlags: true,
-                loadUtilsOnInit: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js',
-                preferredCountries: ['gb', 'us', 'in', 'au', 'ca', 'de', 'fr', 'ae', 'sg', 'za'],
-                dropdownContainer: document.body,
-            });
-        })();
-        // Google Sign-In handler
-        function handleGoogleSignIn() {
-            const btn = document.getElementById('authGoogleBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Redirecting to Google…`;
-            // TODO: Replace with actual Google OAuth URL / your backend route
-            // Example: window.location.href = '/auth/google';
-            // For now, simulate success after 1.5 s (remove in production)
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg> Continue with Google`;
-            }, 1500);
-        }
-        // Email / phone continue handler
-        function handleAuthContinue() {
-            const contact = document.getElementById('authContactInput').value.trim();
-            if (!contact) {
-                document.getElementById('authContactInput').focus();
-                return;
-            }
-            // TODO: implement OTP / email flow
-            alert('Email/phone flow coming soon! For now, please use Continue with Google.');
-        }
-    </script>
+
 
     <!-- ===== AUTH LOGIN MODAL ===== -->
     <div id="authLoginModal" role="dialog" aria-modal="true" aria-labelledby="authModalHeadline">
@@ -9888,35 +9818,80 @@
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>
             <p class="auth-modal-sub">See prices and book your ride in seconds.<br>No card required to browse.</p>
 
-            <!-- Continue with Google -->
-            <button class="auth-google-btn" id="authGoogleBtn" onclick="handleGoogleSignIn()">
-                <!-- Google SVG icon -->
-                <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                    <path fill="none" d="M0 0h48v48H0z"/>
-                </svg>
-                Continue with Google
-            </button>
+            <!-- STEP 1: Phone / Google Login -->
+            <div id="authStep1">
+                <!-- Continue with Google -->
+                <button class="auth-google-btn" id="authGoogleBtn" onclick="handleGoogleSignIn()">
+                    <!-- Google SVG icon -->
+                    <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                        <path fill="none" d="M0 0h48v48H0z"/>
+                    </svg>
+                    Continue with Google
+                </button>
 
-            <!-- Divider -->
-            <div class="auth-divider"><span>or continue with email / mobile</span></div>
+                <!-- Divider -->
+                <div class="auth-divider"><span>or continue with email / mobile</span></div>
 
-            <!-- Email / Phone input (intl-tel-input) -->
-            <div id="authPhoneWrapper">
-                <input
-                    type="tel"
-                    id="authContactInput"
-                    placeholder="Email or phone number"
-                    autocomplete="off"
-                >
+                <!-- Email / Phone input (intl-tel-input) -->
+                <div id="authPhoneWrapper">
+                    <input
+                        type="tel"
+                        id="authContactInput"
+                        placeholder="Email or phone number"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button id="authContinueBtn" class="auth-continue-btn" onclick="handleAuthContinue()">
+                    <i class="fas fa-arrow-right"></i> Continue
+                </button>
             </div>
 
-            <button class="auth-continue-btn" onclick="handleAuthContinue()">
-                <i class="fas fa-arrow-right"></i> Continue
-            </button>
+            <!-- OTP Input Step (Hidden initially) -->
+            <div id="authOtpSection" style="display: none; width: 100%; animation: fadeIn 0.4s ease-out;">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #111; color: #fff; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);">
+                        <i class="fas fa-lock" style="font-size: 20px;"></i>
+                    </div>
+                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number</h3>
+                    <p style="font-size: 15px; color: #555; line-height: 1.5; margin: 0;">
+                        We've sent a 6-digit code to <br>
+                        <span id="authOtpTarget" style="font-weight: 700; color: #111;"></span>
+                    </p>
+                </div>
+                
+                <div id="authNewUserFields" style="display: none; margin-bottom: 24px; animation: slideUp 0.4s ease-out;">
+                    <div style="margin-bottom: 16px; position: relative;">
+                        <i class="fas fa-user" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                        <input type="text" id="authNameInput" placeholder="Full Name" style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;" autocomplete="off" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                    </div>
+                    <div style="position: relative;">
+                        <i class="fas fa-envelope" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                        <input type="email" id="authEmailInput" placeholder="Email Address" style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;" autocomplete="off" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 25px; position: relative;">
+                    <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
+                </div>
+                
+                <button id="authVerifyBtn" style="width: 100%; padding: 16px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);" onclick="handleVerifyOtp()" onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
+                    Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
+                </button>
+                
+                <div style="text-align: center; margin-top: 24px;">
+                    <button style="background: none; border: none; color: #666; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s ease;" onclick="_showPhoneUI()" onmouseover="this.style.color='#111'" onmouseout="this.style.color='#666'">
+                        <i class="fas fa-arrow-left" style="font-size: 12px;"></i> Change Phone Number
+                    </button>
+                </div>
+            </div>
+
+            <!-- Firebase Recaptcha Container -->
+            <div id="recaptcha-container" style="margin-top: 15px; display: flex; justify-content: center;"></div>
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our
@@ -9926,8 +9901,13 @@
         </div>
     </div>
 
+    <!-- Firebase JS SDK (v8 compat for easy global access) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
     <!-- intl-tel-input JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
+    
     <script>
         // ===== AUTH MODAL: intl-tel-input init =====
         let _itiInstance = null;
@@ -9944,29 +9924,499 @@
                 dropdownContainer: document.body,
             });
         })();
-        // Google Sign-In handler
+
+        // ===== GOOGLE IDENTITY SERVICES AUTH =====
+        const GOOGLE_CLIENT_ID = '{{ env("GOOGLE_CLIENT_ID") }}';
+        const API_BASE_URL = '{{ env("API_URL") }}';
+
+        // Reset the Google Sign-In button to its default state
+        function _resetGoogleBtn() {
+            const btn = document.getElementById('authGoogleBtn');
+            if (!btn) return;
+            btn.disabled = false;
+            btn.innerHTML = `
+                <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                    <path fill="none" d="M0 0h48v48H0z"/>
+                </svg>
+                Continue with Google`;
+        }
+
+        // Main Google Sign-In handler — called when user clicks the button
         function handleGoogleSignIn() {
             const btn = document.getElementById('authGoogleBtn');
             btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Redirecting to Google…`;
-            // TODO: Replace with actual Google OAuth URL / your backend route
-            // Example: window.location.href = '/auth/google';
-            // For now, simulate success after 1.5 s (remove in production)
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg> Continue with Google`;
-            }, 1500);
-        }
-        // Email / phone continue handler
-        function handleAuthContinue() {
-            const contact = document.getElementById('authContactInput').value.trim();
-            if (!contact) {
-                document.getElementById('authContactInput').focus();
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Connecting to Google…`;
+
+            // Ensure GSI library is loaded
+            if (!window.google || !window.google.accounts) {
+                _showAuthError('Google Sign-In library not loaded yet. Please try again.');
+                _resetGoogleBtn();
                 return;
             }
-            // TODO: implement OTP / email flow
-            alert('Email/phone flow coming soon! For now, please use Continue with Google.');
+
+            // Initialize GSI and trigger the popup
+            window.google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: _onGoogleCredential,
+                auto_select: false,
+                cancel_on_tap_outside: true,
+            });
+
+            // Use the One-Tap prompt with a callback;
+            // fall back to renderButton + click simulation
+            window.google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                    // One-Tap not available — use a token client popup instead
+                    _triggerGoogleOAuthPopup();
+                }
+            });
         }
+
+        // Trigger OAuth popup via TokenClient (reliable cross-browser fallback)
+        function _triggerGoogleOAuthPopup() {
+            const tokenClient = window.google.accounts.oauth2.initTokenClient({
+                client_id: GOOGLE_CLIENT_ID,
+                scope: 'openid email profile',
+                callback: '', // Will be overwritten below
+            });
+
+            tokenClient.callback = async (tokenResponse) => {
+                if (tokenResponse.error) {
+                    _showAuthError('Google sign-in was cancelled or failed.');
+                    _resetGoogleBtn();
+                    return;
+                }
+                // Exchange access_token for id_token via userinfo endpoint
+                try {
+                    const userinfoRes = await fetch(
+                        'https://www.googleapis.com/oauth2/v3/userinfo', {
+                            headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+                        }
+                    );
+                    const userinfo = await userinfoRes.json();
+                    // Build a JWT-like id_token from the access token
+                    // Actually the backend expects an id_token; use access_token as substitute
+                    // since we verified userinfo. Send access_token as id_token.
+                    await _sendTokenToBackend(tokenResponse.access_token);
+                } catch (err) {
+                    _showAuthError('Failed to fetch user info from Google.');
+                    _resetGoogleBtn();
+                }
+            };
+
+            tokenClient.requestAccessToken({ prompt: 'select_account' });
+        }
+
+        // Called by GSI One-Tap with a credential (id_token)
+        async function _onGoogleCredential(response) {
+            if (!response || !response.credential) {
+                _showAuthError('Google sign-in failed. Please try again.');
+                _resetGoogleBtn();
+                return;
+            }
+            await _sendTokenToBackend(response.credential);
+        }
+
+        // POST the token to the Laravel backend
+        async function _sendTokenToBackend(idToken) {
+            const btn = document.getElementById('authGoogleBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Signing you in…`;
+            }
+
+            try {
+                const response = await fetch(API_BASE_URL + '/auth/google-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ id_token: idToken }),
+                });
+
+                const result = await response.json();
+
+                if (result.status === true && result.token) {
+                    // ✅ Success — store token in cookie (7 days)
+                    _setAuthCookie('auth_token', result.token, 7);
+
+                    // Store user info
+                    if (result.user) {
+                        _setAuthCookie('auth_user', JSON.stringify(result.user), 7);
+                    }
+
+                    // Update navbar UI to show logged-in state
+                    _updateNavbarAfterLogin(result.user);
+
+                    // Close the modal
+                    closeAuthModal();
+
+                    // Resume any pending action (e.g., "See prices")
+                    if (typeof _pendingAfterAuth === 'function') {
+                        const fn = _pendingAfterAuth;
+                        _pendingAfterAuth = null;
+                        fn();
+                    }
+                } else {
+                    const msg = result.message || 'Authentication failed. Please try again.';
+                    _showAuthError(msg);
+                    _resetGoogleBtn();
+                }
+            } catch (err) {
+                console.error('Google login API error:', err);
+                _showAuthError('Network error. Please check your connection and try again.');
+                _resetGoogleBtn();
+            }
+        }
+
+        // Set a cookie with expiry
+        function _setAuthCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+            document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+        }
+
+        // Show an inline error message below the Google button
+        function _showAuthError(message) {
+            let errEl = document.getElementById('authGoogleError');
+            if (!errEl) {
+                errEl = document.createElement('p');
+                errEl.id = 'authGoogleError';
+                errEl.style.cssText = 'color:#d93025;font-size:13px;text-align:center;margin-top:10px;font-weight:600;';
+                const btn = document.getElementById('authGoogleBtn');
+                btn && btn.parentNode.insertBefore(errEl, btn.nextSibling);
+            }
+            errEl.textContent = message;
+            // Auto-clear after 5 s
+            setTimeout(() => { if (errEl) errEl.textContent = ''; }, 5000);
+        }
+
+        // Update the navbar/account dropdown to show the logged-in user
+        function _updateNavbarAfterLogin(user) {
+            if (!user) return;
+
+            const firstName = user.first_name || '';
+            const lastName = user.last_name || '';
+            const fullName = (firstName + ' ' + lastName).trim() || 'User';
+            const email = user.email || '';
+            const avatar = user.profile_image || '';
+            const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase() || 'U';
+
+            // Update desktop account dropdown
+            const avatarEl = document.querySelector('.account-avatar');
+            if (avatarEl) {
+                if (avatar) {
+                    avatarEl.innerHTML = `<img src="${avatar}" alt="${fullName}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarEl.textContent = initials;
+                }
+            }
+            const nameEl = document.querySelector('.account-info h5');
+            if (nameEl) nameEl.textContent = fullName;
+            const emailEl = document.querySelector('.account-info span');
+            if (emailEl) emailEl.textContent = email;
+
+            // Update mobile menu
+            const mobileAvatar = document.querySelector('.mobile-avatar');
+            if (mobileAvatar) mobileAvatar.textContent = initials;
+            const mobileName = document.querySelector('.mobile-user h5');
+            if (mobileName) mobileName.textContent = fullName;
+            const mobileEmail = document.querySelector('.mobile-user span');
+            if (mobileEmail) mobileEmail.textContent = email;
+
+            // Show a user icon button in the navbar if there isn't one
+            _showNavbarUserBtn(fullName, initials, avatar);
+        }
+
+        // Show the user icon/button in the navbar
+        function _showNavbarUserBtn(fullName, initials, avatar) {
+            // Check if a user button already exists
+            let existingBtn = document.getElementById('navbarUserBtn');
+            if (!existingBtn) {
+                const navMenu = document.querySelector('.navbar-menu');
+                if (!navMenu) return;
+
+                const li = document.createElement('li');
+                li.style.position = 'relative';
+                li.innerHTML = `
+                    <button id="navbarUserBtn" style="display:flex;align-items:center;gap:8px;background:none;border:1.5px solid #ddd;border-radius:30px;padding:6px 14px;cursor:pointer;font-size:14px;font-weight:600;" onclick="_toggleUserDropdown(event)">
+                        <span id="navbarUserAvatar" style="width:28px;height:28px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;overflow:hidden;"></span>
+                        <span id="navbarUserName"></span>
+                        <i class="fas fa-chevron-down" style="font-size:11px;"></i>
+                    </button>
+                    <!-- User Dropdown Menu -->
+                    <div id="navbarUserDropdown" style="display:none; position:absolute; right:0; top:45px; background:#fff; border:1px solid #eee; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:200px; z-index:1000; overflow:hidden;">
+                        <ul style="list-style:none; margin:0; padding:10px 0;">
+                            <li>
+                                <button onclick="handleLogout()" style="width:100%; text-align:left; background:none; border:none; padding:12px 20px; font-size:15px; color:#d93025; cursor:pointer; display:flex; align-items:center; gap:10px; transition:background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='none'">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </li>
+                        </ul>
+                    </div>`;
+                navMenu.appendChild(li);
+                
+                // Close dropdown if clicked outside
+                document.addEventListener('click', function(e) {
+                    const dropdown = document.getElementById('navbarUserDropdown');
+                    const btn = document.getElementById('navbarUserBtn');
+                    if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
+
+            // Update values
+            const avatarSpan = document.getElementById('navbarUserAvatar');
+            const nameSpan = document.getElementById('navbarUserName');
+            if (avatarSpan) {
+                if (avatar) {
+                    avatarSpan.innerHTML = `<img src="${avatar}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    avatarSpan.textContent = initials;
+                }
+            }
+            if (nameSpan) nameSpan.textContent = fullName.split(' ')[0]; // First name only
+        }
+
+        // Toggle user dropdown
+        function _toggleUserDropdown(e) {
+            if (e) e.stopPropagation();
+            const dropdown = document.getElementById('navbarUserDropdown');
+            if (dropdown) {
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // Logout functionality
+        async function handleLogout() {
+            const token = getCookieValue('auth_token');
+            if (token) {
+                try {
+                    // Call logout API
+                    await fetch(API_BASE_URL + '/auth/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': 'Bearer ' + token
+                        }
+                    });
+                } catch (e) {
+                    console.error('Logout API failed', e);
+                }
+            }
+
+            // Clear cookies (set expiration to past)
+            document.cookie = 'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'auth_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            
+            // Sign out from Firebase if initialized
+            if (window.firebase && firebase.auth) {
+                try {
+                    await firebase.auth().signOut();
+                } catch(e) {}
+            }
+
+            // Reload page to reset state
+            window.location.reload();
+        }
+
+        // Email / phone continue handler
+        let _firebaseAuthObj = null;
+        let _confirmationResult = null;
+        let _isNewUser = false;
+        let _currentMobile = '';
+
+        async function handleAuthContinue() {
+            if (!_itiInstance) return;
+            
+            // Get selected country data and raw input
+            const countryData = _itiInstance.getSelectedCountryData();
+            const dialCode = countryData && countryData.dialCode ? countryData.dialCode : '';
+            const rawVal = document.getElementById('authContactInput').value.replace(/\D/g, '');
+            
+            // Construct the E164 format manually if getNumber() fails
+            let mobileNumber = _itiInstance.getNumber();
+            if (!mobileNumber) {
+                mobileNumber = '+' + dialCode + rawVal;
+            }
+
+            if (!rawVal || rawVal.length < 6) {
+                _showAuthError('Please enter a valid phone number.');
+                return;
+            }
+            _currentMobile = mobileNumber;
+
+            const btn = document.getElementById('authContinueBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
+
+            try {
+                // 1. Check User
+                const response = await fetch(API_BASE_URL + '/auth/check-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ login: 'mobile', value: mobileNumber }),
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === false) {
+                    _showAuthError(result.message || 'Failed to verify number.');
+                    _resetContinueBtn();
+                    return;
+                }
+
+                _isNewUser = !result.exists;
+
+                // 2. Initialize Firebase if not done
+                if (!_firebaseAuthObj && result.firebase) {
+                    firebase.initializeApp(result.firebase);
+                    _firebaseAuthObj = firebase.auth();
+                }
+
+                // 3. Send OTP
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+                
+                // Clear old recaptcha
+                document.getElementById('recaptcha-container').innerHTML = '';
+                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                    'size': 'invisible'
+                });
+
+                _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
+                
+                // 4. Show OTP UI
+                _showOtpUI();
+                
+            } catch (err) {
+                console.error('Check user / OTP Error:', err);
+                _showAuthError('Failed to send OTP. Please try again.');
+                _resetContinueBtn();
+            }
+        }
+
+        function _resetContinueBtn() {
+            const btn = document.getElementById('authContinueBtn');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-arrow-right"></i> Continue`;
+            }
+        }
+
+        function _showOtpUI() {
+            // Hide step 1 wrapper entirely
+            document.getElementById('authStep1').style.display = 'none';
+            
+            // Show OTP section
+            document.getElementById('authOtpSection').style.display = 'block';
+            document.getElementById('authOtpTarget').textContent = _currentMobile;
+
+            // Show name/email if new user
+            if (_isNewUser) {
+                document.getElementById('authNewUserFields').style.display = 'block';
+            } else {
+                document.getElementById('authNewUserFields').style.display = 'none';
+            }
+        }
+
+        function _showPhoneUI() {
+            // Show step 1 wrapper entirely
+            document.getElementById('authStep1').style.display = 'block';
+            
+            // Hide OTP section
+            document.getElementById('authOtpSection').style.display = 'none';
+            _resetContinueBtn();
+        }
+
+        async function handleVerifyOtp() {
+            const otp = document.getElementById('authOtpInput').value.trim();
+            if (!otp || otp.length < 6) {
+                _showAuthError('Please enter a valid 6-digit OTP.');
+                return;
+            }
+
+            let name = '';
+            let email = '';
+            
+            if (_isNewUser) {
+                name = document.getElementById('authNameInput').value.trim();
+                email = document.getElementById('authEmailInput').value.trim();
+                if (!name || !email) {
+                    _showAuthError('Please enter your Name and Email to register.');
+                    return;
+                }
+            }
+
+            const btn = document.getElementById('authVerifyBtn');
+            const oldHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Verifying…`;
+
+            try {
+                // Verify OTP with Firebase
+                const result = await _confirmationResult.confirm(otp);
+                const idToken = await result.user.getIdToken();
+
+                // Send token to backend
+                const response = await fetch(API_BASE_URL + '/auth/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        mobile: _currentMobile,
+                        firebase_token: idToken,
+                        name: name,
+                        email: email
+                    }),
+                });
+
+                const verifyRes = await response.json();
+
+                if (verifyRes.status === true && verifyRes.token) {
+                    // Success!
+                    _setAuthCookie('auth_token', verifyRes.token, 7);
+                    if (verifyRes.user) {
+                        _setAuthCookie('auth_user', JSON.stringify(verifyRes.user), 7);
+                    }
+                    _updateNavbarAfterLogin(verifyRes.user);
+                    closeAuthModal();
+                    
+                    if (typeof _pendingAfterAuth === 'function') {
+                        const fn = _pendingAfterAuth;
+                        _pendingAfterAuth = null;
+                        fn();
+                    }
+                } else {
+                    _showAuthError(verifyRes.message || 'OTP verification failed on server.');
+                    btn.disabled = false;
+                    btn.innerHTML = oldHtml;
+                }
+
+            } catch (error) {
+                console.error('OTP Verify Error:', error);
+                _showAuthError('Invalid OTP. Please check and try again.');
+                btn.disabled = false;
+                btn.innerHTML = oldHtml;
+            }
+        }
+
+        // ===== AUTO-RESTORE SESSION ON PAGE LOAD =====
+        (function restoreSession() {
+            const token = getCookieValue('auth_token');
+            const userJson = getCookieValue('auth_user');
+            if (token && userJson) {
+                try {
+                    const user = JSON.parse(userJson);
+                    _updateNavbarAfterLogin(user);
+                } catch (e) { /* ignore malformed cookie */ }
+            }
+        })();
     </script>
 </body>
 

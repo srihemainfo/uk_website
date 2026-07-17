@@ -35,7 +35,7 @@
         }
 
         .premium-otp-input {
-            width: 100%; padding: 16px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 24px; letter-spacing: 12px; text-align: center; font-weight: 700; transition: all 0.3s ease; box-sizing: border-box; outline: none; color: #111; background: #f9fafb;
+            width: 100%; padding: 5px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 24px; letter-spacing: 12px; text-align: center; font-weight: 700; transition: all 0.3s ease; box-sizing: border-box; outline: none; color: #111; background: #f9fafb;
         }
         .premium-otp-input:focus {
             border-color: #111; background: #fff; box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
@@ -4397,6 +4397,7 @@
 
         /* Mobile only */
         @media (max-width:768px) {
+
 .iti input{
         padding:   12px;
         font-size: 17px;
@@ -4437,7 +4438,7 @@
 
             .mobile-from,
             .mobile-to {
-                font-size: 13px;
+                font-size: 16px !important;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -4454,7 +4455,7 @@
             }
 
             .mobile-trip-item {
-                font-size: 17px;
+                font-size: 16px;
             }
         }
 
@@ -4581,11 +4582,15 @@
             }
 
             .booking-summary-item {
-                font-size: 12px;
+                font-size: 16px;
             }
         }
 
         @media (max-width: 576px) {
+            .counter-btn{
+                width: 28px;
+    height: 28px;
+            }
             .passenger-luggage-card {
                 padding: 14px;
                 border-radius: 10px;
@@ -5064,7 +5069,7 @@
                 padding-bottom: 30px !important;
             }
 
-            .navbar-menu {
+            .navbar-menu.hide-on-mobile {
                 display: none;
             }
 
@@ -5171,23 +5176,23 @@
             }
 
             .booking-summary-item {
-                font-size: 13px;
+                font-size: 16px;
             }
 
             #mcsEnteredDetails {
                 display: grid !important;
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 8px !important;
+                gap: 12px !important;
             }
 
             #mcsEnteredDetails .booking-summary-item {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                background: #f7f7f7;
-                border: 1px solid #efefef;
+                /* background: #f7f7f7;
+                border: 1px solid #efefef; */
                 border-radius: 10px;
-                padding: 8px 10px;
+                /* padding: 8px 10px; */
                 justify-content: flex-start !important;
                 min-width: 0;
                 overflow: hidden;
@@ -5206,7 +5211,7 @@
             }
 
             #mcsEnteredDetails .summary-value {
-                font-size: 12px !important;
+                font-size: 16px !important;
                 font-weight: 700;
                 color: #111;
                 text-align: left !important;
@@ -5216,14 +5221,16 @@
             }
 
             #mcsCarDetails .selected-car-row {
-                background: #f9f9f9;
-                border-radius: 10px;
-                padding: 10px 12px;
-                align-items: center;
-                justify-content: space-between;
-                gap: 8px;
+                     background: #f9f9f9;
+        border-radius: 10px;
+        padding: 8px 12px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
             }
-
+.confirm-modal-content{
+    padding:0px !important;
+}
             #mcsCarDetails .summary-car-name {
                 font-size: 14px;
                 font-weight: 700;
@@ -5232,7 +5239,7 @@
             }
 
             #mcsCarDetails .summary-car-price {
-                font-size: 15px !important;
+                font-size: 16px !important;
                 font-weight: 800;
                 color: #111;
                 white-space: nowrap;
@@ -5341,7 +5348,7 @@
             }
 
             .passenger-counter-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .passenger-luggage-card {
@@ -5492,7 +5499,7 @@
 
         .vehicle-left {
             position: relative;
-            width: 185px;
+            width: 175px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -5503,24 +5510,13 @@
             object-fit: contain;
         }
 
-        .badge-recommended {
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            background: #f9c106;
-            color: #000;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 6px;
-            z-index: 2;
-        }
+    
 
         .vehicle-right {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: space-around;
         }
 
         .v-header {
@@ -5687,13 +5683,7 @@
                 object-fit: contain;
             }
 
-            .badge-recommended {
-                position: absolute;
-                top: -5px;
-                left: -5px;
-                font-size: 12px;
-                padding: 2px 6px;
-            }
+           
 
             .vehicle-right {
                 flex: 1;
@@ -5997,17 +5987,22 @@
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
         }
+
+        
+        .otp-code{
+            font-size: 15px; color: #555; line-height: 1.5; margin: 0;
+        }
         .auth-modal-card {
-            position: relative;
-            z-index: 1;
-            background: #fff;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 420px;
-            margin: 16px;
-            padding: 36px 32px 32px;
-            box-shadow: 0 32px 80px rgba(0,0,0,0.22);
-            animation: slideUpModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: 24px;
+    width: 100%;
+   max-width: 460px;
+    margin: 16px;
+    padding: 16px 24px 16px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+    animation: slideUpModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         @keyframes slideUpModal {
             from { opacity: 0; transform: translateY(40px) scale(0.96); }
@@ -6038,23 +6033,23 @@
             margin-bottom: 6px;
         }
         .auth-modal-logo img {
-            height: 38px;
+            height: 45px;
             object-fit: contain;
         }
         .auth-modal-headline {
             text-align: center;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
             color: #111;
             margin-bottom: 4px;
             letter-spacing: -0.3px;
         }
         .auth-modal-sub {
-            text-align: center;
-            font-size: 13.5px;
-            color: #777;
-            margin-bottom: 28px;
-            line-height: 1.5;
+               text-align: center;
+    font-size: 14px;
+    /* color: #777; */
+    margin-bottom: 10px;
+    line-height: 1.5;
         }
         /* Google button */
         .auth-google-btn {
@@ -6103,10 +6098,10 @@
             background: #ebebeb;
         }
         .auth-divider span {
-            font-size: 12px;
-            color: #aaa;
-            font-weight: 600;
-            white-space: nowrap;
+           font-size: 14px;
+    /* color: #aaa; */
+    font-weight: 600;
+    white-space: nowrap;
         }
         /* email/phone input row - REMOVED (replaced by intl-tel-input) */
         /* ===== intl-tel-input overrides for auth modal ===== */
@@ -6203,11 +6198,7 @@
             margin-right: 8px;
         }
         /* Logo fix: light/white logo needs to be dark on white card */
-        .auth-modal-logo img {
-            height: 38px;
-            object-fit: contain;
-            /* filter: brightness(0); */
-        }
+        
         .auth-continue-btn {
             display: flex;
             align-items: center;
@@ -6234,11 +6225,10 @@
         }
         .auth-continue-btn:active { transform: translateY(0); }
         .auth-modal-terms {
-            text-align: center;
-            font-size: 11.5px;
-            color: #aaa;
-            margin-top: 18px;
-            line-height: 1.6;
+                text-align: center;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 0px;
         }
         .auth-modal-terms a {
             color: #777;
@@ -6393,10 +6383,12 @@
                     </div>
                     <div id="mcsCarDetails"
                         style="display:none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
-                        <div class="selected-car-row" style="margin-bottom: 15px;">
+                        <div class="selected-car-row" style="margin-bottom: 8px;">
                             <div class="summary-car-details">
-                                <h4 class="summary-car-name" id="mcsCarName"
-                                    style="font-size: 16px; margin-bottom: 6px; font-weight: 700;">-</h4>
+                               <h4 style="font-size:16px; margin-bottom:6px; font-weight:700; display:flex; align-items:center; gap:8px;">
+    <i class="fas fa-car text-secondary"></i>
+    <span id="mcsCarName">-</span>
+</h4>
 
                             </div>
                             <div class="summary-car-price" id="mcsCarPrice"
@@ -6614,6 +6606,7 @@
 
                                     <input type="text" id="pickupInput" placeholder="Enter pickup location"
                                         class="location-input-field" autocomplete="off"
+                                        onfocus="scrollToInputMobile(this)"
                                         onkeyup="handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')">
                                     <div class="location-suggestions" id="pickupSuggestions"></div>
@@ -6628,6 +6621,7 @@
 
                                     <input type="text" id="dropoffInput" placeholder="Enter dropoff location"
                                         class="location-input-field" autocomplete="off"
+                                        onfocus="scrollToInputMobile(this)"
                                         onkeyup="handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')">
                                     <div class="location-suggestions" id="dropoffSuggestions"></div>
@@ -6994,7 +6988,7 @@
                             <!-- Counters -->
                             <div class="passenger-counter-grid">
                                 <div class="passenger-counter-item">
-                                    <label>No Of Passenger</label>
+                                    <label>Passengers</label>
                                     <div class="counter-widget">
                                         <button type="button" class="counter-btn"
                                             onclick="updateCounter('passengerCount', -1, 1, 8)">-</button>
@@ -7186,7 +7180,7 @@
                         </button>
                     </div>
                     <div class="btn-group-uber step-bottom-btns" id="additionalDetailsBtns" style="display: none;">
-                        <button class="btn-back-uber" onclick="goBack(3)">
+                        <button class="btn-back-uber" onclick="goBackToPersonalInfo()">
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
                         <button class="btn-search-uber" onclick="verifyPassengerDetails()">
@@ -7379,12 +7373,12 @@
                             style="text-align: center; color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 25px;">
                             Your booking has been successfully confirmed. A driver will be assigned soon.
                         </p>
-                        <div class="btn-group-uber step-bottom-btns">
-                            <button class="btn-modal-primary" onclick="completeBooking()"
-                                style="width: 100%; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
-                                <i class="fas fa-check"></i> Done
-                            </button>
-                        </div>
+                    </div>
+                    <div class="btn-group-uber step-bottom-btns">
+                        <button class="btn-modal-primary" onclick="completeBooking()"
+                            style="width: 100%; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                            <i class="fas fa-check"></i> Done
+                        </button>
                     </div>
                 </div>
             </div>
@@ -7789,7 +7783,7 @@
         </div>
     </div>
     <div class="modal-uber" id="vehicleInfoModal">
-        <div class="modal-content-uber" style="max-width:550px;">
+        <div class="modal-content-uber" style="max-width:400px;">
             <div class="for-me-modal-header"
                 style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
                 <h5 id="vehicleModalTitle" style="font-weight: 700; font-size: 18px; margin: 0;">Vehicle Details</h5>
@@ -8078,6 +8072,15 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
     <script>
+        function scrollToInputMobile(element) {
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    const topPos = element.getBoundingClientRect().top + window.scrollY - 100;
+                    window.scrollTo({ top: topPos, behavior: 'smooth' });
+                }, 300);
+            }
+        }
+
         function getIconForType(type) {
             switch (type) {
                 case 'airport':
@@ -8847,10 +8850,9 @@
             vehicles.forEach(v => {
                 const amenitiesHtml = (v.amenities || []).map(a => {
                     let icon = 'fa-check';
-                    if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi';
-                    if (a.toLowerCase().includes('air')) icon = 'fa-snowflake';
-                    if (a.toLowerCase().includes('charg')) icon = 'fa-bolt';
-                    if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage';
+                    if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi text-danger';
+                    if (a.toLowerCase().includes('air')) icon = 'fa-snowflake text-primary';
+                    if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage text-success';
                     return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> ${a}</span>`;
                 }).join('');
 
@@ -8864,12 +8866,12 @@
     </div>
 ` : '';
 
-                const recommendedBadge = v.recommended ? `<div class="badge-recommended">Recommended</div>` : '';
+              
 
                 const html = `
 <div class="vehicle-item" onclick="selectVehicle(this, ${JSON.stringify(v).replace(/"/g, '&quot;')})">
     <div class="vehicle-left">
-        ${recommendedBadge}
+   
         <img src="${v.image}" alt="${v.name}">
     </div>
     <div class="vehicle-right">
@@ -8890,15 +8892,15 @@
     <div class="v-price">£${v.price} – £${v.priceMax}</div>
 </div>
         <div class="v-sub">
-            <div class="v-rating"><i class="fas fa-star"></i> ${v.rating || '4.8'} | ${v.reviews || '100+ reviews'}</div>
-              ${tagHtml}
-        </div>
-        <div class="v-features">
+           <div class="v-features">
             <span><i class="fas fa-user"></i> ${v.capacity} </span>
             <span><i class="fas fa-suitcase"></i> ${v.luggage} </span>
             <span><i class="fas fa-clock"></i> ${v.arrivalTime || '10 min'} Arrival</span>
            
         </div>
+              ${tagHtml}
+        </div>
+       
         <div class="v-footer">
             <div class="v-amenities">
                 ${amenitiesHtml}
@@ -9022,6 +9024,13 @@
             $('#personalInfoBtns').hide();
             $('#additionalBookingDetails').show();
             $('#additionalDetailsBtns').css('display', 'flex');
+        }
+        function goBackToPersonalInfo() {
+            $('#additionalBookingDetails').hide();
+            $('#additionalDetailsBtns').hide();
+            $('#personalInfoSection').show();
+            $('#personalInfoBtns').show();
+            $('#personalInfoBtns').css('display', 'flex');
         }
         function proceedToConfirmation() {
             // Ensure payment is selected before triggering API
@@ -9680,6 +9689,7 @@
                 const actionBar = $('#mobileActionBar');
 
                 if (stepNumber === 1) {
+                    $('.navbar-menu').removeClass('hide-on-mobile');
                     $('#mobileHamburger').css('display', 'flex');
                     $('#mobileMapBtn').hide();
                     $('#bookingImage').show();
@@ -9687,7 +9697,16 @@
                     $('#mobileCompactSummary').removeClass('visible');
                     $(`#step1`).css('padding-top', '0');
                     if (actionBar.length) actionBar.removeClass('hidden');
+                } else if (stepNumber === 8) {
+                    $('.navbar-menu').addClass('hide-on-mobile');
+                    $('#mobileHamburger').hide();
+                    $('#mobileMapBtn').hide();
+                    $('#bookingImage').hide();
+                    $('#mobileCompactSummary').removeClass('visible');
+                    if (actionBar.length) actionBar.addClass('hidden');
+                    $(`#step8`).css('padding-top', '20px');
                 } else {
+                    $('.navbar-menu').addClass('hide-on-mobile');
                     $('#mobileHamburger').hide();
                     $('#mobileMapBtn').css('display', 'flex');
                     $('#bookingImage').hide();
@@ -9870,23 +9889,23 @@
                     `;
                     break;
             }
-            $("#vehicleModalContent").html(`
-                <div class="vehicle-info-section">
-                    <div class="vehicle-modal-price-range">
-                        <i class="fas fa-tag"></i>
-                        <span>Price Range: <strong>£${vehicle.price} – £${vehicle.priceMax}</strong></span>
-                    </div>
-                    <h6><i class="fas fa-info-circle"></i> Recommended for:</h6>
-                    ${recommendedHtml}
-                    <h6><i class="fas fa-child"></i> Child Seat</h6>
-                    ${vehicle.childSeat
-                    ? `<div class="child-seat-status available">Available (Max ${Math.floor(vehicle.capacity / 2)})</div>`
-                    : `<div class="child-seat-status unavailable">Not Available</div>`
-                }
-                    <button class="vehicle-modal-price-btn" onclick="closeModal('vehicleInfoModal')">Select Cabs</button>
-                </div>
-            `);
-            $("#vehicleInfoModal").addClass("show");
+        $("#vehicleModalContent").html(`
+    <div class="vehicle-info-section">
+        <div class="vehicle-modal-price-range">
+            <i class="fas fa-tag"></i>
+            <span>Price Range: <strong>£${vehicle.price} – £${vehicle.priceMax}</strong></span>
+        </div>
+
+        <h6><i class="fas fa-info-circle"></i> Recommended for:</h6>
+        ${recommendedHtml}
+
+        <button class="vehicle-modal-price-btn" onclick="closeModal('vehicleInfoModal')">
+            Select Cabs
+        </button>
+    </div>
+`);
+
+$("#vehicleInfoModal").addClass("show");
         }
         // ===== CAR SEAT COUNT UPDATE =====
         function updateCarSeatCount(delta) {
@@ -10035,12 +10054,20 @@
 
             <!-- OTP Input Step (Hidden initially) -->
             <div id="authOtpSection" style="display: none; width: 100%; animation: fadeIn 0.4s ease-out;">
-                <div style="text-align: center; margin-bottom: 25px;">
-                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #111; color: #fff; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <div style="display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #111;
+    color: #fff;
+    margin-bottom: 3px;">
                         <i class="fas fa-lock" style="font-size: 20px;"></i>
                     </div>
                     <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number</h3>
-                    <p style="font-size: 15px; color: #555; line-height: 1.5; margin: 0;">
+                    <p class ="otp-code">
                         We've sent a 6-digit code to <br>
                         <span id="authOtpTarget" style="font-weight: 700; color: #111;"></span>
                     </p>
@@ -10057,17 +10084,17 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 25px; position: relative;">
+                <div style="margin-bottom: 15px; position: relative;">
                     <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
                 </div>
                 
-                <button id="authVerifyBtn" style="width: 100%; padding: 16px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);" onclick="handleVerifyOtp()" onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
+                <button id="authVerifyBtn" style="width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);" onclick="handleVerifyOtp()" onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
                 
-                <div style="text-align: center; margin-top: 24px;">
-                    <button style="background: none; border: none; color: #666; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: color 0.2s ease;" onclick="_showPhoneUI()" onmouseover="this.style.color='#111'" onmouseout="this.style.color='#666'">
-                        <i class="fas fa-arrow-left" style="font-size: 12px;"></i> Change Phone Number
+                <div style="text-align: center; margin-top: 15px;">
+                    <button style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="_showPhoneUI()" onmouseover="this.style.color='#111'" onmouseout="this.style.color='#666'">
+                        <i class="fas fa-pen" style="font-size: 12px;"></i> Change Phone Number
                     </button>
                 </div>
             </div>

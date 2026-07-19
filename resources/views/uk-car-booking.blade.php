@@ -25,23 +25,54 @@
         @import url('https://fonts.googleapis.com/css2?family=Minus+Inlier+Sans&display=swap');
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .premium-otp-input {
-            width: 100%; padding: 5px; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 24px; letter-spacing: 12px; text-align: center; font-weight: 700; transition: all 0.3s ease; box-sizing: border-box; outline: none; color: #111; background: #f9fafb;
+            width: 100%;
+            padding: 5px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 24px;
+            letter-spacing: 12px;
+            text-align: center;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            outline: none;
+            color: #111;
+            background: #f9fafb;
         }
+
         .premium-otp-input:focus {
-            border-color: #111; background: #fff; box-shadow: 0 0 0 4px rgba(0,0,0,0.05);
+            border-color: #111;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
         }
+
         .premium-otp-input::placeholder {
-            letter-spacing: normal; font-weight: 500; font-size: 16px; color: #9ca3af;
+            letter-spacing: normal;
+            font-weight: 500;
+            font-size: 16px;
+            color: #9ca3af;
         }
 
         * {
@@ -2999,9 +3030,9 @@
 
         .summary-title {
             font-size: 15px;
-    /* font-weight: 700; */
-    /* color: #666; */
-    margin-bottom: 15px;
+            /* font-weight: 700; */
+            /* color: #666; */
+            margin-bottom: 15px;
         }
 
         .selected-car-row {
@@ -3058,9 +3089,10 @@
 
         .booking-summary-item {
             display: flex;
-            justify-content: space-between;
+            justify-content: start;
             align-items: center;
             font-size: 14px;
+            gap: 12px;
         }
 
         .summary-label {
@@ -3124,8 +3156,8 @@
             margin-bottom: 14px;
         } */
         .driver-car-banner img {
-            width: 104px;
-            height: 73px;
+            width: 145px;
+            height: 86px;
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -3224,7 +3256,7 @@
         }
 
         .bid-amount {
-            font-size: 20px;
+            font-size: 26px;
             font-weight: 700;
         }
 
@@ -3532,9 +3564,9 @@
         .rc-driver-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            background: #fafafa;
+
             border-radius: 8px;
-            padding: 12px;
+
             text-align: center;
         }
 
@@ -3583,8 +3615,8 @@
         }
 
         .rc-vehicle-img-wrapper {
-            width: 140px;
-            height: 90px;
+            width: 230px;
+            height: 155px;
             flex-shrink: 0;
             border-radius: 8px;
             overflow: hidden;
@@ -3596,7 +3628,7 @@
         .rc-vehicle-img-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
         .rc-vehicle-info-right h4 {
@@ -3620,8 +3652,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            font-size: 14px;
-            color: #555;
+            margin: 10px 0px;
             font-weight: 600;
         }
 
@@ -3633,19 +3664,21 @@
 
         .rc-vehicle-amenities-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
         }
 
         .rc-amenity-box {
-            border: 1px solid #f0f0f0;
-            border-radius: 8px;
-            padding: 10px 4px;
+            /* border: 1px solid #f0f0f0; */
+            /* border-radius: 8px; */
+            /* padding: 10px 4px; */
             display: flex;
-            flex-direction: column;
+            /* flex-direction: column; */
             align-items: center;
             gap: 6px;
             text-align: center;
+            margin: 10px 0;
+            justify-content: center;
         }
 
         .rc-amenity-box i {
@@ -3712,56 +3745,57 @@
             color: #111;
             font-weight: 600;
         }
-        .help-modal{
-    border:0;
-    border-radius:16px;
-    overflow:hidden;
-}
 
-.help-modal .modal-header{
-    border-bottom:1px solid #eee;
-    padding:16px 20px;
-}
+        .help-modal {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
 
-.help-modal .modal-title{
-    font-size:20px;
-    font-weight:700;
-}
+        .help-modal .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+        }
 
-.help-modal .btn-close{
-    font-size:14px;
-    opacity:1;
-}
+        .help-modal .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
 
-.help-modal .modal-body{
-    padding:28px 20px;
-}
+        .help-modal .btn-close {
+            font-size: 14px;
+            opacity: 1;
+        }
 
-.help-icon{
-    width:70px;
-    height:70px;
-    margin:0 auto 18px;
-    border-radius:50%;
-    background:#f8be00;
-    color:#000;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-}
+        .help-modal .modal-body {
+            padding: 28px 20px;
+        }
 
-.help-modal a{
-    color:#111;
-    text-decoration:none;
-    font-weight:600;
-}
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #f8be00;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
 
-.driver-wrap{
-        display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-}
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .driver-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
 
         @media (max-width: 576px) {
             .rc-vehicle-amenities-grid {
@@ -3769,8 +3803,14 @@
             }
 
             .rc-vehicle-top {
-                /* flex-direction: column; */
-                align-items: flex-start;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .rc-vehicle-img-wrapper {
+                width: 100%;
+                height: 180px;
             }
         }
 
@@ -4384,7 +4424,7 @@
 
         .trip-datetime-title {
             font-size: 13px;
-           
+
             font-weight: 600;
         }
 
@@ -4398,26 +4438,28 @@
         /* Mobile only */
         @media (max-width:768px) {
 
-.iti input{
-        padding:   12px;
-        font-size: 17px;
-}
+            .iti input {
+                padding: 12px;
+                font-size: 17px;
+            }
 
             /* .time-hint {
     font-size: 14px;
    
     margin-bottom: 7px;
 } */
-.time-inputs {
-    margin-bottom:0px;
-}
+            .time-inputs {
+                margin-bottom: 0px;
+            }
 
-.time-panel-header {
-    margin-bottom: 8px;
-}
-             .time-selection-panel {
-                            padding: 10px 40px;
-                    }
+            .time-panel-header {
+                margin-bottom: 8px;
+            }
+
+            .time-selection-panel {
+                padding: 10px 40px;
+            }
+
             .driver-divider {
                 display: none;
             }
@@ -4587,10 +4629,11 @@
         }
 
         @media (max-width: 576px) {
-            .counter-btn{
-                width: 28px;
-    height: 28px;
+            .counter-btn {
+                width: 28px !important;
+                height: 28px !important;
             }
+
             .passenger-luggage-card {
                 padding: 14px;
                 border-radius: 10px;
@@ -5060,7 +5103,8 @@
                 display: flex !important;
                 flex-direction: column !important;
             }
-            .form-section#step1{
+
+            .form-section#step1 {
                 padding-bottom: 0px;
             }
 
@@ -5221,16 +5265,18 @@
             }
 
             #mcsCarDetails .selected-car-row {
-                     background: #f9f9f9;
-        border-radius: 10px;
-        padding: 8px 12px;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
+                background: #f9f9f9;
+                border-radius: 10px;
+                padding: 8px 12px;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
             }
-.confirm-modal-content{
-    padding:0px !important;
-}
+
+            .confirm-modal-content {
+                padding: 0px !important;
+            }
+
             #mcsCarDetails .summary-car-name {
                 font-size: 14px;
                 font-weight: 700;
@@ -5274,9 +5320,40 @@
 
             .driver-header {
                 display: flex;
-                align-items: center;
-                gap: 8px;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 0px;
                 margin-bottom: 5px;
+                width: 100%;
+            }
+
+            .driver-car-banner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .driver-car-banner img {
+                width: 120px;
+                height: 60px;
+                object-fit: cover;
+            }
+
+            .driver-car-banner-name {
+                font-size: 13px;
+                margin-bottom: 2px;
+            }
+
+            .driver-car-banner-meta {
+                font-size: 11px;
+                gap: 6px;
+                justify-content: center;
+            }
+
+            .driver-text a {
+                white-space: nowrap;
+                display: inline-block;
+                text-align: center;
             }
 
             .driver-avatar {
@@ -5302,8 +5379,8 @@
 
             .driver-price-row {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
+                justify-content: end;
+                align-items: end;
             }
 
             .bid-amount {
@@ -5409,15 +5486,15 @@
 
             .mob-action-icon {
                 width: 43px;
-        height: 43px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 17px;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
-        background: black;
-        color: white;
+                height: 43px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 17px;
+                transition: box-shadow 0.2s ease, transform 0.2s ease;
+                background: black;
+                color: white;
             }
 
             .mob-action-btn:hover .mob-action-icon {
@@ -5502,7 +5579,9 @@
             width: 175px;
             flex-shrink: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
         .vehicle-left img {
@@ -5510,7 +5589,7 @@
             object-fit: contain;
         }
 
-    
+
 
         .vehicle-right {
             flex: 1;
@@ -5667,54 +5746,62 @@
             }
 
             .vehicle-left {
-                width: 100px;
-                height: 80px;
+                width: 130px;
+                height: auto;
+                min-height: 90px;
                 margin: 0;
                 flex-shrink: 0;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 position: relative;
             }
 
             .vehicle-left img {
                 width: 100%;
-                height: 80px;
-                object-fit: contain;
+                height: 100px;
+                object-fit: cover;
             }
 
-           
+
 
             .vehicle-right {
                 flex: 1;
+                min-width: 0;
                 display: flex;
                 flex-direction: column;
-                gap: 3px;
+                gap: 6px;
             }
 
             .v-header {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-                gap: 8px;
+                align-items: end;
+                gap: 0px;
                 margin-bottom: 0;
+                flex-direction: column-reverse;
+
             }
 
             .v-name {
                 font-size: 17px;
                 font-weight: 700;
                 margin-bottom: 0;
+                flex: 1;
+                min-width: 0;
+                word-wrap: break-word;
             }
 
             .v-price {
-                font-size: 17px;
-                font-weight: 700;
-                white-space: nowrap;
+                font-size: 20px;
+                font-weight: 800;
+                /* white-space: nowrap; */
             }
 
             .v-sub {
                 display: flex;
-                justify-content: flex-start;
+                justify-content: end;
                 font-size: 15px;
                 margin-bottom: 0;
                 gap: 8px;
@@ -5746,10 +5833,13 @@
             .v-features {
                 display: flex;
                 gap: 6px;
-                font-size: 15px;
+                font-size: 12px;
+                margin-top: 4px;
                 margin-bottom: 0;
                 flex-wrap: wrap;
+                justify-content: center;
                 align-items: center;
+                width: 100%;
             }
 
             .v-features span {
@@ -5783,23 +5873,23 @@
 
             .v-footer {
                 display: flex;
-                justify-content: flex-end;
+                justify-content: space-between;
                 align-items: center;
                 gap: 8px;
                 margin-top: 2px;
             }
 
             .btn-v-select {
-                      background: black;
-        color: white;
-        border: none;
-        padding: 7px 11px;
-        border-radius: 6px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        width: auto;
-        flex-shrink: 0;
+                background: black;
+                color: white;
+                border: none;
+                padding: 7px 11px;
+                border-radius: 6px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                width: auto;
+                flex-shrink: 0;
             }
 
             .vehicle-item.selected .btn-v-select {
@@ -5845,17 +5935,17 @@
             }
 
             .mob-trust-text {
-                        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             .mob-trust-title {
-                       font-size: 13px;
-        font-weight: 500;
-        color: #111;
-        line-height: 1.3;
+                font-size: 13px;
+                font-weight: 500;
+                color: #111;
+                line-height: 1.3;
             }
 
             .mob-trust-sub {
@@ -5973,13 +6063,21 @@
             justify-content: center;
             animation: fadeInModal 0.25s ease;
         }
+
         #authLoginModal.show {
             display: flex;
         }
+
         @keyframes fadeInModal {
-            from { opacity: 0; }
-            to   { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
+
         .auth-modal-backdrop {
             position: absolute;
             inset: 0;
@@ -5988,26 +6086,39 @@
             -webkit-backdrop-filter: blur(6px);
         }
 
-        
-        .otp-code{
-            font-size: 15px; color: #555; line-height: 1.5; margin: 0;
+
+        .otp-code {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
         }
+
         .auth-modal-card {
-                position: relative;
-    z-index: 1;
-    background: #fff;
-    border-radius: 24px;
-    width: 100%;
-   max-width: 460px;
-    margin: 16px;
-    padding: 16px 24px 16px;
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
-    animation: slideUpModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 460px;
+            margin: 16px;
+            padding: 16px 24px 16px;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.22);
+            animation: slideUpModal 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
         @keyframes slideUpModal {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0)  scale(1);    }
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
+
         .auth-modal-close {
             position: absolute;
             top: 16px;
@@ -6025,17 +6136,23 @@
             justify-content: center;
             transition: background 0.2s;
         }
-        .auth-modal-close:hover { background: #e8e8e8; }
+
+        .auth-modal-close:hover {
+            background: #e8e8e8;
+        }
+
         .auth-modal-logo {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 6px;
         }
+
         .auth-modal-logo img {
             height: 45px;
             object-fit: contain;
         }
+
         .auth-modal-headline {
             text-align: center;
             font-size: 26px;
@@ -6044,13 +6161,15 @@
             margin-bottom: 4px;
             letter-spacing: -0.3px;
         }
+
         .auth-modal-sub {
-               text-align: center;
-    font-size: 14px;
-    /* color: #777; */
-    margin-bottom: 10px;
-    line-height: 1.5;
+            text-align: center;
+            font-size: 14px;
+            /* color: #777; */
+            margin-bottom: 10px;
+            line-height: 1.5;
         }
+
         /* Google button */
         .auth-google-btn {
             display: flex;
@@ -6067,22 +6186,28 @@
             color: #111;
             cursor: pointer;
             transition: all 0.22s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             text-decoration: none;
         }
+
         .auth-google-btn:hover {
             border-color: #4285f4;
             background: #f8f9ff;
-            box-shadow: 0 4px 16px rgba(66,133,244,0.15);
+            box-shadow: 0 4px 16px rgba(66, 133, 244, 0.15);
             transform: translateY(-1px);
             color: #111;
         }
-        .auth-google-btn:active { transform: translateY(0); }
+
+        .auth-google-btn:active {
+            transform: translateY(0);
+        }
+
         .auth-google-icon {
             width: 22px;
             height: 22px;
             flex-shrink: 0;
         }
+
         /* divider */
         .auth-divider {
             display: flex;
@@ -6090,6 +6215,7 @@
             gap: 14px;
             margin: 20px 0;
         }
+
         .auth-divider::before,
         .auth-divider::after {
             content: '';
@@ -6097,24 +6223,29 @@
             height: 1px;
             background: #ebebeb;
         }
+
         .auth-divider span {
-           font-size: 14px;
-    /* color: #aaa; */
-    font-weight: 600;
-    white-space: nowrap;
+            font-size: 14px;
+            /* color: #aaa; */
+            font-weight: 600;
+            white-space: nowrap;
         }
+
         /* email/phone input row - REMOVED (replaced by intl-tel-input) */
         /* ===== intl-tel-input overrides for auth modal ===== */
         #authPhoneWrapper {
             position: relative;
         }
+
         #authPhoneWrapper .iti {
             width: 100%;
         }
+
         #authPhoneWrapper .iti__tel-input {
             width: 100%;
             padding: 14px 14px 14px 6px;
-            padding-left: 119px !important; /* beats intl-tel-input JS inline style */
+            padding-left: 119px !important;
+            /* beats intl-tel-input JS inline style */
             border: 1.5px solid #e0e0e0;
             border-radius: 14px;
             font-size: 15px;
@@ -6125,16 +6256,22 @@
             height: 52px;
             box-sizing: border-box;
         }
+
         #authPhoneWrapper .iti__tel-input:focus {
             border-color: #111;
-            box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
             background: #fff;
         }
-        #authPhoneWrapper .iti__tel-input::placeholder { color: #bbb; }
+
+        #authPhoneWrapper .iti__tel-input::placeholder {
+            color: #bbb;
+        }
+
         /* Flag button styling */
         #authPhoneWrapper .iti__flag-container {
             padding: 0;
         }
+
         #authPhoneWrapper .iti__selected-country {
             padding: 0 10px 0 14px;
             border-right: 1.5px solid #e0e0e0;
@@ -6143,32 +6280,39 @@
             /* background: #fafafa; */
             gap: 6px;
         }
+
         #authPhoneWrapper .iti__selected-country:hover {
             background: #f2f2f2;
         }
+
         #authPhoneWrapper .iti__selected-country-primary {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         #authPhoneWrapper .iti__selected-dial-code {
             font-size: 13px;
             font-weight: 600;
             color: #333;
         }
+
         #authPhoneWrapper .iti__arrow {
             border-top-color: #999;
         }
+
         /* Dropdown list — appended to <body> so must be targeted globally */
         .iti.iti--container {
             z-index: 9999999 !important;
         }
+
         .iti.iti--container .iti__dropdown-content {
             border-radius: 14px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
             border: 1px solid #eee;
             overflow: hidden;
         }
+
         #authPhoneWrapper .iti__search-input {
             padding: 10px 14px;
             border-bottom: 1px solid #eee;
@@ -6177,6 +6321,7 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         .iti.iti--container .iti__search-input {
             padding: 10px 14px;
             border-bottom: 1px solid #eee;
@@ -6185,20 +6330,24 @@
             width: 100%;
             box-sizing: border-box;
         }
+
         #authPhoneWrapper .iti__country,
         .iti.iti--container .iti__country {
             padding: 10px 14px;
             font-size: 14px;
         }
+
         #authPhoneWrapper .iti__country.iti__highlight,
         .iti.iti--container .iti__country.iti__highlight {
             background: #f5f5f5;
         }
+
         #authPhoneWrapper .iti__flag-box {
             margin-right: 8px;
         }
+
         /* Logo fix: light/white logo needs to be dark on white card */
-        
+
         .auth-continue-btn {
             display: flex;
             align-items: center;
@@ -6216,20 +6365,26 @@
             cursor: pointer;
             letter-spacing: 0.2px;
             transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
         }
+
         .auth-continue-btn:hover {
             background: #000;
             transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
         }
-        .auth-continue-btn:active { transform: translateY(0); }
+
+        .auth-continue-btn:active {
+            transform: translateY(0);
+        }
+
         .auth-modal-terms {
-                text-align: center;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 0px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 0px;
         }
+
         .auth-modal-terms a {
             color: #777;
             text-decoration: underline;
@@ -6246,11 +6401,11 @@
             <!--<li><button onclick="toggleDropdown('language')">-->
             <!--        <i class="fas fa-globe me-2"></i>EN-->
             <!--    </button></li>-->
-           <li>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
-        Help
-    </a>
-</li>
+            <li>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
+                    Help
+                </a>
+            </li>
             <!--<li style="position:relative;">-->
             <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
             <!--        <i class="fas fa-user-circle"></i>-->
@@ -6385,10 +6540,11 @@
                         style="display:none; margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;">
                         <div class="selected-car-row" style="margin-bottom: 8px;">
                             <div class="summary-car-details">
-                               <h4 style="font-size:16px; margin-bottom:6px; font-weight:700; display:flex; align-items:center; gap:8px;">
-    <i class="fas fa-car text-secondary"></i>
-    <span id="mcsCarName">-</span>
-</h4>
+                                <h4
+                                    style="font-size:16px; margin-bottom:6px; font-weight:700; display:flex; align-items:center; gap:8px;">
+                                    <i class="fas fa-car text-secondary"></i>
+                                    <span id="mcsCarName">-</span>
+                                </h4>
 
                             </div>
                             <div class="summary-car-price" id="mcsCarPrice"
@@ -6641,6 +6797,7 @@
                             <i class="fas fa-arrow-right me-2"></i> See prices
                         </button>
                     </div>
+
                     <!-- MOBILE TRUST BADGES -->
                     <div class="mob-trust-badges d-md-none">
                         <div class="mob-trust-badge">
@@ -6764,41 +6921,104 @@
                                 </div>
                             </div>
                             <!-- Entered Details Summary -->
-                            <div id="enteredDetailsSummary" class="booking-summary">
-                                <h5 class="summary-title">
-                                    <i class="fas fa-clipboard-list"></i> Booking Details
+                            <style>
+                                @media (min-width: 992px) {
+                                    #bookingSummaryListDesktop {
+                                        display: none;
+                                    }
+
+                                    .combined-counts-desktop-container {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        border-bottom: 1px dashed #d9d9d9;
+                                    }
+
+                                    .combined-counts-desktop-container .booking-summary-item {
+                                        border-bottom: none !important;
+                                        flex: 1;
+                                        justify-content: start;
+                                        /* flex-direction: column; */
+                                        align-items: center;
+                                        padding: 10px 0;
+                                        gap: 16px;
+                                        align-items: center;
+                                    }
+
+                                    .combined-counts-desktop-container .count-label {
+                                        display: none;
+                                    }
+
+                                    .combined-counts-desktop-container .summary-label {
+                                        margin-bottom: 4px;
+                                        font-size: 16px;
+                                    }
+                                }
+
+                                @media (max-width: 991.98px) {
+                                    .combined-counts-desktop-container {
+                                        display: block;
+                                    }
+                                }
+                            </style>
+                            <script>
+                                function toggleBookingDetailsDesktop() {
+                                    if (window.innerWidth >= 992) {
+                                        const list = document.getElementById('bookingSummaryListDesktop');
+                                        const icon = document.getElementById('bookingDetailsIcon');
+                                        if (list.style.display === 'none' || list.style.display === '') {
+                                            list.style.display = 'block';
+                                            icon.classList.remove('fa-chevron-down');
+                                            icon.classList.add('fa-chevron-up');
+                                        } else {
+                                            list.style.display = 'none';
+                                            icon.classList.remove('fa-chevron-up');
+                                            icon.classList.add('fa-chevron-down');
+                                        }
+                                    }
+                                }
+                            </script>
+                            <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop">
+                                <h5 class="summary-title d-flex justify-content-between align-items-center"
+                                    onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
+                                    <span><i class="fas fa-clipboard-list"></i> Booking Details</span>
+                                    <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                                 </h5>
 
-                                <div class="booking-summary-list">
+                                <div class="booking-summary-list" id="bookingSummaryListDesktop">
 
                                     <div class="booking-summary-item" id="summaryPassengerContainer">
-                                        <span class="summary-label"><i class="fas fa-user"></i> Passenger</span>
+                                        <span class="summary-label"><i class="fas fa-user"></i> </span>
                                         <span id="summaryPassengerName" class="summary-value">–</span>
                                     </div>
 
                                     <div class="booking-summary-item" id="summaryContactContainer">
-                                        <span class="summary-label"><i class="fas fa-phone"></i> Contact</span>
+                                        <span class="summary-label"><i class="fas fa-phone"></i> </span>
                                         <span id="summaryPassengerContact" class="summary-value">–</span>
                                     </div>
 
                                     <div class="booking-summary-item" id="summaryEmailContainer">
-                                        <span class="summary-label"><i class="fas fa-envelope"></i> Email</span>
+                                        <span class="summary-label"><i class="fas fa-envelope"></i> </span>
                                         <span id="summaryPassengerEmail" class="summary-value">–</span>
                                     </div>
 
-                                    <div class="booking-summary-item" id="summaryPassengersCountContainer">
-                                        <span class="summary-label"><i class="fas fa-users"></i> Passengers</span>
-                                        <span id="summaryPassengerCount" class="summary-value">1</span>
-                                    </div>
+                                    <div class="combined-counts-desktop-container">
+                                        <div class="booking-summary-item" id="summaryPassengersCountContainer">
+                                            <span class="summary-label"><i class="fas fa-users"></i> <span
+                                                    class="count-label">Passengers</span></span>
+                                            <span id="summaryPassengerCount" class="summary-value">1</span>
+                                        </div>
 
-                                    <div class="booking-summary-item" id="summaryLuggageCountContainer">
-                                        <span class="summary-label"><i class="fas fa-suitcase"></i> Luggage</span>
-                                        <span id="summaryLuggageCount" class="summary-value">0</span>
-                                    </div>
+                                        <div class="booking-summary-item" id="summaryLuggageCountContainer">
+                                            <span class="summary-label"><i class="fas fa-suitcase"></i> <span
+                                                    class="count-label">Luggage</span></span>
+                                            <span id="summaryLuggageCount" class="summary-value">0</span>
+                                        </div>
 
-                                    <div class="booking-summary-item" id="summaryHandLuggageContainer">
-                                        <span class="summary-label"><i class="fas fa-briefcase"></i> Hand Luggage</span>
-                                        <span id="summaryHandLuggageCount" class="summary-value">0</span>
+                                        <div class="booking-summary-item" id="summaryHandLuggageContainer">
+                                            <span class="summary-label"><i class="fas fa-briefcase"></i> <span
+                                                    class="count-label">Hand Luggage</span></span>
+                                            <span id="summaryHandLuggageCount" class="summary-value">0</span>
+                                        </div>
                                     </div>
 
                                     <div class="booking-summary-item" id="summaryBabySeatContainer"
@@ -6807,19 +7027,6 @@
                                         <span id="summaryBabySeats" class="summary-value">None</span>
                                     </div>
 
-                                    <div class="booking-summary-item" id="summaryDateContainer">
-                                        <span class="summary-label" id="summaryDateLabel">
-                                            <i class="fas fa-calendar-alt"></i> Date
-                                        </span>
-                                        <span id="summaryBookingDate" class="summary-value">–</span>
-                                    </div>
-
-                                    <div class="booking-summary-item" id="summaryTimeContainer">
-                                        <span class="summary-label" id="summaryTimeLabel">
-                                            <i class="fas fa-clock"></i> Time
-                                        </span>
-                                        <span id="summaryBookingTime" class="summary-value">–</span>
-                                    </div>
 
                                     <div id="summaryFlightContainer" class="booking-summary-item" style="display:none;">
                                         <span class="summary-label" id="summaryFlightLabel">
@@ -7223,6 +7430,35 @@
                         </button>
                         <h3 class="rc-title">Review & Confirm</h3>
                     </div>
+
+                    <!-- Vehicle Details Card -->
+                    <div class="rc-vehicle-card">
+                        <div class="rc-card-subtitle">VEHICLE DETAILS</div>
+                        <div class="rc-vehicle-top">
+                            <div class="rc-vehicle-img-wrapper" style="position: relative;">
+                                <img id="rcCarImage" src="goride/img/fleet1.png" alt="Car"
+                                    onclick="showCarDetailsModal(bookingData.selectedDriver)"
+                                    style="cursor:pointer; width:100%;">
+                            </div>
+                            <div class="rc-vehicle-info-right">
+                                <div class="d-flex gap-4">
+                                    <h4 id="rcCarName">-</h4>
+                                    <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
+                                </div>
+                                <div class="rc-vehicle-features">
+                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span>
+                                        Seats</span>
+                                    <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span>
+                                        Large</span>
+                                    <span><i class="fas fa-cogs"></i> <span id="rcTransmission">Automatic</span></span>
+                                </div>
+                                <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
+                                    <!-- populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <!-- Driver Card -->
                     <div class="rc-new-driver-card">
                         <div class="rc-driver-top-flex">
@@ -7260,30 +7496,6 @@
                         </div>
                     </div>
 
-                    <!-- Vehicle Details Card -->
-                    <div class="rc-vehicle-card">
-                        <div class="rc-card-subtitle">VEHICLE DETAILS</div>
-                        <div class="rc-vehicle-top">
-                            <div class="rc-vehicle-img-wrapper"
-                                onclick="showCarDetailsModal(bookingData.selectedDriver)" style="cursor:pointer;">
-                                <img id="rcCarImage" src="goride/img/fleet1.png" alt="Car">
-                            </div>
-                            <div class="rc-vehicle-info-right">
-                                <h4 id="rcCarName">-</h4>
-                                <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
-                                <div class="rc-vehicle-features">
-                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span>
-                                        Seats</span>
-                                    <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span>
-                                        Large</span>
-                                    <span><i class="fas fa-cogs"></i> <span id="rcTransmission">Automatic</span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
-                            <!-- populated dynamically -->
-                        </div>
-                    </div>
 
                     <!-- Bidded Amount Card -->
                     <div class="rc-bid-card">
@@ -7874,43 +8086,43 @@
         </div>
     </div>
 
-<div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content help-modal">
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content help-modal">
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
 
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center">
-
-                <div class="help-icon">
-                    <i class="fas fa-headset"></i>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <h6>Need Assistance?</h6>
+                <div class="modal-body text-center">
 
-                <p class="mb-3 text-muted">
-                    Our support team is here to help.
-                </p>
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
 
-                <p class="mb-2">
-                    <i class="fas fa-phone-alt me-2 text-warning"></i>
-                    <a href="tel:+442083373777">+44 208 337 3777</a>
-                </p>
+                    <h6>Need Assistance?</h6>
 
-                <p class="mb-0">
-                    <i class="fas fa-envelope me-2 text-warning"></i>
-                    <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                </p>
+                    <p class="mb-3 text-muted">
+                        Our support team is here to help.
+                    </p>
+
+                    <p class="mb-2">
+                        <i class="fas fa-phone-alt me-2 text-warning"></i>
+                        <a href="tel:+442083373777">+44 208 337 3777</a>
+                    </p>
+
+                    <p class="mb-0">
+                        <i class="fas fa-envelope me-2 text-warning"></i>
+                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                    </p>
+
+                </div>
 
             </div>
-
         </div>
     </div>
-</div>
 
     <div id="appPromoModal" class="modal-uber">
         <div class="modal-content-uber">
@@ -8020,6 +8232,17 @@
                         style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
                         <i class="fas fa-chevron-right" style="color: #333;"></i>
                     </button>
+                </div>
+                <!-- Thumbnails -->
+                <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                    <img src="goride/img/fleet1.png" onclick="setCarImageIndex(1)" class="car-thumbnail"
+                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid #f5c00b;">
+                    <img src="goride/img/fleet2.png" onclick="setCarImageIndex(2)" class="car-thumbnail"
+                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
+                    <img src="goride/img/fleet3.png" onclick="setCarImageIndex(3)" class="car-thumbnail"
+                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
+                    <img src="goride/img/fleet4.png" onclick="setCarImageIndex(4)" class="car-thumbnail"
+                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
                 </div>
             </div>
         </div>
@@ -9464,7 +9687,7 @@
                     if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi text-danger';
                     if (a.toLowerCase().includes('air')) icon = 'fa-snowflake text-primary';
                     if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage text-success';
-                    return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> ${a}</span>`;
+                    return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> <span class="d-none d-md-inline">${a}</span></span>`;
                 }).join('');
 
                 let tagClass = 'popular';
@@ -9508,10 +9731,10 @@
 </div>
         <div class="v-sub">
            <div class="v-features">
-            <span><i class="fas fa-user"></i> ${v.capacity} </span>
-            <span><i class="fas fa-suitcase"></i> ${v.luggage} </span>
-            <span><i class="fas fa-clock"></i> ${v.arrivalTime || '10 min'} Arrival</span>
-        </div>
+            <span><i class="fas fa-user"></i> ${v.capacity}</span>
+            <span><i class="fas fa-suitcase"></i> ${v.luggage}</span>
+            <span><i class="fas fa-briefcase"></i> ${v.handLuggage || 0}</span>
+           </div>
               ${tagHtml}
         </div>
         <div class="v-footer">
@@ -9525,7 +9748,28 @@
 `;
                 grid.append(html);
             });
+            updateFeaturesLayout();
         }
+
+        function updateFeaturesLayout() {
+            if ($(window).width() <= 768) {
+                $('.vehicle-item').each(function () {
+                    const features = $(this).find('.v-features');
+                    if (features.parent().hasClass('v-sub')) {
+                        $(this).find('.vehicle-left').append(features);
+                    }
+                });
+            } else {
+                $('.vehicle-item').each(function () {
+                    const features = $(this).find('.v-features');
+                    if (features.parent().hasClass('vehicle-left')) {
+                        $(this).find('.v-sub').prepend(features);
+                    }
+                });
+            }
+        }
+        $(window).on('resize', updateFeaturesLayout);
+
         function selectVehicle(el, vehicle) {
             // Single setState fires _updateVehicleSummaryUI subscriber automatically
             BookingStore.setState({ vehicle });
@@ -10160,7 +10404,7 @@
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
                     
                     const html = `
-<div class="driver-item driver-card" id="driver-bid-${key}" onclick="openDriverReview(${driverJson})" style="cursor:pointer; display:none; margin-bottom:15px;">
+<div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px;">
     <div class="driver-info">
         <div class="driver-details">
             <div class="driver-header">
@@ -10194,6 +10438,9 @@
                             ${d.experience}
                         </span>
                     </div>
+                    <div style="margin-top: 5px;">
+                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" style="font-size: 12px;color: white;text-decoration: none;background: #666;padding: 2px 6px;border-radius: 6px;">Click to view more</a>
+                    </div>
                 </div>
                 </div>
             </div>
@@ -10204,10 +10451,8 @@
                     £${d.bid}
                 </div>
             </div>
-            <div class="bid-eta">
-                <i class="fas fa-clock"></i>
-                ${d.eta} away
-            </div>
+         
+            <button onclick="acceptDriverFromList(${driverJson})" style="width:100%; padding:8px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600; margin-top:10px; cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
         </div>
     </div>
 </div>`;
@@ -10276,7 +10521,7 @@
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
                 const html = `
-<div class="driver-item driver-card" onclick="openDriverReview(${driverJson})" style="cursor:pointer;">
+<div class="driver-item driver-card">
     <!-- Car Banner -->
     <div class="driver-info">
         <div class="driver-details">
@@ -10300,6 +10545,9 @@
                         <i class="fas fa-star"></i>
                         ${d.rating} (${d.trips} trips)
                     </div>
+                    <div style="margin-top: 5px;">
+                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" style="font-size:12px; color:#f5c00b; text-decoration:underline;">Click to view more</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -10313,6 +10561,7 @@
                 <i class="fas fa-clock"></i>
                 ${d.eta} away
             </div>
+            <button onclick="acceptDriverFromList(${driverJson})" style="width:100%;     padding: 6px 10px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600;cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
         </div>
     </div>
 </div>
@@ -10378,13 +10627,17 @@
                 });
             }
             showStep(7);
+            startRcCarCarousel();
         }
         function acceptDriverFromList(driver) {
-            openDriverReview(driver);
+            bookingData.selectedDriver = driver;
+            showStep(5);
+            updatePaymentSummary();
         }
         function showCarDetailsModal(driver) {
             currentCarImageIndex = 1;
             $('#carCarouselImage').attr('src', `goride/img/fleet1.png`);
+            updateCarThumbnails();
             bookingData.tempDriver = driver;
             $('#carDetailsModal').addClass('show');
         }
@@ -10394,6 +10647,7 @@
                 currentCarImageIndex = 1;
             }
             $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            updateCarThumbnails();
         }
         function prevCarImage() {
             currentCarImageIndex--;
@@ -10401,6 +10655,47 @@
                 currentCarImageIndex = totalCarImages;
             }
             $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            updateCarThumbnails();
+        }
+        function setCarImageIndex(index) {
+            currentCarImageIndex = index;
+            $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            updateCarThumbnails();
+        }
+        function updateCarThumbnails() {
+            $('.car-thumbnail').css('border', '2px solid transparent');
+            $('.car-thumbnail').eq(currentCarImageIndex - 1).css('border', '2px solid #f5c00b');
+        }
+
+        let currentRcCarImageIndex = 1;
+        let rcCarCarouselInterval = null;
+
+        function nextRcCarImage(e) {
+            if (e) e.stopPropagation();
+            currentRcCarImageIndex++;
+            if (currentRcCarImageIndex > totalCarImages) {
+                currentRcCarImageIndex = 1;
+            }
+            $('#rcCarImage').fadeOut(150, function () {
+                $(this).attr('src', `goride/img/fleet${currentRcCarImageIndex}.png`).fadeIn(150);
+            });
+        }
+        function prevRcCarImage(e) {
+            if (e) e.stopPropagation();
+            currentRcCarImageIndex--;
+            if (currentRcCarImageIndex < 1) {
+                currentRcCarImageIndex = totalCarImages;
+            }
+            $('#rcCarImage').fadeOut(150, function () {
+                $(this).attr('src', `goride/img/fleet${currentRcCarImageIndex}.png`).fadeIn(150);
+            });
+        }
+        function startRcCarCarousel() {
+            if (rcCarCarouselInterval) clearInterval(rcCarCarouselInterval);
+            rcCarCarouselInterval = setInterval(() => nextRcCarImage(), 2500);
+        }
+        function stopRcCarCarousel() {
+            if (rcCarCarouselInterval) clearInterval(rcCarCarouselInterval);
         }
         function acceptDriver() {
             if (bookingData.tempDriver) {
@@ -10751,7 +11046,7 @@
                     `;
                     break;
             }
-        $("#vehicleModalContent").html(`
+            $("#vehicleModalContent").html(`
     <div class="vehicle-info-section">
         <div class="vehicle-modal-price-range">
             <i class="fas fa-tag"></i>
@@ -10767,7 +11062,7 @@
     </div>
 `);
 
-$("#vehicleInfoModal").addClass("show");
+            $("#vehicleInfoModal").addClass("show");
         }
         // ===== CAR SEAT COUNT UPDATE =====
         function updateCarSeatCount(delta) {
@@ -10883,11 +11178,15 @@ $("#vehicleInfoModal").addClass("show");
                 <button class="auth-google-btn" id="authGoogleBtn" onclick="handleGoogleSignIn()">
                     <!-- Google SVG icon -->
                     <svg class="auth-google-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                        <path fill="none" d="M0 0h48v48H0z"/>
+                        <path fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                        <path fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                        <path fill="#FBBC05"
+                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                        <path fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                        <path fill="none" d="M0 0h48v48H0z" />
                     </svg>
                     Continue with Google
                 </button>
@@ -10897,12 +11196,7 @@ $("#vehicleInfoModal").addClass("show");
 
                 <!-- Email / Phone input (intl-tel-input) -->
                 <div id="authPhoneWrapper">
-                    <input
-                        type="tel"
-                        id="authContactInput"
-                        placeholder="Email or phone number"
-                        autocomplete="off"
-                    >
+                    <input type="tel" id="authContactInput" placeholder="Email or phone number" autocomplete="off">
                 </div>
 
                 <button id="authContinueBtn" class="auth-continue-btn" onclick="handleAuthContinue()">
@@ -10924,34 +11218,54 @@ $("#vehicleInfoModal").addClass("show");
     margin-bottom: 3px;">
                         <i class="fas fa-lock" style="font-size: 20px;"></i>
                     </div>
-                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number</h3>
-                    <p class ="otp-code">
+                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number
+                    </h3>
+                    <p class="otp-code">
                         We've sent a 6-digit code to <br>
                         <span id="authOtpTarget" style="font-weight: 700; color: #111;"></span>
                     </p>
                 </div>
-                
-                <div id="authNewUserFields" style="display: none; margin-bottom: 24px; animation: slideUp 0.4s ease-out;">
+
+                <div id="authNewUserFields"
+                    style="display: none; margin-bottom: 24px; animation: slideUp 0.4s ease-out;">
                     <div style="margin-bottom: 16px; position: relative;">
-                        <i class="fas fa-user" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="text" id="authNameInput" placeholder="Full Name" style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;" autocomplete="off" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        <i class="fas fa-user"
+                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                        <input type="text" id="authNameInput" placeholder="Full Name"
+                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                            autocomplete="off"
+                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
                     </div>
                     <div style="position: relative;">
-                        <i class="fas fa-envelope" style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="email" id="authEmailInput" placeholder="Email Address" style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;" autocomplete="off" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        <i class="fas fa-envelope"
+                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                        <input type="email" id="authEmailInput" placeholder="Email Address"
+                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                            autocomplete="off"
+                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
                     </div>
                 </div>
 
                 <div style="margin-bottom: 15px; position: relative;">
-                    <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP" maxlength="6" autocomplete="off">
+                    <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP"
+                        maxlength="6" autocomplete="off">
                 </div>
-                
-                <button id="authVerifyBtn" style="width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);" onclick="handleVerifyOtp()" onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
+
+                <button id="authVerifyBtn"
+                    style="width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);"
+                    onclick="handleVerifyOtp()"
+                    onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'"
+                    onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
-                
+
                 <div style="text-align: center; margin-top: 15px;">
-                    <button style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;" onclick="_showPhoneUI()" onmouseover="this.style.color='#111'" onmouseout="this.style.color='#666'">
+                    <button
+                        style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"
+                        onclick="_showPhoneUI()" onmouseover="this.style.color='#111'"
+                        onmouseout="this.style.color='#666'">
                         <i class="fas fa-pen" style="font-size: 12px;"></i> Change Phone Number
                     </button>
                 </div>
@@ -10975,7 +11289,7 @@ $("#vehicleInfoModal").addClass("show");
 
     <!-- intl-tel-input JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
-    
+
     <script>
         // ===== AUTH MODAL: intl-tel-input init =====
         let _itiInstance = null;
@@ -11062,8 +11376,8 @@ $("#vehicleInfoModal").addClass("show");
                 try {
                     const userinfoRes = await fetch(
                         'https://www.googleapis.com/oauth2/v3/userinfo', {
-                            headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
-                        }
+                        headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+                    }
                     );
                     const userinfo = await userinfoRes.json();
                     // Build a JWT-like id_token from the access token
@@ -11243,9 +11557,9 @@ $("#vehicleInfoModal").addClass("show");
                         </ul>
                     </div>`;
                 navMenu.appendChild(li);
-                
+
                 // Close dropdown if clicked outside
-                document.addEventListener('click', function(e) {
+                document.addEventListener('click', function (e) {
                     const dropdown = document.getElementById('navbarUserDropdown');
                     const btn = document.getElementById('navbarUserBtn');
                     if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
@@ -11298,12 +11612,12 @@ $("#vehicleInfoModal").addClass("show");
             // Clear cookies (set expiration to past)
             document.cookie = 'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
             document.cookie = 'auth_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            
+
             // Sign out from Firebase if initialized
             if (window.firebase && firebase.auth) {
                 try {
                     await firebase.auth().signOut();
-                } catch(e) {}
+                } catch (e) { }
             }
 
             // Reload page to reset state
@@ -11318,12 +11632,12 @@ $("#vehicleInfoModal").addClass("show");
 
         async function handleAuthContinue() {
             if (!_itiInstance) return;
-            
+
             // Get selected country data and raw input
             const countryData = _itiInstance.getSelectedCountryData();
             const dialCode = countryData && countryData.dialCode ? countryData.dialCode : '';
             const rawVal = document.getElementById('authContactInput').value.replace(/\D/g, '');
-            
+
             // Construct the E164 format manually if getNumber() fails
             let mobileNumber = _itiInstance.getNumber();
             if (!mobileNumber) {
@@ -11347,9 +11661,9 @@ $("#vehicleInfoModal").addClass("show");
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify({ login: 'mobile', value: mobileNumber }),
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.status === false) {
                     _showAuthError(result.message || 'Failed to verify number.');
                     _resetContinueBtn();
@@ -11366,7 +11680,7 @@ $("#vehicleInfoModal").addClass("show");
 
                 // 3. Send OTP
                 btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-                
+
                 // Clear old recaptcha
                 document.getElementById('recaptcha-container').innerHTML = '';
                 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
@@ -11374,10 +11688,10 @@ $("#vehicleInfoModal").addClass("show");
                 });
 
                 _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
-                
+
                 // 4. Show OTP UI
                 _showOtpUI();
-                
+
             } catch (err) {
                 console.error('Check user / OTP Error:', err);
                 _showAuthError('Failed to send OTP. Please try again.');
@@ -11396,7 +11710,7 @@ $("#vehicleInfoModal").addClass("show");
         function _showOtpUI() {
             // Hide step 1 wrapper entirely
             document.getElementById('authStep1').style.display = 'none';
-            
+
             // Show OTP section
             document.getElementById('authOtpSection').style.display = 'block';
             document.getElementById('authOtpTarget').textContent = _currentMobile;
@@ -11412,7 +11726,7 @@ $("#vehicleInfoModal").addClass("show");
         function _showPhoneUI() {
             // Show step 1 wrapper entirely
             document.getElementById('authStep1').style.display = 'block';
-            
+
             // Hide OTP section
             document.getElementById('authOtpSection').style.display = 'none';
             _resetContinueBtn();
@@ -11427,7 +11741,7 @@ $("#vehicleInfoModal").addClass("show");
 
             let name = '';
             let email = '';
-            
+
             if (_isNewUser) {
                 name = document.getElementById('authNameInput').value.trim();
                 email = document.getElementById('authEmailInput').value.trim();
@@ -11469,7 +11783,7 @@ $("#vehicleInfoModal").addClass("show");
                     }
                     _updateNavbarAfterLogin(verifyRes.user);
                     closeAuthModal();
-                    
+
                     if (typeof _pendingAfterAuth === 'function') {
                         const fn = _pendingAfterAuth;
                         _pendingAfterAuth = null;

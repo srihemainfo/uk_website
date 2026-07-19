@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UtilityController;
 
 Route::get('/', function () {
     return view('uk-car-booking');
@@ -28,3 +29,13 @@ Route::get('/uk-about', function () {
  Route::get('/operator-signup', function () {
     return view('uk-operator');
 })->name('uk-operator');
+
+// Fare calculation route (requires Sanctum token via Authorization header)
+Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll']);
+
+// Booking endpoints (requires Sanctum token via Authorization header)
+Route::post('/w-book-notify-driver', [UtilityController::class, 'BookNotifyDriver']);
+Route::post('/w-book-final', [UtilityController::class, 'BookFinal']);
+
+// Autocomplete location search
+Route::post('/w-get-location', [UtilityController::class, 'GetLocation']);

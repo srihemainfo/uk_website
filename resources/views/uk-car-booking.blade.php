@@ -586,7 +586,7 @@
         .navbar-menu button {
             color: black;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 500;
             border: none;
             background: none;
@@ -6360,7 +6360,7 @@
 
 .navbar-user-menu-btn {
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
     background: transparent;
     display: flex;
@@ -11855,25 +11855,30 @@ li.innerHTML = `
     </button>
 
     <div id="navbarUserDropdown" class="navbar-user-dropdown">
-        <ul class="navbar-user-menu">
+       <ul class="navbar-user-menu">
 
-            <li>
-                <button class="navbar-user-menu-btn"
-                    onclick="window.location.href='uk-dashboard'">
-                    <i class="fas fa-tachometer-alt"></i>
-                    Dashboard
-                </button>
-            </li>
+         <li>
+        <a href="uk-dashboard" class="navbar-user-menu-btn">
+            <i class="far fa-user me-2"></i>
+            Profile
+        </a>
+    </li>
 
-            <li>
-                <button class="navbar-user-menu-btn navbar-user-logout"
-                    onclick="handleLogout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </li>
+    <li>
+        <a href="uk-dashboard" class="navbar-user-menu-btn">
+            <i class="fas fa-chart-line me-2"></i>
+            Dashboard
+        </a>
+    </li>
 
-        </ul>
+    <li>
+        <a href="javascript:void(0)" class="navbar-user-menu-btn navbar-user-logout" onclick="handleLogout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+        </a>
+    </li>
+
+</ul>
     </div>
 `;
                 navMenu.appendChild(li);

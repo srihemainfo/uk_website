@@ -3285,7 +3285,7 @@
 
         .driver-text h4 {
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
         }
 
@@ -3342,10 +3342,35 @@
         }
 
         .driver-accept-btn {
-            padding: 6px 18px;
-            min-height: auto;
-            font-size: 14px;
+           width: 100%;
+    padding: 4px 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 6px;
+    background: #111;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
         }
+
+        .driver-review-link {
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    text-decoration: none;
+    background: #666;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.driver-review-link:hover {
+    background: #444;
+    color: #fff;
+    text-decoration: none;
+}
 
         .bid-eta {
             font-size: 13px;
@@ -3653,9 +3678,9 @@
 
         .rc-driver-stat-col {
             display: flex;
-            flex-direction: column;
+       
             align-items: center;
-            gap: 4px;
+            gap: 11px;
         }
 
         .rc-driver-stat-col.border-left-right {
@@ -3666,7 +3691,7 @@
         .rc-driver-stat-col i {
             color: #444;
             font-size: 16px;
-            margin-bottom: 4px;
+      
         }
 
         .rc-driver-stat-col strong {
@@ -3675,10 +3700,7 @@
             color: #111;
         }
 
-        .rc-driver-stat-col span {
-            font-size: 14px;
-        }
-
+      
         .rc-card-subtitle {
             font-size: 11px;
             font-weight: 700;
@@ -3709,7 +3731,7 @@
         .rc-vehicle-img-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .rc-vehicle-info-right h4 {
@@ -3735,6 +3757,7 @@
             gap: 12px;
             margin: 10px 0px;
             font-weight: 600;
+            font-size: 14px;
         }
 
         .rc-vehicle-features span {
@@ -3746,7 +3769,7 @@
         .rc-vehicle-amenities-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 11px;
+            gap: 0px;
         }
 
         .rc-amenity-box {
@@ -3758,19 +3781,13 @@
             align-items: center;
             gap: 6px;
             text-align: center;
-            margin: 10px 0;
-            justify-content: center;
+            justify-content: start;
+                font-size: 14px;
+    font-weight: 600;
         }
 
-        .rc-amenity-box i {
-            color: #444;
-            font-size: 16px;
-        }
+       
 
-        .rc-amenity-box span {
-            font-size: 14px;
-            font-weight: 500;
-        }
 
         .rc-bid-card {
             background: #fafafa;
@@ -4547,7 +4564,7 @@
 
             .driver-wrap {
                 display: flex;
-                flex-direction: column;
+                /* flex-direction: column; */
                 align-items: center;
             }
 
@@ -4734,9 +4751,9 @@
         }
 
         @media (max-width: 767px) {
-            .driver-car-banner-details {
+            /* .driver-car-banner-details {
                 flex-direction: column;
-            }
+            } */
 
             .booking-form-section {
                 padding: 14px;
@@ -5337,7 +5354,7 @@
 
             #mcsEnteredDetails .summary-value {
                 font-size: 16px !important;
-                font-weight: 700;
+           
                 color: #111;
                 text-align: left !important;
                 word-break: break-all;
@@ -5346,9 +5363,9 @@
             }
 
             #mcsCarDetails .selected-car-row {
-                background: #f9f9f9;
-                border-radius: 10px;
-                padding: 8px 12px;
+                
+             border-radius: 10px;
+          
                 align-items: center;
                 justify-content: space-between;
                 gap: 8px;
@@ -5380,7 +5397,8 @@
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
-                gap: 12px;
+                      gap: 0px;
+        flex-direction: column;
             }
 
             .driver-car-image {
@@ -5462,6 +5480,12 @@
                 display: flex;
                 justify-content: end;
                 align-items: end;
+                margin-bottom:0px;
+            }
+
+            .driver-bid-box{
+                    display: flex;
+    gap: 18px;
             }
 
             .bid-amount {
@@ -5687,7 +5711,7 @@
         }
 
         .v-name {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             color: #111;
             display: flex;
@@ -5705,7 +5729,7 @@
         .v-sub {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 13px;
             color: #666;
             margin-bottom: 5px;
         }
@@ -5725,7 +5749,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 13px;
+            font-size: 15px;
             color: #111;
             /* margin-bottom: 12px; */
             flex-wrap: wrap;
@@ -5753,7 +5777,7 @@
         }
 
         .v-tag-pill {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             padding: 4px 8px;
             border-radius: 12px;
@@ -5914,11 +5938,11 @@
             .v-features {
                 display: flex;
                 gap: 6px;
-                font-size: 12px;
+                font-size: 15px;
                 margin-top: 4px;
                 margin-bottom: 0;
                 flex-wrap: wrap;
-                justify-content: center;
+                justify-content: space-around;
                 align-items: center;
                 width: 100%;
             }
@@ -5942,14 +5966,14 @@
             }
 
             .v-amenity-pill {
-                display: flex;
-                align-items: center;
-                gap: 2px;
-                font-size: 13px;
-                padding: 2px 5px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                white-space: nowrap;
+                        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-size: 15px;
+        padding: 2px 5px;
+        border: none;
+        border-radius: 4px;
+        white-space: nowrap;
             }
 
             .v-footer {
@@ -5964,7 +5988,7 @@
                 background: black;
                 color: white;
                 border: none;
-                padding: 7px 11px;
+                padding: 4px 11px;
                 border-radius: 6px;
                 font-size: 15px;
                 font-weight: 600;
@@ -6278,6 +6302,84 @@
             transform: translateY(-1px);
             color: #111;
         }
+
+        .navbar-user-item {
+    position: relative;
+}
+
+.navbar-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1.5px solid #ddd;
+    border-radius: 30px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.navbar-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    overflow: hidden;
+}
+
+.navbar-user-arrow {
+    font-size: 11px;
+}
+
+.navbar-user-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    width: 200px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.navbar-user-menu {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.navbar-user-menu-btn {
+    width: 100%;
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.navbar-user-menu-btn:hover {
+    background: #f8f9fa;
+}
+
+.navbar-user-logout {
+    color: #d93025;
+}
 
         .auth-google-btn:active {
             transform: translateY(0);
@@ -6622,7 +6724,7 @@
                         <div class="selected-car-row" style="margin-bottom: 8px;">
                             <div class="summary-car-details">
                                 <h4
-                                    style="font-size:16px; margin-bottom:6px; font-weight:700; display:flex; align-items:center; gap:8px;">
+                                    style="font-size:16px; margin-bottom:6px; display:flex; align-items:center; gap:8px;">
                                     <i class="fas fa-car text-secondary"></i>
                                     <span id="mcsCarName">-</span>
                                 </h4>
@@ -6638,49 +6740,49 @@
                                 <span class="summary-label"><i class="fas fa-user"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerName"
-                                    style="font-weight: 700; font-size: 14px; text-align: right; word-break: break-word;">-</span>
+                                   >-</span>
                             </div>
                             <div class="booking-summary-item" id="mcsPassengerPhoneContainer"
                                 style="display:none;  border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-phone"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerPhone"
-                                    style="font-weight: 700; font-size: 14px; text-align: right; word-break: break-word;">-</span>
+                                    >-</span>
                             </div>
                             <div class="booking-summary-item" id="mcsPassengerEmailContainer"
                                 style="display:none;   border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-envelope"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerEmail"
-                                    style="font-weight: 700; font-size: 14px; text-transform: none; text-align: right; word-break: break-word;">-</span>
+                                   >-</span>
                             </div>
                             <div class="booking-summary-item"
                                 style=" border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-users"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerCount"
-                                    style="font-weight: 700; font-size: 15px;">1</span>
+                                    >1</span>
                             </div>
                             <div class="booking-summary-item" id="mcsLuggageContainer"
                                 style="display:none;  border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-suitcase"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsLuggageCount"
-                                    style="font-weight: 700; font-size: 15px;">0</span>
+                                  >0</span>
                             </div>
                             <div class="booking-summary-item" id="mcsHandLuggageContainer"
                                 style="display:none; border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-briefcase"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsHandLuggageCount"
-                                    style="font-weight: 700; font-size: 15px;">0</span>
+                                    >0</span>
                             </div>
                             <div class="booking-summary-item" id="mcsBabySeatContainer"
                                 style="display:none; border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-baby-carriage"
                                         style="color: #666; font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsBabySeats"
-                                    style="font-weight: 700; font-size: 15px;">0</span>
+                                 >0</span>
                             </div>
                         </div>
 
@@ -7537,21 +7639,21 @@
                                 <i class="fas fa-medal"></i>
                                 <div>
                                     <strong id="rcDriverExperience">6+ Years</strong>
-                                    <span>Experience</span>
+                                   
                                 </div>
                             </div>
                             <div class="rc-driver-stat-col border-left-right">
                                 <i class="far fa-user"></i>
                                 <div>
                                     <strong id="rcDriverTrips">2,145</strong>
-                                    <span>Trips Completed</span>
+                                   
                                 </div>
                             </div>
                             <div class="rc-driver-stat-col">
                                 <i class="far fa-comment-dots"></i>
                                 <div>
                                     <strong id="rcDriverReviewsPct">98%</strong>
-                                    <span>Positive Reviews</span>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -10504,7 +10606,9 @@
                         </span>
                     </div>
                     <div style="margin-top: 5px;">
-                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" style="font-size: 12px;color: white;text-decoration: none;background: #666;padding: 2px 6px;border-radius: 6px;">Click to view more</a>
+                       <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" class="driver-review-link">
+    Click to view more
+</a>
                     </div>
                 </div>
                 </div>
@@ -10517,7 +10621,9 @@
                 </div>
             </div>
          
-            <button onclick="acceptDriverFromList(${driverJson}, this)" style="width:100%; padding:8px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600; margin-top:10px; cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
+            <button onclick="acceptDriverFromList(${driverJson}, this)" class="driver-accept-btn">
+    <i class="fas fa-check me-1"></i> Accept
+</button>
         </div>
     </div>
 </div>`;
@@ -10676,7 +10782,7 @@
                 vehicle.amenities.forEach(am => {
                     let icon = 'fa-check';
                     let label = am;
-                    if (am.toLowerCase().includes('wifi')) { icon = 'fa-wifi'; label = 'Free Wi-Fi'; }
+                    if (am.toLowerCase().includes('wifi')) { icon = 'fa-wifi'; label = 'Wi-Fi'; }
                     else if (am.toLowerCase().includes('air con') || am.toLowerCase().includes('a/c')) { icon = 'fa-snowflake'; label = 'A/C'; }
                     else if (am.toLowerCase().includes('charg')) { icon = 'fa-usb'; label = 'USB Charger'; }
                     else if (am.toLowerCase().includes('water')) { icon = 'fa-bottle-water'; label = 'Water'; }
@@ -11742,24 +11848,38 @@
                 const navMenu = document.querySelector('.navbar-menu');
                 if (!navMenu) return;
 
-                const li = document.createElement('li');
-                li.style.position = 'relative';
-                li.innerHTML = `
-                    <button id="navbarUserBtn" style="display:flex;align-items:center;gap:8px;background:none;border:1.5px solid #ddd;border-radius:30px;padding:6px 14px;cursor:pointer;font-size:14px;font-weight:600;" onclick="_toggleUserDropdown(event)">
-                        <span id="navbarUserAvatar" style="width:28px;height:28px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;overflow:hidden;"></span>
-                        <span id="navbarUserName"></span>
-                        <i class="fas fa-chevron-down" style="font-size:11px;"></i>
-                    </button>
-                    <!-- User Dropdown Menu -->
-                    <div id="navbarUserDropdown" style="display:none; position:absolute; right:0; top:45px; background:#fff; border:1px solid #eee; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:200px; z-index:1000; overflow:hidden;">
-                        <ul style="list-style:none; margin:0; padding:10px 0;">
-                            <li>
-                                <button onclick="handleLogout()" style="width:100%; text-align:left; background:none; border:none; padding:12px 20px; font-size:15px; color:#d93025; cursor:pointer; display:flex; align-items:center; gap:10px; transition:background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='none'">
-                                    <i class="fas fa-sign-out-alt"></i> Logout
-                                </button>
-                            </li>
-                        </ul>
-                    </div>`;
+              const li = document.createElement('li');
+li.className = "navbar-user-item";
+
+li.innerHTML = `
+    <button id="navbarUserBtn" class="navbar-user-btn" onclick="_toggleUserDropdown(event)">
+        <span id="navbarUserAvatar" class="navbar-user-avatar"></span>
+        <span id="navbarUserName"></span>
+        <i class="fas fa-chevron-down navbar-user-arrow"></i>
+    </button>
+
+    <div id="navbarUserDropdown" class="navbar-user-dropdown">
+        <ul class="navbar-user-menu">
+
+            <li>
+                <button class="navbar-user-menu-btn"
+                    onclick="window.location.href='uk-dashboard'">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </button>
+            </li>
+
+            <li>
+                <button class="navbar-user-menu-btn navbar-user-logout"
+                    onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </li>
+
+        </ul>
+    </div>
+`;
                 navMenu.appendChild(li);
 
                 // Close dropdown if clicked outside

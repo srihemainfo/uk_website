@@ -11858,7 +11858,7 @@ li.innerHTML = `
        <ul class="navbar-user-menu">
 
          <li>
-        <a href="uk-dashboard" class="navbar-user-menu-btn">
+        <a href="uk-profile" class="navbar-user-menu-btn">
             <i class="far fa-user me-2"></i>
             Profile
         </a>

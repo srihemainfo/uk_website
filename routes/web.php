@@ -36,6 +36,11 @@ Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll'])
 // Booking endpoints (requires Sanctum token via Authorization header)
 Route::post('/w-book-notify-driver', [UtilityController::class, 'BookNotifyDriver']);
 Route::post('/w-book-final', [UtilityController::class, 'BookFinal']);
+Route::post('/w-payment-break-down', [UtilityController::class, 'PaymentBreakDown']);
+Route::post('/w-cash-payment', [UtilityController::class, 'CashPayment']);
 
 // Autocomplete location search
 Route::post('/w-get-location', [UtilityController::class, 'GetLocation']);
+
+// Driver Vehicle endpoint
+Route::get('/w-driver-vehicle', [UtilityController::class, 'DriverVehicle']);

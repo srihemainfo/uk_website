@@ -46,6 +46,87 @@
             }
         }
 
+        /* Premium Full Card Skeleton Effect */
+        .rc-loading-skeleton {
+            pointer-events: none !important;
+        }
+        .rc-loading-skeleton .rc-vehicle-card,
+        .rc-loading-skeleton .rc-new-driver-card,
+        .rc-loading-skeleton .rc-bid-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rc-loading-skeleton h4,
+        .rc-loading-skeleton span,
+        .rc-loading-skeleton strong,
+        .rc-loading-skeleton .rc-amenity-box,
+        .rc-loading-skeleton .rc-bid-note,
+        .rc-loading-skeleton .rc-bid-badge,
+        .rc-loading-skeleton .rc-fare-amount,
+        .rc-loading-skeleton .rc-vehicle-tag {
+            background-color: #e5e7eb !important;
+            color: transparent !important;
+            border-color: transparent !important;
+            border-radius: 6px !important;
+            box-shadow: none !important;
+        }
+        
+        .rc-loading-skeleton .rc-bid-amount strong {
+            background-color: #e5e7eb !important;
+            color: transparent !important;
+        }
+
+        .rc-loading-skeleton .rc-vehicle-features span {
+            display: inline-block;
+            min-width: 70px;
+            height: 22px;
+        }
+
+        .rc-loading-skeleton .rc-driver-stat-col strong,
+        .rc-loading-skeleton .rc-driver-stat-col span {
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        .rc-loading-skeleton i,
+        .rc-loading-skeleton img {
+            opacity: 0 !important;
+        }
+
+        .rc-loading-skeleton .rc-driver-avatar,
+        .rc-loading-skeleton .rc-vehicle-img-wrapper {
+            background-color: #e5e7eb !important;
+            border: none !important;
+        }
+        .rc-loading-skeleton .rc-driver-avatar {
+            border-radius: 50% !important;
+        }
+        .rc-loading-skeleton .rc-vehicle-img-wrapper {
+            border-radius: 8px !important;
+            min-height: 150px;
+        }
+
+        .rc-loading-skeleton .rc-vehicle-card::after,
+        .rc-loading-skeleton .rc-new-driver-card::after,
+        .rc-loading-skeleton .rc-bid-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+            animation: premiumShimmer 1.5s infinite ease-in-out;
+            z-index: 10;
+        }
+
+        @keyframes premiumShimmer {
+            100% {
+                left: 150%;
+            }
+        }
+
         .premium-otp-input {
             width: 100%;
             padding: 5px;
@@ -7093,48 +7174,28 @@
             <div class="form-section" id="step5">
                 <div class="container">
                     <h3 class="booking-title">Payment Method</h3>
-                    <div class="payment-summary">
+                    <div class="payment-summary" id="dynamicPaymentSummary" style="display:none;">
                         <div class="payment-item">
-                            <span>Base fare</span>
-                            <span>£8.50</span>
+                            <span>Base Fare</span>
+                            <span id="pbBaseFare">£0.00</span>
                         </div>
                         <div class="payment-item">
-                            <span>Minimum fare</span>
-                            <span>£12.75</span>
-                        </div>
-                        <div class="payment-item">
-                            <span>+ per minute</span>
-                            <span>£0.10</span>
-                        </div>
-                        <div class="payment-item">
-                            <span>+ per mile</span>
-                            <span>£0.71</span>
-                        </div>
-                        <div class="payment-item">
-                            <span>Estimated surcharges</span>
-                            <span>£10.63</span>
-                        </div>
-                        <div class="payment-total">
-                            <span>Estimated Operating Fee</span>
-                            <span>£42.50</span>
+                            <span>VAT 20%</span>
+                            <span id="pbTax">£0.00</span>
                         </div>
                         <div class="payment-total grand-total">
                             <span>Total</span>
-                            <span>£55.00</span>
+                            <span id="pbTotalFare">£0.00</span>
                         </div>
                     </div>
                     <div class="form-group-uber">
                         <label><i class="fas fa-credit-card"></i> Payment Method *</label>
                         <select id="paymentMethod" required>
-                            <option value="">Select payment method</option>
-                            <option value="card">Pay Cash to the Driver</option>
-                            <option value="upi" selected>Credit/Debit Card</option>
-                            <option value="wallet">Confirm Now, Pay Later</option>
-                            <!-- <option value="cash">Cash</option> -->
+                            <option value="cash" selected>Pay Cash to the Driver</option>
                         </select>
                     </div>
                     <div class="btn-group-uber step-bottom-btns">
-                        <button class="btn-back-uber" onclick="goBack(4)">
+                        <button class="btn-back-uber" onclick="goBack(6)">
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
                         <button class="btn-search-uber" onclick="proceedToConfirmation()">
@@ -7513,7 +7574,7 @@
                     </div>
                     <!-- Accept Button -->
                     <div class="btn-group-uber step-bottom-btns rc-accept-wrap">
-                        <button class="btn-search-uber" onclick="acceptDriver()" style="flex:1;">
+                        <button class="btn-search-uber" onclick="acceptDriver(this)" style="flex:1;">
                             <i class="fas fa-check me-2"></i> Accept
                         </button>
                     </div>
@@ -8234,7 +8295,7 @@
                     </button>
                 </div>
                 <!-- Thumbnails -->
-                <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <div id="carThumbnailsContainer" style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
                     <img src="goride/img/fleet1.png" onclick="setCarImageIndex(1)" class="car-thumbnail"
                         style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid #f5c00b;">
                     <img src="goride/img/fleet2.png" onclick="setCarImageIndex(2)" class="car-thumbnail"
@@ -8432,7 +8493,7 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch('/w-get-location', {
+                    const response = await fetch(API_BASE_URL + '/web-get-location', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -8786,7 +8847,8 @@
         let searchTimeout;
         let currentEditingField = null;
         let currentCarImageIndex = 1;
-        const totalCarImages = 4;
+        let totalCarImages = 4;
+        let dynamicCarImages = [];
         const MAX_VIA_POINTS = 3;
 
         // ---- Store-backed globals (these stay in sync via the Proxy) ----
@@ -9413,7 +9475,7 @@
             });
 
             try {
-                const response = await fetch('/w-get-fares?' + params.toString(), {
+                const response = await fetch(API_BASE_URL + '/w-get-fares?' + params.toString(), {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -9897,12 +9959,12 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             btn.disabled = true;
 
-            const num = 'GR-2026-' + Math.floor(10000 + Math.random() * 90000);
-            bookingData.bookingId = num; // Store for mock purposes
+            const payload = {
+                pay_no: bookingData.bookingId,
+                credit_pay: null
+            };
 
-            console.log(bookingData);
-
-            fetch('/w-book-final', {
+            fetch('/w-cash-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -9910,12 +9972,12 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Authorization': 'Bearer ' + getCookieValue('auth_token')
                 },
-                body: JSON.stringify(bookingData)
+                body: JSON.stringify(payload)
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
-                        $('#confirmNum').text(num);
+                    if (data.status) {
+                        $('#confirmNum').text(data.data?.job_no || bookingData.bookingId);
                         $('#confirmPickup').text(bookingData.pickup || '—');
                         $('#confirmDropoff').text(bookingData.dropoff || '—');
                         if (bookingData.date && bookingData.time) {
@@ -9929,7 +9991,7 @@
                         $('#confirmDuration').text('~4 hours');
                         showStep(8);
                     } else {
-                        showToast('Booking Error: ' + data.message, 'error');
+                        showToast('Booking Error: ' + (data.message || 'Unknown error'), 'error');
                     }
                 })
                 .catch(error => {
@@ -10392,8 +10454,11 @@
                         experience: 'Pro', 
                         bid: bid.show_amount || 0,
                         eta: '5 mins',
-                        avatar: `<img src="${bid.b_image || '/goride/img/saloon.png'}" alt="${bid.b_name || 'Driver'}" style="width:100%;height:100%;object-fit:cover;">`,
-                        mobile: bid.b_mobile || ''
+                        avatar: `<img src="${bid.b_image || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(bid.b_name || 'Driver') + '&background=f5c00b&color=000'}" alt="${bid.b_name || 'Driver'}" style="width:100%;height:100%;object-fit:cover;">`,
+                        mobile: bid.b_mobile || '',
+                        carName: bid.b_cab || null,
+                        carCapacity: bid.b_seater || null,
+                        carLuggage: bid.b_luggage || null
                     };
                     
                     const vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
@@ -10452,7 +10517,7 @@
                 </div>
             </div>
          
-            <button onclick="acceptDriverFromList(${driverJson})" style="width:100%; padding:8px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600; margin-top:10px; cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
+            <button onclick="acceptDriverFromList(${driverJson}, this)" style="width:100%; padding:8px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600; margin-top:10px; cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
         </div>
     </div>
 </div>`;
@@ -10561,7 +10626,7 @@
                 <i class="fas fa-clock"></i>
                 ${d.eta} away
             </div>
-            <button onclick="acceptDriverFromList(${driverJson})" style="width:100%;     padding: 6px 10px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600;cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
+            <button onclick="acceptDriverFromList(${driverJson}, this)" style="width:100%;     padding: 6px 10px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600;cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
         </div>
     </div>
 </div>
@@ -10573,7 +10638,7 @@
             bookingData.selectedDriver = driver;
             const vehicle = bookingData.vehicle;
             const vehicleImg = bookingData.vehicle?.image || 'goride/img/fleet1.png';
-            const vehicleName = bookingData.vehicle?.name || '-';
+            const vehicleName = driver.carName || bookingData.vehicle?.name || '-';
             const vehiclePrice = bookingData.vehicle?.price || driver.bid;
             $('#rcDriverAvatar').html(driver.avatar);
             $('#rcDriverName').text(driver.name);
@@ -10590,10 +10655,10 @@
                 $('#rcDriverBadge').hide();
             }
             $('#rcCarImage').attr('src', vehicleImg);
-            $('#rcFareAmount').text('\u00a3' + vehiclePrice);
+            $('#rcFareAmount').text('\u00a3' + (driver.bid || vehiclePrice));
             $('#rcCarName').text(vehicleName);
-            $('#rcPassengerCapacity').text(vehicle.capacity);
-            $('#rcLuggageCapacity').text(vehicle.luggage);
+            $('#rcPassengerCapacity').text(driver.carCapacity || vehicle?.capacity || 4);
+            $('#rcLuggageCapacity').text(driver.carLuggage || vehicle?.luggage || 2);
             $('#rcTransmission').text(vehicle.transmission || 'Automatic');
 
             if (vehicle.tag) {
@@ -10602,9 +10667,8 @@
                 $('#rcVehicleTag').hide();
             }
 
-            $('#rcDriverExperience').text(driver.experience || '6+ Years');
-            $('#rcDriverTrips').text(driver.trips || '2,145');
-            $('#rcDriverReviewsPct').text(driver.positiveReviews || '98%');
+            // Premium full-card skeleton setup
+            $('#step7').addClass('rc-loading-skeleton');
 
             const amenitiesGrid = $('#rcVehicleAmenitiesGrid');
             amenitiesGrid.empty();
@@ -10626,17 +10690,157 @@
                     `);
                 });
             }
+
+            // Fetch dynamic driver vehicle data
+            $.ajax({
+                url: API_BASE_URL + '/driver-vehicle',
+                type: 'GET',
+                data: { user_id: driver.id },
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                },
+                success: function(res) {
+                    if (res && res.status && res.data) {
+                        const uid = driver.id;
+                        if (res.data.vehicle && res.data.vehicle[uid]) {
+                            const vDetails = res.data.vehicle[uid];
+                            const pImages = [
+                                vDetails.front_view_image_url,
+                                vDetails.back_view_image_url,
+                                vDetails.side_view_image_url,
+                                vDetails.car_top_view_image_url,
+                                vDetails.interior_front_image_url,
+                                vDetails.interior_rear_image_url,
+                                vDetails.extra_image_1_url,
+                                vDetails.extra_image_2_url,
+                                vDetails.special_features_image_url
+                            ];
+                            dynamicCarImages = pImages.filter(url => url && typeof url === 'string' && url.trim() !== "");
+                            if (dynamicCarImages.length > 0) {
+                                totalCarImages = dynamicCarImages.length;
+                                currentRcCarImageIndex = 1;
+                                $('#rcCarImage').attr('src', dynamicCarImages[0]);
+                                
+                                // Render thumbnails dynamically
+                                let thumbHtml = '';
+                                dynamicCarImages.forEach((url, idx) => {
+                                    let borderStr = (idx === 0) ? '2px solid #f5c00b' : '2px solid transparent';
+                                    thumbHtml += `<img src="${url}" onclick="setCarImageIndex(${idx+1})" class="car-thumbnail" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: ${borderStr};">`;
+                                });
+                                $('#carThumbnailsContainer').html(thumbHtml);
+                            } else {
+                                dynamicCarImages = [];
+                                totalCarImages = 4; // fallback
+                            }
+                        }
+                        if (res.data.user_details && res.data.user_details[uid]) {
+                            const uDetails = res.data.user_details[uid];
+                            if (uDetails.name) $('#rcDriverName').text(uDetails.name);
+                            if (uDetails.exp) $('#rcDriverExperience').text(uDetails.exp);
+                            if (uDetails.completed_jobs) $('#rcDriverTrips').text(uDetails.completed_jobs + '+');
+                            if (uDetails.review) $('#rcDriverReviewsPct').text(uDetails.review + '%');
+
+                            if (uDetails.profile_image_url) {
+                                $('#rcDriverAvatar').html(`<img src="${uDetails.profile_image_url}" style="width:100%;height:100%;object-fit:cover;">`);
+                            } else {
+                                $('#rcDriverAvatar').html(`<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(uDetails.name || driver.name || 'Driver')}&background=f5c00b&color=000" style="width:100%;height:100%;object-fit:cover;">`);
+                            }
+                        }
+                        if (res.data.rc_number && res.data.rc_number[uid]) {
+                            // Update RC number if there's an element for it
+                            if ($('#rcVehicleRcNumber').length) {
+                                $('#rcVehicleRcNumber').text(res.data.rc_number[uid]).show();
+                            }
+                        }
+                    }
+                },
+                error: function(err) {
+                    console.error("Failed to load driver vehicle data", err);
+                    // Fallback to static text on error
+                    $('#rcDriverExperience').text(driver.experience || '6+ Years');
+                    $('#rcDriverTrips').text(driver.trips || '2,145');
+                    $('#rcDriverReviewsPct').text(driver.positiveReviews || '98%');
+                },
+                complete: function() {
+                    // Remove premium skeleton
+                    $('#step7').removeClass('rc-loading-skeleton');
+                }
+            });
+
             showStep(7);
             startRcCarCarousel();
         }
-        function acceptDriverFromList(driver) {
+        async function proceedToPaymentWithDriver(driver, btnElement) {
             bookingData.selectedDriver = driver;
-            showStep(5);
-            updatePaymentSummary();
+            
+            let originalText = '';
+            let $btn = null;
+            if (btnElement) {
+                $btn = $(btnElement);
+                originalText = $btn.html();
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+                $btn.prop('disabled', true);
+            }
+
+            const payload = {
+                job_id: bookingData.jobId || '',
+                job_no: bookingData.bookingId || '',
+                user_id: driver.id || '',
+                date: bookingData.date || '',
+                isCredit: 'no',
+                payType: 'full',
+                isWallet: 'no'
+            };
+
+            try {
+                const response = await fetch(API_BASE_URL + '/w-payment-break-down', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                if (data.status === true && data.data) {
+                    $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
+                    $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
+                    $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || 0).toFixed(2));
+                    
+                    $('#dynamicPaymentSummary').show();
+                    
+                    showStep(5);
+                } else {
+                    showToast(data.message || 'Failed to fetch payment breakdown.', 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to connect to server.', 'error');
+            } finally {
+                if ($btn) {
+                    $btn.html(originalText);
+                    $btn.prop('disabled', false);
+                }
+            }
         }
+
+        function acceptDriverFromList(driver, btnElement) {
+            proceedToPaymentWithDriver(driver, btnElement);
+        }
+        function getCarImageUrl(index) {
+            if (dynamicCarImages && dynamicCarImages.length > 0) {
+                return dynamicCarImages[index - 1];
+            }
+            return `goride/img/fleet${index}.png`;
+        }
+
         function showCarDetailsModal(driver) {
             currentCarImageIndex = 1;
-            $('#carCarouselImage').attr('src', `goride/img/fleet1.png`);
+            $('#carCarouselImage').attr('src', getCarImageUrl(1));
             updateCarThumbnails();
             bookingData.tempDriver = driver;
             $('#carDetailsModal').addClass('show');
@@ -10646,7 +10850,7 @@
             if (currentCarImageIndex > totalCarImages) {
                 currentCarImageIndex = 1;
             }
-            $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            $('#carCarouselImage').attr('src', getCarImageUrl(currentCarImageIndex));
             updateCarThumbnails();
         }
         function prevCarImage() {
@@ -10654,12 +10858,12 @@
             if (currentCarImageIndex < 1) {
                 currentCarImageIndex = totalCarImages;
             }
-            $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            $('#carCarouselImage').attr('src', getCarImageUrl(currentCarImageIndex));
             updateCarThumbnails();
         }
         function setCarImageIndex(index) {
             currentCarImageIndex = index;
-            $('#carCarouselImage').attr('src', `goride/img/fleet${currentCarImageIndex}.png`);
+            $('#carCarouselImage').attr('src', getCarImageUrl(currentCarImageIndex));
             updateCarThumbnails();
         }
         function updateCarThumbnails() {
@@ -10672,22 +10876,24 @@
 
         function nextRcCarImage(e) {
             if (e) e.stopPropagation();
+            if (totalCarImages <= 1) return;
             currentRcCarImageIndex++;
             if (currentRcCarImageIndex > totalCarImages) {
                 currentRcCarImageIndex = 1;
             }
             $('#rcCarImage').fadeOut(150, function () {
-                $(this).attr('src', `goride/img/fleet${currentRcCarImageIndex}.png`).fadeIn(150);
+                $(this).attr('src', getCarImageUrl(currentRcCarImageIndex)).fadeIn(150);
             });
         }
         function prevRcCarImage(e) {
             if (e) e.stopPropagation();
+            if (totalCarImages <= 1) return;
             currentRcCarImageIndex--;
             if (currentRcCarImageIndex < 1) {
                 currentRcCarImageIndex = totalCarImages;
             }
             $('#rcCarImage').fadeOut(150, function () {
-                $(this).attr('src', `goride/img/fleet${currentRcCarImageIndex}.png`).fadeIn(150);
+                $(this).attr('src', getCarImageUrl(currentRcCarImageIndex)).fadeIn(150);
             });
         }
         function startRcCarCarousel() {
@@ -10697,15 +10903,13 @@
         function stopRcCarCarousel() {
             if (rcCarCarouselInterval) clearInterval(rcCarCarouselInterval);
         }
-        function acceptDriver() {
-            if (bookingData.tempDriver) {
-                bookingData.selectedDriver = bookingData.tempDriver;
+        
+        function acceptDriver(btnElement) {
+            let driver = bookingData.tempDriver || bookingData.selectedDriver;
+            if (driver) {
+                $('#carDetailsModal').removeClass('show');
+                proceedToPaymentWithDriver(driver, btnElement);
             }
-            $('#carDetailsModal').removeClass('show');
-            setTimeout(function () {
-                showStep(5);
-                updatePaymentSummary();
-            }, 300);
         }
         function showConfirmation() {
             const num = 'GR-2026-' + Math.floor(Math.random() * 100000);

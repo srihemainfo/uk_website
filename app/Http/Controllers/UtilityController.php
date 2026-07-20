@@ -175,4 +175,82 @@ class UtilityController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * Payment Break Down API Proxy
+     * Proxies the request to the external GoRide UK API.
+     *
+     * Route: POST /w-payment-break-down
+     */
+    public function PaymentBreakDown(Request $request)
+    {
+        try {
+            $token = $request->bearerToken();
+            $apiUrl = env('API_URL') . '/w-payment-break-down';
+
+            $response = Http::withToken($token)
+                ->acceptJson()
+                ->post($apiUrl, $request->all());
+
+            return response()->json($response->json(), $response->status());
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Cash Payment API Proxy
+     * Proxies the request to the external GoRide UK API.
+     *
+     * Route: POST /w-cash-payment
+     */
+    public function CashPayment(Request $request)
+    {
+        try {
+            $token = $request->bearerToken();
+            $apiUrl = env('API_URL') . '/w-cash-payment';
+
+            $response = Http::withToken($token)
+                ->acceptJson()
+                ->post($apiUrl, $request->all());
+
+            return response()->json($response->json(), $response->status());
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Driver Vehicle API Proxy
+     * Proxies the request to the external GoRide UK API.
+     *
+     * Route: GET /w-driver-vehicle
+     */
+    public function DriverVehicle(Request $request)
+    {
+        try {
+            $token = $request->bearerToken();
+            $apiUrl = env('API_URL') . '/driver-vehicle';
+
+            $response = Http::withToken($token)
+                ->acceptJson()
+                ->get($apiUrl, $request->all());
+
+            return response()->json($response->json(), $response->status());
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

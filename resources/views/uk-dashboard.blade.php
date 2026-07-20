@@ -141,21 +141,34 @@
             color: #111;
         }
 
-.dropdown-item{
-    font-weight: 500;
-}
+        .dropdown-item {
+            font-weight: 500;
+        }
+
+        .dashboard-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .welcome-section {
+            flex-shrink: 0;
+        }
 
         .welcome-title {
             font-size: 28px;
             font-weight: 700;
-            margin: 12px;
+            margin: 0 0 5px 0;
             color: #111;
         }
 
         .welcome-subtitle {
             color: #6b7280;
             font-size: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
 
@@ -168,23 +181,23 @@
         .stat-card {
             background: #fff;
             border-radius: 12px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .stat-icon {
-            width: 45px;
-            height: 45px;
+            width: 38px;
+            height: 38px;
             border-radius: 12px;
             background: #f3f4f6;
             color: #111;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 14px;
         }
 
         .stat-info {
@@ -227,7 +240,8 @@
             color: #111;
             border-bottom-color: #111;
         }
-         .dropdown-item:active,
+
+        .dropdown-item:active,
         .dropdown-item.active {
             background-color: #111 !important;
             color: #fff !important;
@@ -245,7 +259,7 @@
         .trip-card {
             background: #fff;
             border-radius: 16px;
-            padding: 24px;
+            padding: 15px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             margin-bottom: 24px;
         }
@@ -254,8 +268,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #f3f4f6;
+
             padding-bottom: 15px;
         }
 
@@ -348,7 +361,9 @@
         .car-image-container {
             background: #f8f9fa;
             border-radius: 12px;
-            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
             text-align: center;
             margin-bottom: 20px;
         }
@@ -378,9 +393,16 @@
             color: #111;
         }
 
+        .car-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
         .car-number {
-            font-size: 13px;
-            color: #6b7280;
+            font-size: 14px;
+
         }
 
         .car-driver-mini {
@@ -391,11 +413,8 @@
         }
 
         .car-amenities {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 24px;
-            font-size: 13px;
-            color: #6b7280;
+            font-size: 14px;
+
         }
 
         .car-amenities span {
@@ -412,7 +431,7 @@
         .fare-breakdown-title {
             font-size: 15px;
             font-weight: 700;
-    
+
             letter-spacing: 0.5px;
             margin-bottom: 10px;
         }
@@ -420,7 +439,7 @@
         .otp-banner {
             background: #111;
             border-radius: 12px;
-            padding: 10px 20px;
+            padding: 7px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -455,9 +474,9 @@
         }
 
         .info-block-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            color: #9ca3af;
+            color: #666;
             letter-spacing: 0.5px;
             margin-bottom: 6px;
         }
@@ -518,9 +537,9 @@
         }
 
         .point-label {
-            font-size: 11px;
+            font-size: 14px;
             font-weight: 700;
-            color: #9ca3af;
+
             letter-spacing: 0.5px;
             margin-bottom: 2px;
         }
@@ -539,6 +558,13 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
+        }
+
+        .driver-details-heading {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
         }
 
         .driver-img-wrapper {
@@ -609,8 +635,8 @@
         }
 
         .btn-outline-dark-custom {
-            width: 100%;
-            padding: 12px;
+
+            padding: 9px;
             border-radius: 10px;
             border: 1px solid #e5e7eb;
             background: #fff;
@@ -772,8 +798,7 @@
             font-weight: 700;
             color: #111;
             margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
+
             text-overflow: ellipsis;
         }
 
@@ -819,13 +844,27 @@
         }
 
         @media (max-width: 992px) {
+            .dashboard-header-flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             .top-overview-grid {
-                grid-template-columns: 1fr;
+                width: 100%;
             }
         }
 
         @media (max-width: 768px) {
-            .stats-grid{
+            .car-image-container {
+                flex-direction: column;
+            }
+
+            .car-amenities {
+                display: flex;
+                gap: 15px;
+            }
+
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -876,14 +915,14 @@
             <a href="/" class="btn-book-ride px-2 px-md-3">
                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline">Book Ride</span>
             </a>
-        
+
             <div class="dropdown">
                 <img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="Profile" class="profile-img"
                     data-bs-toggle="dropdown">
                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
                     <li><a class="dropdown-item  py-2" href="/uk-profile"><i class="far fa-user me-2 w-20px"></i>
                             Profile</a></li>
-                            <li><a class="dropdown-item  py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
+                    <li><a class="dropdown-item  py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
                             Dashboard</a></li>
                     <!-- <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a>
                     </li> -->
@@ -900,45 +939,50 @@
     <!-- Dashboard Content -->
     <div class="container">
 
-        <h1 class="welcome-title">Good Morning, Alex</h1>
-        <p class="welcome-subtitle">Here is what's happening with your rides today.</p>
+        <div class="dashboard-header-flex">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Hello, Alex</h1>
+                <p class="welcome-subtitle">Here is what's happening with your rides today.</p>
+            </div>
 
-        <!-- Top Overview -->
-        <div class="top-overview-grid">
-           
-        
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-car"></i></div>
-                    <div class="stat-info">
-                        <div class="stat-value">148</div>
-                        <div class="stat-label">Total Rides</div>
+            <!-- Top Overview -->
+            <div class="top-overview-grid">
+
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-car"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">148</div>
+                            <div class="stat-label">Total Rides</div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-route"></i></div>
-                    <div class="stat-info">
-                        <div class="stat-value">1,240 <small class="fs-6 fw-bold">mi</small></div>
-                        <div class="stat-label">Total Distance</div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-route"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">1,240 <small class="fs-6 fw-bold">mi</small></div>
+                            <div class="stat-label">Total Distance</div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-piggy-bank"></i></div>
-                    <div class="stat-info">
-                        <div class="stat-value">£120</div>
-                        <div class="stat-label">Total Savings</div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-piggy-bank"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">£120</div>
+                            <div class="stat-label">Total Savings</div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
-                    <div class="stat-info">
-                        <div class="stat-value">4.9</div>
-                        <div class="stat-label">Avg Rating Given</div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-value">4.9</div>
+                            <div class="stat-label">Avg Rating Given</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Tabs -->
         <div class="custom-tabs">
@@ -970,20 +1014,23 @@
                     <div class="col-md-6">
                         <div class="car-image-container">
                             <img src="/goride/img/saloon.png" alt="Innova Crysta">
-                        </div>
 
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div>
-                                <div class="car-name">Innova Crysta</div>
-                                <div class="car-number">TN 09 AB 4567</div>
+                            <div class="car-details mb-2">
+                                <div>
+                                    <div class="car-name">Innova Crysta</div>
+                                    <div class="car-number">TN 09 AB 4567</div>
+                                </div>
+                                <div class="car-amenities">
+                                    <span><i class="fas fa-user-friends"></i> 7 Seats</span>
+                                    <span><i class="fas fa-cog"></i> Automatic</span>
+                                    <span><i class="fas fa-suitcase"></i> 3 Bags</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="car-amenities">
-                            <span><i class="fas fa-user-friends"></i> 7 Seats</span>
-                            <span><i class="fas fa-cog"></i> Automatic</span>
-                            <span><i class="fas fa-suitcase"></i> 3 Bags</span>
-                        </div>
+
+
+
 
                         <div class="fare-breakdown">
                             <div class="fare-breakdown-title">FARE BREAKDOWN</div>
@@ -1018,26 +1065,6 @@
                             </div>
                         </div>
 
-                        <div class="row g-3 mb-4">
-                            <div class="col-6">
-                                <div class="info-block-title">DATE</div>
-                                <div class="info-block-value">Oct 24, 2023</div>
-                            </div>
-                            <div class="col-6">
-                                <div class="info-block-title">PICKUP TIME</div>
-                                <div class="info-block-value">10:30 AM</div>
-                            </div>
-                            <div class="col-6">
-                                <div class="info-block-title">PAYMENT STATUS</div>
-                                <div class="info-block-value text-dark d-flex align-items-center gap-2"><i
-                                        class="far fa-clock"></i> Pending</div>
-                            </div>
-                            <div class="col-6">
-                                <div class="info-block-title">PAYMENT MODE</div>
-                                <div class="info-block-value"><i class="far fa-money-bill-alt"></i> Wallet</div>
-                            </div>
-                        </div>
-
                         <div class="route-timeline">
                             <div class="route-point">
                                 <div class="point-icon"></div>
@@ -1054,23 +1081,55 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3 col-6">
+                                <div class="info-block-title">DATE</div>
+                                <div class="info-block-value">Oct 24, 2023</div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="info-block-title">PICKUP TIME</div>
+                                <div class="info-block-value">10:30 AM</div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="info-block-title">PAYMENT STATUS</div>
+                                <div class="info-block-value text-dark d-flex align-items-center gap-2"><i
+                                        class="far fa-clock"></i> Pending</div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="info-block-title">PAYMENT MODE</div>
+                                <div class="info-block-value"><i class="far fa-money-bill-alt"></i> Wallet</div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="driver-details-heading">
+                            <i class="fas fa-id-badge me-2"></i>
+                            DRIVER DETAILS
+                        </div>
 
                         <div class="driver-card">
                             <div class="driver-img-wrapper">
-                                <img src="https://ui-avatars.com/api/?name=RS&background=random" class="driver-img">
-                                <div class="driver-rating-badge"><i class="fas fa-star text-warning me-1"></i> 4.9</div>
+                                <img src="https://ui-avatars.com/api/?name=RS&amp;background=random" class="driver-img">
+                                <div class="driver-rating-badge">
+                                    <i class="fas fa-star text-warning me-1"></i> 4.9
+                                </div>
                             </div>
+
                             <div class="driver-info">
                                 <div class="driver-name">James Wilson</div>
                                 <div class="driver-trips">3.2k+ trips completed</div>
                             </div>
+
                             <div class="driver-contact-btns">
-                                <a href="tel:#" class="btn-contact"><i class="fas fa-phone-alt"></i></a>
+                                <a href="tel:#" class="btn-contact"><i class="fas fa-phone-alt"
+                                        style="  transform: rotate(90deg);"></i></a>
                                 <a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>
                             </div>
+                            <button class="btn-outline-dark-custom">CANCEL TRIP</button>
                         </div>
 
-                        <button class="btn-outline-dark-custom">CANCEL TRIP</button>
+
                     </div>
                 </div>
             </div>
@@ -1090,7 +1149,7 @@
                             <div class="compact-trip-meta">23 Oct • 09:00 AM</div>
                             <div class="compact-trip-price-status">£35.00 • Completed</div>
                             <div class="compact-trip-actions">
-                                <a href="#" class="btn-compact-action"><i class="fas fa-life-ring"></i> Help</a>
+
                                 <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
                             </div>
                         </div>
@@ -1108,7 +1167,7 @@
                             <div class="compact-trip-meta">20 Oct • 02:15 PM</div>
                             <div class="compact-trip-price-status">£45.00 • Completed</div>
                             <div class="compact-trip-actions">
-                                <a href="#" class="btn-compact-action"><i class="fas fa-life-ring"></i> Help</a>
+
                                 <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
                             </div>
                         </div>
@@ -1126,7 +1185,7 @@
                             <div class="compact-trip-meta">15 Oct • 06:30 AM</div>
                             <div class="compact-trip-price-status">£65.00 • Completed</div>
                             <div class="compact-trip-actions">
-                                <a href="#" class="btn-compact-action"><i class="fas fa-life-ring"></i> Help</a>
+
                                 <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
                             </div>
                         </div>
@@ -1148,10 +1207,7 @@
                             <div class="compact-trip-title">Residential Complex, North St</div>
                             <div class="compact-trip-meta">22 Oct • 04:30 PM</div>
                             <div class="compact-trip-price-status">£0.00 • Cancelled</div>
-                            <div class="compact-trip-actions">
-                                <a href="#" class="btn-compact-action"><i class="fas fa-life-ring"></i> Help</a>
-                                <a href="#" class="btn-compact-action"><i class="fas fa-redo-alt"></i> Rebook</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1166,16 +1222,14 @@
                             <div class="compact-trip-title">Tech Hub 2, City Center</div>
                             <div class="compact-trip-meta">18 Oct • 08:15 AM</div>
                             <div class="compact-trip-price-status">£0.00 • Cancelled</div>
-                            <div class="compact-trip-actions">
-                                <a href="#" class="btn-compact-action"><i class="fas fa-life-ring"></i> Help</a>
-                                <a href="#" class="btn-compact-action"><i class="fas fa-redo-alt"></i> Rebook</a>
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
     </div>
 
     <!-- Live Map Modal -->

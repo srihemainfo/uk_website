@@ -883,7 +883,7 @@
                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
                     <li><a class="dropdown-item  py-2" href="/uk-profile"><i class="far fa-user me-2 w-20px"></i>
                             Profile</a></li>
-                            <li><a class="dropdown-item  py-2" href="/uk-profile"><i class="fas fa-chart-line me-2"></i>
+                            <li><a class="dropdown-item  py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
                             Dashboard</a></li>
                     <!-- <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a>
                     </li> -->

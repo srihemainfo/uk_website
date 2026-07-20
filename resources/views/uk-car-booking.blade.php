@@ -8600,7 +8600,6 @@
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             'Authorization': 'Bearer ' + getCookieValue('auth_token')
                         },
                         body: JSON.stringify({ search: query })
@@ -10071,7 +10070,6 @@
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Authorization': 'Bearer ' + getCookieValue('auth_token')
                 },
                 body: JSON.stringify(payload)
@@ -10385,7 +10383,6 @@
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     // Assuming sanctum token is required for all these secure routes
                     'Authorization': 'Bearer ' + getCookieValue('auth_token')
                 },
@@ -10905,7 +10902,6 @@
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         'Authorization': 'Bearer ' + getCookieValue('auth_token')
                     },
                     body: JSON.stringify(payload)

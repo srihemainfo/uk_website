@@ -45,6 +45,10 @@
             z-index: 1000;
         }
 
+        .dropdown-menu li {
+            font-size: 14px;
+        }
+
         .navbar-brand-wrapper {
             display: flex;
             align-items: center;
@@ -117,28 +121,6 @@
             background: #333;
         }
 
-        .wallet-badge {
-            background: #f8f9fa;
-            border: 1px solid #eaeaea;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #111;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .wallet-badge:hover {
-            background: #f3f4f6;
-            color: #111;
-        }
-
-
-
-
         .profile-img {
             width: 36px;
             height: 36px;
@@ -159,7 +141,9 @@
             color: #111;
         }
 
-
+.dropdown-item{
+    font-weight: 500;
+}
 
         .welcome-title {
             font-size: 28px;
@@ -174,73 +158,10 @@
             margin-bottom: 20px;
         }
 
-        /* Top Section Grid (Wallet + Stats) */
-        .top-overview-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
 
-        /* Wallet Gradient Card */
-        .wallet-card-gradient {
-            background: linear-gradient(135deg, #111 0%, #333 100%);
-            border-radius: 16px;
-            padding: 24px;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .wallet-card-gradient::after {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .wallet-label {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .wallet-balance {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .btn-add-money {
-            background: #fff;
-            color: #111;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 14px;
-            align-self: flex-start;
-            transition: transform 0.2s;
-        }
-
-        .btn-add-money:hover {
-            transform: translateY(-2px);
-            background: #f3f4f6;
-        }
-
-        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
 
@@ -305,6 +226,11 @@
         .custom-tab.active {
             color: #111;
             border-bottom-color: #111;
+        }
+         .dropdown-item:active,
+        .dropdown-item.active {
+            background-color: #111 !important;
+            color: #fff !important;
         }
 
         .tab-content {
@@ -899,6 +825,10 @@
         }
 
         @media (max-width: 768px) {
+            .stats-grid{
+                grid-template-columns: repeat(2, 1fr);
+            }
+
             .stat-value {
                 font-size: 17px;
             }
@@ -932,7 +862,7 @@
     <!-- Navbar -->
     <nav class="dash-navbar px-3 px-md-4">
         <div class="navbar-brand-wrapper gap-2 gap-md-3">
-            <a href="#" class="nav-logo fs-5 fs-md-4">
+            <a href="/" class="nav-logo fs-5 fs-md-4">
                 <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
 
             </a>
@@ -946,22 +876,21 @@
             <a href="/" class="btn-book-ride px-2 px-md-3">
                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline">Book Ride</span>
             </a>
-            <a href="#" class="wallet-badge px-2 px-md-3" data-bs-toggle="modal" data-bs-target="#walletModal">
-                <i class="fas fa-wallet text-secondary"></i> <span>£45.50</span>
-            </a>
-
+        
             <div class="dropdown">
                 <img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="Profile" class="profile-img"
                     data-bs-toggle="dropdown">
                 <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
-                    <li><a class="dropdown-item fw-medium py-2" href="#"><i class="far fa-user me-2 w-20px"></i>
+                    <li><a class="dropdown-item  py-2" href="/uk-profile"><i class="far fa-user me-2 w-20px"></i>
                             Profile</a></li>
-                    <li><a class="dropdown-item fw-medium py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a>
-                    </li>
+                            <li><a class="dropdown-item  py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
+                            Dashboard</a></li>
+                    <!-- <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a>
+                    </li> -->
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item fw-medium py-2" href="#"><i class="fas fa-sign-out-alt me-2"></i>
+                    <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-sign-out-alt me-2"></i>
                             Logout</a></li>
                 </ul>
             </div>
@@ -976,17 +905,8 @@
 
         <!-- Top Overview -->
         <div class="top-overview-grid">
-            <!-- Wallet Card -->
-            <div class="wallet-card-gradient">
-                <div>
-                    <div class="wallet-label">CURRENT BALANCE</div>
-                    <div class="wallet-balance">£45.50</div>
-                </div>
-                <button class="btn-add-money" data-bs-toggle="modal" data-bs-target="#walletModal">
-                    <i class="fas fa-plus me-1"></i> Add Money
-                </button>
-            </div>
-
+           
+        
             <!-- Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
@@ -1220,7 +1140,7 @@
             <div class="row g-4">
                 <!-- Cancelled Trip 1 -->
                 <div class="col-md-6">
-                    <div class="compact-trip-card opacity-75">
+                    <div class="compact-trip-card ">
                         <div class="compact-car-img-wrapper">
                             <img src="/goride/img/saloon.png" class="compact-car-img img-grayscale" alt="Innova">
                         </div>
@@ -1238,7 +1158,7 @@
 
                 <!-- Cancelled Trip 2 -->
                 <div class="col-md-6">
-                    <div class="compact-trip-card opacity-75">
+                    <div class="compact-trip-card ">
                         <div class="compact-car-img-wrapper">
                             <img src="/goride/img/saloon.png" class="compact-car-img img-grayscale" alt="Innova">
                         </div>

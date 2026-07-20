@@ -10,6 +10,10 @@ Route::get('/uk-dashboard', function () {
     return view('uk-dashboard');
 })->name('uk-dashboard');
 
+Route::get('/uk-profile', function () {
+    return view('uk-profile');
+})->name('uk-profile');
+
 Route::get('/uk-about', function () {
     return view('uk-about');
 })->name('uk-about');

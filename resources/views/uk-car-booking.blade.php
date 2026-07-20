@@ -10331,11 +10331,27 @@
             let pTime = bookingData.time;
             if (!pDate) {
                 pDate = new Date().toISOString().slice(0, 10);
+            } else if (pDate.includes('/')) {
+                const parts = pDate.split('/');
+                if (parts.length === 3) {
+                    pDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                }
             }
             if (!pTime) {
                 pTime = "00:00:00";
+            } else {
+                const match = pTime.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+                if (match) {
+                    let hours = parseInt(match[1], 10);
+                    const minutes = match[2];
+                    const modifier = match[3] ? match[3].toUpperCase() : null;
+                    if (modifier === 'PM' && hours < 12) hours += 12;
+                    if (modifier === 'AM' && hours === 12) hours = 0;
+                    pTime = `${hours.toString().padStart(2, '0')}:${minutes}:00`;
+                } else if (pTime.length === 5) {
+                    pTime += ':00';
+                }
             }
-            if (pTime.length === 5) pTime += ':00';
             const pickupDateTime = pDate + ' ' + pTime;
 
             const payload = {
@@ -10486,7 +10502,7 @@
                     driversListener(); // Unsubscribe previous snapshot
                 }
 
-                driversListener = db.collection('uk_dev_jobs').doc(bookingData.bookingId)
+                driversListener = db.collection('{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}').doc(bookingData.bookingId)
                     .onSnapshot((doc) => {
                         if (doc.exists) {
                             const data = doc.data();

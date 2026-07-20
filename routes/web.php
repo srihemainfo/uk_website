@@ -5,6 +5,10 @@ Route::get('/', function () {
     return view('uk-car-booking');
 })->name('home');
 
+Route::get('/uk-dashboard', function () {
+    return view('uk-dashboard');
+})->name('uk-dashboard');
+
 Route::get('/uk-about', function () {
     return view('uk-about');
 })->name('uk-about');

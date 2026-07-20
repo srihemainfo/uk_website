@@ -8595,14 +8595,13 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch(API_BASE_URL + '/web-get-location', {
-                        method: 'POST',
+                    const response = await fetch(API_BASE_URL + '/web-get-location?search=' + encodeURIComponent(query), {
+                        method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                             'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                        },
-                        body: JSON.stringify({ search: query })
+                        }
                     });
                     const result = await response.json();
                     if (wrapper) wrapper.classList.remove('is-loading');
@@ -10065,7 +10064,7 @@
                 credit_pay: null
             };
 
-            fetch('/w-cash-payment', {
+            fetch(API_BASE_URL + '/w-cash-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -10378,7 +10377,7 @@
             };
 
             // Using the user-provided API Route via the local controller proxy
-            fetch('/w-book-notify-driver', {
+            fetch(API_BASE_URL + '/w-book-notify-driver', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -11231,10 +11230,11 @@
                 return_to_type: bookingData.returnTrip ? bookingData.returnDropoffType : null,
             };
             try {
-                const response = await fetch('/api/bookings', {
+                const response = await fetch(API_BASE_URL + '/api/bookings', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
                     },
                     body: JSON.stringify(payload)
                 });

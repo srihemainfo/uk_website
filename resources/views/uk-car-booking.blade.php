@@ -7186,7 +7186,7 @@
                             <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop">
                                 <h5 class="summary-title d-flex justify-content-between align-items-center"
                                     onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
-                                    <span><i class="fas fa-clipboard-list"></i> Booking Details</span>
+                                    <span><i class="fas fa-clipboard-list"></i> Passenger Details</span>
                                     <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                                 </h5>
 
@@ -8094,7 +8094,7 @@
                     <p>Manage fleet, drivers, bookings, and earnings from one dashboard</p>
                 </div>
                 <!--<a href="{{ env('WEBSITE_APP_URL') }}/operator-signup" class="operator-register-btn">-->
-                <a href="/operator-signup" class="operator-register-btn">
+                <a href="https://ops.goride.run/" class="operator-register-btn">
                     <i class="fas fa-arrow-right"></i>
                     Become an Operator
                 </a>
@@ -9969,8 +9969,8 @@
                     return; // skip vehicles with no API price
                 }
 
-                const displayPrice    = parseFloat(fare.from_range || 0).toFixed(2);
-                const displayPriceMax = parseFloat(fare.to_range   || 0).toFixed(2);
+                const displayPrice    = parseFloat(fare.from_range || 0);
+                const displayPriceMax = parseFloat(fare.to_range   || 0);
 
                 const dynamicPassenger = fare && fare.passenger ? parseInt(fare.passenger) : parseInt(v.capacity);
                 const dynamicLuggage = fare && fare.luggage ? parseInt(fare.luggage) : parseInt(v.luggage);

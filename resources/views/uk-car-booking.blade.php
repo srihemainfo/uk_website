@@ -5842,6 +5842,7 @@
         }
 
         @media (max-width: 768px) {
+            
             .vehicle-item {
                 flex-direction: row;
                 gap: 10px;
@@ -6014,8 +6015,8 @@
                 align-items: center;
                 gap: 8px;
                 flex: 1;
-                padding: 0 6px;
-                flex-direction: column;
+                /* padding: 0 6px;
+                flex-direction: column; */
             }
 
             .mob-trust-badge:last-child {
@@ -6989,7 +6990,7 @@
                             </div>
                             <div class="mob-trust-text">
                                 <span class="mob-trust-title">Safe &amp; Secure</span>
-                                <span class="mob-trust-sub">Verified drivers</span>
+                                <!-- <span class="mob-trust-sub">Verified drivers</span> -->
                             </div>
                         </div>
                         <div class="mob-trust-badge">
@@ -6998,7 +6999,7 @@
                             </div>
                             <div class="mob-trust-text">
                                 <span class="mob-trust-title">Quick &amp; Reliable</span>
-                                <span class="mob-trust-sub">On time, every time</span>
+                                <!-- <span class="mob-trust-sub">On time, every time</span> -->
                             </div>
                         </div>
                         <div class="mob-trust-badge">
@@ -7007,7 +7008,7 @@
                             </div>
                             <div class="mob-trust-text">
                                 <span class="mob-trust-title">No Hidden Charges</span>
-                                <span class="mob-trust-sub">Transparent pricing</span>
+                                <!-- <span class="mob-trust-sub">Transparent pricing</span> -->
                             </div>
                         </div>
                     </div>

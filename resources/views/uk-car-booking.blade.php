@@ -9835,8 +9835,8 @@
                     return; // skip vehicles with no API price
                 }
 
-                const displayPrice    = parseFloat(fare.from_range || 0).toFixed(2);
-                const displayPriceMax = parseFloat(fare.to_range   || 0).toFixed(2);
+                const displayPrice    = parseFloat(fare.from_range || 0);
+                const displayPriceMax = parseFloat(fare.to_range   || 0);
 
                 // Build vehicle object with real API prices
                 const vData = Object.assign({}, v, {

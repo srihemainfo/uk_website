@@ -7164,7 +7164,7 @@
                             <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop">
                                 <h5 class="summary-title d-flex justify-content-between align-items-center"
                                     onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
-                                    <span><i class="fas fa-clipboard-list"></i> Booking Details</span>
+                                    <span><i class="fas fa-clipboard-list"></i> Passenger Details</span>
                                     <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                                 </h5>
 

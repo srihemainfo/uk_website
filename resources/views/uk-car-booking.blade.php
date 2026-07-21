@@ -11,7 +11,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/css/intlTelInput.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         rel="stylesheet">
@@ -23,6 +22,35 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Minus+Inlier+Sans&display=swap');
+
+        .btn-swap-locations {
+            position: absolute;
+            right: 15px;
+            top: 54%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            color: #333;
+        }
+        .btn-swap-locations:hover {
+            background: #f8f9fa;
+        }
+        .location-group-wrapper .location-input-field {
+            padding-right: 45px;
+        }
+        .location-group-wrapper {
+            position: relative;
+        }
 
         @keyframes fadeIn {
             from {
@@ -1909,15 +1937,6 @@
             background: none;
             border: none;
             font-size: 16px;
-        }
-
-        .time-panel-header-clear {
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #000;
         }
 
         .time-panel-title {
@@ -6796,7 +6815,7 @@
                     <button class="time-panel-header-back" onclick="hidePickupTimePanel()">
                         <i class="fas fa-arrow-left"></i>
                     </button>
-                    <button class="time-panel-header-clear" onclick="hidePickupTimePanel()">Clear</button>
+                    <!-- <button class="time-panel-header-clear" onclick="hidePickupTimePanel()">Clear</button> -->
                 </div>
                 <h3 class="time-panel-title" id="timePanelTitle">When do you want to be picked up?</h3>
                 <p class="time-panel-subtitle">From <span id="timePanelLocation"></span></p>
@@ -6968,6 +6987,9 @@
                                 </div>
                             </div>
                         </div>
+                        <button type="button" class="btn-swap-locations" onclick="swapLocations()" title="Swap Locations">
+                            <i class="fas fa-exchange-alt" style="transform: rotate(90deg);"></i>
+                        </button>
                     </div>
                     <div class="m-3">
                         <button class="pickup-now-btn" id="pickupNowBtn" onclick="showSchedulePanelFromStep1()">
@@ -7056,7 +7078,7 @@
                                     </div>
                                 </div>
                                 <!-- FOR ME (KEEP EXISTING) -->
-                                <button type="button" class="trip-location-item" onclick="showForMeModal()">
+                                <button type="button" class="trip-location-item" onclick="showForMeModal()" style="display: none !important;">
                                     <div class="trip-location-icon">
                                         <i class="fas fa-user"></i>
                                         <div class="d-flex flex-column text-start">
@@ -7486,36 +7508,16 @@
                             </div>
                         </div>
                         <!-- Normal -->
+                        <!-- Normal -->
                         <div id="journeyNormal">
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
-                                    <!--<label>-->
-                                    <!--    <i class="fas fa-calendar"></i>-->
-                                    <!--    Journey Date-->
-                                    <!--</label>-->
-                                    <!--<input type="text" id="normalJourneyDate" class="time-input-field" readonly>-->
+                                    <label>Pickup Address *</label>
+                                    <input type="text" id="pickupAddressNormal" placeholder="Full pickup address with postcode">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <!--<label><i class="fas fa-clock"></i> Journey Time</label>-->
-                                    <!--<select id="normalJourneyTime">-->
-                                    <!--    <option value="">Select</option>-->
-                                    <!--    <option value="07:00 AM">7:00 AM</option>-->
-                                    <!--    <option value="08:00 AM">8:00 AM</option>-->
-                                    <!--    <option value="09:00 AM">9:00 AM</option>-->
-                                    <!--    <option value="10:00 AM">10:00 AM</option>-->
-                                    <!--    <option value="11:00 AM">11:00 AM</option>-->
-                                    <!--    <option value="12:00 PM">12:00 PM</option>-->
-                                    <!--    <option value="01:00 PM">1:00 PM</option>-->
-                                    <!--    <option value="02:00 PM">2:00 PM</option>-->
-                                    <!--    <option value="03:00 PM">3:00 PM</option>-->
-                                    <!--    <option value="04:00 PM">4:00 PM</option>-->
-                                    <!--    <option value="05:00 PM">5:00 PM</option>-->
-                                    <!--    <option value="06:00 PM">6:00 PM</option>-->
-                                    <!--    <option value="07:00 PM">7:00 PM</option>-->
-                                    <!--    <option value="08:00 PM">8:00 PM</option>-->
-                                    <!--    <option value="09:00 PM">9:00 PM</option>-->
-                                    <!--    <option value="10:00 PM">10:00 PM</option>-->
-                                    <!--</select>-->
+                                    <label>Dropoff Address *</label>
+                                    <input type="text" id="dropoffAddressNormal" placeholder="Full dropoff address with postcode">
                                 </div>
                             </div>
                         </div>
@@ -7610,10 +7612,8 @@
                                     <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
                                 </div>
                                 <div class="rc-vehicle-features">
-                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span>
-                                        Seats</span>
-                                    <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span>
-                                        Large</span>
+                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span></span>
+                                    <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span></span>
                                     <span><i class="fas fa-cogs"></i> <span id="rcTransmission">Automatic</span></span>
                                 </div>
                                 <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
@@ -7823,8 +7823,14 @@
                     }
                 }
 
+                let _lastEncodedPolyline = null;
                 function _drawPolyline(encodedPolyline) {
                     if (!bookingGoogleMap || !encodedPolyline) return;
+                    
+                    if (_lastEncodedPolyline === encodedPolyline && currentRoutePolyline) {
+                        return; // already drawn and map has it, don't re-draw
+                    }
+                    _lastEncodedPolyline = encodedPolyline;
 
                     // Remove previous polyline if any
                     if (currentRoutePolyline) {
@@ -9007,10 +9013,16 @@
                 mcsDateTime.textContent = d + ' ' + t;
             }
 
-            // pickupNowBtn label (when schedule is set)
+            // pickupNowBtn label
             const pnb = document.getElementById('pickupNowBtn');
-            if (pnb && state.date && state.time && state.bookingType === 'schedule') {
-                pnb.innerHTML = `<i class="fas fa-calendar"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+            if (pnb && state.date && state.time) {
+                if (state.pickupType === 'airport') {
+                    pnb.innerHTML = `<i class="fas fa-plane-departure"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                } else if (state.pickupType === 'seaport') {
+                    pnb.innerHTML = `<i class="fas fa-anchor"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                } else {
+                    pnb.innerHTML = `<i class="fas fa-calendar"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                }
             }
         }
 
@@ -9140,6 +9152,23 @@
                 $('#summarySpecialReqContainer').hide();
             }
         }
+        
+        function swapLocations() {
+            const state = BookingStore.getState();
+            if (!state.pickup && !state.dropoff) return; // Nothing to swap
+            
+            BookingStore.setState({
+                pickup: state.dropoff || '',
+                pickupType: state.dropoffType || '',
+                dropoff: state.pickup || '',
+                dropoffType: state.pickupType || ''
+            });
+            
+            if (typeof updateTimePanel === 'function') updateTimePanel();
+            if (typeof updatePickupUI === 'function') updatePickupUI();
+            if (typeof updateBookingSummary === 'function') updateBookingSummary();
+        }
+
         // ===== INITIALIZE =====
         $(document).ready(function () {
             showCookieConsentIfNeeded();
@@ -9165,8 +9194,20 @@
                 dateFormat: "Y-m-d",
                 minDate: "today",
                 defaultDate: _restoredState.date || "today",
+                onReady(selectedDates, dateStr, instance) {
+                    let dStr = dateStr;
+                    if (!dStr && selectedDates.length > 0) {
+                        dStr = instance.formatDate(selectedDates[0], "Y-m-d");
+                    }
+                    if (!dStr) {
+                        dStr = instance.formatDate(new Date(), "Y-m-d");
+                    }
+                    BookingStore.setState({ date: dStr, bookingType: 'schedule' });
+                    generateTimeOptions(dStr);
+                },
                 onChange(selectedDates, dateStr) {
-                    BookingStore.setState({ date: dateStr });
+                    BookingStore.setState({ date: dateStr, bookingType: 'schedule' });
+                    generateTimeOptions(dateStr);
                 }
             });
             $('.fleet-carousel').owlCarousel({
@@ -9209,6 +9250,14 @@
 
             // Re-render vehicles if we have cached fares
             if (_restoredState.fareDataObj) {
+                // apiPolyline is skipped in persistence due to size, restore it from fareDataObj
+                if (!bookingData.apiPolyline && Object.keys(_restoredState.fareDataObj).length > 0) {
+                    const firstFare = Object.values(_restoredState.fareDataObj)[0];
+                    if (firstFare && firstFare.polyline) {
+                        BookingStore.setState({ apiPolyline: firstFare.polyline });
+                    }
+                }
+
                 renderVehicles(_restoredState.fareDataObj);
                 
                 // Re-select previously chosen vehicle visually
@@ -9232,12 +9281,17 @@
 
             // Restore the user's current step (if they refreshed the page)
             if (_restoredState.currentStep && _restoredState.currentStep > 1) {
-                showStep(_restoredState.currentStep);
+                if (_restoredState.currentStep === 8) {
+                    BookingStore.clear();
+                    showStep(1);
+                } else {
+                    showStep(_restoredState.currentStep);
 
-                // If they were on the driver search screen, restart the firebase listener
-                if (_restoredState.currentStep === 6 && _restoredState.bookingId) {
-                    if (typeof startDynamicDriverSearch === 'function') {
-                        startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
+                    // If they were on the driver search screen, restart the firebase listener
+                    if (_restoredState.currentStep === 6 && _restoredState.bookingId) {
+                        if (typeof startDynamicDriverSearch === 'function') {
+                            startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
+                        }
                     }
                 }
             }
@@ -9288,6 +9342,75 @@
             toggleDropdown('language');
         }
         // ===== CUSTOM TIME DROPDOWN =====
+        function generateTimeOptions(dateStr) {
+            const timeDropdownList = document.getElementById('timeDropdownList');
+            timeDropdownList.innerHTML = '';
+            
+            let selectedDate = new Date();
+            if (dateStr && typeof dateStr === 'string') {
+                const parts = dateStr.split('-');
+                if (parts.length === 3) {
+                    selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                }
+            }
+            const now = new Date();
+            
+            const isToday = selectedDate.toDateString() === now.toDateString();
+            
+            let firstOptionTime = null;
+            let firstOptionFormatted = null;
+            const currentSelectedTime = BookingStore.getState().time;
+            let foundCurrentTime = false;
+
+            // Generate times every 30 minutes from 00:00 to 23:30
+            for (let hour = 0; hour < 24; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    if (isToday) {
+                        if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
+                            continue;
+                        }
+                    }
+                    
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+                    const displayMinute = minute === 0 ? '00' : '30';
+                    
+                    const timeValue = `${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`;
+                    const timeDisplay = `${displayHour}:${displayMinute} ${ampm}`;
+                    
+                    if (!firstOptionTime) {
+                        firstOptionTime = timeValue;
+                        firstOptionFormatted = timeDisplay;
+                    }
+                    
+                    if (currentSelectedTime === timeValue) {
+                        foundCurrentTime = true;
+                    }
+
+                    const item = document.createElement('div');
+                    item.className = 'time-dropdown-item';
+                    item.onclick = function() { selectTime(timeValue); };
+                    item.textContent = timeDisplay;
+                    timeDropdownList.appendChild(item);
+                }
+            }
+
+            if (!firstOptionTime) {
+                const item = document.createElement('div');
+                item.className = 'time-dropdown-item';
+                item.textContent = 'No times available';
+                timeDropdownList.appendChild(item);
+                BookingStore.setState({ time: '' });
+                document.getElementById('timeDropdownValue').textContent = 'Select time';
+            } else {
+                if (foundCurrentTime) {
+                    selectTime(currentSelectedTime);
+                } else {
+                    selectTime(firstOptionTime);
+                }
+            }
+        }
+
         function toggleTimeDropdown() {
             $('#timeDropdownList').toggleClass('show');
             $('#timeDropdownBtn').toggleClass('active');
@@ -9657,25 +9780,36 @@
         // Call this whenever pickup location changes
         function updatePickupUI() {
             const pickupType = bookingData.pickupType; // airport, seaport, or address
-            // Update button text
-            if (pickupType === 'airport') {
-                $('#pickupNowBtn').html(`
-            <i class="fas fa-plane-departure"></i>
-            Flight Landing Details
-            <i class="fas fa-chevron-down ms-2"></i>
-        `);
-            } else if (pickupType === 'seaport') {
-                $('#pickupNowBtn').html(`
-            <i class="fas fa-anchor"></i>
-            Cruise Details
-            <i class="fas fa-chevron-down ms-2"></i>
-        `);
+            const state = BookingStore.getState();
+            
+            if (state.date && state.time) {
+                if (pickupType === 'airport') {
+                    $('#pickupNowBtn').html(`<i class="fas fa-plane-departure"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                } else if (pickupType === 'seaport') {
+                    $('#pickupNowBtn').html(`<i class="fas fa-anchor"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                } else {
+                    $('#pickupNowBtn').html(`<i class="fas fa-calendar"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                }
             } else {
-                $('#pickupNowBtn').html(`
-            <i class="fas fa-clock"></i>
-            Pickup Now
-            <i class="fas fa-chevron-down ms-2"></i>
-        `);
+                if (pickupType === 'airport') {
+                    $('#pickupNowBtn').html(`
+                <i class="fas fa-plane-departure"></i>
+                Flight Landing Details
+                <i class="fas fa-chevron-down ms-2"></i>
+            `);
+                } else if (pickupType === 'seaport') {
+                    $('#pickupNowBtn').html(`
+                <i class="fas fa-anchor"></i>
+                Cruise Details
+                <i class="fas fa-chevron-down ms-2"></i>
+            `);
+                } else {
+                    $('#pickupNowBtn').html(`
+                <i class="fas fa-clock"></i>
+                Pickup Now
+                <i class="fas fa-chevron-down ms-2"></i>
+            `);
+                }
             }
         }
         function updateSchedule() {
@@ -9838,10 +9972,19 @@
                 const displayPrice    = parseFloat(fare.from_range || 0);
                 const displayPriceMax = parseFloat(fare.to_range   || 0);
 
+                const dynamicPassenger = fare && fare.passenger ? parseInt(fare.passenger) : parseInt(v.capacity);
+                const dynamicLuggage = fare && fare.luggage ? parseInt(fare.luggage) : parseInt(v.luggage);
+                const dynamicChild = fare && fare.child ? parseInt(fare.child) : 0;
+                const dynamicHandLuggage = fare && fare.hand_luggage ? parseInt(fare.hand_luggage) : (v.handLuggage || dynamicPassenger);
+
                 // Build vehicle object with real API prices
                 const vData = Object.assign({}, v, {
                     price:    parseFloat(displayPrice),
                     priceMax: parseFloat(displayPriceMax),
+                    capacity: dynamicPassenger,
+                    luggage: dynamicLuggage,
+                    child: dynamicChild,
+                    handLuggage: dynamicHandLuggage,
                     fareBreakdown: fare
                 });
 
@@ -9874,7 +10017,7 @@
                     : '';
 
                 const html = `
-<div class="vehicle-item" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
+<div class="vehicle-item" id="vehicle-item-${v.id}" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
     <div class="vehicle-left">
         <img src="${v.image}" alt="${v.name}">
     </div>
@@ -9885,7 +10028,7 @@
         <button
             type="button"
             class="vehicle-info-btn"
-            onclick="event.stopPropagation(); openVehicleInfo(${v.id})"
+            onclick="event.stopPropagation(); openVehicleInfo(${JSON.stringify(vData).replace(/"/g, '&quot;')})"
             title="Vehicle Details">
             <i class="fas fa-info-circle"></i>
         </button>
@@ -9894,9 +10037,9 @@
 </div>
         <div class="v-sub">
            <div class="v-features">
-            <span><i class="fas fa-user"></i> ${v.capacity}</span>
-            <span><i class="fas fa-suitcase"></i> ${v.luggage}</span>
-            <span><i class="fas fa-briefcase"></i> ${v.handLuggage || 0}</span>
+            <span><i class="fas fa-user"></i> ${dynamicPassenger}</span>
+            <span><i class="fas fa-suitcase"></i> ${dynamicLuggage}</span>
+            ${dynamicChild > 0 ? `<span><i class="fas fa-baby-carriage"></i> ${dynamicChild}</span>` : ''}
            </div>
               ${tagHtml}
         </div>
@@ -9974,13 +10117,7 @@
                     });
                 }
             } else {
-                // $('#journeyNormal').show();
-                // if (!document.getElementById('normalJourneyDate')._flatpickr) {
-                //     flatpickr('#normalJourneyDate', {
-                //         dateFormat: 'd/m/Y',
-                //         minDate: 'today'
-                //     });
-                // }
+                $('#journeyNormal').show();
             }
         }
         // Fallback for showToast if it's not defined globally
@@ -10027,9 +10164,26 @@
                 return;
             }
             bookingData.paymentMethod = paymentMethod;
-            const email = document.getElementById('passengerEmail').value.trim();
-            const name = document.getElementById('passengerFirstName').value.trim();
-            const phone = document.getElementById('passengerPhone').value.trim();
+            
+            const state = BookingStore.getState();
+            let email = document.getElementById('passengerEmail').value.trim();
+            let name = document.getElementById('passengerFirstName').value.trim();
+            let phone = document.getElementById('passengerPhone').value.trim();
+
+            // Restore from state if empty due to page reload
+            if (!email && state.passengerEmail) {
+                email = state.passengerEmail;
+                document.getElementById('passengerEmail').value = email;
+            }
+            if (!name && state.passengerFirstName) {
+                name = state.passengerFirstName;
+                document.getElementById('passengerFirstName').value = name;
+            }
+            if (!phone && state.passengerPhone) {
+                phone = state.passengerPhone;
+                document.getElementById('passengerPhone').value = phone;
+            }
+
             if (!name) {
                 showToast('Full name is required to process your booking.', 'error');
                 document.getElementById('passengerFirstName').focus();
@@ -10051,6 +10205,12 @@
                 document.getElementById('passengerEmail').focus();
                 return;
             }
+
+            // Restore other inputs to prevent gatherAllBookingData from wiping state
+            if (!$('#passengerLastName').val() && state.passengerLastName) $('#passengerLastName').val(state.passengerLastName);
+            if (!$('#passengerCount').val() && state.passengerCount) $('#passengerCount').val(state.passengerCount);
+            if (!$('#luggageCount').val() && state.luggageCount) $('#luggageCount').val(state.luggageCount);
+            if (!$('#handLuggageCount').val() && state.handLuggageCount) $('#handLuggageCount').val(state.handLuggageCount);
 
             gatherAllBookingData();
 
@@ -10104,9 +10264,11 @@
                 });
         }
         function updateBookingSummary() {
+            const bData = BookingStore.getState();
+
             // 1. Passenger Name
-            const fname = $('#passengerFirstName').val() || '';
-            const lname = $('#passengerLastName').val() || '';
+            const fname = bData.passengerFirstName || '';
+            const lname = bData.passengerLastName || '';
             const pName = (fname + ' ' + lname).trim();
             $('#summaryPassengerName').text(fname.trim() || '–');
 
@@ -10117,16 +10279,29 @@
                 $('#mcsPassengerNameContainer').hide();
             }
             // 2. Contact
-            const phone = $('#passengerPhone').val() || '';
-            $('#summaryPassengerContact').text(phone.trim() ? ('+44 ' + phone.trim()) : '–');
+            const phone = bData.passengerPhone || '';
             if (phone.trim()) {
-                $('#mcsPassengerPhone').text('+44 ' + phone.trim());
+                let displayPhone = phone.trim();
+                if (window.passengerPhoneIti) {
+                    const countryData = window.passengerPhoneIti.getSelectedCountryData();
+                    if (countryData && countryData.dialCode) {
+                        displayPhone = phone.startsWith('+') ? phone : '+' + countryData.dialCode + ' ' + phone.trim();
+                    } else {
+                        displayPhone = phone.startsWith('+') ? phone : '+44 ' + phone.trim();
+                    }
+                } else {
+                    displayPhone = phone.startsWith('+') ? phone : '+44 ' + phone.trim();
+                }
+                
+                $('#summaryPassengerContact').text(displayPhone);
+                $('#mcsPassengerPhone').text(displayPhone);
                 $('#mcsPassengerPhoneContainer').css('display', 'flex');
             } else {
+                $('#summaryPassengerContact').text('–');
                 $('#mcsPassengerPhoneContainer').hide();
             }
             // 3. Email
-            const email = $('#passengerEmail').val() || '';
+            const email = bData.passengerEmail || '';
             $('#summaryPassengerEmail').text(email.trim() || '–');
             if (email.trim()) {
                 $('#mcsPassengerEmail').text(email.trim());
@@ -10136,12 +10311,12 @@
             }
             let showEnteredDetails = false;
             // 4. Passengers count
-            const pCount = $('#passengerCount').val() || '1';
+            const pCount = bData.passengerCount || '1';
             $('#summaryPassengerCount').text(pCount);
             $('#mcsPassengerCount').text(pCount);
             if (parseInt(pCount) > 1 || pName !== '' || email.trim() !== '' || phone.trim() !== '') showEnteredDetails = true;
             // 5. Luggage count
-            const lCount = $('#luggageCount').val() || '0';
+            const lCount = bData.luggageCount || '0';
             $('#summaryLuggageCount').text(lCount);
             $('#mcsLuggageCount').text(lCount);
             if (parseInt(lCount) > 0) {
@@ -10151,7 +10326,7 @@
                 $('#mcsLuggageContainer').hide();
             }
             // 6. Hand Luggage count
-            const hlCount = $('#handLuggageCount').val() || '0';
+            const hlCount = bData.handLuggageCount || '0';
             $('#summaryHandLuggageCount').text(hlCount);
             $('#mcsHandLuggageCount').text(hlCount);
             if (parseInt(hlCount) > 0) {
@@ -10161,17 +10336,11 @@
                 $('#mcsHandLuggageContainer').hide();
             }
             // 7. Baby Seats
-            const isBabySeat = $('#carSeatCheckbox').is(':checked');
+            const isBabySeat = bData.isBabySeat;
             if (isBabySeat) {
-                const bsCount = parseInt($('#childSeatCount').val()) || 0;
+                const bsCount = parseInt(bData.childSeatCount) || 0;
                 if (bsCount > 0) {
-                    const seatTypes = [];
-                    for (let i = 1; i <= bsCount; i++) {
-                        const val = $(`#childSeatType_${i}`).val();
-                        if (val) {
-                            seatTypes.push(val.charAt(0).toUpperCase() + val.slice(1));
-                        }
-                    }
+                    const seatTypes = bData.childSeatTypes || [];
                     const seatTypesStr = seatTypes.length > 0 ? ` (${seatTypes.join(', ')})` : '';
                     $('#summaryBabySeats').text(bsCount + seatTypesStr);
                     $('#mcsBabySeats').text(bsCount + seatTypesStr);
@@ -10278,8 +10447,8 @@
                 };
             } else {
                 journeyFields = {
-                    normalJourneyDate: $('#normalJourneyDate').val(),
-                    normalJourneyTime: $('#normalJourneyTime').val(),
+                    pickupAddressNormal: $('#pickupAddressNormal').val(),
+                    dropoffAddressNormal: $('#dropoffAddressNormal').val(),
                 };
             }
 
@@ -10316,6 +10485,17 @@
             if (!bookingData.passengerEmail) {
                 showToast('Email address is required.', 'error');
                 return;
+            }
+
+            // --- Journey specific validation ---
+            if (bookingData.pickupType === 'airport') {
+                if (!bookingData.flightNumber) { showToast('Flight Number is required.', 'error'); return; }
+                if (!bookingData.pickAfterTime) { showToast('Pick Up Time After Landing is required.', 'error'); return; }
+                if (!bookingData.comingFrom) { showToast('Coming From is required.', 'error'); return; }
+                if (!bookingData.dropoffAddress) { showToast('Drop off Address is required.', 'error'); return; }
+            } else if (bookingData.pickupType !== 'seaport') {
+                if (!bookingData.pickupAddressNormal) { showToast('Pickup Address is required.', 'error'); return; }
+                if (!bookingData.dropoffAddressNormal) { showToast('Dropoff Address is required.', 'error'); return; }
             }
 
             const btn = document.querySelector('#additionalDetailsBtns .btn-search-uber');
@@ -10359,8 +10539,8 @@
                 job_type: bookingData.returnTrip ? 'roundtrip' : 'oneway',
                 from_place: bookingData.pickup || '',
                 to_place: bookingData.dropoff || '',
-                pick_address: bookingData.pickup || '',
-                drop_address: bookingData.dropoff || '',
+                pick_address: bookingData.pickupAddressNormal || bookingData.pickup || '',
+                drop_address: bookingData.dropoffAddressNormal || bookingData.dropoffAddress || bookingData.dropoffAddressSeaport || bookingData.dropoff || '',
                 pickup_date: pickupDateTime,
                 dropoff_date: '',
                 day: '',
@@ -10388,8 +10568,8 @@
                 c_child_type: bookingData.childSeatTypes && bookingData.childSeatTypes.length ? bookingData.childSeatTypes.join(',') : '',
                 c_flight_number: bookingData.flightNumber || bookingData.cruiseFerryName || 'none',
                 c_coming_from: bookingData.comingFrom || bookingData.comingFromPort || 'none',
-                c_drop_address: bookingData.dropoffAddress || bookingData.dropoffAddressSeaport || bookingData.dropoff || '',
-                c_pick_address: bookingData.pickup || '',
+                c_drop_address: bookingData.dropoffAddressNormal || bookingData.dropoffAddress || bookingData.dropoffAddressSeaport || bookingData.dropoff || '',
+                c_pick_address: bookingData.pickupAddressNormal || bookingData.pickup || '',
                 c_special_require: bookingData.specialRequirements || 'none'
             };
 
@@ -10532,6 +10712,39 @@
                         })
                         .catch((error) => {
                             console.error("Failed to sign in with custom token:", error);
+                            // If token is expired or invalid, fetch a new one silently
+                            if (error.code === 'auth/invalid-custom-token') {
+                                console.log("Token expired. Fetching a new custom token...");
+                                fetch(API_BASE_URL + '/refresh-firebase-token', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json',
+                                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                                    },
+                                    body: JSON.stringify({ 
+                                        job_id: bookingData.jobId,
+                                        c_mobile: bookingData.passengerPhone || '' 
+                                    })
+                                })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.status && data.firebase_custom_token) {
+                                        console.log("New token received. Retrying sign in...");
+                                        BookingStore.setState({ firebaseCustomToken: data.firebase_custom_token });
+                                        
+                                        _firebaseAuthObj.signInWithCustomToken(data.firebase_custom_token)
+                                            .then(() => {
+                                                console.log("Re-authentication successful. Attaching listener.");
+                                                attachFirestoreListener();
+                                            })
+                                            .catch(err => console.error("Re-authentication failed:", err));
+                                    } else {
+                                        console.error("Failed to refresh token:", data.message);
+                                    }
+                                })
+                                .catch(err => console.error("Error fetching refreshed token:", err));
+                            }
                         });
                 }
             } else {
@@ -10643,6 +10856,41 @@
                     const newElem = $(html);
                     grid.append(newElem);
                     newElem.slideDown(400);
+                } else {
+                    const bid = bidsDetails[key];
+                    const driverElem = $(`#driver-bid-${key}`);
+                    if (driverElem.length) {
+                        const newAmount = bid.show_amount || 0;
+                        const currentAmountText = driverElem.find('.bid-amount').text().trim();
+                        if (currentAmountText !== '£' + newAmount) {
+                            driverElem.find('.bid-amount').text('£' + newAmount);
+                            
+                            const d = {
+                                id: bid.kyc_id || key,
+                                name: bid.b_name || 'Driver',
+                                rating: bid.b_rating || '4.9',
+                                trips: '100+', 
+                                experience: 'Pro', 
+                                bid: newAmount,
+                                eta: '5 mins',
+                                avatar: `<img src="${bid.b_image || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(bid.b_name || 'Driver') + '&background=f5c00b&color=000'}" alt="${bid.b_name || 'Driver'}" style="width:100%;height:100%;object-fit:cover;">`,
+                                mobile: bid.b_mobile || '',
+                                carName: bid.b_cab || null,
+                                carCapacity: bid.b_seater || null,
+                                carLuggage: bid.b_luggage || null
+                            };
+                            const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
+                            
+                            driverElem.find('.driver-accept-btn').attr('onclick', `acceptDriverFromList(${driverJson}, this)`);
+                            driverElem.find('.driver-review-link').attr('onclick', `openDriverReview(${driverJson})`);
+                            
+                            const priceElem = driverElem.find('.bid-amount');
+                            priceElem.css({ 'color': '#28a745', 'transition': 'color 0.3s ease' });
+                            setTimeout(() => {
+                                priceElem.css('color', '');
+                            }, 800);
+                        }
+                    }
                 }
             });
         }
@@ -10857,7 +11105,9 @@
                             const uDetails = res.data.user_details[uid];
                             if (uDetails.name) $('#rcDriverName').text(uDetails.name);
                             if (uDetails.exp) $('#rcDriverExperience').text(uDetails.exp);
-                            if (uDetails.completed_jobs) $('#rcDriverTrips').text(uDetails.completed_jobs + '+');
+                            if (uDetails.completed_jobs !== undefined && uDetails.completed_jobs !== null) {
+                                $('#rcDriverTrips').text(uDetails.completed_jobs);
+                            }
                             if (uDetails.review) $('#rcDriverReviewsPct').text(uDetails.review + '%');
 
                             if (uDetails.profile_image_url) {
@@ -11119,6 +11369,7 @@
                 $('#step2Buttons').hide();
                 $('#bookingImage').hide();
                 $('#bookingMap').show();
+                $('#vehicleGrid').addClass('single-col');
                 setTimeout(function () {
                     if (typeof initSingleRouteMap === 'function') {
                         initSingleRouteMap();
@@ -11132,6 +11383,7 @@
                     const mapSection = $('.hero-map-section');
                     formSection.removeClass('col-md-8 three-column-mode').addClass('col-md-5');
                     mapSection.removeClass('col-md-4').addClass('col-md-7');
+                    $('#vehicleGrid').removeClass('single-col');
                     if (stepNumber === 1) {
                         $('#bookingMap').hide();
                         $('#bookingImage').show();
@@ -11274,10 +11526,19 @@
             const input = $(`#${inputId}`);
             const display = $(`#${inputId}Display`);
             if (!input.length || !display.length) return;
+            
+            const vehicle = BookingStore.getState().vehicle;
+            let dynamicMax = max;
+            if (vehicle) {
+                if (inputId === 'passengerCount') dynamicMax = parseInt(vehicle.capacity) || max;
+                if (inputId === 'luggageCount') dynamicMax = parseInt(vehicle.luggage) || max;
+                if (inputId === 'handLuggageCount') dynamicMax = parseInt(vehicle.handLuggage) || max;
+            }
+
             let val = parseInt(input.val()) || 0;
             val += delta;
             if (val < min) val = min;
-            if (val > max) val = max;
+            if (val > dynamicMax) val = dynamicMax;
             input.val(val);
             display.text(val);
         }
@@ -11297,9 +11558,22 @@
                 $('#carSeatDropdownsContainer').html('');
             }
         }
-        function openVehicleInfo(id) {
-            const vehicle = vehicles.find(v => v.id === id);
+        let currentModalVehicleData = null;
+        function openVehicleInfo(vData) {
+            currentModalVehicleData = vData;
+            const vehicle = vData;
             $("#vehicleModalTitle").html(vehicle.name);
+            
+            const price = vehicle.price;
+            const priceMax = vehicle.priceMax;
+            
+            let priceTextHtml = '';
+            if (priceMax && parseFloat(priceMax) > 0) {
+                priceTextHtml = `Price Range: <strong>£${price} – £${priceMax}</strong>`;
+            } else {
+                priceTextHtml = `Price: <strong>£${price}</strong>`;
+            }
+            
             let recommendedHtml = '';
             switch (vehicle.name) {
                 case 'Standard':
@@ -11373,13 +11647,13 @@
     <div class="vehicle-info-section">
         <div class="vehicle-modal-price-range">
             <i class="fas fa-tag"></i>
-            <span>Price Range: <strong>£${vehicle.price} – £${vehicle.priceMax}</strong></span>
+            <span>${priceTextHtml}</span>
         </div>
 
         <h6><i class="fas fa-info-circle"></i> Recommended for:</h6>
         ${recommendedHtml}
 
-        <button class="vehicle-modal-price-btn" onclick="closeModal('vehicleInfoModal')">
+        <button class="vehicle-modal-price-btn" onclick="selectCabFromModal()">
             Select Cabs
         </button>
     </div>
@@ -11387,15 +11661,30 @@
 
             $("#vehicleInfoModal").addClass("show");
         }
+
+        function selectCabFromModal() {
+            closeModal('vehicleInfoModal');
+            if (currentModalVehicleData) {
+                const el = document.getElementById('vehicle-item-' + currentModalVehicleData.id);
+                if (el) selectVehicle(el, currentModalVehicleData);
+            }
+        }
         // ===== CAR SEAT COUNT UPDATE =====
         function updateCarSeatCount(delta) {
             const input = $('#childSeatCount');
             const display = $('#childSeatCountDisplay');
             if (!input.length || !display.length) return;
+
+            const vehicle = BookingStore.getState().vehicle;
+            let maxSeats = 4;
+            if (vehicle && vehicle.child !== undefined) {
+                maxSeats = parseInt(vehicle.child) || 0;
+            }
+
             let val = parseInt(input.val()) || 0;
             val += delta;
             if (val < 0) val = 0;
-            if (val > 4) val = 4;
+            if (val > maxSeats) val = maxSeats;
             input.val(val);
             display.text(val);
             renderCarSeatDropdowns(val);
@@ -11462,7 +11751,13 @@
         const phoneInput = document.querySelector("#passengerPhone");
 
         const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "gb", // Default UK
+            initialCountry: "auto",
+            geoIpLookup: function(success, failure) {
+                fetch("https://ipapi.co/json")
+                    .then(function(res) { return res.json(); })
+                    .then(function(data) { success(data.country_code); })
+                    .catch(function() { success("gb"); });
+            },
             preferredCountries: ["gb", "us", "in", "ae", "au"],
             separateDialCode: true,
             nationalMode: true,
@@ -11473,10 +11768,6 @@
         });
         window.passengerPhoneIti = iti;
     </script>
-
-
-    <!-- intl-tel-input JS -->
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
 
 
     <!-- ===== AUTH LOGIN MODAL ===== -->
@@ -11610,9 +11901,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-    <!-- intl-tel-input JS -->
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/intlTelInput.min.js"></script>
-
+    <!-- intl-tel-input JS config -->
     <script>
         // ===== AUTH MODAL: intl-tel-input init =====
         let _itiInstance = null;
@@ -11620,13 +11909,20 @@
             const inputEl = document.getElementById('authContactInput');
             if (!inputEl) return;
             _itiInstance = window.intlTelInput(inputEl, {
-                initialCountry: 'gb',
+                initialCountry: 'auto',
+                geoIpLookup: function(success, failure) {
+                    fetch("https://ipapi.co/json")
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) { success(data.country_code); })
+                        .catch(function() { success("gb"); });
+                },
                 separateDialCode: true,
                 countrySearch: true,
                 showFlags: true,
-                loadUtilsOnInit: 'https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js',
                 preferredCountries: ['gb', 'us', 'in', 'au', 'ca', 'de', 'fr', 'ae', 'sg', 'za'],
                 dropdownContainer: document.body,
+                loadUtils: () =>
+                    import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
             });
         })();
 
@@ -11874,14 +12170,14 @@ li.innerHTML = `
     <div id="navbarUserDropdown" class="navbar-user-dropdown">
        <ul class="navbar-user-menu">
 
-         <li>
+         <li style="display:none;">
         <a href="uk-profile" class="navbar-user-menu-btn">
             <i class="far fa-user me-2"></i>
             Profile
         </a>
     </li>
 
-    <li>
+    <li style="display:none;">
         <a href="uk-dashboard" class="navbar-user-menu-btn">
             <i class="fas fa-chart-line me-2"></i>
             Dashboard

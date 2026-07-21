@@ -8088,7 +8088,7 @@
                     <p>Manage fleet, drivers, bookings, and earnings from one dashboard</p>
                 </div>
                 <!--<a href="{{ env('WEBSITE_APP_URL') }}/operator-signup" class="operator-register-btn">-->
-                <a href="/operator-signup" class="operator-register-btn">
+                <a href="https://ops.goride.run/" class="operator-register-btn">
                     <i class="fas fa-arrow-right"></i>
                     Become an Operator
                 </a>

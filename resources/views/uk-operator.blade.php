@@ -593,12 +593,12 @@
         $(document).ready(function() {
             $('#loginForm').on('submit', function(e) {
                 e.preventDefault();
-                alert('Login submitted!');
+                showToast('Login submitted!', 'success');
             });
 
             $('#registerForm').on('submit', function(e) {
                 e.preventDefault();
-                alert('Registration submitted!');
+                showToast('Registration submitted!', 'success');
             });
         });
     </script>

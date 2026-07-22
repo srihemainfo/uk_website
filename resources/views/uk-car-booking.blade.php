@@ -13,6 +13,9 @@
 
     
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="alternate" hreflang="en-GB" href="https://www.goride.run/uk" />
+<link rel="alternate" hreflang="en-IN" href="https://www.goride.run/in" />
+<link rel="alternate" hreflang="x-default" href="https://www.goride.run/global" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -204,11 +207,7 @@
             overflow-x: hidden;
         }
 
-        #bookingMap {
-            width: 100%;
-            height: 100%;
-            min-height: calc(100vh - 70px);
-        }
+       
 
         .date-time-screen {
             display: grid;
@@ -728,8 +727,7 @@
         }
 
         #bookingMap {
-            width: 100%;
-            height: 100%;
+         display: none; width: 100%; height: 100%; min-height: 400px;
         }
 
         #bookingImage {
@@ -4547,7 +4545,7 @@
         .trip-route-meta-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .trip-route-meta-item {
@@ -4610,7 +4608,7 @@
         }
 
         .trip-datetime-icon {
-            width: 42px;
+            /* width: 42px; */
             height: 42px;
             border-radius: 50%;
             background: #f8f8f8;
@@ -5071,7 +5069,7 @@
 
             #bookingMap.mobile-fullscreen {
                 position: fixed;
-                top: 70px;
+                /* top: 70px; */
                 left: 0;
                 width: 100vw;
                 height: calc(100vh - 70px);
@@ -5230,6 +5228,7 @@
 
             .owl-carousel.review-carousel {
                 display: block !important;
+                z-index:0;
             }
 
             .section-head h2 {
@@ -5987,7 +5986,7 @@
                 align-items: end;
                 gap: 0px;
                 margin-bottom: 0;
-                flex-direction: column-reverse;
+                flex-direction: column;
 
             }
 
@@ -5998,6 +5997,10 @@
                 flex: 1;
                 min-width: 0;
                 word-wrap: break-word;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                /* flex-wrap: wrap; */
             }
 
             .v-price {
@@ -6032,19 +6035,19 @@
             }
 
             .v-tag-pill {
-                font-size: 13px;
-                padding: 2px 6px;
+                font-size: 11px;
+                padding: 2px 2px;
                 border-radius: 8px;
             }
 
             .v-features {
                 display: flex;
-                gap: 6px;
+                gap: 22px;
                 font-size: 15px;
                 margin-top: 4px;
                 margin-bottom: 0;
                 flex-wrap: wrap;
-                justify-content: space-around;
+                justify-content: center;
                 align-items: center;
                 width: 100%;
             }
@@ -6080,7 +6083,7 @@
 
             .v-footer {
                 display: flex;
-                justify-content: space-between;
+                justify-content: end;
                 align-items: center;
                 gap: 8px;
                 margin-top: 2px;
@@ -7187,8 +7190,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="trip-route-meta-item" id="tripRouteMetaContainer" style="display: none;">
-                                            <div class="trip-datetime-icon" style="background: #f4f4f4; color: #111;">
+                                        <div class="trip-datetime-item" id="tripRouteMetaContainer" style="display: none;">
+                                            <div class="trip-datetime-icon">
                                                 <i class="fas fa-route"></i>
                                             </div>
                                             <div class="trip-datetime-content">
@@ -7870,7 +7873,7 @@
                 <img src="https://goride-media.s3.ap-south-1.amazonaws.com/cus_app/images/day_6a561ea0b63e7.webp"
                     alt="Airport Transfer" class="hero-side-img">
             </div>
-            <div id="bookingMap" style="display: none; width: 100%; height: 100%; min-height: 400px;"></div>
+            <div id="bookingMap" ></div>
             <div id="mapRouteBadge" class="map-route-badge" style="display: none;">
                 <div class="map-route-badge-content">
                     <div class="map-route-pill">
@@ -10176,7 +10179,10 @@
 
                 // Distance/duration badge if available
                 const tripInfoHtml = bookingData.apiDistanceMiles
-                    ? `<span style="font-size:12px;color:#888;margin-left:6px;"><i class="fas fa-road"></i> ${bookingData.apiDistanceMiles} mi</span>`
+                    ? `<div style="font-size:13px;font-weight:500;    color: #666;margin-left:6px;    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 5px;"><i class="fas fa-road"></i> ${bookingData.apiDistanceMiles} mi</div>`
                     : '';
 
                 const html = `
@@ -10227,12 +10233,20 @@
                     if (features.parent().hasClass('v-sub')) {
                         $(this).find('.vehicle-left').append(features);
                     }
+                    const tag = $(this).find('.v-tag');
+                    if (tag.parent().hasClass('v-sub')) {
+                        $(this).find('.v-name').append(tag);
+                    }
                 });
             } else {
                 $('.vehicle-item').each(function () {
                     const features = $(this).find('.v-features');
                     if (features.parent().hasClass('vehicle-left')) {
                         $(this).find('.v-sub').prepend(features);
+                    }
+                    const tag = $(this).find('.v-tag');
+                    if (tag.parent().hasClass('v-name')) {
+                        $(this).find('.v-sub').append(tag);
                     }
                 });
             }

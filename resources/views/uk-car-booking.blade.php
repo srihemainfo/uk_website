@@ -4525,6 +4525,82 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            width: 100%;
+        }
+
+        .trip-datetime-main-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .trip-datetime-item,
+        .trip-route-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .trip-route-meta-item {
+            padding-left: 10px;
+            border-left: 1px solid #eee;
+        }
+
+        @media (max-width: 576px) {
+            .trip-route-meta-item {
+                border-left: none;
+                padding-left: 0;
+                padding-top: 8px;
+                border-top: 1px solid #eee;
+                width: 100%;
+            }
+        }
+
+        .map-route-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 99;
+            background: #ffffff;
+            padding: 10px 18px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e0e0e0;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+        }
+
+        .map-route-badge-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .map-route-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .map-route-divider {
+            color: #ccc;
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .map-route-badge {
+                top: 85px;
+                left: 15px;
+                z-index: 10001;
+                padding: 8px 14px;
+                font-size: 13px;
+            }
         }
 
         .trip-datetime-icon {
@@ -7090,16 +7166,33 @@
                                     <i class="fas fa-chevron-down"></i>
                                 </button>
                                 <div class="trip-datetime-card" id="tripDateTimeCard">
-                                    <div class="trip-datetime-icon">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
+                                    <div class="trip-datetime-main-wrapper">
+                                        <div class="trip-datetime-item">
+                                            <div class="trip-datetime-icon">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                            <div class="trip-datetime-content">
+                                                <div class="trip-datetime-title">Pickup Date & Time</div>
+                                                <div class="trip-datetime-value">
+                                                    <span id="tripSelectedDate">--</span>
+                                                    <span> • </span>
+                                                    <span id="tripSelectedTime">--</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div class="trip-datetime-content">
-                                        <div class="trip-datetime-title">Pickup Date & Time</div>
-                                        <div class="trip-datetime-value">
-                                            <span id="tripSelectedDate">--</span>
-                                            <span> • </span>
-                                            <span id="tripSelectedTime">--</span>
+                                        <div class="trip-route-meta-item" id="tripRouteMetaContainer" style="display: none;">
+                                            <div class="trip-datetime-icon" style="background: #f4f4f4; color: #111;">
+                                                <i class="fas fa-route"></i>
+                                            </div>
+                                            <div class="trip-datetime-content">
+                                                <div class="trip-datetime-title">Distance & Duration</div>
+                                                <div class="trip-datetime-value">
+                                                    <span id="leftTripDistance">--</span>
+                                                    <span> • </span>
+                                                    <span id="leftTripDuration">--</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -7772,6 +7865,19 @@
                     alt="Airport Transfer" class="hero-side-img">
             </div>
             <div id="bookingMap" style="display: none; width: 100%; height: 100%; min-height: 400px;"></div>
+            <div id="mapRouteBadge" class="map-route-badge" style="display: none;">
+                <div class="map-route-badge-content">
+                    <div class="map-route-pill">
+                        <i class="fas fa-road me-1" style="color: #000;"></i>
+                        <span id="mapRouteDistance">--</span>
+                    </div>
+                    <span class="map-route-divider">•</span>
+                    <div class="map-route-pill">
+                        <i class="fas fa-clock me-1" style="color: #000;"></i>
+                        <span id="mapRouteDuration">--</span>
+                    </div>
+                </div>
+            </div>
             <style>
                 .map-marker-label {
                     background-color: #ffffff;
@@ -7794,10 +7900,56 @@
                 let routeBounds     = null;
                 let currentRoutePolyline = null;
 
+                function formatTripDistance(dist) {
+                    if (!dist && dist !== 0) return '';
+                    const str = String(dist).trim();
+                    if (!str) return '';
+                    if (str.toLowerCase().includes('mile') || str.toLowerCase().includes('mi')) {
+                        return str;
+                    }
+                    return str + ' Miles';
+                }
+
+                function formatTripDuration(dur) {
+                    if (!dur) return '';
+                    return String(dur).trim();
+                }
+
+                function updateDistanceDurationUI(dist, dur) {
+                    const formattedDist = formatTripDistance(dist);
+                    const formattedDur  = formatTripDuration(dur);
+
+                    if (formattedDist || formattedDur) {
+                        const dText = formattedDist || '--';
+                        const tText = formattedDur || '--';
+
+                        // Left side Trip Details card
+                        $('#leftTripDistance').text(dText);
+                        $('#leftTripDuration').text(tText);
+                        $('#tripRouteMetaContainer').attr('style', 'display: flex !important;');
+
+                        // Map overlay badge
+                        $('#mapRouteDistance').text(dText);
+                        $('#mapRouteDuration').text(tText);
+                        if ($('#bookingMap').is(':visible')) {
+                            $('#mapRouteBadge').show();
+                        } else {
+                            $('#mapRouteBadge').hide();
+                        }
+                    } else {
+                        $('#tripRouteMetaContainer').attr('style', 'display: none !important;');
+                        $('#mapRouteBadge').hide();
+                    }
+                }
+
                 function initRouteMapFromFare() {
                     const mapContainer = document.getElementById('bookingMap');
                     if (!mapContainer) return;
                     mapContainer.style.display = 'block';
+
+                    if (bookingData.apiDistance || bookingData.apiDuration) {
+                        updateDistanceDurationUI(bookingData.apiDistance, bookingData.apiDuration);
+                    }
 
                     const polylineStr = bookingData.apiPolyline || null;
 
@@ -9449,6 +9601,7 @@
                 return (s || '') + ';display:none !important;';
             });
             $('#bookingMap').removeClass('mobile-fullscreen').hide();
+            $('#mapRouteBadge').hide();
             $('#mapCloseBtn').removeClass('visible');
             $('.hero-form-section').css({
                 display: 'flex',
@@ -9752,6 +9905,7 @@
                 }
             });
             $('footer').removeClass('sections-hidden');
+            $('#mapRouteBadge').hide();
             showStep(1);
         }
         function hidePickupTimePanel() {
@@ -9922,7 +10076,10 @@
                 bookingData.apiDistance  = firstFare.distance || null;
                 bookingData.apiDuration  = firstFare.duration || null;
                 bookingData.apiPolyline  = firstFare.polyline || null;
+                bookingData.apiDistanceMiles = firstFare.distance ? formatTripDistance(firstFare.distance) : null;
                 bookingData.fareDataObj  = fareDataObj;  // keep full object for map markers
+
+                updateDistanceDurationUI(firstFare.distance, firstFare.duration);
                 renderVehicles(fareDataObj);
                 // Draw route on map from the fare polyline
                 if (typeof initRouteMapFromFare === 'function') {
@@ -11362,13 +11519,16 @@
                 const formSection = $('.hero-form-section');
                 const mapSection = $('.hero-map-section');
                 formSection.removeClass('col-md-5').addClass('col-md-8 three-column-mode');
-                mapSection.removeClass('col-md-7').addClass('col-md-4');
+                mapSection.removeClass('col-md-4').addClass('col-md-7');
                 sections.removeClass('active side-by-side');
                 $('#step2').addClass('active side-by-side');
                 $(`#step${stepNumber}`).addClass('active side-by-side');
                 $('#step2Buttons').hide();
                 $('#bookingImage').hide();
                 $('#bookingMap').show();
+                if (bookingData.apiDistance || bookingData.apiDuration) {
+                    $('#mapRouteBadge').show();
+                }
                 $('#vehicleGrid').addClass('single-col');
                 setTimeout(function () {
                     if (typeof initSingleRouteMap === 'function') {
@@ -11386,6 +11546,7 @@
                     $('#vehicleGrid').removeClass('single-col');
                     if (stepNumber === 1) {
                         $('#bookingMap').hide();
+                        $('#mapRouteBadge').hide();
                         $('#bookingImage').show();
                     } else if (stepNumber === 2) {
                         $('#step2Buttons').css('display', 'flex');
@@ -11425,6 +11586,7 @@
                     $('#mobileMapBtn').hide();
                     $('#bookingImage').show();
                     $('#bookingMap').hide();
+                    $('#mapRouteBadge').hide();
                     $('#mobileCompactSummary').removeClass('visible');
                     $(`#step1`).css('padding-top', '0');
                     if (actionBar.length) actionBar.removeClass('hidden');
@@ -11433,6 +11595,7 @@
                     $('#mobileHamburger').hide();
                     $('#mobileMapBtn').hide();
                     $('#bookingImage').hide();
+                    $('#mapRouteBadge').hide();
                     $('#mobileCompactSummary').removeClass('visible');
                     if (actionBar.length) actionBar.addClass('hidden');
                     $(`#step8`).css('padding-top', '20px');

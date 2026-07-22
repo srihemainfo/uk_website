@@ -33,6 +33,250 @@
             height: 100%;
             min-height: calc(100vh - 70px);
         }
+
+        /* ===== SKELETON LOADING OVERLAY ===== */
+        #skeletonOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #f5f6fa;
+            overflow: hidden;
+        }
+        #skeletonOverlay.active {
+            display: flex;
+            flex-direction: column;
+        }
+        /* Top nav skeleton */
+        .sk-nav {
+            height: 68px;
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        .sk-nav-logo {
+            width: 110px;
+            height: 32px;
+            border-radius: 6px;
+        }
+        .sk-nav-spacer { flex: 1; }
+        .sk-nav-item {
+            width: 60px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .sk-nav-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+        /* Body row */
+        .sk-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        /* Left panel — Trip Details */
+        .sk-left {
+            width: 30%;
+            min-width: 220px;
+            max-width: 320px;
+            background: #fff;
+            border-right: 1px solid #e8e8e8;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            flex-shrink: 0;
+        }
+        .sk-left-title {
+            width: 60%;
+            height: 22px;
+            border-radius: 5px;
+            margin-bottom: 4px;
+        }
+        .sk-location-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sk-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .sk-line {
+            height: 14px;
+            border-radius: 4px;
+            flex: 1;
+        }
+        .sk-line-sm {
+            height: 12px;
+            border-radius: 4px;
+        }
+        .sk-divider {
+            height: 1px;
+            background: #eee;
+            margin: 2px 0;
+        }
+        .sk-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sk-section-label {
+            width: 45%;
+            height: 13px;
+            border-radius: 4px;
+        }
+        .sk-section-value {
+            width: 70%;
+            height: 16px;
+            border-radius: 4px;
+        }
+        /* Center panel — Booking confirmed */
+        .sk-center {
+            flex: 1;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            overflow-y: auto;
+        }
+        .sk-check-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+        }
+        .sk-title-block {
+            width: 55%;
+            height: 28px;
+            border-radius: 6px;
+        }
+        .sk-id-block {
+            width: 72%;
+            height: 20px;
+            border-radius: 5px;
+        }
+        .sk-card {
+            width: 100%;
+            max-width: 460px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .sk-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .sk-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sk-field-label {
+            height: 11px;
+            width: 55%;
+            border-radius: 3px;
+        }
+        .sk-field-value {
+            height: 16px;
+            width: 85%;
+            border-radius: 4px;
+        }
+        .sk-field-value-long {
+            height: 14px;
+            width: 100%;
+            border-radius: 4px;
+        }
+        .sk-info-text {
+            height: 13px;
+            width: 80%;
+            border-radius: 4px;
+        }
+        .sk-btn {
+            width: 100%;
+            max-width: 460px;
+            height: 48px;
+            border-radius: 10px;
+        }
+        /* Right panel — Map */
+        .sk-right {
+            width: 32%;
+            min-width: 200px;
+            background: #e4e8ee;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .sk-map-bar {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            right: 16px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+        }
+        /* Shimmer animation */
+        @keyframes sk-shimmer {
+            0%   { background-position: -700px 0; }
+            100% { background-position: 700px 0; }
+        }
+        .sk-nav-logo,
+        .sk-nav-item,
+        .sk-nav-avatar,
+        .sk-left-title,
+        .sk-icon,
+        .sk-line,
+        .sk-line-sm,
+        .sk-section-label,
+        .sk-section-value,
+        .sk-check-circle,
+        .sk-title-block,
+        .sk-id-block,
+        .sk-field-label,
+        .sk-field-value,
+        .sk-field-value-long,
+        .sk-info-text,
+        .sk-btn,
+        .sk-map-bar {
+            background: linear-gradient(90deg,
+                #e8eaf0 0px,
+                #f4f5f8 200px,
+                #e8eaf0 400px
+            );
+            background-size: 700px 100%;
+            animation: sk-shimmer 1.4s infinite linear;
+        }
+        /* Map shimmer (darker base) */
+        .sk-right {
+            background: linear-gradient(90deg,
+                #d0d5df 0px,
+                #dde0e8 200px,
+                #d0d5df 400px
+            );
+            background-size: 700px 100%;
+            animation: sk-shimmer 1.4s infinite linear;
+        }
+        /* Responsive: hide right panel on small screens */
+        @media (max-width: 768px) {
+            .sk-right  { display: none; }
+            .sk-left   { width: 100%; max-width: 100%; border-right: none; border-bottom: 1px solid #e8e8e8; }
+            .sk-center { padding: 20px 16px; }
+        }
         .date-time-screen {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -3417,6 +3661,79 @@
     </style>
 </head>
 <body>
+    <!-- ===== SKELETON LOADING OVERLAY ===== -->
+    <div id="skeletonOverlay">
+        <!-- Nav skeleton -->
+        <div class="sk-nav">
+            <div class="sk-nav-logo"></div>
+            <div class="sk-nav-spacer"></div>
+            <div class="sk-nav-item"></div>
+            <div class="sk-nav-avatar"></div>
+        </div>
+        <!-- Body panels -->
+        <div class="sk-body">
+            <!-- Left: Trip Details -->
+            <div class="sk-left">
+                <div class="sk-left-title"></div>
+                <div class="sk-location-row">
+                    <div class="sk-icon"></div>
+                    <div class="sk-line" style="width:80%;"></div>
+                </div>
+                <div class="sk-location-row">
+                    <div class="sk-icon"></div>
+                    <div class="sk-line" style="width:65%;"></div>
+                </div>
+                <div class="sk-divider"></div>
+                <div class="sk-section">
+                    <div class="sk-section-label"></div>
+                    <div class="sk-section-value"></div>
+                </div>
+                <div class="sk-section">
+                    <div class="sk-section-label" style="width:55%;"></div>
+                    <div class="sk-section-value" style="width:60%;"></div>
+                </div>
+                <div class="sk-section">
+                    <div class="sk-section-label" style="width:50%;"></div>
+                    <div class="sk-section-value" style="width:75%;"></div>
+                </div>
+            </div>
+            <!-- Center: Booking Confirmed -->
+            <div class="sk-center">
+                <div class="sk-check-circle"></div>
+                <div class="sk-title-block"></div>
+                <div class="sk-id-block"></div>
+                <div class="sk-card">
+                    <div class="sk-grid-2">
+                        <div class="sk-field">
+                            <div class="sk-field-label"></div>
+                            <div class="sk-field-value"></div>
+                            <div class="sk-field-value-long" style="margin-top:2px;"></div>
+                        </div>
+                        <div class="sk-field">
+                            <div class="sk-field-label"></div>
+                            <div class="sk-field-value"></div>
+                            <div class="sk-field-value-long" style="margin-top:2px;"></div>
+                        </div>
+                        <div class="sk-field">
+                            <div class="sk-field-label"></div>
+                            <div class="sk-field-value" style="width:70%;"></div>
+                        </div>
+                        <div class="sk-field">
+                            <div class="sk-field-label"></div>
+                            <div class="sk-field-value" style="width:55%;"></div>
+                        </div>
+                    </div>
+                    <div class="sk-info-text" style="margin:0 auto;"></div>
+                </div>
+                <div class="sk-btn"></div>
+            </div>
+            <!-- Right: Map -->
+            <div class="sk-right">
+                <div class="sk-map-bar"></div>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
@@ -3426,31 +3743,31 @@
             <!--        <i class="fas fa-globe me-2"></i>EN-->
             <!--    </button></li>-->
             <li><a href="#faq">Help</a></li>
-            <!--<li style="position:relative;">-->
-            <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
-            <!--        <i class="fas fa-user-circle"></i>-->
-            <!--        Mogana-->
-            <!--        <i class="fas fa-chevron-down"></i>-->
-            <!--    </button>-->
-            <!--</li>-->
+            <li style="position:relative;">
+                <button class="user-btn" id="navUserBtn" onclick="toggleDropdown('user')">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="navUserName">Account</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </li>
         </ul>
         <div id="language-dropdown" class="dropdown-menu-navbar">
             <button onclick="selectLanguage('en')">English</button>
-            <button onclick="selectLanguage('hi')">à¤¹à¤¿à¤‚à¤¦à¥€</button>
-            <button onclick="selectLanguage('ta')">à®¤à®®à®¿à®´à¯</button>
-            <button onclick="selectLanguage('te')">à°¤à±†à°²à±à°—à±</button>
-            <button onclick="selectLanguage('kn')">à²•à²¨à³à²¨à²¡</button>
+            <button onclick="selectLanguage('hi')">हिंदी</button>
+            <button onclick="selectLanguage('ta')">தமிழ்</button>
+            <button onclick="selectLanguage('te')">తెలుగు</button>
+            <button onclick="selectLanguage('kn')">ಕನ್ನಡ</button>
         </div>
         <div id="user-dropdown" class="account-dropdown">
             <div class="account-header">
-                <div class="account-avatar">MG</div>
+                <div class="account-avatar" id="navAvatarInitials">U</div>
                 <div class="account-info">
-                    <h5>Mogana Priya</h5>
-                    <span>mogana@email.com</span>
+                    <h5 id="navDropdownName">—</h5>
+                    <span id="navDropdownEmail">—</span>
                 </div>
             </div>
             <div class="account-menu">
-                <a href="#"><i class="fas fa-user"></i><span>My Profile</span></a>
+                <a href="/uk-profile"><i class="fas fa-user"></i><span>My Profile</span></a>
                 <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>
                 <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
@@ -3458,7 +3775,7 @@
                 <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
             </div>
             <div class="account-footer">
-                <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                <a href="#" id="mainLogoutBtn"><i class="fas fa-sign-out-alt"></i>Logout</a>
             </div>
         </div>
         <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
@@ -3483,7 +3800,7 @@
                 </div>
             </div>
             <div class="mobile-menu-links">
-                <a href="#"><i class="fas fa-user"></i>My Profile</a>
+                <a href="/uk-profile"><i class="fas fa-user"></i>My Profile</a>
                 <a href="#"><i class="fas fa-car"></i>My Rides</a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
                 <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
@@ -3493,7 +3810,7 @@
                 <a href="#"><i class="fas fa-gear"></i>Settings</a>
             </div>
             <div class="mobile-menu-footer">
-                <button><i class="fas fa-right-from-bracket"></i>Logout</button>
+                <button id="mobileLogoutBtn"><i class="fas fa-right-from-bracket"></i>Logout</button>
             </div>
         </div>
     </nav>
@@ -5288,6 +5605,79 @@
         function selectLanguage(lang) {
             toggleDropdown('language');
         }
+
+        // ===== NAVBAR USER INFO =====
+        function initNavbarUser() {
+            // Try to read stored user profile from localStorage
+            let user = null;
+            try {
+                const stored = localStorage.getItem('goride_user');
+                if (stored) user = JSON.parse(stored);
+            } catch (e) {}
+
+            if (!user) {
+                // Try to decode the JWT token for basic info
+                const token = localStorage.getItem('goride_token') || '';
+                if (token) {
+                    try {
+                        const payload = JSON.parse(atob(token.split('.')[1]));
+                        user = {
+                            c_name:  payload.name  || payload.c_name  || '',
+                            c_email: payload.email || payload.c_email || '',
+                            c_image: payload.c_image || null,
+                        };
+                    } catch (e) {}
+                }
+            }
+
+            if (user) {
+                const name  = user.c_name  || user.name  || 'Account';
+                const email = user.c_email || user.email || '';
+                const initials = name.trim().split(' ')
+                    .map(w => w[0]).join('').toUpperCase().slice(0, 2) || 'U';
+
+                // Desktop navbar button
+                const nameEl = document.getElementById('navUserName');
+                if (nameEl) nameEl.textContent = name.split(' ')[0];
+
+                // Dropdown header
+                const dropName  = document.getElementById('navDropdownName');
+                const dropEmail = document.getElementById('navDropdownEmail');
+                const dropInit  = document.getElementById('navAvatarInitials');
+                if (dropName)  dropName.textContent  = name;
+                if (dropEmail) dropEmail.textContent = email;
+                if (dropInit)  dropInit.textContent  = initials;
+
+                // Mobile menu header
+                const mobileAvatar = document.querySelector('.mobile-avatar');
+                const mobileName   = document.querySelector('.mobile-user h5');
+                const mobileEmail  = document.querySelector('.mobile-user span');
+                if (mobileAvatar) mobileAvatar.textContent = initials;
+                if (mobileName)   mobileName.textContent   = name;
+                if (mobileEmail)  mobileEmail.textContent  = email;
+            }
+        }
+
+        // Logout handler
+        function handleLogout() {
+            localStorage.removeItem('goride_token');
+            localStorage.removeItem('goride_user');
+            window.location.href = '/';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavbarUser();
+            // Desktop logout
+            const logoutBtn = document.getElementById('mainLogoutBtn');
+            if (logoutBtn) logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleLogout();
+            });
+            // Mobile logout
+            const mobileLogout = document.getElementById('mobileLogoutBtn');
+            if (mobileLogout) mobileLogout.addEventListener('click', handleLogout);
+        });
+
         // ===== CUSTOM TIME DROPDOWN =====
         function toggleTimeDropdown() {
             const list = document.getElementById('timeDropdownList');
@@ -5960,12 +6350,23 @@
                 });
         }
         function completeBooking() {
+            // Button loading state
             const btn = document.querySelector('#confirmModal .btn-modal-primary');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
-            btn.disabled = true;
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                btn.disabled = true;
+            }
+            // Hide the confirm modal
+            document.getElementById('confirmModal').classList.remove('show');
+            // Show skeleton overlay
+            const overlay = document.getElementById('skeletonOverlay');
+            if (overlay) {
+                overlay.classList.add('active');
+            }
+            // Reload after skeleton animation plays
             setTimeout(() => {
                 window.location.href = window.location.href.split('#')[0];
-            }, 300);
+            }, 1800);
         }
         // 4. Handle Page Refresh on Complete
         function completeBooking() {

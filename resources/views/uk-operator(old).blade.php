@@ -1381,13 +1381,13 @@
                 const maxSize = 5 * 1024 * 1024; // 5MB
 
                 if (file.size > maxSize) {
-                    alert('File size exceeds 5MB limit');
+                    showToast('File size exceeds 5MB limit', 'error');
                     this.value = '';
                     return;
                 }
 
                 if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
-                    alert('Please upload a JPG, JPEG, or PNG file');
+                    showToast('Please upload a JPG, JPEG, or PNG file', 'error');
                     this.value = '';
                     return;
                 }
@@ -1436,7 +1436,7 @@
             const agreeTerms = document.getElementById('agreeTerms').checked;
             if (!agreeTerms) {
                 e.preventDefault();
-                alert('Please agree to terms and conditions');
+                showToast('Please agree to terms and conditions', 'error');
             }
         });
     });

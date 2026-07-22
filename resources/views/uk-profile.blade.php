@@ -1,153 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide - My Profile</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <!-- Bootstrap JS (needed for modals and dropdowns) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+@section('content')
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 35px 20px;
-        }
-
-        /* Navbar */
-        .dash-navbar {
-            background: #fff;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #eaeaea;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 45px;
-            right: 0;
-            width: 200px;
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            z-index: 1000;
-        }
-
-        .dropdown-menu li {
-            font-size: 14px;
-        }
-
-        .navbar-brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .nav-logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #111;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-logo img {
-            height: 45px;
-        }
-
-
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-book-ride {
-            background: #000;
-            color: #fff;
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-book-ride:hover {
-            color: #fff;
-            background: #333;
-        }
-
-        .profile-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        .dropdown-item:active,
-        .dropdown-item.active {
-            background-color: #111 !important;
-            color: #fff !important;
-        }
-
-        .dropdown-item:hover,
-        .dropdown-item:focus {
-            background-color: #f3f4f6;
-            color: #111;
-        }
-
-        .dropdown-item {
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-
-            .dash-navbar {
-                padding: 12px 16px;
-            }
-        }
-
         /* Profile Specific Styles */
         .profile-wrapper {
             width: 100%;
             max-width: 700px;
-            margin: 0 auto;
+            margin: 50px auto;
+            padding: 0 20px;
         }
 
         .profile-header {
-            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 30px;
+        }
+
+        .profile-header-text {
+            text-align: left;
+        }
+
+        .btn-book-now {
+            background: #111;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-book-now:hover {
+            background: #333;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .profile-title {
@@ -159,7 +52,6 @@
 
         .profile-subtitle {
             font-size: 17px;
-
         }
 
         .profile-layout {
@@ -226,7 +118,6 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-
             margin-bottom: 8px;
             display: block;
         }
@@ -301,10 +192,15 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
+        .btn-save:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
 
+        /* Toast Notification removed (now global) */
 
         @media (max-width: 768px) {
-
             .input-icon {
                 top: 47px;
             }
@@ -315,9 +211,7 @@
 
             .profile-subtitle {
                 font-size: 16px;
-                margin-bottom: 0px;
-                ;
-
+                margin-bottom: 0;
             }
 
             .profile-layout {
@@ -327,146 +221,284 @@
             }
 
             .profile-header {
-                text-align: center;
+                flex-direction: column-reverse;
+                align-items: flex-end;
                 margin-top: 20px;
                 margin-bottom: 18px;
+                gap: 15px;
+            }
+
+            .profile-header-text {
+                width: 100%;
+                text-align: left;
             }
 
             .profile-right {
                 width: 100%;
                 max-width: 400px;
             }
-
-            .main-content {
-                align-items: flex-start;
-
-            }
         }
     </style>
-</head>
 
-<body>
 
-    <!-- Navbar -->
-    <nav class="dash-navbar px-3 px-md-4">
-        <div class="navbar-brand-wrapper gap-2 gap-md-3">
-            <a href="/" class="nav-logo fs-5 fs-md-4">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
-            </a>
-
-        </div>
-
-        <div class="nav-actions gap-2 gap-md-3">
-            <a href="/" class="btn-book-ride px-2 px-md-3">
-                <i class="fas fa-plus"></i> <span class="d-none d-md-inline">Book Ride</span>
-            </a>
-
-            <div class="dropdown">
-                <img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="Profile" class="profile-img"
-                    data-bs-toggle="dropdown">
-                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
-                    <li><a class="dropdown-item py-2 active" href="/uk-profile"><i class="far fa-user me-2"></i>
-                            Profile</a></li>
-                    <li><a class="dropdown-item py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
-                            Dashboard</a></li>
-                    <!-- <li><a class="dropdown-item py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li> -->
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item py-2" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <!-- Profile Content -->
-    <div class="main-content">
-        <div class="container profile-wrapper">
-            <div class="profile-header">
+    <div class="container profile-wrapper">
+        <div class="profile-header">
+            <div class="profile-header-text">
                 <h1 class="profile-title">Edit Profile</h1>
                 <p class="profile-subtitle">Manage your personal information</p>
             </div>
+            <a href="{{ url('/') }}" class="btn-book-now">
+                <i class="fas fa-arrow-left"></i> Book Now
+            </a>
+        </div>
 
-            <div class="profile-layout">
-                <div class="profile-left">
-                    <div class="profile-avatar-wrapper">
-                        <img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="User Avatar"
-                            class="profile-avatar" id="profileImagePreview">
-                        <label for="avatarUpload" class="edit-avatar-btn" title="Change Avatar">
-                            <i class="fas fa-pencil-alt"></i>
-                        </label>
-                        <input type="file" id="avatarUpload" style="display: none;" accept="image/*">
+        <div class="profile-layout">
+            <div class="profile-left">
+                <div class="profile-avatar-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=U&background=111111&color=fff" alt="User Avatar"
+                        class="profile-avatar" id="profileImagePreview">
+                    <label for="avatarUpload" class="edit-avatar-btn" title="Change Avatar">
+                        <i class="fas fa-pencil-alt"></i>
+                    </label>
+                    <input type="file" id="avatarUpload" style="display: none;"
+                        accept="image/jpeg,image/png,image/jpg,image/webp">
+                </div>
+            </div>
+
+            <div class="profile-right">
+                <form id="profileForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="c_name" class="form-control" placeholder="Your full name"
+                            required>
+                        <i class="far fa-user input-icon"></i>
                     </div>
-                </div>
 
-                <div class="profile-right">
-                    <form action="#" method="POST" id="profileForm">
-                        <div class="form-group">
-                            <label class="form-label" for="fullName">Full Name</label>
-                            <input type="text" id="fullName" class="form-control" value="Alex Smith" required>
-                            <i class="far fa-user input-icon"></i>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label" for="emailAddress">Email Address</label>
+                        <input type="email" id="emailAddress" name="c_email" class="form-control"
+                            placeholder="your@email.com" readonly>
+                        <i class="far fa-envelope input-icon"></i>
+                        <i class="fas fa-lock readonly-icon" title="Cannot be changed"></i>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="emailAddress">Email Address</label>
-                            <input type="email" id="emailAddress" class="form-control" value="alex.smith@example.com"
-                                readonly>
-                            <i class="far fa-envelope input-icon"></i>
-                            <i class="fas fa-lock readonly-icon" title="Cannot be changed"></i>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                        <input type="text" id="phoneNumber" class="form-control" placeholder="xxxx xxxxxx" readonly>
+                        <i class="fas fa-phone-alt input-icon"></i>
+                        <i class="fas fa-lock readonly-icon" title="Cannot be changed"></i>
+                    </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="phoneNumber">Phone Number</label>
-                            <input type="text" id="phoneNumber" class="form-control" value="+44 7700 900077" readonly>
-                            <i class="fas fa-phone-alt input-icon"></i>
-                            <i class="fas fa-lock readonly-icon" title="Cannot be changed"></i>
-                        </div>
-
-                        <button type="submit" class="btn-save">
-                            <i class="fas fa-check-circle"></i> Save Changes
-                        </button>
-                    </form>
-                </div>
+                    <button type="submit" class="btn-save" id="saveBtn">
+                        <i class="fas fa-check-circle"></i> Save Changes
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            // Handle avatar image preview
-            $('#avatarUpload').on('change', function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#profileImagePreview').attr('src', e.target.result);
-                    }
-                    reader.readAsDataURL(file);
+        document.addEventListener('DOMContentLoaded', function () {
+            // ─── Helpers ────────────────────────────────────────────────────────────
+            function getToken() {
+                return typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '';
+            }
+
+
+
+            // ─── Load Profile Data ───────────────────────────────────────────────────
+            function loadProfile() {
+                // Instantly fill inputs from cookie data
+                const storedUserStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+                if (storedUserStr) {
+                    try {
+                        const user = JSON.parse(storedUserStr);
+                        const firstName = user.first_name || '';
+                        const lastName = user.last_name || '';
+                        const fullName = (firstName + ' ' + lastName).trim();
+                        const name = user.c_name || user.name || fullName || '';
+                        const email = user.c_email || user.email || '';
+                        const phone = user.c_phone || user.phone || user.mobile || user.mobile_number || '';
+                        const image = user.c_image || user.profile_image || user.avatar || null;
+
+                        document.getElementById('fullName').value = name;
+                        document.getElementById('emailAddress').value = email;
+                        document.getElementById('phoneNumber').value = phone;
+
+                        if (image) {
+                            document.getElementById('profileImagePreview').src = image;
+                        } else if (name) {
+                            const avatarUrl = 'https://ui-avatars.com/api/?name='
+                                + encodeURIComponent(name)
+                                + '&background=111111&color=fff';
+                            document.getElementById('profileImagePreview').src = avatarUrl;
+                        }
+                    } catch (e) { }
                 }
-            });
 
-            // Handle form submission
-            $('#profileForm').on('submit', function (e) {
-                e.preventDefault();
-                const btn = $(this).find('.btn-save');
-                const originalText = btn.text();
+                const token = getToken();
+                if (!token) return;
 
-                btn.html('<i class="fas fa-spinner fa-spin"></i> Saving...');
-                btn.prop('disabled', true);
+                // Fetch from API to ensure data is fresh
+                const apiUrl = '{{ env("API_URL") }}/auth/customer/me';
+                fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(r => r.json())
+                    .then(data => {
+                        const user = data.data || data.user || data;
+                        if (!user) return;
 
-                // Simulate an API call
-                setTimeout(() => {
-                    btn.html('<i class="fas fa-check"></i> Saved Successfully');
+                        const name = user.c_name || user.name || '';
+                        const email = user.c_email || user.email || '';
+                        const phone = user.c_phone || user.phone || user.mobile || '';
+                        const image = user.c_image || user.profile_image || user.avatar || null;
 
-                    setTimeout(() => {
-                        btn.html(originalText);
-                        btn.prop('disabled', false);
-                    }, 2000);
-                }, 1000);
-            });
+                        document.getElementById('fullName').value = name;
+                        document.getElementById('emailAddress').value = email;
+                        document.getElementById('phoneNumber').value = phone;
+
+                        // Avatar
+                        if (image) {
+                            document.getElementById('profileImagePreview').src = image;
+                        } else if (name) {
+                            const avatarUrl = 'https://ui-avatars.com/api/?name='
+                                + encodeURIComponent(name)
+                                + '&background=111111&color=fff';
+                            document.getElementById('profileImagePreview').src = avatarUrl;
+                        }
+                    })
+                    .catch(() => { });
+            }
+
+            // ─── Avatar Preview ──────────────────────────────────────────────────────
+            const avatarUpload = document.getElementById('avatarUpload');
+            if (avatarUpload) {
+                avatarUpload.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    if (file.size > 5 * 1024 * 1024) {
+                        showToast('Image must be smaller than 5 MB.', 'error');
+                        this.value = '';
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function (ev) {
+                        document.getElementById('profileImagePreview').src = ev.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // ─── Form Submission ──────────────────────────────────────────────
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const token = getToken();
+                    const btn = document.getElementById('saveBtn');
+                    const name = document.getElementById('fullName').value.trim();
+                    const email = document.getElementById('emailAddress').value.trim();
+
+                    if (!name) {
+                        showToast('Full name is required.', 'error');
+                        return;
+                    }
+
+                    const formData = new FormData();
+                    formData.append('c_name', name);
+                    formData.append('c_email', email);
+
+                    const fileInput = document.getElementById('avatarUpload');
+                    if (fileInput.files.length > 0) {
+                        formData.append('c_image', fileInput.files[0]);
+                    }
+
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                    btn.disabled = true;
+
+                    const submitUrl = '{{ env("API_URL") }}/auth/update-profile';
+                    fetch(submitUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    })
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                const user = data.data || {};
+                                const newImage = user.c_image || user.profile_image;
+                                if (newImage) {
+                                    document.getElementById('profileImagePreview').src = newImage;
+                                }
+                                
+                                // Update cookie and navbar UI
+                                try {
+                                    const storedStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+                                    let storedUser = storedStr ? JSON.parse(storedStr) : {};
+                                    
+                                    // Map the updated name
+                                    const newName = user.c_name || user.name || user.first_name;
+                                    if (newName) {
+                                        storedUser.first_name = newName;
+                                        storedUser.last_name = ''; // GoRide primarily uses first_name or combines them
+                                    }
+                                    
+                                    // Map the updated image
+                                    if (newImage) {
+                                        storedUser.profile_image = newImage;
+                                    }
+                                    
+                                    // Save back to cookie
+                                    const expires = new Date();
+                                    expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000);
+                                    document.cookie = 'auth_user=' + encodeURIComponent(JSON.stringify(storedUser)) + '; expires=' + expires.toUTCString() + '; path=/; SameSite=Lax';
+                                    
+                                    // Update navbar globally
+                                    if (typeof _updateNavbarAfterLogin === 'function') {
+                                        _updateNavbarAfterLogin(storedUser);
+                                    }
+                                } catch(e) {
+                                    console.error('Failed to update navbar:', e);
+                                }
+
+                                showToast('Profile updated successfully!', 'success');
+                                btn.innerHTML = '<i class="fas fa-check-circle"></i> Saved!';
+                                setTimeout(() => {
+                                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Save Changes';
+                                    btn.disabled = false;
+                                }, 2000);
+                            } else {
+                                const errors = data.errors;
+                                if (errors) {
+                                    const firstError = Object.values(errors)[0];
+                                    showToast(Array.isArray(firstError) ? firstError[0] : firstError, 'error');
+                                } else {
+                                    showToast(data.message || 'Failed to update profile.', 'error');
+                                }
+                                btn.innerHTML = '<i class="fas fa-check-circle"></i> Save Changes';
+                                btn.disabled = false;
+                            }
+                        })
+                        .catch(() => {
+                            showToast('Network error. Please try again.', 'error');
+                            btn.innerHTML = '<i class="fas fa-check-circle"></i> Save Changes';
+                            btn.disabled = false;
+                        });
+                });
+            }
+
+            loadProfile();
         });
     </script>
-</body>
-
-</html>
+@endsection

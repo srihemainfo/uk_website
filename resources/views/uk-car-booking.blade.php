@@ -4,7 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide</title>
+    <title>UK Taxi Booking, Airport Transfers & Executive Chauffeur Services | GoRide UK</title>
+
+<meta name="description" content="Book reliable taxis, airport transfers, executive chauffeur services, and local minicabs across the UK with GoRide. Compare driver bids, choose your preferred driver, and travel with confidence.">
+
+<meta name="keywords" content="UK Taxi Booking, UK Cab Booking, Book Taxi UK, Airport Transfers UK, Heathrow Airport Taxi, Gatwick Airport Taxi, Luton Airport Taxi, Stansted Airport Taxi, London Taxi Booking, London Minicab, Executive Chauffeur UK, Private Hire Taxi UK, Local Taxi Service UK, Intercity Taxi UK, Taxi Booking Platform UK, Online Cab Booking UK, Compare Taxi Prices UK, Compare Driver Bids, Choose Your Driver, Taxi App UK, Cab Booking App UK, Fleet Management UK, Corporate Taxi Services UK, Business Travel UK, Airport Pickup UK, Airport Drop UK, 24/7 Taxi UK, Affordable Taxi UK, GoRide UK">
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">

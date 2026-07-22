@@ -10,6 +10,8 @@
 
 <meta name="keywords" content="UK Taxi Booking, UK Cab Booking, Book Taxi UK, Airport Transfers UK, Heathrow Airport Taxi, Gatwick Airport Taxi, Luton Airport Taxi, Stansted Airport Taxi, London Taxi Booking, London Minicab, Executive Chauffeur UK, Private Hire Taxi UK, Local Taxi Service UK, Intercity Taxi UK, Taxi Booking Platform UK, Online Cab Booking UK, Compare Taxi Prices UK, Compare Driver Bids, Choose Your Driver, Taxi App UK, Cab Booking App UK, Fleet Management UK, Corporate Taxi Services UK, Business Travel UK, Airport Pickup UK, Airport Drop UK, 24/7 Taxi UK, Affordable Taxi UK, GoRide UK">
     <!-- Google Identity Services -->
+
+    
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -6678,7 +6680,7 @@
 <body>
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
-            <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+            <img src="/goride/img/logo-dark.png" alt="GoRide UK Logo">
         </div>
         <ul class="navbar-menu">
             <!--<li><button onclick="toggleDropdown('language')">-->
@@ -6733,7 +6735,7 @@
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="/goride/img/logo-dark.png" alt="GoRide">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -8309,7 +8311,7 @@
                 <div class="col-12 col-md-3">
                     <div class="footer-logo-section">
                         <div class="footer-logo">
-                            <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                            <img src="/goride/img/logo-dark.png" alt="GoRide UK Logo">
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                     </div>
@@ -11947,7 +11949,7 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="/goride/img/logo-dark.png" alt="GoRide">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

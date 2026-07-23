@@ -174,7 +174,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
@@ -864,9 +864,7 @@
                 gap: 15px;
             }
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+          
 
             .stat-value {
                 font-size: 17px;
@@ -880,8 +878,22 @@
                 padding: 9px;
                 justify-content: center;
                 gap: 6px;
+                flex-direction: column;
             }
-
+.stat-info{
+    text-align: center;
+}
+.driver-card{
+     flex-wrap: wrap;   
+     justify-content: end;
+}
+.btn-outline-dark-custom{
+        padding: 9px 13px;
+}
+.stats-grid
+{
+    gap:10px;
+}
             .trip-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -965,13 +977,7 @@
                             <div class="stat-label">Total Distance</div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-piggy-bank"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-value">£120</div>
-                            <div class="stat-label">Total Savings</div>
-                        </div>
-                    </div>
+                   
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
                         <div class="stat-info">

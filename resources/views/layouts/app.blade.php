@@ -163,7 +163,7 @@
 
         .premium-otp-input {
             width: 100%;
-            padding: 5px;
+            padding: 3px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             font-size: 24px;
@@ -6352,7 +6352,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 6px;
+            /* margin-bottom: 6px; */
         }
 
         .auth-modal-logo img {
@@ -10718,7 +10718,7 @@
     margin-bottom: 3px;">
                         <i class="fas fa-lock" style="font-size: 20px;"></i>
                     </div>
-                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number
+                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 3px;">Verify your number
                     </h3>
                     <p class="otp-code">
                         We've sent a 6-digit code to <br>
@@ -10727,24 +10727,26 @@
                 </div>
 
                 <div id="authNewUserFields"
-                    style="display: none; margin-bottom: 24px; animation: slideUp 0.4s ease-out;">
-                    <div style="margin-bottom: 16px; position: relative;">
-                        <i class="fas fa-user"
-                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="text" id="authNameInput" placeholder="Full Name" maxlength="100"
-                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
-                            autocomplete="off"
-                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
-                    </div>
-                    <div style="position: relative;">
-                        <i class="fas fa-envelope"
-                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="email" id="authEmailInput" placeholder="Email Address" maxlength="100"
-                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
-                            autocomplete="off"
-                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                    style="display: none; margin-bottom: 10px; animation: slideUp 0.4s ease-out;">
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                        <div style="position: relative; flex: 1;">
+                            <i class="fas fa-user"
+                                style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                            <input type="text" id="authNameInput" placeholder="Full Name" maxlength="100"
+                                style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                                autocomplete="off"
+                                onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                                onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        </div>
+                        <div style="position: relative; flex: 1;">
+                            <i class="fas fa-envelope"
+                                style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                            <input type="email" id="authEmailInput" placeholder="Email Address" maxlength="100"
+                                style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                                autocomplete="off"
+                                onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                                onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        </div>
                     </div>
                 </div>
 
@@ -10754,14 +10756,14 @@
                 </div>
 
                 <button id="authVerifyBtn"
-                    style="width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);"
+                    style="width: 100%; padding: 10px 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);"
                     onclick="handleVerifyOtp()"
                     onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'"
                     onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-                <div style="text-align: center; margin-top: 15px;">
+                <div style="text-align: center; margin-top: 10px;">
                     <button
                         style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"
                         onclick="_showPhoneUI()" onmouseover="this.style.color='#111'"
@@ -10772,7 +10774,7 @@
             </div>
 
             <!-- Firebase Recaptcha Container -->
-            <div id="recaptcha-container" style="margin-top: 15px; display: flex; justify-content: center;"></div>
+            <div id="recaptcha-container" style="margin-top: 7px; display: flex; justify-content: center;"></div>
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our

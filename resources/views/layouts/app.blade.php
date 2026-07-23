@@ -7514,17 +7514,39 @@
             if (tpl) tpl.textContent = state.pickup || '\u2014';
         }
 
+        function formatUIOrdinalDate(dateStr) {
+            if (!dateStr || dateStr.toLowerCase() === 'today') return dateStr;
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            const d = new Date(parts[0], parts[1] - 1, parts[2]);
+            if (isNaN(d.getTime())) return dateStr;
+            const day = d.getDate();
+            const nth = function(d) {
+                if (d > 3 && d < 21) return 'th';
+                switch (d % 10) {
+                    case 1:  return "st";
+                    case 2:  return "nd";
+                    case 3:  return "rd";
+                    default: return "th";
+                }
+            };
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const month = monthNames[d.getMonth()];
+            const year = d.getFullYear();
+            return day + nth(day) + ' ' + month + ' ' + year;
+        }
+
         function _updateDateTimeUI(state) {
             // Trip date/time card (Step 2)
             const tripDate = document.getElementById('tripSelectedDate');
             const tripTime = document.getElementById('tripSelectedTime');
-            if (tripDate) tripDate.textContent = state.date || '--';
+            if (tripDate) tripDate.textContent = state.date ? formatUIOrdinalDate(state.date) : '--';
             if (tripTime) tripTime.textContent = state.time || '--';
 
             // Mobile compact summary date line
             const mcsDateTime = document.getElementById('mcsDateTime');
             if (mcsDateTime) {
-                const d = state.date || 'Today';
+                const d = state.date ? formatUIOrdinalDate(state.date) : 'Today';
                 const t = state.time || 'Now';
                 mcsDateTime.textContent = d + ' ' + t;
             }
@@ -7532,12 +7554,13 @@
             // pickupNowBtn label
             const pnb = document.getElementById('pickupNowBtn');
             if (pnb && state.date && state.time) {
+                const uiDate = formatUIOrdinalDate(state.date);
                 if (state.pickupType === 'airport') {
-                    pnb.innerHTML = `<i class="fas fa-plane-departure"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                    pnb.innerHTML = `<i class="fas fa-plane-departure"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
                 } else if (state.pickupType === 'seaport') {
-                    pnb.innerHTML = `<i class="fas fa-anchor"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                    pnb.innerHTML = `<i class="fas fa-anchor"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
                 } else {
-                    pnb.innerHTML = `<i class="fas fa-calendar"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
+                    pnb.innerHTML = `<i class="fas fa-calendar"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`;
                 }
             }
         }
@@ -8395,12 +8418,13 @@
             const state = BookingStore.getState();
 
             if (state.date && state.time) {
+                const uiDate = formatUIOrdinalDate(state.date);
                 if (pickupType === 'airport') {
-                    $('#pickupNowBtn').html(`<i class="fas fa-plane-departure"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                    $('#pickupNowBtn').html(`<i class="fas fa-plane-departure"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
                 } else if (pickupType === 'seaport') {
-                    $('#pickupNowBtn').html(`<i class="fas fa-anchor"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                    $('#pickupNowBtn').html(`<i class="fas fa-anchor"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
                 } else {
-                    $('#pickupNowBtn').html(`<i class="fas fa-calendar"></i> ${state.date} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
+                    $('#pickupNowBtn').html(`<i class="fas fa-calendar"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${state.time} <i class="fas fa-chevron-down ms-2"></i>`);
                 }
             } else {
                 if (pickupType === 'airport') {
@@ -8430,8 +8454,9 @@
             bookingData.date = date;
             bookingData.time = selectedTime;
             updateBookingSummary();
+            const uiDate = formatUIOrdinalDate(date);
             $("#selectedDateTime").show().html(
-                `<i class="fas fa-calendar"></i> ${date} &nbsp;&nbsp; <i class="fas fa-clock"></i> ${selectedTime}`
+                `<i class="fas fa-calendar"></i> ${uiDate} &nbsp;&nbsp; <i class="fas fa-clock"></i> ${selectedTime}`
             );
         }
         function saveSchedule() {
@@ -8452,7 +8477,8 @@
             $("#normalJourneyDate").val(date);
             $("#normalJourneyTime").val(currentTime);
             if ($("#pickupNowBtn").length) {
-                $("#pickupNowBtn").html(`<i class="fas fa-calendar"></i> ${date} &nbsp; <i class="fas fa-clock"></i> ${currentTime} <i class="fas fa-chevron-down ms-2"></i>`);
+                const uiDate = formatUIOrdinalDate(date);
+                $("#pickupNowBtn").html(`<i class="fas fa-calendar"></i> ${uiDate} &nbsp; <i class="fas fa-clock"></i> ${currentTime} <i class="fas fa-chevron-down ms-2"></i>`);
             }
             $("#timeSelectionPanel").removeClass("show");
             $('section').each(function () {
@@ -8603,13 +8629,20 @@
                     fareBreakdown: fare
                 });
 
-                const amenitiesHtml = (v.amenities || []).map(a => {
-                    let icon = 'fa-check';
-                    if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi text-danger';
-                    if (a.toLowerCase().includes('air')) icon = 'fa-snowflake text-primary';
-                    if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage text-success';
-                    return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> <span class="d-none d-md-inline">${a}</span></span>`;
-                }).join('');
+                const amenitiesHtml = (v.amenities || [])
+                    .filter(a => {
+                        if (a.toLowerCase().includes('seat')) {
+                            return dynamicChild > 0;
+                        }
+                        return true;
+                    })
+                    .map(a => {
+                        let icon = 'fa-check';
+                        if (a.toLowerCase().includes('wifi')) icon = 'fa-wifi text-danger';
+                        if (a.toLowerCase().includes('air')) icon = 'fa-snowflake text-primary';
+                        if (a.toLowerCase().includes('seat')) icon = 'fa-baby-carriage text-success';
+                        return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> <span class="d-none d-md-inline">${a}</span></span>`;
+                    }).join('');
 
                 let tagClass = 'popular';
                 if (v.tag && v.tag.toLowerCase().includes('cheapest')) tagClass = 'cheapest';
@@ -8750,6 +8783,15 @@
             } else {
                 $('#journeyNormal').show();
             }
+
+            const vehicle = BookingStore.getState().vehicle;
+            if (vehicle && vehicle.child && parseInt(vehicle.child) > 0) {
+                $('#carSeatToggleContainer').show();
+            } else {
+                $('#carSeatToggleContainer').hide();
+                $('#carSeatCheckbox').prop('checked', false);
+                if (typeof toggleChildSeatOptions === 'function') toggleChildSeatOptions();
+            }
         }
         // Global Toast implementation
         window.showToast = function (msg, type = 'success') {
@@ -8885,6 +8927,8 @@
         }
 
         function _proceedFromPersonalInfo() {
+            $('#passengerPhone').prop('disabled', true); // Make contact number disabled
+            
             $('#personalInfoSection').hide();
             $('#personalInfoBtns').hide();
             $('#additionalBookingDetails').show();
@@ -8900,7 +8944,7 @@
             }
 
             // Find the Step 4 continue button
-            const btn = document.querySelector('button[onclick="verifyPersonalInfoAndRequestOTP()"]');
+            const btn = document.querySelector('#personalInfoBtns .btn-search-uber') || document.querySelector('button[onclick="verifyPersonalInfoAndRequestOTP()"]');
             let origHtml = '';
             if (btn) {
                 origHtml = btn.innerHTML;
@@ -8944,7 +8988,7 @@
                 _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
 
                 // Setup callback for after OTP is successful
-                window._pendingAfterAuth = function () {
+                _pendingAfterAuth = function () {
                     if (document.getElementById('booking-recaptcha-container')) {
                         document.getElementById('booking-recaptcha-container').remove();
                     }
@@ -9341,17 +9385,16 @@
                 if (!bookingData.flightNumber) { showToast('Flight Number is required.', 'error'); return; }
                 if (!bookingData.pickAfterTime) { showToast('Pick Up Time After Landing is required.', 'error'); return; }
                 if (!bookingData.comingFrom) { showToast('Coming From is required.', 'error'); return; }
-                if (!bookingData.dropoffAddress) { showToast('Drop off Address is required.', 'error'); return; }
+                // Dropoff Address validation removed as requested
             } else if (bookingData.pickupType !== 'seaport') {
-                if (!bookingData.pickupAddressNormal) { showToast('Pickup Address is required.', 'error'); return; }
-                if (!bookingData.dropoffAddressNormal) { showToast('Dropoff Address is required.', 'error'); return; }
+                // Validation removed for Pickup and Dropoff Address as requested
             }
 
             const btn = document.querySelector('#additionalDetailsBtns .btn-search-uber');
             let originalBtnContent = 'Continue';
             if (btn) {
                 originalBtnContent = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finding Driver...';
                 btn.disabled = true;
             }
 
@@ -9486,16 +9529,84 @@
             // Add the loader element at the bottom if not already present
             if ($('#moreDriversLoader').length === 0) {
                 grid.after(`
-                    <div id="moreDriversLoader" class="more-drivers-loader" style="display:none; text-align:center; padding:15px; margin: 15px 0; background: #fdfaf0; border-radius: 8px; border: 1px dashed #f5c00b3b;">
-                        <span class="spinner-border spinner-border-sm text-warning" role="status" style="width: 1.2rem; height: 1.2rem; border-width: 0.2em; vertical-align: middle;"></span>
-                        <span style="font-size: 13.5px; color: #7c6204; margin-left: 8px; font-weight: 600;">Searching for drivers...</span>
+                    <div id="moreDriversLoader" style="display:none; flex-direction:column; align-items:center; justify-content:center; flex-grow: 1; min-height: 400px; position: relative; margin-top: 20px;">
+                        <!-- Radar Animation -->
+                        <div class="radar-container" style="position: relative; width: 220px; height: 220px; margin-bottom: 50px; border-radius: 50%; border: 1px solid #f4f4f4;">
+                            <div class="radar-core" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #000; border-radius: 50%; z-index: 10; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                                <i class="fas fa-car" style="color: white; font-size: 18px;"></i>
+                            </div>
+
+                            <!-- Fast Radar Rings (1.5s) -->
+                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out;"></div>
+                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out 0.5s;"></div>
+                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out 1s;"></div>
+
+                            <!-- Fast Sweep (1.5s) -->
+                            <div class="radar-sweep" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: conic-gradient(rgba(0,0,0,0.04) 0deg, rgba(0,0,0,0.01) 45deg, transparent 80deg, transparent 360deg); animation: radarSpin 1.5s infinite linear; border-radius: 50%; z-index: 5;"></div>
+
+                            <!-- Surrounding Icons (2 Left, 2 Right) -->
+                            <i class="fas fa-car" style="position: absolute; top: 25%; left: 10%; font-size: 14px; animation: blinkNode 1.5s infinite ease-in-out; opacity: 0; z-index: 6;"></i>
+                            <i class="fas fa-car" style="position: absolute; top: 65%; left: 15%; font-size: 16px; animation: blinkNode 1.5s infinite ease-in-out 0.75s; opacity: 0; z-index: 6;"></i>
+                            <i class="fas fa-car" style="position: absolute; top: 30%; right: 15%; font-size: 15px; animation: blinkNode 1.5s infinite ease-in-out 0.4s; opacity: 0; z-index: 6;"></i>
+                            <i class="fas fa-car" style="position: absolute; top: 75%; right: 5%; font-size: 14px; animation: blinkNode 1.5s infinite ease-in-out 1.1s; opacity: 0; z-index: 6;"></i>
+                        </div>
+
+                        <!-- Text Pill -->
+                        <div style="background: #fff; padding: 14px 30px; border-radius: 40px; border: 1px solid #e5e5e5; box-shadow: 0 8px 30px rgba(0,0,0,0.06); display: flex; align-items: center;">
+                            <i class="fas fa-circle-notch fa-spin" style="color: #444; font-size: 16px; margin-right: 12px; animation-duration: 1.5s;"></i>
+                            <span id="moreDriversText" style="font-size: 15px; color: #333; font-weight: 500; letter-spacing: 0.2px; transition: opacity 0.4s ease;">Scanning for nearby drivers...</span>
+                        </div>
+
+                        <style>
+                            @keyframes radarPulse {
+                                0% { width: 44px; height: 44px; opacity: 1; }
+                                100% { width: 280px; height: 280px; opacity: 0; }
+                            }
+                            @keyframes radarSpin {
+                                0% { transform: rotate(0deg); }
+                                100% { transform: rotate(360deg); }
+                            }
+                            @keyframes blinkNode {
+                                0% { transform: scale(0.5); opacity: 0; color: #aaa; }
+                                30% { transform: scale(1.2); opacity: 1; color: #000; text-shadow: 0 0 8px rgba(0,0,0,0.2); }
+                                70% { transform: scale(1); opacity: 0.8; color: #555; }
+                                100% { transform: scale(0.8); opacity: 0; color: #aaa; }
+                            }
+                        </style>
                     </div>
                 `);
+
+                const phrases = [
+                    'Scanning for nearby drivers...',
+                    'Drivers are reviewing your request...',
+                    'Hold tight, matching you now...',
+                    'Alerting top-rated drivers...',
+                    'Drivers getting ready...',
+                    'Optimizing best matches...',
+                    'Please wait, we found nearby drivers!',
+                    'We are sending trip details directly to active drivers in your area.',
+                    'Sending priority reminders to available nearby drivers.',
+                    'Drivers are bidding on your ride request'
+                ];
+                let currentPhraseIndex = 0;
+                setInterval(() => {
+                    const textEl = $('#moreDriversText');
+                    textEl.css('opacity', 0);
+                    setTimeout(() => {
+                        let newIndex;
+                        do {
+                            newIndex = Math.floor(Math.random() * phrases.length);
+                        } while (newIndex === currentPhraseIndex && phrases.length > 1);
+                        currentPhraseIndex = newIndex;
+                        textEl.text(phrases[currentPhraseIndex]);
+                        textEl.css('opacity', 1);
+                    }, 400);
+                }, 1500);
             }
 
             $('#findingDriversLoader').hide();
             $('#driverList').show();
-            $('#moreDriversLoader').show();
+            $('#moreDriversLoader').css('display', 'flex');
 
             // Setup Firebase Listener
             if (typeof firebase === 'undefined') {
@@ -9889,7 +10000,12 @@
             const amenitiesGrid = $('#rcVehicleAmenitiesGrid');
             amenitiesGrid.empty();
             if (vehicle.amenities) {
-                vehicle.amenities.forEach(am => {
+                vehicle.amenities.filter(am => {
+                    if (am.toLowerCase().includes('seat')) {
+                        return vehicle.child > 0;
+                    }
+                    return true;
+                }).forEach(am => {
                     let icon = 'fa-check';
                     let label = am;
                     if (am.toLowerCase().includes('wifi')) { icon = 'fa-wifi'; label = 'Wi-Fi'; }
@@ -10628,7 +10744,8 @@
             $('#mcsPickup, #mcsDropoff').toggleClass('text-truncate');
         }
         function updateTripDateTimeCard() {
-            $('#tripSelectedDate').text(bookingData.date || '--');
+            const uiDate = bookingData.date ? formatUIOrdinalDate(bookingData.date) : '--';
+            $('#tripSelectedDate').text(uiDate);
             $('#tripSelectedTime').text(bookingData.time || '--');
         }
         // mcsPickup / mcsDropoff are now updated reactively by _updateLocationUI subscriber
@@ -10761,14 +10878,6 @@
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-                <div style="text-align: center; margin-top: 15px;">
-                    <button
-                        style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"
-                        onclick="_showPhoneUI()" onmouseover="this.style.color='#111'"
-                        onmouseout="this.style.color='#666'">
-                        <i class="fas fa-pen" style="font-size: 12px;"></i> Change Phone Number
-                    </button>
-                </div>
             </div>
 
             <!-- Firebase Recaptcha Container -->

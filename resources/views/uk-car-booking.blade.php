@@ -444,7 +444,12 @@
                             <!-- Selected Car Summary -->
                             <!-- Selected Car Summary (visible after vehicle selection) -->
                             <div id="selectedCarSummary" class="selected-car-summary">
-                                <h5 class="summary-title">Selected Vehicle</h5>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                    <h5 class="summary-title" style="margin-bottom: 0;">Selected Vehicle</h5>
+                                    <button class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle">
+                                        <i class="fas fa-pencil"></i> Edit
+                                    </button>
+                                </div>
                                 <div class="selected-car-row">
                                     <img id="summaryCarImage" src="" alt="Car" class="summary-car-image">
                                     <div class="summary-car-details">
@@ -747,7 +752,7 @@
                                 </div>
                             </div>
                             <!-- Car Seat -->
-                            <div class="car-seat-toggle">
+                            <div class="car-seat-toggle" id="carSeatToggleContainer">
                                 <label class="car-seat-label">
                                     <input type="checkbox" id="carSeatCheckbox" class="booking-checkbox"
                                         onchange="toggleChildSeatOptions()">
@@ -844,11 +849,11 @@
                         <div id="journeyNormal">
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Pickup Address *</label>
+                                    <label>Pickup Address</label>
                                     <input type="text" id="pickupAddressNormal" placeholder="Full pickup address with postcode">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Dropoff Address *</label>
+                                    <label>Dropoff Address</label>
                                     <input type="text" id="dropoffAddressNormal" placeholder="Full dropoff address with postcode">
                                 </div>
                             </div>
@@ -871,8 +876,7 @@
                             <!-- TEXTAREA (HIDDEN BY DEFAULT) -->
                             <div class="form-group-uber booking-form-group">
                                 <textarea id="specialRequirements" rows="3" placeholder="Enter any special requirements"
-                                    style="display: none;">
-                            </textarea>
+                                    style="display: none;"></textarea>
                             </div>
                         </div>
                     </div> <!-- End of additionalBookingDetails -->
@@ -889,7 +893,7 @@
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
                         <button class="btn-search-uber" onclick="verifyPassengerDetails()">
-                            <i class="fas fa-arrow-right"></i> Continue
+                            <i class="fas fa-search"></i> Find a Driver
                         </button>
                     </div>
                 </div>
@@ -911,11 +915,13 @@
                         </div>
                     </div>
                     <div id="driverList" style="display:none;"></div>
-                    <div class="btn-group-uber step-bottom-btns">
-                        <button class="btn-back-uber" onclick="goBack(4)">
-                            <i class="fas fa-chevron-left"></i> Back
+                    <div class="btn-group-uber step-bottom-btns" style="margin-top: auto;">
+                        <button class="btn-search-uber" style="width: 100%;" onclick="showCancelJobModal()">
+                            <i class="fas fa-times"></i> Cancel Job
                         </button>
                     </div>
+
+
                 </div>
             </div>
             <!-- STEP 7: REVIEW & CONFIRM (shown after clicking a driver) -->
@@ -1283,8 +1289,8 @@
                         const toLat   = parseFloat(fareFirst.to_lat);
                         const toLng   = parseFloat(fareFirst.to_lng);
 
-                        const svgPickup = encodeURIComponent('<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="#111111" stroke="white" stroke-width="2.5"/><circle cx="12" cy="12" r="3" fill="white"/></svg>');
-                        const svgDropoff = encodeURIComponent('<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" fill="#111111" stroke="white" stroke-width="2.5"/><rect x="9" y="9" width="6" height="6" fill="white"/></svg>');
+                        const svgPickup = encodeURIComponent('<svg width="24" height="32" viewBox="0 0 384 512" fill="#f9c106" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>');
+                        const svgDropoff = encodeURIComponent('<svg width="24" height="32" viewBox="0 0 384 512" fill="#000000" xmlns="http://www.w3.org/2000/svg"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>');
 
                         const getShortAddress = (addr) => {
                             if (!addr) return '';
@@ -1306,9 +1312,9 @@
                                 },
                                 icon     : {
                                     url: 'data:image/svg+xml;charset=UTF-8,' + svgPickup,
-                                    scaledSize: new google.maps.Size(24, 24),
-                                    anchor: new google.maps.Point(12, 12),
-                                    labelOrigin: new google.maps.Point(12, -16)
+                                    scaledSize: new google.maps.Size(24, 32),
+                                    anchor: new google.maps.Point(12, 32),
+                                    labelOrigin: new google.maps.Point(12, -12)
                                 }
                             });
                         }
@@ -1323,9 +1329,9 @@
                                 },
                                 icon     : {
                                     url: 'data:image/svg+xml;charset=UTF-8,' + svgDropoff,
-                                    scaledSize: new google.maps.Size(24, 24),
-                                    anchor: new google.maps.Point(12, 12),
-                                    labelOrigin: new google.maps.Point(12, -16)
+                                    scaledSize: new google.maps.Size(24, 32),
+                                    anchor: new google.maps.Point(12, 32),
+                                    labelOrigin: new google.maps.Point(12, -12)
                                 }
                             });
                         }
@@ -1537,4 +1543,91 @@
             </div>
         </div>
     </section>
+
+    <!-- Premium Cancel Job Modal (Global Overlay) -->
+    <div id="cancelJobModal" class="modal" tabindex="-1" role="dialog" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center;">
+        <div class="modal-dialog" role="document" style="background: white; border-radius: 20px; padding: 30px; max-width: 380px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center;">
+            <div class="modal-content" style="border: none;">
+                <div style="width: 60px; height: 60px; background: #fff0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 24px;"></i>
+                </div>
+                <h4 style="margin: 0 0 10px; font-weight: 700; color: #333; font-size: 22px;">Cancel Job?</h4>
+                <p style="color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 15px;">
+                    Are you sure you want to cancel this booking? This action cannot be undone.
+                </p>
+                <textarea id="cancelJobReason" rows="3" placeholder="Reason for cancellation (optional)" style="width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 25px; font-family: inherit; font-size: 14px; resize: none; background: #fafafa;"></textarea>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button type="button" onclick="confirmCancelJob()" style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
+                        Yes, Cancel
+                    </button>
+                    <button type="button" onclick="hideCancelJobModal()" style="flex: 1; padding: 12px 0; border-radius: 10px; border: 1px solid #ddd; background: #fff; color: #333; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        Keep It
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showCancelJobModal() {
+            document.getElementById('cancelJobReason').value = '';
+            document.getElementById('cancelJobModal').style.display = 'flex';
+        }
+        function hideCancelJobModal() {
+            document.getElementById('cancelJobModal').style.display = 'none';
+        }
+        function confirmCancelJob() {
+            const reason = document.getElementById('cancelJobReason').value.trim();
+            
+            if (typeof bookingData === 'undefined' || !bookingData.jobId || !bookingData.bookingId) {
+                alert('Job details are missing. Cannot cancel.');
+                return;
+            }
+
+            const payload = {
+                job_id: bookingData.jobId,
+                job_no: bookingData.bookingId,
+                reason: reason
+            };
+
+            const btn = document.querySelector('#cancelJobModal button[onclick="confirmCancelJob()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
+            btn.disabled = true;
+
+            fetch('{{env("API_URL")}}'+ '/cancel-job', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                if (data.status) {
+                    hideCancelJobModal();
+                    showToast(data.message || 'Job cancelled successfully.', 'success');
+                    
+                    if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
+                        BookingStore.clear();
+                    }
+                    
+                    setTimeout(() => {
+                        window.location.href = '/'; 
+                    }, 1500);
+                } else {
+                    showToast(data.message || 'Failed to cancel job.', 'error');
+                }
+            })
+            .catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                showToast('An error occurred while cancelling the job.', 'error');
+            });
+        }
+    </script>
 @endsection

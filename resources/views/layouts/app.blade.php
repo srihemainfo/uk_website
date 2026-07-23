@@ -8875,7 +8875,7 @@
                     const userPhone = user.mobile || user.mobile_number || user.phone || '';
                     if (!userPhone) {
                         // User is logged in but has no mobile. We must verify this new phone number.
-                        _startBookingOtpVerification(phone, firstName, email);
+                        _startBookingOtpVerification(phoneEl.value.trim(), firstName, email);
                         return; // Stop here until OTP is done
                     }
                 } catch (e) { console.error('Error parsing auth_user', e); }

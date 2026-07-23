@@ -163,7 +163,7 @@
 
         .premium-otp-input {
             width: 100%;
-            padding: 5px;
+            padding: 3px;
             border: 2px solid #e5e7eb;
             border-radius: 12px;
             font-size: 24px;
@@ -3135,9 +3135,9 @@
         }
 
         .summary-title {
-            font-size: 15px;
+            font-size: 16px;
             /* font-weight: 700; */
-            /* color: #666; */
+            color: #000;
             margin-bottom: 15px;
         }
 
@@ -3170,7 +3170,7 @@
             display: flex;
             gap: 18px;
 
-            color: #666;
+            color: #000;
             font-size: 14px;
         }
 
@@ -3181,7 +3181,7 @@
         }
 
         .summary-car-price {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             color: #000;
             white-space: nowrap;
@@ -3208,9 +3208,9 @@
         }
 
         .summary-label i {
-            width: 16px;
-            text-align: center;
-            color: #666;
+               font-size: 13px;
+    text-align: center;
+    color: #000;
         }
 
         .summary-label {
@@ -4547,12 +4547,132 @@
         .trip-route-meta-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .trip-route-meta-item {
             padding-left: 10px;
             border-left: 1px solid #eee;
+        }
+                /* Wrapper */
+        .cookie-banner-wrapper {
+            position: fixed;
+            bottom: 15px;
+            right: 30px;
+            z-index: 99999;
+        }
+
+        /* Banner */
+        .cookie-banner {
+            max-width: 300px;
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+                gap: 16px;
+    flex-direction: column;
+     animation: cookieSlideUp 0.6s ease-out;
+        }
+
+        @keyframes cookieSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(80px) scale(0.95);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+        /* Content */
+        .cookie-banner-content {
+            flex: 1;
+        }
+
+        .cookie-banner-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 6px;
+        }
+
+        .cookie-banner-text {
+            font-size: 14px;
+            line-height: 1.5;
+           
+            margin: 0;
+        }
+
+        /* Actions */
+        .cookie-banner-actions {
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+             width: 100%;
+        }
+
+        /* Buttons */
+        .cookie-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s;
+             flex: 1;
+    width: 100%;
+        }
+
+        .cookie-btn-reject {
+            background: #f3f4f6;
+            color: #333;
+        }
+
+        .cookie-btn-reject:hover {
+            background: #e5e7eb;
+        }
+
+        .cookie-btn-accept {
+            background: #000;
+            color: #fff;
+        }
+
+        .cookie-btn-accept:hover {
+            background: #222;
+        }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .cookie-banner-wrapper {
+                left: 15px;
+                right: 15px;
+                
+            }
+
+            .cookie-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                max-width: 100%;
+            }
+
+            .cookie-banner-actions {
+                width: 100%;
+            }
+
+            .cookie-btn {
+                flex: 1;
+            }
         }
 
         @media (max-width: 576px) {
@@ -4610,8 +4730,8 @@
         }
 
         .trip-datetime-icon {
-            width: 42px;
-            height: 42px;
+            /* width: 42px;
+            height: 42px; */
             border-radius: 50%;
             background: #f8f8f8;
             display: flex;
@@ -4619,6 +4739,9 @@
             justify-content: center;
             color: #000;
             font-size: 18px;
+        }
+        .trip-datetime-icon i{
+            font-size:19px;
         }
 
         .trip-datetime-title {
@@ -4674,7 +4797,7 @@
             }
 
             .mobile-trip-header {
-                padding: 12px 14px;
+                padding: 12px 14px 10px 3px;
             }
 
             .mobile-from,
@@ -5071,7 +5194,7 @@
 
             #bookingMap.mobile-fullscreen {
                 position: fixed;
-                top: 70px;
+                top: 0px;
                 left: 0;
                 width: 100vw;
                 height: calc(100vh - 70px);
@@ -5230,6 +5353,7 @@
 
             .owl-carousel.review-carousel {
                 display: block !important;
+                z-index:0;
             }
 
             .section-head h2 {
@@ -6352,7 +6476,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 6px;
+            /* margin-bottom: 6px; */
         }
 
         .auth-modal-logo img {
@@ -7007,30 +7131,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <div class="cookie-consent-banner" id="cookiecontent" style="display: none;">
-        <div class="cookie-consent-banner__inner">
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="cookie-consent-banner__copy">
-                        <div class="cookie-consent-banner__description">
-                            This website stores cookies on your browser. These cookies are used to improve your
-                            experience and provide more personalized service. To learn more, please review our Privacy
-                            Policy.
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="cookie-consent-banner__actions">
-                        <a target="_blank" href="/uk-privacy"
-                            class="cookie-consent-banner__cta cookie-consent-banner__cta--secondary">
-                            PRIVACY POLICY
-                        </a>
-                        <button class="cookie-consent-banner__cta" onclick="acceptCookieConsent()">ACCEPT</button>
-                    </div>
-                </div>
-            </div>
+    <div id="cookiecontent" class="cookie-banner-wrapper" style="display: none;">
+    <div class="cookie-banner">
+        <div class="cookie-banner-content">
+            <h5 class="cookie-banner-title">We Value Your Privacy</h5>
+            <p class="cookie-banner-text">
+                We use cookies to improve your browsing experience, personalize
+                content and analyze our traffic.
+            </p>
+        </div>
+
+        <div class="cookie-banner-actions">
+            <button type="button"
+                class="cookie-btn cookie-btn-reject"
+                onclick="document.getElementById('cookiecontent').style.display='none'">
+                Reject
+            </button>
+
+            <button type="button"
+                class="cookie-btn cookie-btn-accept"
+                onclick="acceptCookieConsent()">
+                Accept
+            </button>
         </div>
     </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
     <script>
@@ -10835,7 +10960,7 @@
     margin-bottom: 3px;">
                         <i class="fas fa-lock" style="font-size: 20px;"></i>
                     </div>
-                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 8px;">Verify your number
+                    <h3 style="font-size: 22px; font-weight: 800; color: #111; margin-bottom: 3px;">Verify your number
                     </h3>
                     <p class="otp-code">
                         We've sent a 6-digit code to <br>
@@ -10844,24 +10969,26 @@
                 </div>
 
                 <div id="authNewUserFields"
-                    style="display: none; margin-bottom: 24px; animation: slideUp 0.4s ease-out;">
-                    <div style="margin-bottom: 16px; position: relative;">
-                        <i class="fas fa-user"
-                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="text" id="authNameInput" placeholder="Full Name" maxlength="100"
-                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
-                            autocomplete="off"
-                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
-                    </div>
-                    <div style="position: relative;">
-                        <i class="fas fa-envelope"
-                            style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
-                        <input type="email" id="authEmailInput" placeholder="Email Address" maxlength="100"
-                            style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
-                            autocomplete="off"
-                            onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
-                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                    style="display: none; margin-bottom: 10px; animation: slideUp 0.4s ease-out;">
+                    <div class="d-flex flex-column flex-md-row gap-3">
+                        <div style="position: relative; flex: 1;">
+                            <i class="fas fa-user"
+                                style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                            <input type="text" id="authNameInput" placeholder="Full Name" maxlength="100"
+                                style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                                autocomplete="off"
+                                onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                                onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        </div>
+                        <div style="position: relative; flex: 1;">
+                            <i class="fas fa-envelope"
+                                style="position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #888; font-size: 15px;"></i>
+                            <input type="email" id="authEmailInput" placeholder="Email Address" maxlength="100"
+                                style="width: 100%; padding: 15px 15px 15px 48px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; font-weight: 500; transition: all 0.2s ease; box-sizing: border-box; outline: none; background: #fff;"
+                                autocomplete="off"
+                                onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 4px rgba(0,0,0,0.05)'"
+                                onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                        </div>
                     </div>
                 </div>
 
@@ -10871,17 +10998,25 @@
                 </div>
 
                 <button id="authVerifyBtn"
-                    style="width: 100%; padding: 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);"
+                    style="width: 100%; padding: 10px 14px; background: #111; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(0,0,0,0.1);"
                     onclick="handleVerifyOtp()"
                     onmouseover="this.style.background='#000'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.2)'"
                     onmouseout="this.style.background='#111'; this.style.transform='none'; this.style.boxShadow='0 6px 15px rgba(0,0,0,0.1)'">
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
+                <div style="text-align: center; margin-top: 10px;">
+                    <button
+                        style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"
+                        onclick="_showPhoneUI()" onmouseover="this.style.color='#111'"
+                        onmouseout="this.style.color='#666'">
+                        <i class="fas fa-pen" style="font-size: 12px;"></i> Change Phone Number
+                    </button>
+                </div>
             </div>
 
             <!-- Firebase Recaptcha Container -->
-            <div id="recaptcha-container" style="margin-top: 15px; display: flex; justify-content: center;"></div>
+            <div id="recaptcha-container" style="margin-top: 7px; display: flex; justify-content: center;"></div>
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our

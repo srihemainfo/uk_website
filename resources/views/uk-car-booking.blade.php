@@ -33,7 +33,7 @@
             <!-- COMPACT MOBILE SUMMARY -->
             <div id="mobileCompactSummary" class="mobile-trip-summary">
                 <div class="mobile-trip-header" onclick="toggleTripSummary()" style="align-items: flex-start;">
-                    <div class="location-group-wrapper" style="width: 100%; gap: 12px; margin-right: 15px;">
+                    <div class="location-group-wrapper" style="width: 100%; gap: 12px; ">
                         <div class="route-indicator"
                             style="padding-top: 4px; padding-bottom: 4px; justify-content: space-between;">
                             <i class="fas fa-location-dot route-dot-start" style="font-size: 15px;"></i>
@@ -65,7 +65,7 @@
                             <div class="summary-car-details">
                                 <h4
                                     style="font-size:16px; margin-bottom:6px; display:flex; align-items:center; gap:8px;">
-                                    <i class="fas fa-car text-secondary"></i>
+                                    <i class="fas fa-car"></i>
                                     <span id="mcsCarName">-</span>
                                 </h4>
 
@@ -78,28 +78,28 @@
                             <div class="booking-summary-item" id="mcsPassengerNameContainer"
                                 style="display:none;  border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-user"
-                                        style="color: #666; font-size: 15px;"></i></span>
+                                        style="font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerName"
                                    >-</span>
                             </div>
                             <div class="booking-summary-item" id="mcsPassengerPhoneContainer"
                                 style="display:none;  border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-phone"
-                                        style="color: #666; font-size: 15px;"></i></span>
+                                        style=" font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerPhone"
                                     >-</span>
                             </div>
                             <div class="booking-summary-item" id="mcsPassengerEmailContainer"
                                 style="display:none;   border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-envelope"
-                                        style="color: #666; font-size: 15px;"></i></span>
+                                        style=" font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerEmail"
                                    >-</span>
                             </div>
                             <div class="booking-summary-item"
                                 style=" border-radius: 8px; justify-content: space-between;">
                                 <span class="summary-label"><i class="fas fa-users"
-                                        style="color: #666; font-size: 15px;"></i></span>
+                                        style=" font-size: 15px;"></i></span>
                                 <span class="summary-value" id="mcsPassengerCount"
                                     >1</span>
                             </div>
@@ -325,7 +325,7 @@
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->
-                    <div class="mob-trust-badges d-md-none">
+                    <div class="mob-trust-badges d-none">
                         <div class="mob-trust-badge">
                             <div class="mob-trust-icon">
                                 <i class="fas fa-shield-halved"></i>
@@ -425,7 +425,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="trip-route-meta-item" id="tripRouteMetaContainer" style="display: none;">
+                                        <div class="trip-datetime-item" id="tripRouteMetaContainer" style="display: none;">
                                             <div class="trip-datetime-icon" style="background: #f4f4f4; color: #111;">
                                                 <i class="fas fa-route"></i>
                                             </div>
@@ -445,7 +445,7 @@
                             <!-- Selected Car Summary (visible after vehicle selection) -->
                             <div id="selectedCarSummary" class="selected-car-summary">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-                                    <h5 class="summary-title" style="margin-bottom: 0;">Selected Vehicle</h5>
+                                    <h5 class="summary-title" style="margin-bottom: 0;"><span><i class="fas fa-car me-2"></i></span>Selected Vehicle</h5>
                                     <button class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle">
                                         <i class="fas fa-pencil"></i> Edit
                                     </button>
@@ -528,7 +528,7 @@
                             <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop">
                                 <h5 class="summary-title d-flex justify-content-between align-items-center"
                                     onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
-                                    <span><i class="fas fa-clipboard-list"></i> Passenger Details</span>
+                                    <span><i class="fas fa-clipboard-list me-2"></i> Passenger Details</span>
                                     <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                                 </h5>
 
@@ -1109,7 +1109,7 @@
                 <img src="https://goride-media.s3.ap-south-1.amazonaws.com/cus_app/images/day_6a561ea0b63e7.webp"
                     alt="Airport Transfer" class="hero-side-img">
             </div>
-            <div id="bookingMap" style="display: none; width: 100%; height: 100%; min-height: 400px;"></div>
+            <div id="bookingMap" style="display: none; width: 100%; height: 100%; "></div>
             <div id="mapRouteBadge" class="map-route-badge" style="display: none;">
                 <div class="map-route-badge-content">
                     <div class="map-route-pill">

@@ -1557,7 +1557,7 @@
                 </p>
                 <textarea id="cancelJobReason" rows="3" placeholder="Reason for cancellation (optional)" style="width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 25px; font-family: inherit; font-size: 14px; resize: none; background: #fafafa;"></textarea>
                 <div style="display: flex; gap: 12px; justify-content: center;">
-                    <button type="button" onclick="confirmCancelJob()" style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
+                    <button type="button" onclick="confirmCancelJob(this)" style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
                         Yes, Cancel
                     </button>
                     <button type="button" onclick="hideCancelJobModal()" style="flex: 1; padding: 12px 0; border-radius: 10px; border: 1px solid #ddd; background: #fff; color: #333; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
@@ -1576,7 +1576,7 @@
         function hideCancelJobModal() {
             document.getElementById('cancelJobModal').style.display = 'none';
         }
-        function confirmCancelJob() {
+        function confirmCancelJob(btn) {
             const reason = document.getElementById('cancelJobReason').value.trim();
             
             if (typeof bookingData === 'undefined' || !bookingData.jobId || !bookingData.bookingId) {
@@ -1590,7 +1590,6 @@
                 reason: reason
             };
 
-            const btn = document.querySelector('#cancelJobModal button[onclick="confirmCancelJob()"]');
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
             btn.disabled = true;

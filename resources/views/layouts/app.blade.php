@@ -7168,8 +7168,31 @@
             }
         }
 
+        // Returns a Date object whose local fields match the current UK time.
+        // This ensures the frontend date comparisons and flatpickr instances use UK time regardless of the user's timezone.
+        function getUKDate() {
+            const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+            return new Date(ukTimeStr);
+        }
+
+        function normalizeLocationType(type) {
+            if (!type) return 'address';
+            const t = type.toLowerCase();
+            if (t.includes('airport')) return 'airport';
+            if (t.includes('seaport')) return 'seaport';
+            if (t.includes('railway_station') || t.includes('train')) return 'railway_station';
+            if (t.includes('hotel')) return 'hotel';
+            if (t.includes('mall') || t.includes('shopping')) return 'mall';
+            if (t.includes('hospital')) return 'hospital';
+            if (t.includes('university')) return 'university';
+            if (t.includes('school')) return 'school';
+            if (t.includes('landmark') || t.includes('point_of_interest')) return 'landmark';
+            return type;
+        }
+
         function getIconForType(type) {
-            switch (type) {
+            const normalized = normalizeLocationType(type);
+            switch (normalized) {
                 case 'airport':
                     return 'plane-departure';
                 case 'railway_station':
@@ -7858,15 +7881,15 @@
 
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
-                minDate: "today",
-                defaultDate: _restoredState.date || "today",
+                minDate: getUKDate(),
+                defaultDate: _restoredState.date || getUKDate(),
                 onReady(selectedDates, dateStr, instance) {
                     let dStr = dateStr;
                     if (!dStr && selectedDates.length > 0) {
                         dStr = instance.formatDate(selectedDates[0], "Y-m-d");
                     }
                     if (!dStr) {
-                        dStr = instance.formatDate(new Date(), "Y-m-d");
+                        dStr = instance.formatDate(getUKDate(), "Y-m-d");
                     }
                     BookingStore.setState({ date: dStr, bookingType: 'schedule' });
                     generateTimeOptions(dStr);
@@ -7990,6 +8013,10 @@
                     showStep(1);
                 } else {
                     showStep(_restoredState.currentStep);
+                    
+                    if (typeof updatePassengerForm === 'function') {
+                        updatePassengerForm();
+                    }
 
                     // If they were on the driver search screen, restart the firebase listener
                     if (_restoredState.currentStep === 6 && _restoredState.bookingId) {
@@ -8050,14 +8077,14 @@
             const timeDropdownList = document.getElementById('timeDropdownList');
             timeDropdownList.innerHTML = '';
 
-            let selectedDate = new Date();
+            let selectedDate = getUKDate();
             if (dateStr && typeof dateStr === 'string') {
                 const parts = dateStr.split('-');
                 if (parts.length === 3) {
                     selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
                 }
             }
-            const now = new Date();
+            const now = getUKDate();
 
             const isToday = selectedDate.toDateString() === now.toDateString();
 
@@ -8103,7 +8130,7 @@
                 if (isToday) {
                     // All times for today have passed (e.g. late night after 23:30)
                     // Automatically advance date to tomorrow and generate time options
-                    const tomorrow = new Date(now);
+                    const tomorrow = getUKDate();
                     tomorrow.setDate(tomorrow.getDate() + 1);
                     const yr = tomorrow.getFullYear();
                     const mo = String(tomorrow.getMonth() + 1).padStart(2, '0');
@@ -8186,8 +8213,9 @@
                 showToast("Pickup and dropoff locations cannot be the same.", 'error');
                 return;
             }
+            const normalizedType = normalizeLocationType(type);
             // Batch update (fires subscribers once)
-            BookingStore.setState({ pickup: location, pickupType: type, pickupSelected: true });
+            BookingStore.setState({ pickup: location, pickupType: normalizedType, pickupSelected: true });
             $('#pickupInput').val(location);
             $('#pickupSuggestions').removeClass('show');
             updateTimePanel();
@@ -8200,8 +8228,9 @@
                 showToast("Pickup and dropoff locations cannot be the same.", 'error');
                 return;
             }
+            const normalizedType = normalizeLocationType(type);
             // Batch update (fires subscribers once)
-            BookingStore.setState({ dropoff: location, dropoffType: type, dropoffSelected: true });
+            BookingStore.setState({ dropoff: location, dropoffType: normalizedType, dropoffSelected: true });
             $('#dropoffInput').val(location);
             $('#dropoffSuggestions').removeClass('show');
             updateTimePanel();
@@ -8425,12 +8454,12 @@
 
             // Fallback to today + now if not set
             if (!pickupDate) {
-                const now = new Date();
+                const now = getUKDate();
                 pickupDate = now.toISOString().slice(0, 10);
             }
             if (!pickupTime) {
                 // Use current time rounded to the next 90 mins
-                const now = new Date();
+                const now = getUKDate();
                 now.setMinutes(now.getMinutes() + 90);
                 pickupTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':00';
             } else {
@@ -8674,6 +8703,10 @@
             // Fetch from API
             const faresResult = await fetchFaresFromAPI();
 
+            if (faresResult && faresResult.status === false && faresResult.message) {
+                showToast(faresResult.message, 'error');
+            }
+
             // data comes back as an object keyed by vehicle type (e.g. { standard:{...}, mpv:{...} })
             const fareDataObj = faresResult && faresResult.status === true && faresResult.data &&
                 typeof faresResult.data === 'object' && !Array.isArray(faresResult.data)
@@ -8891,18 +8924,44 @@
             console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
         }
         function updatePassengerForm() {
-            const pickup = bookingData.pickupType;
+            const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
+            console.log('UpdatePassengerForm state:', state);
+            const pickup = state.pickupType || (typeof bookingData !== 'undefined' ? bookingData.pickupType : null);
+            const dropoff = state.dropoffType || (typeof bookingData !== 'undefined' ? bookingData.dropoffType : null);
+
             $('#journeyAirport').hide();
             $('#journeySeaport').hide();
             $('#journeyNormal').hide();
+
+            // Reset dropoff address visibility
+            $('#dropoffAddress').closest('.form-group-uber').show();
+            $('#dropoffAddressSeaport').closest('.form-group-uber').show();
+            $('#dropoffAddressNormal').closest('.form-group-uber').show();
+
+            // Hide dropoff address if dropoff location is airport
+            if (dropoff === 'airport') {
+                $('#dropoffAddress').closest('.form-group-uber').hide();
+                $('#dropoffAddressSeaport').closest('.form-group-uber').hide();
+                $('#dropoffAddressNormal').closest('.form-group-uber').hide();
+            }
+
             if (pickup === 'airport') {
                 $('#journeyAirport').show();
+                if (document.getElementById('flightArrivingTime') && !document.getElementById('flightArrivingTime')._flatpickr) {
+                    flatpickr('#flightArrivingTime', {
+                        enableTime: true,
+                        noCalendar: true,
+                        dateFormat: 'H:i',
+                        time_24hr: true
+                    });
+                }
             } else if (pickup === 'seaport') {
                 $('#journeySeaport').show();
-                if (!document.getElementById('cruiseDate')._flatpickr) {
-                    flatpickr('#cruiseDate', {
-                        dateFormat: 'd/m/Y',
-                        minDate: 'today'
+                if (document.getElementById('seaportArrivalTime') && !document.getElementById('seaportArrivalTime')._flatpickr) {
+                    flatpickr('#seaportArrivalTime', {
+                        enableTime: true,
+                        dateFormat: 'Y-m-d H:i',
+                        minDate: getUKDate()
                     });
                 }
             } else {
@@ -9383,7 +9442,7 @@
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Docking Date');
                 $('#summaryBookingDate').text(bookingData.date || '–');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Docking Time');
-                const dockingTime = $('#dockingTimeSelect').val() || bookingData.time || '–';
+                const dockingTime = $('#seaportArrivalTime').val() || bookingData.time || '–';
                 $('#summaryBookingTime').text(dockingTime);
                 $('#summaryFlightLabel').text('Cruise/Ferry');
                 $('#summaryFlightNumber').text($('#ferryName').val() || '–');
@@ -9434,13 +9493,15 @@
             if (currentPickupType === 'airport') {
                 journeyFields = {
                     flightNumber: $('#flightNumber').val(),
+                    flightArrivingTime: $('#flightArrivingTime').val(),
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
                     pickAfterTime: $('#pickupAfterLandingSelect').val(),
+                    meetAndGreet: $('#meetAndGreet').is(':checked') ? '1' : '0'
                 };
             } else if (currentPickupType === 'seaport') {
                 journeyFields = {
-                    dockingTime: $('#dockingTimeSelect').val(),
+                    dockingTime: $('#seaportArrivalTime').val(),
                     ferryName: $('#ferryName').val(),
                     comingFromPort: $('#comingFromPort').val(),
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
@@ -9583,11 +9644,14 @@
                 c_hand_lagguage: bookingData.handLuggageCount || '0',
                 c_child_count: bookingData.childSeatCount ? bookingData.childSeatCount.toString() : '0',
                 c_child_type: bookingData.childSeatTypes && bookingData.childSeatTypes.length ? bookingData.childSeatTypes.join(',') : '',
-                c_flight_number: bookingData.flightNumber || bookingData.cruiseFerryName || 'none',
+                c_flight_number: bookingData.flightNumber || bookingData.ferryName || 'none',
                 c_coming_from: bookingData.comingFrom || bookingData.comingFromPort || 'none',
-                c_drop_address: bookingData.dropoffAddressNormal || bookingData.dropoffAddress || bookingData.dropoffAddressSeaport || bookingData.dropoff || '',
-                c_pick_address: bookingData.pickupAddressNormal || bookingData.pickup || '',
-                c_special_require: bookingData.specialRequirements || 'none'
+                c_drop_address: bookingData.dropoffAddressNormal || bookingData.dropoffAddress || bookingData.dropoffAddressSeaport || '',
+                c_pick_address: bookingData.pickupAddressNormal || '',
+                c_special_require: bookingData.specialRequirements || 'none',
+                c_flight_arriving_time: bookingData.flightArrivingTime || '',
+                c_meet_and_greet: bookingData.meetAndGreet || '0',
+                c_seaport_arrival_time: bookingData.dockingTime || ''
             };
 
             // Using the user-provided API Route via the local controller proxy
@@ -9860,7 +9924,7 @@
                     const bid = bidsDetails[key];
 
                     const d = {
-                        id: bid.kyc_id || key,
+                        id: key,
                         name: bid.b_name || 'Driver',
                         rating: bid.b_rating || '4.9',
                         trips: '100+',
@@ -9951,7 +10015,7 @@
                             driverElem.find('.bid-amount').text('£' + newAmount);
 
                             const d = {
-                                id: bid.kyc_id || key,
+                                id: key,
                                 name: bid.b_name || 'Driver',
                                 rating: bid.b_rating || '4.9',
                                 trips: '100+',
@@ -10267,6 +10331,14 @@
                 if (data.status === true && data.data) {
                     $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
                     $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
+                    
+                    if (data.data.is_meet_and_greet == 1) {
+                        $('#pbMeetGreetRow').show();
+                        $('#pbMeetGreet').text('£' + parseFloat(data.data.meet_amount || 0).toFixed(2));
+                    } else {
+                        $('#pbMeetGreetRow').hide();
+                    }
+
                     $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || 0).toFixed(2));
 
                     $('#dynamicPaymentSummary').show();
@@ -10405,7 +10477,7 @@
         $(document).ready(function () {
             // Bind input change events to update the store + booking summary live
             $(document).on('input change',
-                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #comingFrom, #dropoffAddress, #ferryName, #dockingTimeSelect, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
+                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
                     // _updatePassengerSummaryUI and _updateJourneySummaryUI subscribers

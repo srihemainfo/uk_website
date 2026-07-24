@@ -3102,20 +3102,20 @@
         }
 
         .edit-icon-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            padding: 9px 24px;
-            background: black;
-            border: 1px solid #dcdcdc;
-            border-radius: 2px;
-            color: white;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border-radius: 23px;
+               display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 5px 15px;
+    background: black;
+    border: 1px solid #dcdcdc;
+    border-radius: 2px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border-radius: 24px;
         }
 
         .edit-icon-btn i {

@@ -963,7 +963,7 @@
 
         .find-trip-locations .route-indicator {
             padding-top: 19px;
-            padding-bottom: 25px;
+            padding-bottom: 15px;
         }
 
         .location-suggestions {
@@ -1858,7 +1858,7 @@
         }
 
         .find-trip-card {
-            background: #f9f9f9;
+            /* background: #f9f9f9; */
             padding: 12px;
             border-radius: 12px;
             border: 1px solid #e0e0e0;
@@ -3133,19 +3133,37 @@
             padding-top: 10px;
             border-top: 1px solid #e5e5e5;
         }
-
-        .summary-title {
-            font-size: 16px;
-            /* font-weight: 700; */
-            color: #000;
-            margin-bottom: 15px;
+        #bookingDetailsIcon{
+            background: none;
+    color: #3a3434;
+    height: 0px;
         }
+
+        .summary-title{
+            font-size: 15px;
+           display:flex;
+           justify-content: space-between;
+           align-items:center;
+           text-transform: uppercase;
+    color: #555;
+            margin-bottom: 10px;
+       
+        }
+        .summary-title i{
+            font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    border-radius: 50%;
+        }
+
 
         .selected-car-row {
             display: flex;
             align-items: center;
             gap: 7px;
-            justify-content: center;
+               justify-content: space-between;
         }
 
         .summary-car-image {
@@ -3153,11 +3171,12 @@
             height: 70px;
             object-fit: contain;
             border-radius: 10px;
+           
         }
 
-        .summary-car-details {
+        /* .summary-car-details {
             flex: 1;
-        }
+        } */
 
         .summary-car-name {
             margin-bottom: 0px !important;
@@ -3210,7 +3229,7 @@
         .summary-label i {
                font-size: 13px;
     text-align: center;
-    color: #000;
+    color: #888;
         }
 
         .summary-label {
@@ -3635,7 +3654,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-            margin-bottom: 16px;
+       
         }
 
         .rc-driver-avatar {
@@ -3694,7 +3713,7 @@
 
         .rc-driver-stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            /* grid-template-columns: 1fr 1fr 1fr; */
 
             border-radius: 8px;
 
@@ -3738,8 +3757,12 @@
         .rc-vehicle-top {
             display: flex;
             gap: 16px;
-            margin-bottom: 16px;
+           
             align-items: center;
+            justify-content: space-between;
+        }
+        .rc-vehicle-info-right{
+            flex:1;
         }
 
         .rc-vehicle-img-wrapper {
@@ -3761,55 +3784,87 @@
 
         .rc-vehicle-info-right h4 {
             margin: 0 0 6px 0;
-            font-size: 16px;
+            font-size: 22px;
             font-weight: 700;
         }
 
         .rc-vehicle-tag {
-            display: inline-block;
-            border: 1px solid #f9c106;
-            color: #d77f00;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 12px;
-            margin-bottom: 8px;
+                  display: inline-flex;
+    /* border: 1px solid #f9c106; */
+    background: #d77f002b;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-bottom: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #d77f00;
         }
 
         .rc-vehicle-features {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin: 10px 0px;
+            margin: 12px 0px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
+            justify-content: space-between;
+        }
+        .rc-vehicle-features i{
+           font-size: 12px;
+    height: 27px;
+    width: 27px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
         }
 
         .rc-vehicle-features span {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 11px;
         }
 
         .rc-vehicle-amenities-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0px;
+              display: flex;
+    /* grid-template-columns: repeat(2, 1fr); */
+    /* gap: 0px; */
+    justify-content: space-evenly;
         }
 
-        .rc-amenity-box {
-            /* border: 1px solid #f0f0f0; */
-            /* border-radius: 8px; */
-            /* padding: 10px 4px; */
-            display: flex;
-            /* flex-direction: column; */
-            align-items: center;
-            gap: 6px;
-            text-align: center;
-            justify-content: start;
-            font-size: 14px;
-            font-weight: 600;
-        }
+    .rc-amenity-box{
+       display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 18px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Wi-Fi */
+.rc-amenity-box:has(.fa-snowflake){
+    background: #EAF4FF;
+    color: #1976D2;
+}
+
+.rc-amenity-box .fa-snowflake{
+    color: #2196F3;
+}
+
+/* A/C */
+.rc-amenity-box:has(.fa-wifi){
+    background: #FFECEC;
+    color: #D32F2F;
+}
+
+.rc-amenity-box .fa-wifi{
+    color: #F44336;
+}
 
 
 
@@ -3828,7 +3883,7 @@
         .rc-bid-badge {
             background: #e6f7eb;
             color: #128741;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 600;
             padding: 4px 10px;
             border-radius: 20px;
@@ -3864,7 +3919,7 @@
         }
 
         .rc-bid-note {
-            font-size: 11px;
+            font-size: 13px;
             color: #111;
             font-weight: 600;
         }
@@ -3918,6 +3973,231 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
+        }
+        .more-drivers-loader {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            min-height: 400px;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .radar-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 50px;
+            border-radius: 50%;
+            border: 1px solid #f4f4f4;
+        }
+
+        .radar-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: #000;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .radar-core-icon {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .radar-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.05);
+            animation: radarPulse 1.5s infinite ease-out;
+        }
+
+        .radar-ring-1 {
+            animation-delay: 0s;
+        }
+
+        .radar-ring-2 {
+            animation-delay: 0.5s;
+        }
+
+        .radar-ring-3 {
+            animation-delay: 1s;
+        }
+
+        .radar-sweep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(rgba(0,0,0,0.04) 0deg,
+                    rgba(0,0,0,0.01) 45deg,
+                    transparent 80deg,
+                    transparent 360deg);
+            animation: radarSpin 1.5s infinite linear;
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        .radar-node {
+            position: absolute;
+            opacity: 0;
+            z-index: 6;
+        }
+
+        .radar-node-1 {
+            top: 25%;
+            left: 10%;
+            font-size: 14px;
+            animation: blinkNode 1.5s infinite ease-in-out;
+        }
+
+        .radar-node-2 {
+            top: 65%;
+            left: 15%;
+            font-size: 16px;
+            animation: blinkNode 1.5s infinite ease-in-out 0.75s;
+        }
+
+        .radar-node-3 {
+            top: 30%;
+            right: 15%;
+            font-size: 15px;
+            animation: blinkNode 1.5s infinite ease-in-out 0.4s;
+        }
+
+        .radar-node-4 {
+            top: 75%;
+            right: 5%;
+            font-size: 14px;
+            animation: blinkNode 1.5s infinite ease-in-out 1.1s;
+        }
+
+        .loader-pill {
+            background: #fff;
+            padding: 14px 30px;
+            border-radius: 40px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+        }
+
+        .loader-spin {
+            color: #444;
+            font-size: 16px;
+            margin-right: 12px;
+            animation-duration: 1.5s;
+        }
+
+        .loader-text {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            transition: opacity 0.4s ease;
+        }
+
+        @keyframes radarPulse {
+            0% {
+                width: 44px;
+                height: 44px;
+                opacity: 1;
+            }
+
+            100% {
+                width: 280px;
+                height: 280px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes radarSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes blinkNode {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+                color: #aaa;
+            }
+
+            30% {
+                transform: scale(1.2);
+                opacity: 1;
+                color: #000;
+                text-shadow: 0 0 8px rgba(0,0,0,0.2);
+            }
+
+            70% {
+                transform: scale(1);
+                opacity: 0.8;
+                color: #555;
+            }
+
+            100% {
+                transform: scale(0.8);
+                opacity: 0;
+                color: #aaa;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 767px) {
+
+            .more-drivers-loader {
+                min-height: 320px;
+                margin-top: 15px;
+            }
+
+            .radar-container {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 35px;
+            }
+
+            .loader-pill {
+                padding: 12px 20px;
+            }
+
+            .loader-text {
+                font-size: 14px;
+                text-align: center;
+            }
+
+            @keyframes radarPulse {
+                0% {
+                    width: 44px;
+                    height: 44px;
+                    opacity: 1;
+                }
+
+                100% {
+                    width: 220px;
+                    height: 220px;
+                    opacity: 0;
+                }
+            }
         }
 
         @media (max-width: 576px) {
@@ -4532,6 +4812,10 @@
             align-items: center;
             gap: 12px;
             width: 100%;
+            border-top: 1px solid #e5e5e5;
+    /* margin: 2px; */
+    margin-top: 0px;
+    padding-top: 10px;
         }
 
         .trip-datetime-main-wrapper {
@@ -4737,7 +5021,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #000;
+            color: #f9c106;
             font-size: 18px;
         }
         .trip-datetime-icon i{
@@ -4745,9 +5029,11 @@
         }
 
         .trip-datetime-title {
-            font-size: 13px;
-
-            font-weight: 600;
+               font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #555;
+    letter-spacing: 1px;
         }
 
         .trip-datetime-value {
@@ -6163,12 +6449,12 @@
 
             .v-features {
                 display: flex;
-                gap: 6px;
+                gap: 26px;
                 font-size: 15px;
                 margin-top: 4px;
                 margin-bottom: 0;
                 flex-wrap: wrap;
-                justify-content: space-around;
+                justify-content: center;
                 align-items: center;
                 width: 100%;
             }
@@ -6892,7 +7178,7 @@
                     </p>
 
                     <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning"></i>
+                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"> </i>
                         <a href="tel:+442083373777">+44 208 337 3777</a>
                     </p>
 
@@ -9731,51 +10017,34 @@
             // Add the loader element at the bottom if not already present
             if ($('#moreDriversLoader').length === 0) {
                 grid.after(`
-                    <div id="moreDriversLoader" style="display:none; flex-direction:column; align-items:center; justify-content:center; flex-grow: 1; min-height: 400px; position: relative; margin-top: 20px;">
-                        <!-- Radar Animation -->
-                        <div class="radar-container" style="position: relative; width: 220px; height: 220px; margin-bottom: 50px; border-radius: 50%; border: 1px solid #f4f4f4;">
-                            <div class="radar-core" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: #000; border-radius: 50%; z-index: 10; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
-                                <i class="fas fa-car" style="color: white; font-size: 18px;"></i>
-                            </div>
+                    <div id="moreDriversLoader" class="more-drivers-loader">
+    <!-- Radar Animation -->
+    <div class="radar-container">
+        <div class="radar-core">
+            <i class="fas fa-car radar-core-icon"></i>
+        </div>
 
-                            <!-- Fast Radar Rings (1.5s) -->
-                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out;"></div>
-                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out 0.5s;"></div>
-                            <div class="radar-ring" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 2px solid rgba(0, 0, 0, 0.05); animation: radarPulse 1.5s infinite ease-out 1s;"></div>
+        <!-- Fast Radar Rings -->
+        <div class="radar-ring radar-ring-1"></div>
+        <div class="radar-ring radar-ring-2"></div>
+        <div class="radar-ring radar-ring-3"></div>
 
-                            <!-- Fast Sweep (1.5s) -->
-                            <div class="radar-sweep" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: conic-gradient(rgba(0,0,0,0.04) 0deg, rgba(0,0,0,0.01) 45deg, transparent 80deg, transparent 360deg); animation: radarSpin 1.5s infinite linear; border-radius: 50%; z-index: 5;"></div>
+        <!-- Fast Sweep -->
+        <div class="radar-sweep"></div>
 
-                            <!-- Surrounding Icons (2 Left, 2 Right) -->
-                            <i class="fas fa-car" style="position: absolute; top: 25%; left: 10%; font-size: 14px; animation: blinkNode 1.5s infinite ease-in-out; opacity: 0; z-index: 6;"></i>
-                            <i class="fas fa-car" style="position: absolute; top: 65%; left: 15%; font-size: 16px; animation: blinkNode 1.5s infinite ease-in-out 0.75s; opacity: 0; z-index: 6;"></i>
-                            <i class="fas fa-car" style="position: absolute; top: 30%; right: 15%; font-size: 15px; animation: blinkNode 1.5s infinite ease-in-out 0.4s; opacity: 0; z-index: 6;"></i>
-                            <i class="fas fa-car" style="position: absolute; top: 75%; right: 5%; font-size: 14px; animation: blinkNode 1.5s infinite ease-in-out 1.1s; opacity: 0; z-index: 6;"></i>
-                        </div>
+        <!-- Surrounding Icons -->
+        <i class="fas fa-car radar-node radar-node-1"></i>
+        <i class="fas fa-car radar-node radar-node-2"></i>
+        <i class="fas fa-car radar-node radar-node-3"></i>
+        <i class="fas fa-car radar-node radar-node-4"></i>
+    </div>
 
-                        <!-- Text Pill -->
-                        <div style="background: #fff; padding: 14px 30px; border-radius: 40px; border: 1px solid #e5e5e5; box-shadow: 0 8px 30px rgba(0,0,0,0.06); display: flex; align-items: center;">
-                            <i class="fas fa-circle-notch fa-spin" style="color: #444; font-size: 16px; margin-right: 12px; animation-duration: 1.5s;"></i>
-                            <span id="moreDriversText" style="font-size: 15px; color: #333; font-weight: 500; letter-spacing: 0.2px; transition: opacity 0.4s ease;">Scanning for nearby drivers...</span>
-                        </div>
-
-                        <style>
-                            @keyframes radarPulse {
-                                0% { width: 44px; height: 44px; opacity: 1; }
-                                100% { width: 280px; height: 280px; opacity: 0; }
-                            }
-                            @keyframes radarSpin {
-                                0% { transform: rotate(0deg); }
-                                100% { transform: rotate(360deg); }
-                            }
-                            @keyframes blinkNode {
-                                0% { transform: scale(0.5); opacity: 0; color: #aaa; }
-                                30% { transform: scale(1.2); opacity: 1; color: #000; text-shadow: 0 0 8px rgba(0,0,0,0.2); }
-                                70% { transform: scale(1); opacity: 0.8; color: #555; }
-                                100% { transform: scale(0.8); opacity: 0; color: #aaa; }
-                            }
-                        </style>
-                    </div>
+    <!-- Text Pill -->
+    <div class="loader-pill">
+        <i class="fas fa-circle-notch fa-spin loader-spin"></i>
+        <span id="moreDriversText" class="loader-text">Scanning for nearby drivers...</span>
+    </div>
+</div>
                 `);
 
                 const phrases = [

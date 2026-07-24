@@ -374,7 +374,7 @@
                             <div class="find-trip-locations">
                                 <!-- SINGLE EDIT AT TOP & LOCATIONS LIKE STEP 1 -->
                                 <div
-                                    style="display: flex; justify-content: center; align-items: center; ">
+                                    style="display: flex; justify-content: space-between; align-items: center; ">
                                     <span
                                         style="display: block;font-size: 20px;font-weight: 600;color: black;letter-spacing: 0.5px;">Trip
                                         Details</span>

@@ -650,6 +650,10 @@
                             <span>Tax and Other charges</span>
                             <span id="pbTax">£0.00</span>
                         </div>
+                        <div class="payment-item" id="pbMeetGreetRow" style="display:none;">
+                            <span>Meet and Greet</span>
+                            <span id="pbMeetGreet">£0.00</span>
+                        </div>
                         <div class="payment-total grand-total">
                             <span>Total</span>
                             <span id="pbTotalFare">£0.00</span>
@@ -792,6 +796,13 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>
                                         <i class="fas fa-clock"></i>
+                                        Flight Arriving Time *
+                                    </label>
+                                    <input type="text" id="flightArrivingTime" placeholder="Select Time">
+                                </div>
+                                <div class="form-group-uber booking-form-group">
+                                    <label>
+                                        <i class="fas fa-clock"></i>
                                         Pick Up Time After Landing?
                                     </label>
                                     <select id="pickupAfterLandingSelect">
@@ -809,8 +820,60 @@
                                     <input type="text" id="comingFrom" placeholder="Coming From">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Drop off Address *</label>
+                                    <label>Drop off Address</label>
                                     <input type="text" id="dropoffAddress" placeholder="Full address with postcode">
+                                </div>
+                                <style>
+                                    .meet-greet-tooltip {
+                                        position: relative;
+                                        display: flex;
+                                        align-items: center;
+                                    }
+                                    .meet-greet-tooltip .tooltip-text {
+                                        visibility: hidden;
+                                        width: max-content;
+                                        background-color: #333;
+                                        color: #fff;
+                                        text-align: center;
+                                        border-radius: 6px;
+                                        padding: 6px 12px;
+                                        font-size: 13px;
+                                        font-weight: 500;
+                                        position: absolute;
+                                        z-index: 1;
+                                        bottom: 125%; 
+                                        left: 50%;
+                                        transform: translateX(-50%);
+                                        opacity: 0;
+                                        transition: opacity 0.3s;
+                                        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                                    }
+                                    .meet-greet-tooltip .tooltip-text::after {
+                                        content: "";
+                                        position: absolute;
+                                        top: 100%;
+                                        left: 50%;
+                                        margin-left: -5px;
+                                        border-width: 5px;
+                                        border-style: solid;
+                                        border-color: #333 transparent transparent transparent;
+                                    }
+                                    .meet-greet-tooltip:hover .tooltip-text {
+                                        visibility: visible;
+                                        opacity: 1;
+                                    }
+                                </style>
+                                <div class="form-group-uber booking-form-group" style="grid-column: 1 / -1; margin-top: 5px;">
+                                    <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                        <input type="checkbox" id="meetAndGreet" class="booking-checkbox" style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;" onchange="if(this.checked) showToast('Meet &amp; Greet has an extra amount of £5', 'info')">
+                                        <label for="meetAndGreet" style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                            Meet and Greet Options
+                                        </label>
+                                        <div class="meet-greet-tooltip">
+                                            <i class="fas fa-info-circle text-primary" style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                            <span class="tooltip-text">Meet &amp; Greet has an extra amount of £5</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -819,26 +882,19 @@
                         <div id="journeySeaport" style="display:none;">
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
-                                    <label><i class="fas fa-ship"></i> Cruise/Ferry Name *</label>
+                                    <label><i class="fas fa-ship"></i> Cruise/Ferry Name</label>
                                     <input type="text" id="ferryName" placeholder="Cruise or Ferry name">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label><i class="fas fa-clock"></i> Docking Time?</label>
-                                    <select id="dockingTimeSelect">
-                                        <option value="">Select</option>
-                                        <option>15 Min After</option>
-                                        <option>30 Min After</option>
-                                        <option selected>45 Min After</option>
-                                        <option>60 Min After</option>
-                                        <option>90 Min After</option>
-                                    </select>
+                                    <label><i class="fas fa-calendar-alt"></i> Arrival Date and Time</label>
+                                    <input type="text" id="seaportArrivalTime" placeholder="Select Date & Time">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Coming From *</label>
-                                    <input type="text" id="comingFromPort" placeholder="Port/Terminal name">
+                                    <label><i class="fas fa-map-marker-alt"></i> Terminal</label>
+                                    <input type="text" id="comingFromPort" placeholder="Terminal name">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Drop off Address *</label>
+                                    <label>Drop off Address</label>
                                     <input type="text" id="dropoffAddressSeaport"
                                         placeholder="Full address with postcode">
                                 </div>

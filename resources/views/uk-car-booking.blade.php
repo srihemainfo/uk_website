@@ -920,13 +920,13 @@
                                 </style>
                                 <div class="form-group-uber booking-form-group" style="grid-column: 1 / -1; margin-top: 5px;">
                                     <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
-                                        <input type="checkbox" id="meetAndGreet" class="booking-checkbox" style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;" onchange="if(this.checked) showToast('Meet &amp; Greet has an extra amount of £5', 'info')">
+                                        <input type="checkbox" id="meetAndGreet" class="booking-checkbox" style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;" onchange="if(this.checked) showToast('Meet &amp; Greet has an extra amount', 'info')">
                                         <label for="meetAndGreet" style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
                                             Meet and Greet Options
                                         </label>
                                         <div class="meet-greet-tooltip">
                                             <i class="fas fa-info-circle text-primary" style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
-                                            <span class="tooltip-text">Meet &amp; Greet has an extra amount of £5</span>
+                                            <span class="tooltip-text">Meet &amp; Greet has an extra amount</span>
                                         </div>
                                     </div>
                                 </div>

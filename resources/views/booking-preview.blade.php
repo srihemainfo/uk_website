@@ -714,7 +714,7 @@
             <div class="grid">
                 <div class="info">
                     <small>Pickup Date & Time</small>
-                    <strong>{{ $pickup_date ?? '' }}</strong>
+                    <strong>{{ isset($pickup_date) ? \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') : '' }}</strong>
                 </div>
                 @if(isset($day) && $day)
                     <div class="info">
@@ -722,10 +722,10 @@
                         <strong>{{ $day }}</strong>
                     </div>
                 @endif
-                <div class="info">
+                <!-- <div class="info">
                     <small>Trip Type</small>
                     <strong>{{ ucfirst($job_type ?? '') }}</strong>
-                </div>
+                </div> -->
                 <div class="info">
                     <small>Vehicle</small>
                     <strong>{{ $cab_type ?? '' }}</strong>
@@ -744,7 +744,7 @@
                 @endif
                 <div class="info">
                     <small>Distance Upto</small>
-                    <strong>{{ $distance ?? '' }} kms</strong>
+                    <strong>{{ $distance ?? '' }} miles</strong>
                 </div>
                                 
                 @if(!empty($user_details['c_flight_number']))   
@@ -841,6 +841,10 @@
                 <span>Toll (Govt. Levy / Extra)</span>
                 <span>£{{ $govt_levy ?? 0 }}</span>
             </div> -->
+            <div class="fare-row">
+                <span>Tax and Other Charges</span>
+                <span>£{{ $tax ?? 0 }}</span>
+            </div>
 
             @if(isset($meet_amt) && $meet_amt > 0)
             <div class="fare-row">
@@ -849,10 +853,6 @@
             </div>
             @endif
 
-            <div class="fare-row">
-                <span>Tax and Other Charges</span>
-                <span>£{{ $tax ?? 0 }}</span>
-            </div>
 
             <div class="fare-divider"></div>
 

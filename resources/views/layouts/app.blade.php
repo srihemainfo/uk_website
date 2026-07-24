@@ -3426,8 +3426,8 @@
             align-items: center;
             gap: 14px;
             padding: 16px 0 12px;
-            border-bottom: 1px solid #f0f0f0;
-            margin-bottom: 20px;
+            /* border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 20px; */
         }
 
         .rc-back-btn {
@@ -3640,8 +3640,8 @@
 
         /* NEW STEP 7 CLASSES */
         .rc-new-driver-card,
-        .rc-vehicle-card,
-        .rc-bid-card {
+        .rc-vehicle-card
+      {
             background: #fff;
             border: 1px solid #f0f0f0;
             border-radius: 12px;
@@ -3750,7 +3750,6 @@
             font-weight: 700;
             color: #888;
             letter-spacing: 1px;
-            margin-bottom: 12px;
             text-transform: uppercase;
         }
 
@@ -3866,18 +3865,11 @@
     color: #F44336;
 }
 
-
-
-
-        .rc-bid-card {
-            background: #fafafa;
-        }
-
         .rc-bid-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            
         }
 
         .rc-bid-badge {
@@ -3893,7 +3885,7 @@
         }
 
         .rc-bid-bottom {
-            display: flex;
+            /* display: flex; */
             justify-content: space-between;
             align-items: center;
         }
@@ -4165,6 +4157,16 @@
         /* Responsive */
         @media (max-width: 767px) {
 
+            .rc-driver-top-flex{
+                    gap: 8px;
+            }
+.rc-new-driver-card{
+    padding: 9px;
+}
+.rc-driver-avatar {
+    width: 50px;
+    height: 50px;
+}
             .more-drivers-loader {
                 min-height: 320px;
                 margin-top: 15px;
@@ -4209,12 +4211,11 @@
                 flex-direction: column;
                 align-items: stretch;
                 gap: 12px;
+                justify-content: center;
+        align-items: center;
             }
 
-            .rc-vehicle-img-wrapper {
-                width: 100%;
-                height: 180px;
-            }
+         
         }
 
         @media (max-width: 576px) {
@@ -10547,7 +10548,7 @@
                             if (uDetails.review) $('#rcDriverReviewsPct').text(uDetails.review + '%');
 
                             if (uDetails.profile_image_url) {
-                                $('#rcDriverAvatar').html(`<img src="${uDetails.profile_image_url}" style="width:100%;height:100%;object-fit:cover;">`);
+                                $('#rcDriverAvatar').html(`<img src="${uDetails.profile_image_url}"`);
                             } else {
                                 $('#rcDriverAvatar').html(`<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(uDetails.name || driver.name || 'Driver')}&background=f5c00b&color=000" style="width:100%;height:100%;object-fit:cover;">`);
                             }

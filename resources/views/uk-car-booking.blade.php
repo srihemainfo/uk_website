@@ -640,6 +640,40 @@
             <!-- <!€” STEP 4: YOUR DETAILS (sectioned, dynamic journey info) €”> -->
             <div class="form-section" id="step5">
                 <div class="container">
+                    <style>
+                        .premium-tooltip-container { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+                        .premium-tooltip-container .fa-info-circle { color: #888; font-size: 16px; transition: color 0.2s; }
+                        .premium-tooltip-container:hover .fa-info-circle { color: #111; }
+                        .premium-tooltip-content {
+                            visibility: hidden; opacity: 0; position: absolute; top: 130%; bottom: auto; left: -15px;
+                            transform: translateY(-10px); width: 340px; background-color: #fff;
+                            color: #333; text-align: left; border-radius: 12px; padding: 16px;
+                            box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 99999;
+                            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                            font-size: 13px; font-weight: 500; line-height: 1.5; pointer-events: none;
+                            border: 1px solid #eaeaea; font-family: inherit;
+                        }
+                        .premium-tooltip-content::after {
+                            content: ""; position: absolute; bottom: 100%; top: auto; left: 23px; margin-left: -8px;
+                            border-width: 8px; border-style: solid; border-color: transparent transparent #fff transparent;
+                        }
+                        .premium-tooltip-container:hover .premium-tooltip-content {
+                            visibility: visible; opacity: 1; transform: translateY(0);
+                        }
+                        .tooltip-section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 6px; display: flex; align-items: center; }
+                        .tooltip-section-title:not(:first-child) { margin-top: 14px; }
+                        .tooltip-list { margin: 0; padding: 0 0 0 20px; color: #555; }
+                        .tooltip-list li { margin-bottom: 4px; }
+                        @media (min-width: 769px) {
+                            .premium-tooltip-content { left: 0; right: auto; width: 340px; }
+                            .premium-tooltip-content::after { left: 12px; }
+                        }
+                        @media (max-width: 768px) {
+                            .premium-tooltip-content { left: -10px; right: auto; transform: translateY(-10px); width: 280px; }
+                            .premium-tooltip-content::after { left: 18px; right: auto; margin-left: 0; }
+                            .premium-tooltip-container:hover .premium-tooltip-content { transform: translateY(0); }
+                        }
+                    </style>
                     <h3 class="booking-title">Payment Method</h3>
                     <div class="payment-summary" id="dynamicPaymentSummary" style="display:none;">
                         <div class="payment-item">
@@ -655,7 +689,28 @@
                             <span id="pbMeetGreet">£0.00</span>
                         </div>
                         <div class="payment-total grand-total">
-                            <span>Total</span>
+                            <span style="display: flex; align-items: center; gap: 8px;">
+                                Total
+                                <div class="premium-tooltip-container">
+                                    <i class="fas fa-info-circle"></i>
+                                    <div class="premium-tooltip-content">
+                                        <span class="tooltip-section-title"><i class="fas fa-check-circle" style="color:#28a745; margin-right:6px;"></i> Inclusions</span>
+                                        <ul class="tooltip-list">
+                                            <li><span id="dynamicIncludedMiles">360 Miles</span> included in the fare. Additional mileage: £1.50 per mile.</li>
+                                            <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per minute applies.</li>
+                                            <li>VAT included (where applicable).</li>
+                                            <li>Fuel charges included.</li>
+                                        </ul>
+                                        <span class="tooltip-section-title"><i class="fas fa-times-circle" style="color:#dc3545; margin-right:6px;"></i> Exclusions</span>
+                                        <ul class="tooltip-list">
+                                            <li>Parking charges will be charged at actuals.</li>
+                                            <li>Road tolls, Congestion Charge, and ULEZ charges (where applicable).</li>
+                                            <li>Any government or local authority charges, if applicable.</li>
+                                            <li>Additional mileage and waiting charges beyond the included limits.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </span>
                             <span id="pbTotalFare">£0.00</span>
                         </div>
                     </div>

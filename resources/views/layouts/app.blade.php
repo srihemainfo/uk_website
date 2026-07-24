@@ -8011,18 +8011,24 @@
                 if (_restoredState.currentStep === 8) {
                     BookingStore.clear();
                     showStep(1);
+                } else if (_restoredState.currentStep === 5 || _restoredState.currentStep === 6) {
+                    showStep(6);
+                    if (typeof updatePassengerForm === 'function') {
+                        updatePassengerForm();
+                    }
+                    if (_restoredState.bookingId) {
+                        if (typeof startDynamicDriverSearch === 'function') {
+                            startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
+                        }
+                    } else {
+                        // If there's no bookingId, they shouldn't be here, fallback to passenger details
+                        showStep(4);
+                    }
                 } else {
                     showStep(_restoredState.currentStep);
                     
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
-                    }
-
-                    // If they were on the driver search screen, restart the firebase listener
-                    if (_restoredState.currentStep === 6 && _restoredState.bookingId) {
-                        if (typeof startDynamicDriverSearch === 'function') {
-                            startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
-                        }
                     }
                 }
             }
@@ -10341,6 +10347,8 @@
 
                     $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || 0).toFixed(2));
 
+                    $('#dynamicIncludedMiles').text(bookingData.apiDistance || '360 Miles');
+
                     $('#dynamicPaymentSummary').show();
 
                     showStep(5);
@@ -11066,7 +11074,7 @@
 
                 <div style="margin-bottom: 15px; position: relative;">
                     <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP"
-                        maxlength="6" autocomplete="off">
+                        maxlength="6" autocomplete="off" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
                 <button id="authVerifyBtn"
@@ -11077,14 +11085,7 @@
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-                <div style="text-align: center; margin-top: 10px;">
-                    <button
-                        style="background: none; border: none;color:black; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"
-                        onclick="_showPhoneUI()" onmouseover="this.style.color='#111'"
-                        onmouseout="this.style.color='#666'">
-                        <i class="fas fa-pen" style="font-size: 12px;"></i> Change Phone Number
-                    </button>
-                </div>
+
             </div>
 
             <!-- Firebase Recaptcha Container -->

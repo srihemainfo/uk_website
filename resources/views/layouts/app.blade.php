@@ -9298,6 +9298,13 @@
                 .then(data => {
                     if (data.status) {
                         $('#confirmNum').text(data.data?.job_no || bookingData.bookingId);
+                        
+                        if (data.data?.preview_hash) {
+                            $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + data.data.preview_hash).css('display', 'block');
+                        } else {
+                            $('#viewBookingPreviewBtn').hide();
+                        }
+                        
                         $('#confirmPickup').text(bookingData.pickup || '—');
                         $('#confirmDropoff').text(bookingData.dropoff || '—');
                         if (bookingData.date && bookingData.time) {

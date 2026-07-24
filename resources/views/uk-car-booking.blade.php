@@ -1199,11 +1199,16 @@
                             Your booking has been successfully confirmed. A driver will be assigned soon.
                         </p>
                     </div>
-                    <div class="btn-group-uber step-bottom-btns">
+                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap;">
                         <button class="btn-modal-primary" onclick="completeBooking()"
-                            style="width: 100%; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                            style="flex: 1; min-width: 120px; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
                             <i class="fas fa-check"></i> Done
                         </button>
+                        <a href="#" id="viewBookingPreviewBtn" target="_blank"
+                            class="btn-modal-outline"
+                            style="flex: 1; min-width: 180px; display: none; text-align: center; border: 2px solid #000; background: #fff; color: #000; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                            <i class="fas fa-file-invoice"></i> View Booking Preview
+                        </a>
                     </div>
                 </div>
             </div>

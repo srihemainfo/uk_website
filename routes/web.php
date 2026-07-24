@@ -52,3 +52,6 @@ Route::post('/w-get-location', [UtilityController::class, 'GetLocation']);
 
 // Driver Vehicle endpoint
 Route::get('/w-driver-vehicle', [UtilityController::class, 'DriverVehicle']);
+
+// Booking Preview endpoint
+Route::get('/booking-preview/{key}', [UtilityController::class, 'BookingPreview'])->name('booking-preview');

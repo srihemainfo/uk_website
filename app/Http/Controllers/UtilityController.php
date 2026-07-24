@@ -253,4 +253,33 @@ class UtilityController extends Controller
             ], 500);
         }
     }
+    /**
+     * Booking Preview Proxy
+     * Fetches booking preview data from the external GoRide UK API and renders the view.
+     *
+     * Route: GET /booking-preview/{key}
+     */
+    public function BookingPreview(Request $request, $key)
+    {
+        try {
+            $apiUrl = env('API_URL') . '/api-booking-information/' . $key;
+
+            $response = Http::acceptJson()->get($apiUrl);
+
+            if ($response->successful()) {
+                $responseData = $response->json();
+                
+                if (isset($responseData['success']) && $responseData['success'] === true && isset($responseData['data'])) {
+                    // Pass the data array to the view
+                    return view('booking-preview', $responseData['data']);
+                }
+            }
+
+            // Fallback if not successful or job not found
+            return response('Booking not found or an error occurred.', 404);
+
+        } catch (\Exception $e) {
+            return response('An error occurred: ' . $e->getMessage(), 500);
+        }
+    }
 }

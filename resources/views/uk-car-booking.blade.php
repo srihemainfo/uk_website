@@ -374,9 +374,9 @@
                             <div class="find-trip-locations">
                                 <!-- SINGLE EDIT AT TOP & LOCATIONS LIKE STEP 1 -->
                                 <div
-                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                    style="display: flex; justify-content: center; align-items: center; ">
                                     <span
-                                        style="display: block;font-size: 20px;font-weight: 600;color: black;margin-bottom: 6px;letter-spacing: 0.5px;">Trip
+                                        style="display: block;font-size: 20px;font-weight: 600;color: black;letter-spacing: 0.5px;">Trip
                                         Details</span>
                                     <button class="edit-icon-btn" onclick="goBackToLocations()" title="Edit trip">
                                         <i class="fas fa-pencil"></i> Edit
@@ -426,7 +426,7 @@
                                         </div>
 
                                         <div class="trip-datetime-item" id="tripRouteMetaContainer" style="display: none;">
-                                            <div class="trip-datetime-icon" style="background: #f4f4f4; color: #111;">
+                                            <div class="trip-datetime-icon">
                                                 <i class="fas fa-route"></i>
                                             </div>
                                             <div class="trip-datetime-content">
@@ -444,7 +444,7 @@
                             <!-- Selected Car Summary -->
                             <!-- Selected Car Summary (visible after vehicle selection) -->
                             <div id="selectedCarSummary" class="selected-car-summary">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; ">
                                     <h5 class="summary-title" style="margin-bottom: 0;"><span><i class="fas fa-car me-2"></i></span>Selected Vehicle</h5>
                                     <button class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle">
                                         <i class="fas fa-pencil"></i> Edit
@@ -526,9 +526,9 @@
                                 }
                             </script>
                             <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop">
-                                <h5 class="summary-title d-flex justify-content-between align-items-center"
+                                <h5 class="summary-title"
                                     onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
-                                    <span><i class="fas fa-clipboard-list me-2"></i> Passenger Details</span>
+                                    <span class="d-flex justify-content-between align-items-center"><i class="fas fa-clipboard-list me-2"></i> Passenger Details</span>
                                     <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                                 </h5>
 
@@ -1056,7 +1056,7 @@
                                     style="cursor:pointer; width:100%;">
                             </div>
                             <div class="rc-vehicle-info-right">
-                                <div class="d-flex gap-4">
+                                <div class="d-flex justify-content-between gap-4">
                                     <h4 id="rcCarName">-</h4>
                                     <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
                                 </div>
@@ -1083,8 +1083,7 @@
                                 </div>
                                 <div class="rc-driver-rating-row" id="rcDriverStars"></div>
                             </div>
-                        </div>
-                        <div class="rc-driver-stats-grid">
+                            <div class="rc-driver-stats-grid">
                             <div class="rc-driver-stat-col">
                                 <i class="fas fa-medal"></i>
                                 <div>
@@ -1092,7 +1091,7 @@
                                    
                                 </div>
                             </div>
-                            <div class="rc-driver-stat-col border-left-right">
+                            <!-- <div class="rc-driver-stat-col border-left-right">
                                 <i class="far fa-user"></i>
                                 <div>
                                     <strong id="rcDriverTrips">2,145</strong>
@@ -1105,8 +1104,10 @@
                                     <strong id="rcDriverReviewsPct">98%</strong>
                                    
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
+                        </div>
+                        
                     </div>
 
 
@@ -1199,11 +1200,16 @@
                             Your booking has been successfully confirmed. A driver will be assigned soon.
                         </p>
                     </div>
-                    <div class="btn-group-uber step-bottom-btns">
+                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap;">
                         <button class="btn-modal-primary" onclick="completeBooking()"
-                            style="width: 100%; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                            style="flex: 1; min-width: 120px; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
                             <i class="fas fa-check"></i> Done
                         </button>
+                        <a href="#" id="viewBookingPreviewBtn" target="_blank"
+                            class="btn-modal-outline"
+                            style="flex: 1; min-width: 180px; display: none; text-align: center; border: 2px solid #000; background: #fff; color: #000; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                            <i class="fas fa-file-invoice"></i> View Booking Preview
+                        </a>
                     </div>
                 </div>
             </div>

@@ -38,6 +38,7 @@
                         <div class="footer-links-list">
                             <a href="uk-about">About Us</a>
                             <a href="uk-contact">Contact</a>
+                            <a href="#">Blogs</a>
                         </div>
                     </div>
                 </div>

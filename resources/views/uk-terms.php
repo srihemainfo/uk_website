@@ -941,6 +941,7 @@
                         <div class="footer-links-list">
                             <a href="uk-about">About Us</a>
                             <a href="uk-contact">Contact</a>
+                            <a href="#">Blogs</a>
                         </div>
                     </div>
                 </div>
@@ -1011,7 +1012,7 @@
                     </p>
 
                     <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning"></i>
+                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"></i>
                         <a href="tel:+442083373777">+44 208 337 3777</a>
                     </p>
 

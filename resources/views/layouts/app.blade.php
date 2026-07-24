@@ -9478,6 +9478,9 @@
                 document.getElementById('authOtpSection').style.display = 'block';
                 document.getElementById('authOtpTarget').textContent = _currentMobile;
 
+                const changeBtn = document.getElementById('authChangeNumberBtn');
+                if (changeBtn) changeBtn.style.display = 'none';
+
                 if (_isNewUser) {
                     document.getElementById('authNewUserFields').style.display = 'block';
                     document.getElementById('authNameInput').value = name;
@@ -11322,6 +11325,7 @@
                     <p class="otp-code">
                         We've sent a 6-digit code to <br>
                         <span id="authOtpTarget" style="font-weight: 700; color: #111;"></span>
+                        <a href="javascript:void(0)" id="authChangeNumberBtn" style="font-size: 13px; color: #c89f17; font-weight: 600; text-decoration: underline; margin-left: 10px; display: none;" onclick="_showPhoneUI()">Change</a>
                     </p>
                 </div>
 
@@ -11900,6 +11904,15 @@
             document.getElementById('authOtpSection').style.display = 'block';
             document.getElementById('authOtpTarget').textContent = _currentMobile;
 
+            const changeBtn = document.getElementById('authChangeNumberBtn');
+            if (changeBtn) {
+                if (typeof isAuthenticated === 'function' && isAuthenticated()) {
+                    changeBtn.style.display = 'none';
+                } else {
+                    changeBtn.style.display = 'inline';
+                }
+            }
+
             // Show name/email if new user
             if (_isNewUser) {
                 document.getElementById('authNewUserFields').style.display = 'block';
@@ -11914,6 +11927,7 @@
 
             // Hide OTP section
             document.getElementById('authOtpSection').style.display = 'none';
+            document.getElementById('authOtpInput').value = '';
             _resetContinueBtn();
         }
 

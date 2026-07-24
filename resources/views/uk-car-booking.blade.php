@@ -1040,10 +1040,7 @@
                 <div class="container">
                     <!-- Header -->
                     <div class="rc-header">
-                        <button class="rc-back-btn" onclick="showStep(6)">
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
-                        <h3 class="rc-title">Review & Confirm</h3>
+                        <h3 class="booking-title">Review & Confirm</h3>
                     </div>
 
                     <!-- Vehicle Details Card -->
@@ -1082,8 +1079,7 @@
                                     <div class="rc-driver-badge-top" id="rcDriverBadge" style="display:none;"></div>
                                 </div>
                                 <div class="rc-driver-rating-row" id="rcDriverStars"></div>
-                            </div>
-                            <div class="rc-driver-stats-grid">
+                                 <div class="rc-driver-stats-grid">
                             <div class="rc-driver-stat-col">
                                 <i class="fas fa-medal"></i>
                                 <div>
@@ -1106,16 +1102,12 @@
                                 </div>
                             </div> -->
                         </div>
-                        </div>
-                        
-                    </div>
+                            </div>
 
-
-                    <!-- Bidded Amount Card -->
-                    <div class="rc-bid-card">
+                             <div class="rc-bid-card">
                         <div class="rc-bid-top">
                             <div class="rc-card-subtitle">BIDDED AMOUNT</div>
-                            <div class="rc-bid-badge"><i class="fas fa-check-circle"></i> Includes all fees</div>
+                            <!-- <div class="rc-bid-badge"><i class="fas fa-check-circle"></i> Includes all fees</div> -->
                         </div>
                         <div class="rc-bid-bottom">
                             <div class="rc-bid-amount">
@@ -1125,8 +1117,19 @@
                             <div class="rc-bid-note">No hidden charges</div>
                         </div>
                     </div>
+                           
+                        </div>
+                        
+                    </div>
+
+
+                    <!-- Bidded Amount Card -->
+                   
                     <!-- Accept Button -->
                     <div class="btn-group-uber step-bottom-btns rc-accept-wrap">
+                        <button class="btn-back-uber" onclick="showStep(6)">
+                            <i class="fas fa-chevron-left"></i> Back
+                        </button>
                         <button class="btn-search-uber" onclick="acceptDriver(this)" style="flex:1;">
                             <i class="fas fa-check me-2"></i> Accept
                         </button>
@@ -1197,7 +1200,7 @@
                         </div>
                         <p class="confirm-info-text"
                             style="text-align: center; color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 25px;">
-                            Your booking has been successfully confirmed. A driver will be assigned soon.
+                            Your booking has been successfully confirmed. 
                         </p>
                     </div>
                     <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap;">
@@ -1662,7 +1665,7 @@
     </section>
 
     <!-- Premium Cancel Job Modal (Global Overlay) -->
-    <div id="cancelJobModal" class="modal" tabindex="-1" role="dialog" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center;">
+    <div id="cancelJobModal" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center;">
         <div class="modal-dialog" role="document" style="background: white; border-radius: 20px; padding: 30px; max-width: 380px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center;">
             <div class="modal-content" style="border: none;">
                 <div style="width: 60px; height: 60px; background: #fff0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
@@ -1686,6 +1689,40 @@
     </div>
     
     <script>
+        // Prevent outside click from closing any modal or popup on uk-car-booking
+        (function() {
+            function preventOutsideModalClose(e) {
+                const modalOverlay = e.target.closest('.modal, .modal-uber, #authLoginModal, .auth-modal-backdrop, #cancelJobModal');
+                if (modalOverlay) {
+                    const isInsideContent = e.target.closest('.modal-content-uber, .auth-modal-card, .modal-content, .modal-dialog');
+                    const isCloseBtn = e.target.closest('.btn-close, .for-me-close-btn, .app-promo-close, .auth-modal-close, [data-bs-dismiss="modal"]');
+                    
+                    if (!isInsideContent && !isCloseBtn) {
+                        e.stopPropagation();
+                        if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+                        e.preventDefault();
+                        return false;
+                    }
+                }
+            }
+
+            document.addEventListener('click', preventOutsideModalClose, true);
+            document.addEventListener('mousedown', preventOutsideModalClose, true);
+            document.addEventListener('touchstart', preventOutsideModalClose, true);
+
+            document.addEventListener('DOMContentLoaded', function() {
+                if (typeof $ !== 'undefined') {
+                    $('.modal').attr('data-bs-backdrop', 'static').attr('data-bs-keyboard', 'false');
+                    $('.auth-modal-backdrop').removeAttr('onclick');
+                    $(document).on('hide.bs.modal', '.modal', function(e) {
+                        if (e.trigger === 'backdropClick') {
+                            e.preventDefault();
+                        }
+                    });
+                }
+            });
+        })();
+
         function showCancelJobModal() {
             document.getElementById('cancelJobReason').value = '';
             document.getElementById('cancelJobModal').style.display = 'flex';

@@ -121,6 +121,11 @@
             min-width: 80px;
         }
 
+                *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
         .rc-loading-skeleton i,
         .rc-loading-skeleton img {
             opacity: 0 !important;
@@ -3192,12 +3197,15 @@
         }
 
 
-        .summary-car-name {
-            margin-bottom: 0px !important;
-            font-size: 18px;
-            /* font-weight: 700; */
-            color: #111;
-        }
+       .summary-car-name {
+    margin-bottom: 0px !important;
+    font-size: 16px;
+    /* font-weight: 700; */
+    color: #111;
+    flex-wrap: nowrap;
+    line-height: 1.2;
+    flex: 1;
+}
 
         .summary-car-info {
             display: flex;
@@ -3247,16 +3255,16 @@
         .summary-label i {
             font-size: 13px;
             text-align: center;
-            color: #888;
+         
         }
-
+/* 
         .summary-label {
             color: #666;
-        }
+        } */
 
         .summary-value {
             color: #111;
-            font-weight: 600;
+    
             text-align: right;
         }
 
@@ -5248,14 +5256,16 @@
             }
 
             .combined-counts-desktop-container {
-                display: flex;
-                justify-content: space-between;
-                border-bottom: 1px dashed #d9d9d9;
+                     display: flex;
+        justify-content: start;
+        border-bottom: 1px dashed #d9d9d9;
+        gap: 21px;
+        align-items: center;
             }
 
             .combined-counts-desktop-container .booking-summary-item {
                 border-bottom: none !important;
-                flex: 1;
+                /* flex: 1; */
                 justify-content: start;
                 align-items: center;
                 padding: 10px 0;
@@ -5267,7 +5277,7 @@
             }
 
             .combined-counts-desktop-container .summary-label {
-                margin-bottom: 4px;
+      
                 font-size: 16px;
             }
         }
@@ -6398,6 +6408,8 @@
             align-items: center;
             gap: 8px;
             flex-wrap: nowrap;
+            line-height: 1.2;
+    flex: 1;
         }
 
         .v-price {

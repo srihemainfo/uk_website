@@ -523,7 +523,7 @@
                             }
                         </script>
                         <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop summary-box-card">
-                            <h5 class="summary-title" onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
+                            <h5 class="summary-title mb-2" onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
                                 PASSENGER DETAILS
                                 <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
                             </h5>
@@ -531,35 +531,35 @@
                             <div class="booking-summary-list" id="bookingSummaryListDesktop">
 
                                 <div class="booking-summary-item" id="summaryPassengerContainer">
-                                    <span class="summary-label"><i class="fas fa-user"></i> </span>
+                                    <span class="summary-label"><i class="fas fa-user text-yellow"></i> </span>
                                     <span id="summaryPassengerName" class="summary-value">–</span>
                                 </div>
 
                                 <div class="booking-summary-item" id="summaryContactContainer">
-                                    <span class="summary-label"><i class="fas fa-phone"></i> </span>
+                                    <span class="summary-label"><i class="fas fa-phone text-yellow"></i> </span>
                                     <span id="summaryPassengerContact" class="summary-value">–</span>
                                 </div>
 
                                 <div class="booking-summary-item" id="summaryEmailContainer">
-                                    <span class="summary-label"><i class="fas fa-envelope"></i> </span>
+                                    <span class="summary-label"><i class="fas fa-envelope text-yellow"></i> </span>
                                     <span id="summaryPassengerEmail" class="summary-value">–</span>
                                 </div>
 
                                 <div class="combined-counts-desktop-container">
                                     <div class="booking-summary-item" id="summaryPassengersCountContainer">
-                                        <span class="summary-label"><i class="fas fa-users"></i> <span
+                                        <span class="summary-label"><i class="fas fa-users text-navy"></i> <span
                                                 class="count-label">Passengers</span></span>
                                         <span id="summaryPassengerCount" class="summary-value">1</span>
                                     </div>
 
                                     <div class="booking-summary-item" id="summaryLuggageCountContainer">
-                                        <span class="summary-label"><i class="fas fa-suitcase"></i> <span
+                                        <span class="summary-label"><i class="fas fa-suitcase text-navy"></i> <span
                                                 class="count-label">Luggage</span></span>
                                         <span id="summaryLuggageCount" class="summary-value">0</span>
                                     </div>
 
                                     <div class="booking-summary-item" id="summaryHandLuggageContainer">
-                                        <span class="summary-label"><i class="fas fa-briefcase"></i> <span
+                                        <span class="summary-label"><i class="fas fa-briefcase text-navy"></i> <span
                                                 class="count-label">Hand Luggage</span></span>
                                         <span id="summaryHandLuggageCount" class="summary-value">0</span>
                                     </div>
@@ -1286,7 +1286,7 @@
                             style="flex: 1; min-width: 120px; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
                             <i class="fas fa-check"></i> Done
                         </button>
-                        <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-outline"
+                        <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary"
                             style="flex: 1; min-width: 180px; display: none; text-align: center; border: 2px solid #000; background: #fff; color: #000; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600;">
                             <i class="fas fa-file-invoice"></i> View Booking Preview
                         </a>

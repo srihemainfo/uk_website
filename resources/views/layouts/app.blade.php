@@ -3102,20 +3102,21 @@
         }
 
         .edit-icon-btn {
-               display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 5px 15px;
-    background: black;
-    border: 1px solid #dcdcdc;
-    border-radius: 2px;
-    color: white;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    border-radius: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 5px;
+            background: black;
+            border: 1px solid #dcdcdc;
+            border-radius: 2px;
+            color: white;
+
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border-radius: 50%;
+            height: 27px;
+            width: 27px;
         }
 
         .edit-icon-btn i {
@@ -3126,36 +3127,39 @@
             transform: scale(0.95);
         }
 
-        .selected-car-summary,
+
+
         .booking-summary {
             display: none;
-            margin-top: 10px;
+            /* margin-top: 10px; */
             padding-top: 10px;
             border-top: 1px solid #e5e5e5;
         }
-        #bookingDetailsIcon{
+
+        #bookingDetailsIcon {
             background: none;
-    color: #3a3434;
-    height: 0px;
+            color: #3a3434;
+            height: 0px;
         }
 
-        .summary-title{
-            font-size: 15px;
-           display:flex;
-           justify-content: space-between;
-           align-items:center;
-           text-transform: uppercase;
-    color: #555;
-            margin-bottom: 10px;
-       
+        .summary-title {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 0px;
+
         }
-        .summary-title i{
+
+        .summary-title i {
             font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #000;
-    border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            border-radius: 50%;
         }
 
 
@@ -3163,34 +3167,48 @@
             display: flex;
             align-items: center;
             gap: 7px;
-               justify-content: space-between;
+            justify-content: space-between;
         }
 
         .summary-car-image {
-            width: 70px;
+            width: 130px;
             height: 70px;
-            object-fit: contain;
+            object-fit: cover;
             border-radius: 10px;
-           
+            flex: 1;
+
         }
 
-        /* .summary-car-details {
-            flex: 1;
-        } */
+        .estimated-fare-badge {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #d4a017;
+            background: #fff5d9;
+            border-radius: 20px;
+            line-height: 1;
+        }
+
 
         .summary-car-name {
             margin-bottom: 0px !important;
             font-size: 18px;
-            font-weight: 700;
+            /* font-weight: 700; */
             color: #111;
         }
 
         .summary-car-info {
             display: flex;
-            gap: 18px;
-
-            color: #000;
+            gap: 10px;
             font-size: 14px;
+        }
+
+        .summary-car-details {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
         }
 
         .summary-car-info span {
@@ -3227,9 +3245,9 @@
         }
 
         .summary-label i {
-               font-size: 13px;
-    text-align: center;
-    color: #888;
+            font-size: 13px;
+            text-align: center;
+            color: #888;
         }
 
         .summary-label {
@@ -3640,8 +3658,7 @@
 
         /* NEW STEP 7 CLASSES */
         .rc-new-driver-card,
-        .rc-vehicle-card
-      {
+        .rc-vehicle-card {
             background: #fff;
             border: 1px solid #f0f0f0;
             border-radius: 12px;
@@ -3654,7 +3671,7 @@
             display: flex;
             align-items: center;
             gap: 16px;
-       
+
         }
 
         .rc-driver-avatar {
@@ -3756,12 +3773,13 @@
         .rc-vehicle-top {
             display: flex;
             gap: 16px;
-           
+
             align-items: center;
             justify-content: space-between;
         }
-        .rc-vehicle-info-right{
-            flex:1;
+
+        .rc-vehicle-info-right {
+            flex: 1;
         }
 
         .rc-vehicle-img-wrapper {
@@ -3788,17 +3806,17 @@
         }
 
         .rc-vehicle-tag {
-                  display: inline-flex;
-    /* border: 1px solid #f9c106; */
-    background: #d77f002b;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-bottom: 5px;
-    justify-content: center;
-    align-items: center;
-    color: #d77f00;
+            display: inline-flex;
+            /* border: 1px solid #f9c106; */
+            background: #d77f002b;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            justify-content: center;
+            align-items: center;
+            color: #d77f00;
         }
 
         .rc-vehicle-features {
@@ -3810,16 +3828,17 @@
             font-size: 15px;
             justify-content: space-between;
         }
-        .rc-vehicle-features i{
-           font-size: 12px;
-    height: 27px;
-    width: 27px;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border-radius: 50%;
+
+        .rc-vehicle-features i {
+            font-size: 12px;
+            height: 27px;
+            width: 27px;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            border-radius: 50%;
         }
 
         .rc-vehicle-features span {
@@ -3829,47 +3848,47 @@
         }
 
         .rc-vehicle-amenities-grid {
-              display: flex;
-    /* grid-template-columns: repeat(2, 1fr); */
-    /* gap: 0px; */
-    justify-content: space-evenly;
+            display: flex;
+            /* grid-template-columns: repeat(2, 1fr); */
+            /* gap: 0px; */
+            justify-content: space-evenly;
         }
 
-    .rc-amenity-box{
-       display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 18px;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 600;
-}
+        .rc-amenity-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 18px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
 
-/* Wi-Fi */
-.rc-amenity-box:has(.fa-snowflake){
-    background: #EAF4FF;
-    color: #1976D2;
-}
+        /* Wi-Fi */
+        .rc-amenity-box:has(.fa-snowflake) {
+            background: #EAF4FF;
+            color: #1976D2;
+        }
 
-.rc-amenity-box .fa-snowflake{
-    color: #2196F3;
-}
+        .rc-amenity-box .fa-snowflake {
+            color: #2196F3;
+        }
 
-/* A/C */
-.rc-amenity-box:has(.fa-wifi){
-    background: #FFECEC;
-    color: #D32F2F;
-}
+        /* A/C */
+        .rc-amenity-box:has(.fa-wifi) {
+            background: #FFECEC;
+            color: #D32F2F;
+        }
 
-.rc-amenity-box .fa-wifi{
-    color: #F44336;
-}
+        .rc-amenity-box .fa-wifi {
+            color: #F44336;
+        }
 
         .rc-bid-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
+
         }
 
         .rc-bid-badge {
@@ -3966,6 +3985,7 @@
             align-items: center;
             gap: 15px;
         }
+
         .more-drivers-loader {
             display: none;
             flex-direction: column;
@@ -3999,7 +4019,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         .radar-core-icon {
@@ -4013,7 +4033,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            border: 2px solid rgba(0,0,0,0.05);
+            border: 2px solid rgba(0, 0, 0, 0.05);
             animation: radarPulse 1.5s infinite ease-out;
         }
 
@@ -4035,8 +4055,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: conic-gradient(rgba(0,0,0,0.04) 0deg,
-                    rgba(0,0,0,0.01) 45deg,
+            background: conic-gradient(rgba(0, 0, 0, 0.04) 0deg,
+                    rgba(0, 0, 0, 0.01) 45deg,
                     transparent 80deg,
                     transparent 360deg);
             animation: radarSpin 1.5s infinite linear;
@@ -4083,7 +4103,7 @@
             padding: 14px 30px;
             border-radius: 40px;
             border: 1px solid #e5e5e5;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
         }
@@ -4138,7 +4158,7 @@
                 transform: scale(1.2);
                 opacity: 1;
                 color: #000;
-                text-shadow: 0 0 8px rgba(0,0,0,0.2);
+                text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
             }
 
             70% {
@@ -4157,16 +4177,19 @@
         /* Responsive */
         @media (max-width: 767px) {
 
-            .rc-driver-top-flex{
-                    gap: 8px;
+            .rc-driver-top-flex {
+                gap: 8px;
             }
-.rc-new-driver-card{
-    padding: 9px;
-}
-.rc-driver-avatar {
-    width: 50px;
-    height: 50px;
-}
+
+            .rc-new-driver-card {
+                padding: 9px;
+            }
+
+            .rc-driver-avatar {
+                width: 50px;
+                height: 50px;
+            }
+
             .more-drivers-loader {
                 min-height: 320px;
                 margin-top: 15px;
@@ -4212,10 +4235,10 @@
                 align-items: stretch;
                 gap: 12px;
                 justify-content: center;
-        align-items: center;
+                align-items: center;
             }
 
-         
+
         }
 
         @media (max-width: 576px) {
@@ -4814,9 +4837,9 @@
             gap: 12px;
             width: 100%;
             border-top: 1px solid #e5e5e5;
-    /* margin: 2px; */
-    margin-top: 0px;
-    padding-top: 10px;
+            /* margin: 2px; */
+            margin-top: 0px;
+            padding-top: 10px;
         }
 
         .trip-datetime-main-wrapper {
@@ -4839,7 +4862,8 @@
             padding-left: 10px;
             border-left: 1px solid #eee;
         }
-                /* Wrapper */
+
+        /* Wrapper */
         .cookie-banner-wrapper {
             position: fixed;
             bottom: 15px;
@@ -4858,27 +4882,28 @@
             display: flex;
             align-items: center;
             gap: 16px;
-                gap: 16px;
-    flex-direction: column;
-     animation: cookieSlideUp 0.6s ease-out;
+            gap: 16px;
+            flex-direction: column;
+            animation: cookieSlideUp 0.6s ease-out;
         }
 
         @keyframes cookieSlideUp {
-    0% {
-        opacity: 0;
-        transform: translateY(80px) scale(0.95);
-    }
+            0% {
+                opacity: 0;
+                transform: translateY(80px) scale(0.95);
+            }
 
-    60% {
-        opacity: 1;
-        transform: translateY(-8px) scale(1.02);
-    }
+            60% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.02);
+            }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         /* Content */
         .cookie-banner-content {
             flex: 1;
@@ -4894,7 +4919,7 @@
         .cookie-banner-text {
             font-size: 14px;
             line-height: 1.5;
-           
+
             margin: 0;
         }
 
@@ -4903,7 +4928,7 @@
             display: flex;
             gap: 10px;
             flex-shrink: 0;
-             width: 100%;
+            width: 100%;
         }
 
         /* Buttons */
@@ -4915,8 +4940,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: .3s;
-             flex: 1;
-    width: 100%;
+            flex: 1;
+            width: 100%;
         }
 
         .cookie-btn-reject {
@@ -4942,7 +4967,7 @@
             .cookie-banner-wrapper {
                 left: 15px;
                 right: 15px;
-                
+
             }
 
             .cookie-banner {
@@ -5025,16 +5050,17 @@
             color: #f9c106;
             font-size: 18px;
         }
-        .trip-datetime-icon i{
-            font-size:19px;
+
+        .trip-datetime-icon i {
+            font-size: 19px;
         }
 
         .trip-datetime-title {
-               font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #555;
-    letter-spacing: 1px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #555;
+            letter-spacing: 1px;
         }
 
         .trip-datetime-value {
@@ -5042,6 +5068,112 @@
             /* font-weight:700; */
             color: #111;
             margin-top: 2px;
+        }
+
+        /* Separate Box Card Styling */
+        .summary-box-card {
+            background: #ffffff;
+            border: 1px solid #eaedf0;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 6px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+        }
+
+        .box-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .box-card-title {
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            color: #555;
+            margin-bottom: 0px;
+
+        }
+
+        .dropoff-form-group {
+            margin-top: 15px;
+        }
+
+        .for-me-btn-hidden {
+            display: none !important;
+        }
+
+        /* Step 2 Date/Time/Distance/Duration Grid (Strict 2 in a Row) */
+        .trip-datetime-card.summary-box-card {
+            padding: 10px;
+            margin-top: 0;
+        }
+
+        .trip-stat-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            min-width: 0;
+        }
+
+        #tripRouteMetaContainer {
+            width: 100%;
+        }
+
+        .stat-icon-circle {
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .stat-icon-circle.yellow-icon {
+            background: #fff8e7;
+            color: #f39c12;
+            border: 1px solid #fde68a;
+        }
+
+        .stat-icon-circle.navy-icon {
+            background: #f0f4f8;
+            color: #1a2b4c;
+            border: 1px solid #e2e8f0;
+        }
+
+        .text-navy {
+            color: #1a2b4c;
+        }
+
+        .text-yellow {
+            color: #f39c12;
+        }
+
+        .stat-info-group {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .stat-header-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #555;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .stat-main-value {
+            font-size: 15px;
+            color: #000;
+
         }
 
         /* Mobile only */
@@ -5107,6 +5239,42 @@
 
             .mobile-trip-item {
                 font-size: 16px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            #bookingSummaryListDesktop {
+                display: none;
+            }
+
+            .combined-counts-desktop-container {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px dashed #d9d9d9;
+            }
+
+            .combined-counts-desktop-container .booking-summary-item {
+                border-bottom: none !important;
+                flex: 1;
+                justify-content: start;
+                align-items: center;
+                padding: 10px 0;
+                gap: 16px;
+            }
+
+            .combined-counts-desktop-container .count-label {
+                display: none;
+            }
+
+            .combined-counts-desktop-container .summary-label {
+                margin-bottom: 4px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .combined-counts-desktop-container {
+                display: block;
             }
         }
 
@@ -5640,7 +5808,7 @@
 
             .owl-carousel.review-carousel {
                 display: block !important;
-                z-index:0;
+                z-index: 0;
             }
 
             .section-head h2 {
@@ -7419,30 +7587,27 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <div id="cookiecontent" class="cookie-banner-wrapper" style="display: none;">
-    <div class="cookie-banner">
-        <div class="cookie-banner-content">
-            <h5 class="cookie-banner-title">We Value Your Privacy</h5>
-            <p class="cookie-banner-text">
-                We use cookies to improve your browsing experience, personalize
-                content and analyze our traffic.
-            </p>
-        </div>
+        <div class="cookie-banner">
+            <div class="cookie-banner-content">
+                <h5 class="cookie-banner-title">We Value Your Privacy</h5>
+                <p class="cookie-banner-text">
+                    We use cookies to improve your browsing experience, personalize
+                    content and analyze our traffic.
+                </p>
+            </div>
 
-        <div class="cookie-banner-actions">
-            <button type="button"
-                class="cookie-btn cookie-btn-reject"
-                onclick="document.getElementById('cookiecontent').style.display='none'">
-                Reject
-            </button>
+            <div class="cookie-banner-actions">
+                <button type="button" class="cookie-btn cookie-btn-reject"
+                    onclick="document.getElementById('cookiecontent').style.display='none'">
+                    Reject
+                </button>
 
-            <button type="button"
-                class="cookie-btn cookie-btn-accept"
-                onclick="acceptCookieConsent()">
-                Accept
-            </button>
+                <button type="button" class="cookie-btn cookie-btn-accept" onclick="acceptCookieConsent()">
+                    Accept
+                </button>
+            </div>
         </div>
     </div>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
     <script>
@@ -7458,7 +7623,7 @@
         // Returns a Date object whose local fields match the current UK time.
         // This ensures the frontend date comparisons and flatpickr instances use UK time regardless of the user's timezone.
         function getUKDate() {
-            const ukTimeStr = new Date().toLocaleString("en-US", {timeZone: "Europe/London"});
+            const ukTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/London" });
             return new Date(ukTimeStr);
         }
 
@@ -7956,12 +8121,12 @@
             const d = new Date(parts[0], parts[1] - 1, parts[2]);
             if (isNaN(d.getTime())) return dateStr;
             const day = d.getDate();
-            const nth = function(d) {
+            const nth = function (d) {
                 if (d > 3 && d < 21) return 'th';
                 switch (d % 10) {
-                    case 1:  return "st";
-                    case 2:  return "nd";
-                    case 3:  return "rd";
+                    case 1: return "st";
+                    case 2: return "nd";
+                    case 3: return "rd";
                     default: return "th";
                 }
             };
@@ -8014,11 +8179,27 @@
             $('#summaryCarName').text(v.name);
             $('#summaryCarCapacity').text(v.capacity);
             $('#summaryCarLuggage').text(v.luggage);
+            $('#summaryCarHandLuggage').text(v.handLuggage || v.capacity);
+            if (v.child && v.child > 0) {
+                $('#summaryCarChild').text(v.child);
+                $('#summaryCarChildContainer').show();
+            } else {
+                $('#summaryCarChildContainer').hide();
+            }
             $('#summaryCarPrice').text(priceText);
             $('#selectedCarSummary').show();
 
             // Mobile compact summary car details
             $('#mcsCarName').text(v.name);
+            $('#mcsCarCapacity').text(v.capacity);
+            $('#mcsCarLuggage').text(v.luggage);
+            $('#mcsCarHandLuggage').text(v.handLuggage || v.capacity);
+            if (v.child && v.child > 0) {
+                $('#mcsCarChild').text(v.child);
+                $('#mcsCarChildContainer').show();
+            } else {
+                $('#mcsCarChildContainer').hide();
+            }
             $('#mcsCarPrice').text(priceText);
             $('#mcsCarDetails').show();
         }
@@ -8313,7 +8494,7 @@
                     }
                 } else {
                     showStep(_restoredState.currentStep);
-                    
+
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
                     }
@@ -8716,8 +8897,9 @@
             // The subscriber _updateLocationUI handles all DOM updates,
             // but we also keep these direct updates for non-subscriber elements:
             $('#timePanelLocation').text(pickup);
-            let selDate = $('#date').val() || 'Today';
-            let selTime = BookingStore.getState().time || 'Now';
+            const currentBookingState = BookingStore.getState();
+            let selDate = currentBookingState.date ? formatUIOrdinalDate(currentBookingState.date) : ($('#date').val() || 'Today');
+            let selTime = currentBookingState.time || 'Now';
             $('#mcsDateTime').text(selDate + ' ' + selTime);
             $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
@@ -9066,7 +9248,7 @@
 
                 const dynamicPassenger = fare && fare.passenger ? parseInt(fare.passenger) : parseInt(v.capacity);
                 const dynamicLuggage = fare && fare.luggage ? parseInt(fare.luggage) : parseInt(v.luggage);
-                const dynamicChild = fare && fare.child ? parseInt(fare.child) : 0;
+                const dynamicChild = (fare && fare.child != null && parseInt(fare.child) > 0) ? parseInt(fare.child) : (v.child || (v.childSeat ? 1 : 0));
                 const dynamicHandLuggage = fare && fare.hand_luggage ? parseInt(fare.hand_luggage) : (v.handLuggage || dynamicPassenger);
 
                 // Build vehicle object with real API prices
@@ -9136,6 +9318,7 @@
            <div class="v-features">
             <span><i class="fas fa-user"></i> ${dynamicPassenger}</span>
             <span><i class="fas fa-suitcase"></i> ${dynamicLuggage}</span>
+            <span><i class="fas fa-briefcase"></i> ${dynamicHandLuggage}</span>
             ${dynamicChild > 0 ? `<span><i class="fas fa-baby-carriage"></i> ${dynamicChild}</span>` : ''}
            </div>
               ${tagHtml}
@@ -9405,7 +9588,7 @@
 
         function _proceedFromPersonalInfo() {
             $('#passengerPhone').prop('disabled', true); // Make contact number disabled
-            
+
             $('#personalInfoSection').hide();
             $('#personalInfoBtns').hide();
             $('#additionalBookingDetails').show();
@@ -9588,13 +9771,13 @@
                 .then(data => {
                     if (data.status) {
                         $('#confirmNum').text(data.data?.job_no || bookingData.bookingId);
-                        
+
                         if (data.data?.preview_hash) {
                             $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + data.data.preview_hash).css('display', 'block');
                         } else {
                             $('#viewBookingPreviewBtn').hide();
                         }
-                        
+
                         $('#confirmPickup').text(bookingData.pickup || '—');
                         $('#confirmDropoff').text(bookingData.dropoff || '—');
                         if (bookingData.date && bookingData.time) {
@@ -10617,7 +10800,7 @@
                 if (data.status === true && data.data) {
                     $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
                     $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
-                    
+
                     if (data.data.is_meet_and_greet == 1) {
                         $('#pbMeetGreetRow').show();
                         $('#pbMeetGreet').text('£' + parseFloat(data.data.meet_amount || 0).toFixed(2));
@@ -10841,7 +11024,7 @@
                 if (window.innerWidth > 768 && stepNumber < 3) {
                     const formSection = $('.hero-form-section');
 
-                  
+
                     const mapSection = $('.hero-map-section');
                     formSection.removeClass('col-md-8 three-column-mode').addClass('col-md-5');
                     mapSection.removeClass('col-md-4').addClass('col-md-7');
@@ -11325,7 +11508,9 @@
                     <p class="otp-code">
                         We've sent a 6-digit code to <br>
                         <span id="authOtpTarget" style="font-weight: 700; color: #111;"></span>
-                        <a href="javascript:void(0)" id="authChangeNumberBtn" style="font-size: 13px; color: #c89f17; font-weight: 600; text-decoration: underline; margin-left: 10px; display: none;" onclick="_showPhoneUI()">Change</a>
+                        <a href="javascript:void(0)" id="authChangeNumberBtn"
+                            style="font-size: 13px; color: #c89f17; font-weight: 600; text-decoration: underline; margin-left: 10px; display: none;"
+                            onclick="_showPhoneUI()">Change</a>
                     </p>
                 </div>
 
@@ -11355,7 +11540,8 @@
 
                 <div style="margin-bottom: 15px; position: relative;">
                     <input type="text" id="authOtpInput" class="premium-otp-input" placeholder="Enter 6-digit OTP"
-                        maxlength="6" autocomplete="off" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        maxlength="6" autocomplete="off" inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
                 <button id="authVerifyBtn"

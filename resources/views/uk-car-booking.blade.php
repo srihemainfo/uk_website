@@ -1323,6 +1323,10 @@
                         google.maps.event.trigger(bookingGoogleMap, 'resize');
                         if (polylineStr) _drawPolyline(polylineStr);
                         else if (routeBounds) bookingGoogleMap.fitBounds(routeBounds);
+                        
+                        if (bookingData.nearby_drivers && bookingData.nearby_drivers.length > 0) {
+                            _drawNearbyDrivers(bookingData.nearby_drivers);
+                        }
                         return;
                     }
 
@@ -1338,6 +1342,84 @@
                     if (polylineStr) {
                         _drawPolyline(polylineStr);
                     }
+
+                    if (bookingData.nearby_drivers && bookingData.nearby_drivers.length > 0) {
+                        _drawNearbyDrivers(bookingData.nearby_drivers);
+                    }
+                }
+
+                let _nearbyDriverMarkers = [];
+                function _drawNearbyDrivers(drivers) {
+                    if (!bookingGoogleMap || !drivers || drivers.length === 0) return;
+
+                    // Clear existing markers
+                    _nearbyDriverMarkers.forEach(marker => {
+                        if (marker && typeof marker.setMap === 'function') {
+                            marker.setMap(null);
+                        } else if (marker && marker.marker) {
+                            marker.marker.setMap(null);
+                            if (marker.interval) clearInterval(marker.interval);
+                        }
+                    });
+                    _nearbyDriverMarkers = [];
+
+                    drivers.forEach((driver, index) => {
+                        // Generate a pseudo-random angle (0 to 359) based on lat/lng or just random
+                        // so each car faces a different direction
+                        const angle = Math.floor(Math.random() * 360);
+                        
+                        // We create the SVG for this specific car with the rotation applied
+                        const carSvg = `
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+                                <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                                    <!-- Car Body -->
+                                    <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
+                                    
+                                    <!-- Windshield (dark tinted) -->
+                                    <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
+                                    
+                                    <!-- Rear Window (dark tinted) -->
+                                    <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
+                                    
+                                    <!-- Side Mirrors -->
+                                    <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                    <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                    
+                                    <!-- Subtle Metallic Highlights -->
+                                    <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+                                    
+                                    <!-- Headlights -->
+                                    <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                    <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                    
+                                    <!-- Taillights -->
+                                    <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                    <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                </g>
+                            </svg>
+                        `;
+                        const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg);
+
+                        // Stagger animation for a smooth, organic feel
+                        setTimeout(() => {
+                            let currentLat = parseFloat(driver.lat);
+                            let currentLng = parseFloat(driver.lng);
+                            
+                            const marker = new google.maps.Marker({
+                                position: { lat: currentLat, lng: currentLng },
+                                map: bookingGoogleMap,
+                                icon: {
+                                    url: iconUrl,
+                                    scaledSize: new google.maps.Size(40, 40),
+                                    anchor: new google.maps.Point(20, 20)
+                                },
+                                animation: google.maps.Animation.DROP,
+                                title: `Nearby Driver (${driver.distance_miles} miles away)`
+                            });
+                            
+                            _nearbyDriverMarkers.push(marker);
+                        }, index * 200);
+                    });
                 }
 
                 let _lastEncodedPolyline = null;

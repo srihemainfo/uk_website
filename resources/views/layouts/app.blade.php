@@ -7306,14 +7306,14 @@
                 <!-- Thumbnails -->
                 <div id="carThumbnailsContainer"
                     style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
-                    <img src="goride/img/fleet1.png" onclick="setCarImageIndex(1)" class="car-thumbnail"
+                    <!-- <img src="goride/img/fleet1.png" onclick="setCarImageIndex(1)" class="car-thumbnail"
                         style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid #f5c00b;">
                     <img src="goride/img/fleet2.png" onclick="setCarImageIndex(2)" class="car-thumbnail"
                         style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
                     <img src="goride/img/fleet3.png" onclick="setCarImageIndex(3)" class="car-thumbnail"
                         style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
                     <img src="goride/img/fleet4.png" onclick="setCarImageIndex(4)" class="car-thumbnail"
-                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;">
+                        style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent;"> -->
                 </div>
             </div>
         </div>
@@ -9011,10 +9011,13 @@
                 bookingData.apiDistance = firstFare.distance || null;
                 bookingData.apiDuration = firstFare.duration || null;
                 bookingData.apiPolyline = firstFare.polyline || null;
-                bookingData.apiDistanceMiles = firstFare.distance ? formatTripDistance(firstFare.distance) : null;
+                bookingData.apiDistanceMiles = firstFare.distance ? (typeof formatTripDistance === 'function' ? formatTripDistance(firstFare.distance) : firstFare.distance) : null;
                 bookingData.fareDataObj = fareDataObj;  // keep full object for map markers
+                bookingData.nearby_drivers = faresResult.nearby_drivers || [];
 
-                updateDistanceDurationUI(firstFare.distance, firstFare.duration);
+                if (typeof updateDistanceDurationUI === 'function') {
+                    updateDistanceDurationUI(firstFare.distance, firstFare.duration);
+                }
                 renderVehicles(fareDataObj);
                 // Draw route on map from the fare polyline
                 if (typeof initRouteMapFromFare === 'function') {
@@ -9051,26 +9054,33 @@
                 });
             }
 
-            vehicles.forEach(v => {
-                // Match by vehicle name (case-insensitive)
-                const vKey = v.name.toLowerCase().trim();
-                const fare = fareMap[vKey] || null;
-
+            Object.entries(fareMap).forEach(([vKey, fare]) => {
                 // Strictly use API from_range / to_range — no static fallback
                 if (!fare || (fare.from_range == null && fare.to_range == null)) {
                     return; // skip vehicles with no API price
                 }
 
+                // If fare doesn't have a name, default to capitalizing the key
+                const vehicleName = fare.name || (vKey.charAt(0).toUpperCase() + vKey.slice(1));
+                const vehicleImage = `/goride/img/${vKey}.webp`;
+                
+                // Try to find if we have static data for amenities/inclusions
+                const staticV = vehicles.find(v => v.name.toLowerCase().trim() === vKey) || {};
+
                 const displayPrice = parseFloat(fare.from_range || 0);
                 const displayPriceMax = parseFloat(fare.to_range || 0);
 
-                const dynamicPassenger = fare && fare.passenger ? parseInt(fare.passenger) : parseInt(v.capacity);
-                const dynamicLuggage = fare && fare.luggage ? parseInt(fare.luggage) : parseInt(v.luggage);
-                const dynamicChild = fare && fare.child ? parseInt(fare.child) : 0;
-                const dynamicHandLuggage = fare && fare.hand_luggage ? parseInt(fare.hand_luggage) : (v.handLuggage || dynamicPassenger);
+                const dynamicPassenger = fare.passenger ? parseInt(fare.passenger) : (staticV.capacity ? parseInt(staticV.capacity) : 4);
+                const dynamicLuggage = fare.luggage ? parseInt(fare.luggage) : (staticV.luggage ? parseInt(staticV.luggage) : 2);
+                const dynamicChild = fare.child ? parseInt(fare.child) : 0;
+                const dynamicHandLuggage = fare.hand_luggage ? parseInt(fare.hand_luggage) : (staticV.handLuggage || dynamicPassenger);
 
                 // Build vehicle object with real API prices
-                const vData = Object.assign({}, v, {
+                const vData = Object.assign({}, staticV, {
+                    id: fare.id || staticV.id || vKey,
+                    key: vKey,
+                    name: vehicleName,
+                    image: vehicleImage,
                     price: parseFloat(displayPrice),
                     priceMax: parseFloat(displayPriceMax),
                     capacity: dynamicPassenger,
@@ -9080,7 +9090,7 @@
                     fareBreakdown: fare
                 });
 
-                const amenitiesHtml = (v.amenities || [])
+                const amenitiesHtml = (staticV.amenities || ["WiFi", "Air Con", "Child Seat"])
                     .filter(a => {
                         if (a.toLowerCase().includes('seat')) {
                             return dynamicChild > 0;
@@ -9095,13 +9105,14 @@
                         return `<span class="v-amenity-pill"><i class="fas ${icon}"></i> <span class="d-none d-md-inline">${a}</span></span>`;
                     }).join('');
 
+                let tag = fare.tag || staticV.tag;
                 let tagClass = 'popular';
-                if (v.tag && v.tag.toLowerCase().includes('cheapest')) tagClass = 'cheapest';
-                if (v.tag && v.tag.toLowerCase().includes('families')) tagClass = 'families';
+                if (tag && tag.toLowerCase().includes('cheapest')) tagClass = 'cheapest';
+                if (tag && tag.toLowerCase().includes('families')) tagClass = 'families';
 
-                const tagHtml = v.tag ? `
+                const tagHtml = tag ? `
     <div class="v-tag">
-        <span class="v-tag-pill ${tagClass}">${v.tag}</span>
+        <span class="v-tag-pill ${tagClass}">${tag}</span>
     </div>
 ` : '';
 
@@ -9114,14 +9125,14 @@
                 const tripInfoHtml = '';
 
                 const html = `
-<div class="vehicle-item" id="vehicle-item-${v.id}" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
+<div class="vehicle-item" id="vehicle-item-${vData.id}" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
     <div class="vehicle-left">
-        <img src="${v.image}" alt="${v.name}">
+        <img src="${vData.image}" alt="${vData.name}">
     </div>
     <div class="vehicle-right">
        <div class="v-header">
     <div class="v-name">
-        ${v.name}
+        ${vData.name}
         <button
             type="button"
             class="vehicle-info-btn"
@@ -9174,23 +9185,36 @@
         $(window).on('resize', updateFeaturesLayout);
 
         function selectVehicle(el, vehicle) {
+            const maxPassenger = vehicle ? (parseInt(vehicle.capacity) || 8) : 8;
             const maxLuggage = vehicle ? (parseInt(vehicle.luggage) || 8) : 8;
+            const maxHandLuggage = vehicle ? (parseInt(vehicle.handLuggage) || 8) : 8;
+            const maxChild = vehicle ? (parseInt(vehicle.child) || 8) : 8;
+
+            let passenger = parseInt($('#passengerCount').val()) || BookingStore.getState().passengerCount || 1;
             let luggage = parseInt($('#luggageCount').val()) || BookingStore.getState().luggageCount || 0;
             let handLuggage = parseInt($('#handLuggageCount').val()) || BookingStore.getState().handLuggageCount || 0;
+            let child = parseInt($('#childSeatCount').val()) || BookingStore.getState().childSeatCount || 0;
 
-            if (luggage + handLuggage > maxLuggage) {
-                if (luggage > maxLuggage) {
-                    luggage = maxLuggage;
-                    handLuggage = 0;
-                } else {
-                    handLuggage = maxLuggage - luggage;
-                }
-                $('#luggageCount').val(luggage);
-                $('#luggageCountDisplay').text(luggage);
-                $('#handLuggageCount').val(handLuggage);
-                $('#handLuggageCountDisplay').text(handLuggage);
-                BookingStore.setState({ luggageCount: luggage, handLuggageCount: handLuggage });
-            }
+            if (passenger > maxPassenger) passenger = maxPassenger;
+            if (luggage > maxLuggage) luggage = maxLuggage;
+            if (handLuggage > maxHandLuggage) handLuggage = maxHandLuggage;
+            if (child > maxChild) child = maxChild;
+
+            $('#passengerCount').val(passenger);
+            $('#passengerCountDisplay').text(passenger);
+            $('#luggageCount').val(luggage);
+            $('#luggageCountDisplay').text(luggage);
+            $('#handLuggageCount').val(handLuggage);
+            $('#handLuggageCountDisplay').text(handLuggage);
+            $('#childSeatCount').val(child);
+            $('#childSeatCountDisplay').text(child);
+
+            BookingStore.setState({ 
+                passengerCount: passenger,
+                luggageCount: luggage, 
+                handLuggageCount: handLuggage,
+                childSeatCount: child
+            });
 
             // Single setState fires _updateVehicleSummaryUI subscriber automatically
             BookingStore.setState({ vehicle });
@@ -9930,7 +9954,7 @@
                 fare: String(bookingData.vehicle?.price || '0'),
                 distance: String(bookingData.apiDistance || fareDetails.distance || '0'),
                 duration: String(bookingData.apiDuration || fareDetails.duration || '0'),
-                cab_type: (bookingData.vehicle?.name || 'standard').toLowerCase().trim(),
+                cab_type: (bookingData.vehicle?.key || bookingData.vehicle?.name || 'standard').toLowerCase().trim(),
                 add_fare_details: {
                     bata: String(fareDetails.bata || '0'),
                     parking: String(fareDetails.parking_charge || '0'),
@@ -10998,26 +11022,13 @@
                 if (inputId === 'passengerCount') {
                     dynamicMax = parseInt(vehicle.capacity) || max;
                 } else if (inputId === 'luggageCount') {
-                    const maxLuggage = parseInt(vehicle.luggage) || max;
-                    const currentHandLuggage = parseInt($('#handLuggageCount').val()) || 0;
-                    dynamicMax = Math.max(0, maxLuggage - currentHandLuggage);
+                    dynamicMax = parseInt(vehicle.luggage) || max;
                 } else if (inputId === 'handLuggageCount') {
-                    const maxLuggage = parseInt(vehicle.luggage) || max;
-                    const currentLuggage = parseInt($('#luggageCount').val()) || 0;
-                    dynamicMax = Math.max(0, maxLuggage - currentLuggage);
+                    dynamicMax = parseInt(vehicle.handLuggage) || max;
                 }
             }
 
             let val = parseInt(input.val()) || 0;
-
-            if (delta > 0 && (inputId === 'luggageCount' || inputId === 'handLuggageCount') && vehicle) {
-                const maxLuggage = parseInt(vehicle.luggage) || max;
-                const currentLuggage = parseInt($('#luggageCount').val()) || 0;
-                const currentHandLuggage = parseInt($('#handLuggageCount').val()) || 0;
-                if (currentLuggage + currentHandLuggage >= maxLuggage) {
-                    return;
-                }
-            }
 
             val += delta;
             if (val < min) val = min;
@@ -11097,6 +11108,7 @@
                     `;
                     break;
                 case 'MPV':
+                case 'MPV+ (6 Passengers)':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>
@@ -11119,6 +11131,7 @@
                     `;
                     break;
                 case 'Executive MPV':
+                case 'Executive MPV +':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>

@@ -7970,11 +7970,11 @@
             </div>
             <div class="form-group-uber">
                 <label>Passenger Name</label>
-                <input type="text" id="otherPassengerName" placeholder="Enter passenger name">
+                <input type="text" id="otherPassengerName" placeholder="Enter passenger name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
             </div>
             <div class="form-group-uber">
                 <label>Mobile Number(Optional)</label>
-                <input type="text" id="otherPassengerPhone" placeholder="+44 7123456789">
+                <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
             </div>
             <button class="btn-search-uber" onclick="saveOtherPassenger()">
                 Save Details
@@ -8549,6 +8549,18 @@
             $('#mcsDateValue').text(d);
             $('#mcsTimeValue').text(t);
 
+            // Dynamic Date and Time header labels for Desktop & Mobile stat boxes
+            if (state.pickupType === 'airport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+            } else if (state.pickupType === 'seaport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
+            } else {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+            }
+
             // pickupNowBtn label
             const pnb = document.getElementById('pickupNowBtn');
             if (pnb && state.date && state.time) {
@@ -8694,9 +8706,11 @@
         function _updateJourneySummaryUI(state) {
             const pickupType = state.pickupType;
             if (pickupType === 'airport') {
-                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Flight Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Flight Arrival Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Landing Time');
                 $('#summaryBookingTime').text(state.time || '\u2013');
 
                 const airportDetails = [state.flightNumber, state.comingFrom, state.dropoffAddress]
@@ -8717,6 +8731,8 @@
                 $('#mcsDropoffAddressContainer').hide();
                 $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else if (pickupType === 'seaport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Docking Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Docking Time');
@@ -8740,9 +8756,11 @@
                 $('#mcsDropoffAddressContainer').hide();
                 $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else {
-                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Journey Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Journey Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Time');
                 $('#summaryBookingTime').text(state.time || '\u2013');
                 $('#summaryFlightContainer').hide();
                 $('#summaryComingFromContainer').hide();
@@ -8885,13 +8903,13 @@
             });
 
             // Realtime formatters for Personal Info fields
-            $(document).on('input', '#passengerFirstName, #authNameInput', function () {
+            $(document).on('input', '#passengerFirstName, #authNameInput, #otherPassengerName', function () {
                 formatFullName(this);
-            }).on('blur', '#passengerFirstName, #authNameInput', function () {
+            }).on('blur', '#passengerFirstName, #authNameInput, #otherPassengerName', function () {
                 this.value = this.value.trim();
             });
 
-            $(document).on('input', '#passengerPhone, #authContactInput', function () {
+            $(document).on('input', '#passengerPhone, #authContactInput, #otherPassengerPhone', function () {
                 formatContactNumber(this);
             });
 
@@ -10059,13 +10077,15 @@
             v = v.replace(/[^A-Za-z ]/g, '');
             v = v.replace(/^ +/, '');
             v = v.replace(/ {2,}/g, ' ');
-            if (v.length > 100) v = v.substring(0, 100);
+            if (v.length > 75) v = v.substring(0, 75);
             inputEl.value = v;
         }
 
         function formatContactNumber(inputEl) {
             if (!inputEl) return;
-            inputEl.value = inputEl.value.replace(/\D/g, '');
+            let v = inputEl.value.replace(/\D/g, '');
+            if (v.length > 12) v = v.substring(0, 12);
+            inputEl.value = v;
         }
 
         function formatEmailAddress(inputEl) {
@@ -10081,8 +10101,8 @@
             if (!trimmed) {
                 return { valid: false, message: 'Full Name is mandatory.' };
             }
-            if (trimmed.length > 100) {
-                return { valid: false, message: 'Full Name cannot exceed 100 characters.' };
+            if (trimmed.length > 75) {
+                return { valid: false, message: 'Full Name cannot exceed 75 characters.' };
             }
             if (!/^[A-Za-z]+( [A-Za-z]+)*$/.test(trimmed)) {
                 return { valid: false, message: 'Full Name must contain only alphabets (A-Z, a-z) with single spaces between words.' };
@@ -10497,9 +10517,11 @@
             const pickupType = bookingData.pickupType;
             if (pickupType === 'airport') {
                 // Flight details
-                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Flight Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Flight Arrival Date');
                 $('#summaryBookingDate').text(bookingData.date || '–');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Flight Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Flight Landing Time');
                 $('#summaryBookingTime').text(bookingData.time || '–');
 
                 const flightNum = $('#flightNumber').val() || '';
@@ -10529,6 +10551,8 @@
                 }
             } else if (pickupType === 'seaport') {
                 // Cruise details
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
                 $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Docking Date');
                 $('#summaryBookingDate').text(bookingData.date || '–');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Docking Time');
@@ -10562,10 +10586,12 @@
                 }
             } else {
                 // Normal details
-                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Journey Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Date');
                 const normalDate = $('#normalJourneyDate').val() || bookingData.date || '–';
                 $('#summaryBookingDate').text(normalDate);
-                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Journey Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Time');
                 const normalTime = $('#normalJourneyTime').val() || bookingData.time || '–';
                 $('#summaryBookingTime').text(normalTime);
                 // Hide airport/seaport specific details
@@ -11866,12 +11892,22 @@
             answer.toggleClass('show');
         }
         function saveOtherPassenger() {
-            const name = $('#otherPassengerName').val().trim();
-            const phone = $('#otherPassengerPhone').val().trim();
+            let name = $('#otherPassengerName').val().trim();
+            let phone = $('#otherPassengerPhone').val().trim();
+
             if (!name) {
-                showToast('Please enter recipient name', 'error');
+                showToast('Please enter passenger name', 'error');
                 return;
             }
+            if (!/^[a-zA-Z\s]{1,75}$/.test(name)) {
+                showToast('Passenger name can only contain letters (max 75 characters)', 'error');
+                return;
+            }
+            if (phone && !/^[0-9]{1,12}$/.test(phone)) {
+                showToast('Mobile number can only contain numbers (max 12 digits)', 'error');
+                return;
+            }
+
             const otherData = {
                 name: name,
                 phone: phone

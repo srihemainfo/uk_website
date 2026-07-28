@@ -186,7 +186,7 @@
                                     <i class="far fa-calendar-alt"></i>
                                 </div>
                                 <div class="stat-info-group">
-                                    <span class="stat-header-label">DATE</span>
+                                    <span class="stat-header-label" id="mcsStatDateLabel">DATE</span>
                                     <div class="stat-main-value" id="mcsDateValue">--</div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                                     <i class="far fa-clock"></i>
                                 </div>
                                 <div class="stat-info-group">
-                                    <span class="stat-header-label">TIME</span>
+                                    <span class="stat-header-label" id="mcsStatTimeLabel">TIME</span>
                                     <div class="stat-main-value" id="mcsTimeValue">--</div>
                                 </div>
                             </div>
@@ -603,7 +603,7 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </div>
                                         <div class="stat-info-group">
-                                            <span class="stat-header-label">DATE</span>
+                                            <span class="stat-header-label" id="dtStatDateLabel">DATE</span>
                                             <div class="stat-main-value" id="tripSelectedDate">--</div>
                                         </div>
                                     </div>
@@ -616,7 +616,7 @@
                                             <i class="far fa-clock"></i>
                                         </div>
                                         <div class="stat-info-group">
-                                            <span class="stat-header-label">TIME</span>
+                                            <span class="stat-header-label" id="dtStatTimeLabel">TIME</span>
                                             <div class="stat-main-value" id="tripSelectedTime">--</div>
                                         </div>
                                     </div>
@@ -1138,7 +1138,7 @@
                         <div class="booking-form-grid">
                             <div class="form-group-uber booking-form-group">
                                 <label>Full Name</label>
-                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="100">
+                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
                             </div>
                             <div class="form-group-uber booking-form-group">
                                 <label>Contact Number</label>

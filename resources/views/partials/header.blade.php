@@ -49,6 +49,11 @@
         <!--<button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">-->
         <!--    <i class="fas fa-bars"></i>-->
         <!--</button>-->
+        <button type="button" class="mobile-header-rider-btn" id="mobileHeaderRiderBtn" style="display:none;" onclick="showForMeModal()">
+            <i class="fas fa-user"></i>
+            <span id="mobileHeaderRiderTitle">For me</span>
+            <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+        </button>
         <div class="mobile-menu-btn" id="mobileMapBtn" style="display:none;" onclick="toggleMobileMap()">
             <i class="fas fa-map"></i>
         </div>

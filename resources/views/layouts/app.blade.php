@@ -858,7 +858,7 @@
             border: 2px solid #e0e0e0 !important;
             border-radius: 10px !important;
             font-size: 17px !important;
-            background: #f7f7f7 !important;
+            background: #fff !important;
             transition: border-color 0.25s ease;
             /* box-shadow 0.25s ease; */
             background 0.25s ease !important;
@@ -2134,7 +2134,7 @@
         .passenger-details-layout {
             display: flex;
             gap: 15px;
-            align-items: stretch;
+            align-items: center;
             justify-content: space-between;
         }
 
@@ -3225,7 +3225,10 @@
         #bookingDetailsIcon {
             background: none;
             color: #3a3434;
-            height: 0px;
+            height: auto;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
         }
 
         .summary-title {
@@ -4875,7 +4878,8 @@
             padding: 14px 16px;
             background: white;
             overflow-y: auto;
-            height: calc(100vh - 150px);
+            max-height: calc(100vh - 150px);
+            -webkit-overflow-scrolling: touch;
         }
 
         .mobile-trip-item {
@@ -5850,6 +5854,9 @@
                 top: 70px !important;
                 left: 0;
                 width: 100%;
+                max-height: calc(100vh - 75px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
                 z-index: 1000;
                 background: #fff;
                 border-bottom: 1px solid #eee;
@@ -8266,6 +8273,7 @@
             // Payment (Step 5)
             paymentMethod: '',
             meetAndGreet: false,
+            wheelchairOption: false,
 
             // Driver (Steps 6/7)
             bookingId: null,
@@ -8595,9 +8603,16 @@
         }
 
         function _updatePassengerSummaryUI(state) {
+            function _fmtPhone(val) {
+                if (!val) return '';
+                const clean = val.trim();
+                if (clean.startsWith('+')) return clean;
+                return '+44 ' + clean;
+            }
+
             // Passenger name
             const pName = (state.passengerFirstName + ' ' + (state.passengerLastName || '')).trim();
-            $('#summaryPassengerName').text(state.passengerFirstName || '\u2013');
+            $('#summaryPassengerName').text(state.passengerFirstName || '–');
             if (pName) {
                 $('#mcsPassengerName').text(pName);
                 $('#mcsPassengerNameContainer').css('display', 'flex');
@@ -8605,11 +8620,31 @@
                 $('#mcsPassengerNameContainer').hide();
             }
 
+            // Booked for someone else support
+            const isOther = state.rideFor === 'other' && state.otherPassengerData && state.otherPassengerData.name;
+            if (isOther) {
+                const otherName = state.otherPassengerData.name;
+                const otherPhone = state.otherPassengerData.phone || '';
+
+                $('#summaryBookedByLabel, #mcsBookedByLabel').show();
+                $('#summaryBookedForName, #mcsBookedForName').text(otherName);
+                if (otherPhone) {
+                    $('#summaryBookedForPhone, #mcsBookedForPhone').text('(' + _fmtPhone(otherPhone) + ')').show();
+                } else {
+                    $('#summaryBookedForPhone, #mcsBookedForPhone').hide().text('');
+                }
+                $('#summaryBookedForContainer, #mcsBookedForContainer').show();
+            } else {
+                $('#summaryBookedByLabel, #mcsBookedByLabel').hide();
+                $('#summaryBookedForContainer, #mcsBookedForContainer').hide();
+            }
+
             // Phone
             const phone = state.passengerPhone || '';
-            $('#summaryPassengerContact').text(phone ? ('+44 ' + phone) : '\u2013');
+            const fmtMainPhone = _fmtPhone(phone);
+            $('#summaryPassengerContact').text(fmtMainPhone || '–');
             if (phone) {
-                $('#mcsPassengerPhone').text('+44 ' + phone);
+                $('#mcsPassengerPhone').text(fmtMainPhone);
                 $('#mcsPassengerPhoneContainer').css('display', 'flex');
             } else {
                 $('#mcsPassengerPhoneContainer').hide();
@@ -9659,10 +9694,11 @@
             if (type === 'Me') {
                 $('#forMeRadioMe').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
                 $('#forMeRadioOther').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
-                $('#forMeTitle').text('For me');
-                $('#forMeDetails').hide();
+                $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('For me');
+                $('#forMeDetails').hide().text('');
                 // Batch update rideFor + clear other passenger
                 BookingStore.setState({ rideFor: 'me', otherPassengerData: null });
+                closeForMeModal();
             } else {
                 $('#forMeRadioMe').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
                 $('#forMeRadioOther').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
@@ -10365,7 +10401,10 @@
 
             if (pName) {
                 $('#mcsPassengerName').text(pName);
-                $('#mcsPassengerNameContainer').css('display', 'flex');
+                $('#mcsPassengerNameContainer').css({
+                    'display': 'flex',
+                    'flex-direction': 'column'
+                });
             } else {
                 $('#mcsPassengerNameContainer').hide();
             }
@@ -10578,6 +10617,9 @@
             const isSpecialReq = $('#specialReqCheckbox').is(':checked');
             const currentPickupType = BookingStore.getState().pickupType;
 
+            const isMeetGreet = $('#meetAndGreet').is(':checked') || $('#meetAndGreetSeaport').is(':checked');
+            const isWheelchair = $('#wheelchairOptionAirport').is(':checked') || $('#wheelchairOptionSeaport').is(':checked') || $('#wheelchairOptionNormal').is(':checked');
+
             // Build journey-specific fields
             let journeyFields = {};
             if (currentPickupType === 'airport') {
@@ -10587,7 +10629,8 @@
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
                     pickAfterTime: $('#pickupAfterLandingSelect').val(),
-                    meetAndGreet: $('#meetAndGreet').is(':checked') ? '1' : '0'
+                    meetAndGreet: isMeetGreet ? '1' : '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             } else if (currentPickupType === 'seaport') {
                 journeyFields = {
@@ -10595,11 +10638,15 @@
                     ferryName: $('#ferryName').val(),
                     comingFromPort: $('#comingFromPort').val(),
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
+                    meetAndGreet: isMeetGreet ? '1' : '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             } else {
                 journeyFields = {
                     pickupAddressNormal: $('#pickupAddressNormal').val(),
                     dropoffAddressNormal: $('#dropoffAddressNormal').val(),
+                    meetAndGreet: '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             }
 
@@ -11593,9 +11640,17 @@
                 updateSeaportArrivalTime();
             }
 
+            // Sync meet and greet & wheelchair checkboxes across pickup types
+            $(document).on('change', '.meet-and-greet-cb', function () {
+                $('.meet-and-greet-cb').prop('checked', this.checked);
+            });
+            $(document).on('change', '.wheelchair-option-cb', function () {
+                $('.wheelchair-option-cb').prop('checked', this.checked);
+            });
+
             // Bind input change events to update the store + booking summary live
             $(document).on('input change',
-                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
+                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
                     // _updatePassengerSummaryUI and _updateJourneySummaryUI subscribers
@@ -11730,16 +11785,19 @@
                 if (stepNumber >= 5) {
                     $('#enteredDetailsSummary').show();
                     $('#mcsEnteredDetails').css('display', 'grid');
+                    $('#riderSelectCard').hide();
                     updateBookingSummary();
                 } else {
                     $('#enteredDetailsSummary').hide();
                     $('#mcsEnteredDetails').hide();
+                    $('#riderSelectCard').show();
                 }
             } else {
                 $('#selectedCarSummary').hide();
                 $('#mcsCarDetails').hide();
                 $('#enteredDetailsSummary').hide();
                 $('#mcsEnteredDetails').hide();
+                $('#riderSelectCard').show();
             }
             if (stepNumber >= 5) {
                 $('.edit-icon-btn').hide();
@@ -11756,7 +11814,7 @@
                 if (stepNumber === 1) {
                     $('.navbar-menu').removeClass('hide-on-mobile');
                     $('#mobileHamburger').css('display', 'flex');
-                    $('#mobileMapBtn').hide();
+                    $('#mobileMapBtn, #mobileHeaderRiderBtn').hide();
                     $('#bookingImage').show();
                     $('#bookingMap').hide();
                     $('#mapRouteBadge').hide();
@@ -11769,7 +11827,7 @@
                 } else if (stepNumber === 8) {
                     $('.navbar-menu').addClass('hide-on-mobile');
                     $('#mobileHamburger').hide();
-                    $('#mobileMapBtn').hide();
+                    $('#mobileMapBtn, #mobileHeaderRiderBtn').hide();
                     $('#bookingImage').hide();
                     $('#mapRouteBadge').hide();
                     $('#mobileCompactSummary').removeClass('visible');
@@ -11782,6 +11840,11 @@
                     $('.navbar-menu').addClass('hide-on-mobile');
                     $('#mobileHamburger').hide();
                     $('#mobileMapBtn').css('display', 'flex');
+                    if (stepNumber < 5) {
+                        $('#mobileHeaderRiderBtn').css('display', 'inline-flex');
+                    } else {
+                        $('#mobileHeaderRiderBtn').hide();
+                    }
                     $('#bookingImage').hide();
                     $('#mobileCompactSummary').addClass('visible');
                     if (actionBar.length) actionBar.addClass('hidden');
@@ -11809,14 +11872,17 @@
                 showToast('Please enter recipient name', 'error');
                 return;
             }
-            otherPassengerData = {
-                name,
-                phone
+            const otherData = {
+                name: name,
+                phone: phone
             };
-            $('#forMeTitle').text('Book for someone');
-            $('#forMeDetails').html(phone ?
-                `${name}<br><small style="font-size:18px;">${phone}</small>` :
-                name).show();
+            $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Booked for ' + name);
+            if (phone) {
+                $('#forMeDetails').text(phone).show();
+            } else {
+                $('#forMeDetails').hide().text('');
+            }
+            BookingStore.setState({ rideFor: 'other', otherPassengerData: otherData });
             closeModal('bookForOtherModal');
             closeForMeModal();
         }

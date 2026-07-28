@@ -57,11 +57,53 @@
                     <i class="fas fa-chevron-down" id="tripSummaryArrow" style="margin-top: 6px;"></i>
                 </div>
                 <div class="mobile-trip-body" id="mobileTripBody">
-                    <div class="mobile-trip-item">
-                        <i class="fas fa-calendar"></i>
-                        <span id="mcsDateTime"></span>
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <div class="trip-stat-box">
+                                <div class="stat-icon-circle yellow-icon">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                                <div class="stat-info-group">
+                                    <span class="stat-header-label">DATE</span>
+                                    <div class="stat-main-value" id="mcsDateValue">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="trip-stat-box">
+                                <div class="stat-icon-circle yellow-icon">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <div class="stat-info-group">
+                                    <span class="stat-header-label">TIME</span>
+                                    <div class="stat-main-value" id="mcsTimeValue">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="trip-stat-box">
+                                <div class="stat-icon-circle navy-icon">
+                                    <i class="fas fa-route"></i>
+                                </div>
+                                <div class="stat-info-group">
+                                    <span class="stat-header-label">DISTANCE</span>
+                                    <div class="stat-main-value" id="mcsDistanceValue">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="trip-stat-box">
+                                <div class="stat-icon-circle  navy-icon">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <div class="stat-info-group">
+                                    <span class="stat-header-label">DURATION</span>
+                                    <div class="stat-main-value" id="mcsDurationValue">--</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div id="mcsCarDetails">
+                    <div id="mcsCarDetails" style="display:none;">
                         <div class="selected-car-row">
                             <div class="summary-car-details">
                                 <h4 class="mcs-car-name-header">
@@ -81,59 +123,73 @@
                                 <div class="estimated-fare-badge" id="mcsEstimatedFareBadge">Estimated Fare</div>
                             </div>
                         </div>
-                        <div class="booking-summary-list" id="mcsEnteredDetails">
-                            <!-- Passenger details header -->
-                            <h5 class="booking-summary-header-item" id="mcsPassengerHeader">PASSENGER DETAILS</h5>
+                    </div>
+                    <div class="booking-summary-list" id="mcsEnteredDetails" style="display:none;">
+                        <!-- Passenger details header -->
+                        <!-- <h5 class="booking-summary-header-item" id="mcsPassengerHeader">PASSENGER DETAILS</h5> -->
 
-                            <div class="booking-summary-item" id="mcsPassengerNameContainer">
-                                <span class="summary-label"><i class="fas fa-user text-navy"></i></span>
-                                <span class="summary-value" id="mcsPassengerName">-</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsPassengerPhoneContainer">
-                                <span class="summary-label"><i class="fas fa-phone text-navy"></i></span>
-                                <span class="summary-value" id="mcsPassengerPhone">-</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsPassengerEmailContainer">
-                                <span class="summary-label"><i class="fas fa-envelope text-navy"></i></span>
-                                <span class="summary-value" id="mcsPassengerEmail">-</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsPassengerCountContainer">
-                                <span class="summary-label"><i class="fas fa-users text-yellow"></i></span>
-                                <span class="summary-value" id="mcsPassengerCount">1</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsLuggageContainer">
-                                <span class="summary-label"><i class="fas fa-suitcase text-yellow"></i></span>
-                                <span class="summary-value" id="mcsLuggageCount">0</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsHandLuggageContainer">
-                                <span class="summary-label"><i class="fas fa-briefcase text-yellow"></i></span>
-                                <span class="summary-value" id="mcsHandLuggageCount">0</span>
-                            </div>
-                            <div class="booking-summary-item" id="mcsBabySeatContainer">
-                                <span class="summary-label"><i class="fas fa-baby-carriage text-navy"></i></span>
-                                <span class="summary-value" id="mcsBabySeats">0</span>
-                            </div>
-                            
-                            <!-- Journey Details -->
-                            <h5 class="booking-summary-header-item" id="mcsJourneyDetailsHeader">FLIGHT DETAILS</h5>
-                            <div class="booking-summary-item booking-summary-span2-item" id="mcsFlightContainer">
-                                <span class="summary-label" id="mcsFlightLabel"><i class="fas fa-plane text-navy"></i> Flight No.</span>
-                                <span id="mcsFlightNumber" class="summary-value">–</span>
-                            </div>
-                            <div class="booking-summary-item booking-summary-span2-item" id="mcsComingFromContainer">
-                                <span class="summary-label" id="mcsComingFromLabel"><i class="fas fa-plane-arrival text-navy"></i> Coming From</span>
-                                <span id="mcsComingFrom" class="summary-value">–</span>
-                            </div>
-                            <div class="booking-summary-item booking-summary-span2-item" id="mcsDropoffAddressContainer">
-                                <span class="summary-label" id="mcsDropoffAddressLabel"><i class="fas fa-map-marker-alt text-navy"></i> Dropoff Address</span>
-                                <span id="mcsDropoffAddress" class="summary-value">–</span>
+                        <div class="passenger-details-layout">
+                            <div class="passenger-details-left">
+                                <div id="mcsPassengerNameContainer" class="passenger-details-name-container">
+                                    <span class="passenger-details-name" id="mcsPassengerName">-</span>
+                                </div>
+                                <div class="booking-summary-item passenger-details-item" id="mcsPassengerPhoneContainer">
+                                    <span class="summary-label"><i class="fas fa-phone p-icon-contact"></i></span>
+                                    <span class="summary-value" id="mcsPassengerPhone">-</span>
+                                </div>
+                                <div class="booking-summary-item passenger-details-item" id="mcsPassengerEmailContainer">
+                                    <span class="summary-label"><i class="fas fa-envelope p-icon-contact"></i></span>
+                                    <span class="summary-value" id="mcsPassengerEmail">-</span>
+                                </div>
                             </div>
 
-                            <!-- Special Requirements -->
-                            <div class="booking-summary-item booking-summary-span2-item mcs-special-req-container" id="mcsSpecialReqContainer">
-                                <span class="summary-label"><i class="fas fa-comment-dots text-navy"></i> Special Req.</span>
-                                <span id="mcsSpecialRequirements" class="summary-value">–</span>
+                            <div class="passenger-details-right">
+                                <div class="booking-summary-item passenger-details-item" id="mcsPassengerCountContainer">
+                                    <span class="summary-label"><i class="fas fa-user text-navy"></i></span>
+                                    <span class="summary-value" id="mcsPassengerCount">1</span>
+                                </div>
+                                <div class="booking-summary-item passenger-details-item" id="mcsLuggageContainer">
+                                    <span class="summary-label"><i class="fas fa-suitcase text-navy"></i></span>
+                                    <span class="summary-value" id="mcsLuggageCount">0</span>
+                                </div>
+                                <div class="booking-summary-item passenger-details-item" id="mcsHandLuggageContainer">
+                                    <span class="summary-label"><i class="fas fa-briefcase text-navy"></i></span>
+                                    <span class="summary-value" id="mcsHandLuggageCount">0</span>
+                                </div>
+                                <div class="booking-summary-item passenger-details-item" id="mcsBabySeatContainer"
+                                    style="display:none;">
+                                    <span class="summary-label"><i class="fas fa-baby-carriage text-navy"></i></span>
+                                    <span class="summary-value" id="mcsBabySeats">0</span>
+                                </div>
                             </div>
+                        </div>
+
+                        <!-- Journey Details -->
+                        <h5 class="booking-summary-header-item" id="mcsJourneyDetailsHeader" style="display:none;">
+                            ADDITIONAL INFORMATION</h5>
+                        <div class="booking-summary-item booking-summary-span2-item" id="mcsFlightContainer"
+                            style="display:none;">
+                            <span class="summary-label" id="mcsFlightLabel"><i class="fas fa-plane text-navy"></i></span>
+                            <span id="mcsFlightNumber" class="summary-value">–</span>
+                        </div>
+                        <div class="booking-summary-item booking-summary-span2-item" id="mcsComingFromContainer"
+                            style="display:none;">
+                            <span class="summary-label" id="mcsComingFromLabel"><i
+                                    class="fas fa-plane-arrival text-navy"></i> Coming From</span>
+                            <span id="mcsComingFrom" class="summary-value">–</span>
+                        </div>
+                        <div class="booking-summary-item booking-summary-span2-item" id="mcsDropoffAddressContainer"
+                            style="display:none;">
+                            <span class="summary-label" id="mcsDropoffAddressLabel"><i
+                                    class="fas fa-map-marker-alt text-navy"></i> Dropoff Address</span>
+                            <span id="mcsDropoffAddress" class="summary-value">–</span>
+                        </div>
+
+                        <!-- Special Requirements -->
+                        <div class="booking-summary-item booking-summary-span2-item mcs-special-req-container"
+                            id="mcsSpecialReqContainer">
+                            <span class="summary-label"><i class="fas fa-comment-dots text-navy"></i> Special Req.</span>
+                            <span id="mcsSpecialRequirements" class="summary-value">–</span>
                         </div>
                     </div>
                 </div>
@@ -263,8 +319,8 @@
                     </div>
                 </div>
                 <!-- <p class="time-hint">
-                            <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
-                        </p> -->
+                                <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
+                            </p> -->
                 <button id="timePanelDoneBtn" class="btn-search-uber mt-5" onclick="saveSchedule()">
                     See Prices
                 </button>
@@ -544,39 +600,41 @@
                             </h5>
 
                             <div class="booking-summary-list" id="bookingSummaryListDesktop">
-
-                                <div class="booking-summary-item" id="summaryPassengerContainer">
-                                    <span class="summary-label"><i class="fas fa-user text-navy"></i> </span>
-                                    <span id="summaryPassengerName" class="summary-value">–</span>
-                                </div>
-
-                                <div class="booking-summary-item" id="summaryContactContainer">
-                                    <span class="summary-label"><i class="fas fa-phone text-yellow"></i> </span>
-                                    <span id="summaryPassengerContact" class="summary-value">–</span>
-                                </div>
-
-                                <div class="booking-summary-item" id="summaryEmailContainer">
-                                    <span class="summary-label"><i class="fas fa-envelope text-navy"></i> </span>
-                                    <span id="summaryPassengerEmail" class="summary-value">–</span>
-                                </div>
-
-                                <div class="combined-counts-desktop-container">
-                                    <div class="booking-summary-item" id="summaryPassengersCountContainer">
-                                        <span class="summary-label"><i class="fas fa-users text-yellow"></i> <span
-                                                class="count-label">Passengers</span></span>
-                                        <span id="summaryPassengerCount" class="summary-value">1</span>
+                                <div class="passenger-details-layout">
+                                    <div class="passenger-details-left">
+                                        <div id="summaryPassengerContainer" class="passenger-details-name-container">
+                                            <span id="summaryPassengerName" class="passenger-details-name"
+                                                style="font-weight:600;">-</span>
+                                        </div>
+                                        <div class="booking-summary-item passenger-details-item mb-1"
+                                            id="summaryContactContainer">
+                                            <span class="summary-label"><i class="fas fa-phone"
+                                                    style="background: #fff8e7;color: #f39c12;border: 1px solid #fde68a;"></i></span>
+                                            <span id="summaryPassengerContact" class="summary-value">-</span>
+                                        </div>
+                                        <div class="booking-summary-item passenger-details-item" id="summaryEmailContainer">
+                                            <span class="summary-label"><i class="fas fa-envelope"
+                                                    style="background: #fff8e7;color: #f39c12;border: 1px solid #fde68a;"></i></span>
+                                            <span id="summaryPassengerEmail" class="summary-value">-</span>
+                                        </div>
                                     </div>
 
-                                    <div class="booking-summary-item" id="summaryLuggageCountContainer">
-                                        <span class="summary-label"><i class="fas fa-suitcase text-navy"></i> <span
-                                                class="count-label">Luggage</span></span>
-                                        <span id="summaryLuggageCount" class="summary-value">0</span>
-                                    </div>
-
-                                    <div class="booking-summary-item" id="summaryHandLuggageContainer">
-                                        <span class="summary-label"><i class="fas fa-briefcase text-yellow"></i> <span
-                                                class="count-label">Hand Luggage</span></span>
-                                        <span id="summaryHandLuggageCount" class="summary-value">0</span>
+                                    <div class="passenger-details-right">
+                                        <div class="booking-summary-item passenger-details-item"
+                                            id="summaryPassengersCountContainer">
+                                            <span class="summary-label"><i class="fas fa-user text-navy"></i></span>
+                                            <span id="summaryPassengerCount" class="summary-value">1</span>
+                                        </div>
+                                        <div class="booking-summary-item passenger-details-item"
+                                            id="summaryLuggageCountContainer">
+                                            <span class="summary-label"><i class="fas fa-suitcase text-navy"></i></span>
+                                            <span id="summaryLuggageCount" class="summary-value">0</span>
+                                        </div>
+                                        <div class="booking-summary-item passenger-details-item"
+                                            id="summaryHandLuggageContainer">
+                                            <span class="summary-label"><i class="fas fa-briefcase text-navy"></i></span>
+                                            <span id="summaryHandLuggageCount" class="summary-value">0</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -585,12 +643,12 @@
                                     <span id="summaryBabySeats" class="summary-value">None</span>
                                 </div>
                                 <h5 class="summary-title mb-2 mt-3" id="summaryJourneyDetailsHeader" style="display:none;">
-                                    FLIGHT DETAILS
+                                    ADDITIONAL INFORMATION
                                 </h5>
 
                                 <div id="summaryFlightContainer" class="booking-summary-item" style="display:none;">
                                     <span class="summary-label" id="summaryFlightLabel">
-                                        <i class="fas fa-plane"></i> Flight No.
+                                        <i class="fas fa-plane text-navy"></i>
                                     </span>
                                     <span id="summaryFlightNumber" class="summary-value">–</span>
                                 </div>
@@ -634,29 +692,25 @@
                 <div class="container">
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -801,29 +855,25 @@
                     </style>
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick Driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -900,29 +950,25 @@
                 <div class="container p-0">
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -936,8 +982,8 @@
                         </div>
                     </div>
                     <!-- =======================
-             SECTION 1 : PERSONAL INFO
-        ======================== -->
+                 SECTION 1 : PERSONAL INFO
+            ======================== -->
                     <div class="booking-form-section" id="personalInfoSection">
                         <div class="booking-section-title">
                             Personal Info
@@ -969,8 +1015,8 @@
                     </div>
                     <div id="additionalBookingDetails" style="display: none;">
                         <!-- =======================
-             SECTION 2 : PASSENGERS & LUGGAGE
-        ======================== -->
+                 SECTION 2 : PASSENGERS & LUGGAGE
+            ======================== -->
                         <div class="passenger-luggage-card">
                             <div class="passenger-card-title">
                                 Passengers & Luggage
@@ -1048,44 +1094,44 @@
                                     </label>
                                     <input type="text" id="flightNumber" placeholder="Flight Number">
                                 </div>
-                                <div class="form-group-uber booking-form-group">
-                                    <label>
-                                        <i class="fas fa-clock"></i>
-                                        Flight Arriving Time *
-                                    </label>
-                                    <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
-                                        <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
-                                            onclick="toggleFlightTimeDropdown()">
-                                            <span id="flightTimeDropdownValue"> <i
-                                                    class="fas fa-clock me-1"></i>11:00</span>
-                                            <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
-                                        </button>
-                                        <div class="time-dropdown-list flight-time-dual-dropdown"
-                                            id="flightTimeDropdownList">
-                                            <div class="flight-time-col-header">
-                                                <div>Hour</div>
-                                                <div>Min</div>
-                                            </div>
-                                            <div class="flight-time-cols-container">
-                                                <div class="flight-time-col flight-hours-col">
-                                                    @for ($h = 0; $h < 24; $h++)
-                                                        @php $val = sprintf('%02d', $h); @endphp
-                                                        <div class="flight-time-item hour-item" data-val="{{ $val }}"
-                                                            onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
-                                                    @endfor
+                                <!--<div class="form-group-uber booking-form-group">
+                                        <label>
+                                            <i class="fas fa-clock"></i>
+                                            Flight Arriving Time *
+                                        </label>
+                                        <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
+                                            <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
+                                                onclick="toggleFlightTimeDropdown()">
+                                                <span id="flightTimeDropdownValue"> <i
+                                                        class="fas fa-clock me-1"></i>11:00</span>
+                                                <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+                                            </button>
+                                            <div class="time-dropdown-list flight-time-dual-dropdown"
+                                                id="flightTimeDropdownList">
+                                                <div class="flight-time-col-header">
+                                                    <div>Hour</div>
+                                                    <div>Min</div>
                                                 </div>
-                                                <div class="flight-time-col flight-minutes-col">
-                                                    @for ($m = 0; $m < 60; $m++)
-                                                        @php $val = sprintf('%02d', $m); @endphp
-                                                        <div class="flight-time-item minute-item" data-val="{{ $val }}"
-                                                            onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
-                                                    @endfor
+                                                <div class="flight-time-cols-container">
+                                                    <div class="flight-time-col flight-hours-col">
+                                                        @for ($h = 0; $h < 24; $h++)
+                                                            @php $val = sprintf('%02d', $h); @endphp
+                                                            <div class="flight-time-item hour-item" data-val="{{ $val }}"
+                                                                onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
+                                                        @endfor
+                                                    </div>
+                                                    <div class="flight-time-col flight-minutes-col">
+                                                        @for ($m = 0; $m < 60; $m++)
+                                                            @php $val = sprintf('%02d', $m); @endphp
+                                                            <div class="flight-time-item minute-item" data-val="{{ $val }}"
+                                                                onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
+                                                        @endfor
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <input type="hidden" id="flightArrivingTime" value="11:00">
-                                </div>
+                                        <input type="hidden" id="flightArrivingTime" value="11:00">
+                                    </div>-->
                                 <div class="form-group-uber booking-form-group">
                                     <label>
                                         <i class="fas fa-clock"></i>
@@ -1157,15 +1203,15 @@
                                     <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
                                         <input type="checkbox" id="meetAndGreet" class="booking-checkbox"
                                             style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
-                                            onchange="if(this.checked) showToast('Meet &amp; Greet has an extra amount', 'info')">
+                                            onchange="if(this.checked) showToast('Meet &amp; Greet may have additional Payment', 'info')">
                                         <label for="meetAndGreet"
                                             style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
                                             Meet and Greet Options
                                         </label>
                                         <div class="meet-greet-tooltip">
-                                            <i class="fas fa-info-circle text-primary"
+                                            <i class="fas fa-info-circle text-dark"
                                                 style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
-                                            <span class="tooltip-text">Meet &amp; Greet has an extra amount</span>
+                                            <span class="tooltip-text">Meet &amp; Greet may have additional Payment</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1180,11 +1226,11 @@
                                     <input type="text" id="ferryName" placeholder="Cruise or Ferry name">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label><i class="fas fa-calendar-alt"></i> Arrival Date</label>
+                                    <label><i class="fas fa-calendar-alt"></i> Docking Date</label>
                                     <input type="text" id="seaportArrivalDate" placeholder="Select Date">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label><i class="fas fa-clock"></i> Arrival Time</label>
+                                    <label><i class="fas fa-clock"></i> Docking Time</label>
                                     <div class="time-dropdown-wrapper" id="seaportTimeDropdownWrapper">
                                         <button type="button" class="time-dropdown-btn" id="seaportTimeDropdownBtn"
                                             onclick="toggleSeaportTimeDropdown()">
@@ -1245,8 +1291,8 @@
                             </div>
                         </div>
                         <!-- =======================
-             SECTION 5 : SPECIAL REQUIREMENTS
-        ======================== -->
+                 SECTION 5 : SPECIAL REQUIREMENTS
+            ======================== -->
                         <div class="booking-form-section">
                             <div class="booking-section-title">
                                 Special Requirements
@@ -1289,29 +1335,25 @@
                 <div class="container">
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -1351,29 +1393,25 @@
                 <div class="container">
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -1433,19 +1471,19 @@
                                         </div>
                                     </div>
                                     <!-- <div class="rc-driver-stat-col border-left-right">
-                                        <i class="far fa-user"></i>
-                                        <div>
-                                            <strong id="rcDriverTrips">2,145</strong>
+                                            <i class="far fa-user"></i>
+                                            <div>
+                                                <strong id="rcDriverTrips">2,145</strong>
 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="rc-driver-stat-col">
-                                        <i class="far fa-comment-dots"></i>
-                                        <div>
-                                            <strong id="rcDriverReviewsPct">98%</strong>
+                                        <div class="rc-driver-stat-col">
+                                            <i class="far fa-comment-dots"></i>
+                                            <div>
+                                                <strong id="rcDriverReviewsPct">98%</strong>
 
-                                        </div>
-                                    </div> -->
+                                            </div>
+                                        </div> -->
                                 </div>
                             </div>
 
@@ -1485,29 +1523,25 @@
                 <div class="container">
                     <div class="booking-stepper-wrapper">
                         <div class="stepper-track">
-                            <div class="stepper-item step-item-1 active"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 3) showStep(3)">
+                            <div class="stepper-item step-item-1 active">
                                 <div class="stepper-num">1</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-car"></i></div>
                                 <span class="stepper-label">Choose </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-2 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 4) showStep(4)">
+                            <div class="stepper-item step-item-2 inactive">
                                 <div class="stepper-num">2</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-clipboard-list"></i></div>
                                 <span class="stepper-label">Booking </span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-3 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 6) showStep(6)">
+                            <div class="stepper-item step-item-3 inactive">
                                 <div class="stepper-num">3</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-user-tie"></i></div>
                                 <span class="stepper-label">Pick driver</span>
                                 <div class="stepper-line"></div>
                             </div>
-                            <div class="stepper-item step-item-4 inactive"
-                                onclick="if(typeof BookingStore !== 'undefined' && BookingStore.getState().currentStep > 5) showStep(5)">
+                            <div class="stepper-item step-item-4 inactive">
                                 <div class="stepper-num">4</div>
                                 <div class="stepper-icon-circle"><i class="fas fa-credit-card"></i></div>
                                 <span class="stepper-label">Pay</span>
@@ -1522,8 +1556,8 @@
                     </div>
                     <div class="confirm-modal-content" style="padding: 0px 0;">
                         <!-- <div class="confirm-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div> -->
+                                    <i class="fas fa-check-circle"></i>
+                                </div> -->
                         <h2 class="confirm-title" style="text-align: center; margin-top: 15px; margin-bottom: 12px;">
                             Booking Confirmed!</h2>
                         <div class="confirm-booking-id"
@@ -1580,12 +1614,10 @@
                         </p>
                     </div>
                     <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap;">
-                        <button class="btn-modal-primary" onclick="completeBooking()"
-                            style="flex: 1; min-width: 120px; background: #000; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                        <button class="btn-modal-primary" onclick="completeBooking()">
                             <i class="fas fa-check"></i> Done
                         </button>
-                        <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary"
-                            style="flex: 1; min-width: 180px; display: none; text-align: center; border: 2px solid #000; background: #fff; color: #000; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600;">
+                        <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary">
                             <i class="fas fa-file-invoice"></i> View Booking Preview
                         </a>
                     </div>
@@ -1668,6 +1700,10 @@
                         $('#leftTripDuration').text(tText);
                         $('#tripRouteMetaContainer').attr('style', 'display: flex !important;');
 
+                        // Mobile Summary
+                        $('#mcsDistanceValue').text(dText);
+                        $('#mcsDurationValue').text(tText);
+
                         // Map overlay badge
                         $('#mapRouteDistance').text(dText);
                         $('#mapRouteDuration').text(tText);
@@ -1745,34 +1781,34 @@
 
                         // We create the SVG for this specific car with the rotation applied
                         const carSvg = `
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-                                    <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
-                                        <!-- Car Body -->
-                                        <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+                                        <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                                            <!-- Car Body -->
+                                            <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
 
-                                        <!-- Windshield (dark tinted) -->
-                                        <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
+                                            <!-- Windshield (dark tinted) -->
+                                            <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
 
-                                        <!-- Rear Window (dark tinted) -->
-                                        <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
+                                            <!-- Rear Window (dark tinted) -->
+                                            <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
 
-                                        <!-- Side Mirrors -->
-                                        <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
-                                        <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                            <!-- Side Mirrors -->
+                                            <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                            <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
 
-                                        <!-- Subtle Metallic Highlights -->
-                                        <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+                                            <!-- Subtle Metallic Highlights -->
+                                            <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
 
-                                        <!-- Headlights -->
-                                        <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
-                                        <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                            <!-- Headlights -->
+                                            <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                            <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
 
-                                        <!-- Taillights -->
-                                        <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                        <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                    </g>
-                                </svg>
-                            `;
+                                            <!-- Taillights -->
+                                            <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                            <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                        </g>
+                                    </svg>
+                                `;
                         const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg);
 
                         // Stagger animation for a smooth, organic feel
@@ -1927,45 +1963,45 @@
         </div>
     </div>
     <!-- <section class="fleet-section pt-5">
-                <div class="container">
-                    <div class="section-head text-center mb-4">
-                        <h2 class="section-title">Available Fleets</h2>
-                        <p>Choose the perfect ride for your journey</p>
+                    <div class="container">
+                        <div class="section-head text-center mb-4">
+                            <h2 class="section-title">Available Fleets</h2>
+                            <p>Choose the perfect ride for your journey</p>
+                        </div>
+                        <div class="owl-carousel fleet-carousel">
+                            <div class="fleet-card">
+                                <img src="/goride/img/saloon.png" alt="Saloon">
+                                <h5>Saloon</h5>
+                                <span>Up to 4 Passengers</span>
+                            </div>
+                            <div class="fleet-card">
+                                <img src="/goride/img/executive.png" alt="Executive">
+                                <h5>Executive</h5>
+                                <span>Luxury Business Ride</span>
+                            </div>
+                            <div class="fleet-card">
+                                <img src="/goride/img/executive mv5.png" alt="Executive MPV">
+                                <h5>Executive MPV</h5>
+                                <span>Up to 6 Passengers</span>
+                            </div>
+                            <div class="fleet-card">
+                                <img src="/goride/img/estate.png" alt="Estate">
+                                <h5>Estate</h5>
+                                <span>Extra Luggage Space</span>
+                            </div>
+                            <div class="fleet-card">
+                                <img src="/goride/img/8seater.png" alt="8 Seater">
+                                <h5>8 Seater</h5>
+                                <span>Up to 8 Passengers</span>
+                            </div>
+                            <div class="fleet-card">
+                                <img src="/goride/img/mpv.png" alt="MPV">
+                                <h5>MPV</h5>
+                                <span>Family Friendly</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="owl-carousel fleet-carousel">
-                        <div class="fleet-card">
-                            <img src="/goride/img/saloon.png" alt="Saloon">
-                            <h5>Saloon</h5>
-                            <span>Up to 4 Passengers</span>
-                        </div>
-                        <div class="fleet-card">
-                            <img src="/goride/img/executive.png" alt="Executive">
-                            <h5>Executive</h5>
-                            <span>Luxury Business Ride</span>
-                        </div>
-                        <div class="fleet-card">
-                            <img src="/goride/img/executive mv5.png" alt="Executive MPV">
-                            <h5>Executive MPV</h5>
-                            <span>Up to 6 Passengers</span>
-                        </div>
-                        <div class="fleet-card">
-                            <img src="/goride/img/estate.png" alt="Estate">
-                            <h5>Estate</h5>
-                            <span>Extra Luggage Space</span>
-                        </div>
-                        <div class="fleet-card">
-                            <img src="/goride/img/8seater.png" alt="8 Seater">
-                            <h5>8 Seater</h5>
-                            <span>Up to 8 Passengers</span>
-                        </div>
-                        <div class="fleet-card">
-                            <img src="/goride/img/mpv.png" alt="MPV">
-                            <h5>MPV</h5>
-                            <span>Family Friendly</span>
-                        </div>
-                    </div>
-                </div>
-            </section> -->
+                </section> -->
     <section class="reviews-section section-padding mt-5" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>

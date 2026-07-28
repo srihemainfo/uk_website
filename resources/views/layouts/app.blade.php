@@ -1026,8 +1026,8 @@
         .time-dropdown-btn {
             width: 100%;
             padding: 12px 18px 12px 15px;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
+            background: #fff;
+            border: 2px solid #ddd;
             border-radius: 10px;
             font-size: 15px;
             font-weight: 600;
@@ -1199,7 +1199,7 @@
             border-radius: 8px;
             font-size: 17px;
             transition: all 0.3s ease;
-            background: #f5f5f5;
+            background: #fff;
         }
 
         .form-group-uber input:focus,
@@ -1905,6 +1905,7 @@
             cursor: pointer;
             transition: all 0.25s ease;
             text-decoration: none;
+            text-align: center;
         }
 
         .btn-modal-primary {
@@ -2071,7 +2072,7 @@
             padding: 12px 15px;
             border: 2px solid #ddd;
             border-radius: 8px;
-            background: #f5f5f5;
+            background: #fff;
             /*resize:vertical;*/
             /*min-height:120px;*/
         }
@@ -2128,6 +2129,13 @@
             flex-direction: column;
             gap: 12px;
             margin-bottom: 20px;
+        }
+
+        .passenger-details-layout {
+            display: flex;
+            gap: 15px;
+            align-items: stretch;
+            justify-content: space-between;
         }
 
         .for-me-option {
@@ -3314,9 +3322,9 @@
         .booking-summary-item {
             display: flex;
             justify-content: start;
-            align-items: center;
+            /* align-items: center; */
             font-size: 14px;
-            gap: 12px;
+            gap: 6px;
         }
 
         .summary-label {
@@ -3328,6 +3336,14 @@
         .summary-label i {
             font-size: 13px;
             text-align: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
 
         }
 
@@ -3339,7 +3355,7 @@
         .summary-value {
             color: #111;
 
-            text-align: right;
+            /* text-align: right; */
         }
 
         .driver-info {
@@ -3735,7 +3751,7 @@
             min-height: 48px;
             display: flex;
             align-items: center;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         /* NEW STEP 7 CLASSES */
@@ -4766,7 +4782,7 @@
             padding-right: 12px;
             border: 2px solid #ddd !important;
             border-radius: 8px;
-            background: #f5f5f5 !important;
+            background: #fff !important;
             font-size: 16px;
             transition: .3s;
         }
@@ -4858,6 +4874,8 @@
             border-top: 1px solid #eee;
             padding: 14px 16px;
             background: white;
+            overflow-y: auto;
+            height: calc(100vh - 150px);
         }
 
         .mobile-trip-item {
@@ -5409,6 +5427,14 @@
 
         /* Mobile only */
         @media (max-width:768px) {
+            .stat-header-label {
+                font-size: 13px;
+            }
+
+            .stat-main-value {
+                font-size: 16px;
+                font-weight: 600;
+            }
 
             .iti input {
                 padding: 12px;
@@ -5629,7 +5655,7 @@
             }
 
             .summary-car-info {
-                font-size: 12px;
+                font-size: 15px;
                 gap: 8px;
             }
 
@@ -5663,9 +5689,9 @@
         }
 
         @media (max-width: 767px) {
-            /* .driver-car-banner-details {
-                flex-direction: column;
-            } */
+            .summary-car-details {
+                align-items: start;
+            }
 
             .booking-form-section {
                 padding: 14px;
@@ -5848,6 +5874,63 @@
                 z-index: 999;
                 display: none;
             }
+
+            /* Passenger Details Layout Classes */
+            .passenger-details-layout {
+                display: flex;
+                gap: 15px;
+                align-items: stretch;
+                justify-content: space-between;
+                margin-top: 9px;
+                border-top: 1px solid #eee;
+                padding-top: 8px;
+
+            }
+
+            .passenger-details-left {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .passenger-details-right {
+
+                border-left: 1px solid #eee;
+                padding-left: 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .passenger-details-name-container {
+                margin-bottom: 4px;
+            }
+
+            .passenger-details-name {
+                font-size: 18px;
+                font-weight: 500;
+                display: block;
+                color: #111;
+                word-break: break-word;
+                white-space: normal;
+            }
+
+            .passenger-details-item {
+                border-bottom: none !important;
+                padding-bottom: 0 !important;
+                margin-bottom: 5px;
+            }
+
+            .passenger-details-item .summary-value {
+                word-break: break-word;
+                white-space: normal;
+            }
+
+            .p-icon-contact {
+                background: #fff8e7;
+                color: #f39c12;
+                border: 1px solid #fde68a;
+            }
+
 
             .mcs-route {
                 display: flex;
@@ -6234,7 +6317,7 @@
             .summary-car-info {
                 /* flex-wrap: wrap; */
                 gap: 10px;
-                font-size: 13px;
+                font-size: 15px;
             }
 
             .summary-car-price {
@@ -6247,17 +6330,18 @@
 
             #mcsCarDetails {
                 display: none;
-                margin-top: 15px;
+                margin-top: 10px;
                 border-top: 1px solid #eee;
-                padding-top: 15px;
+                padding-top: 8px;
             }
 
             #mcsCarDetails .mcs-car-name-header {
-                font-size: 16px;
+                font-size: 18px;
                 margin-bottom: 6px;
                 display: flex;
                 align-items: center;
                 gap: 8px;
+                color: #111;
             }
 
             #mcsCarDetails .mcs-car-child-container {
@@ -6293,9 +6377,8 @@
             }
 
             #mcsEnteredDetails {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 12px !important;
+                display: none;
+                gap: 4px;
             }
 
             #mcsEnteredDetails .booking-summary-item {
@@ -6340,11 +6423,7 @@
                 align-items: center;
             }
 
-            #mcsEnteredDetails .summary-label i {
-                font-size: 13px;
-                color: #555;
-                width: auto;
-            }
+
 
             #mcsEnteredDetails .summary-value {
                 font-size: 16px !important;
@@ -6375,9 +6454,10 @@
 
             #mcsCarDetails .summary-car-price {
                 font-size: 16px !important;
-                font-weight: 800;
+                font-weight: 700;
                 color: #111;
                 white-space: nowrap;
+                margin-top: 0px;
             }
 
             .summary-title {
@@ -8455,13 +8535,11 @@
             if (tripDate) tripDate.textContent = state.date ? formatUIOrdinalDate(state.date) : '--';
             if (tripTime) tripTime.textContent = state.time || '--';
 
-            // Mobile compact summary date line
-            const mcsDateTime = document.getElementById('mcsDateTime');
-            if (mcsDateTime) {
-                const d = state.date ? formatUIOrdinalDate(state.date) : 'Today';
-                const t = state.time || 'Now';
-                mcsDateTime.textContent = d + ' ' + t;
-            }
+            // Mobile compact summary grid
+            const d = state.date ? formatUIOrdinalDate(state.date) : 'Today';
+            const t = state.time || 'Now';
+            $('#mcsDateValue').text(d);
+            $('#mcsTimeValue').text(t);
 
             // pickupNowBtn label
             const pnb = document.getElementById('pickupNowBtn');
@@ -8573,7 +8651,8 @@
             }
 
             // Show/hide mcsEnteredDetails grid
-            const hasDetails = pName || email || phone || (state.passengerCount || 1) > 1;
+            const currentStep = state.currentStep || 1;
+            const hasDetails = (pName || email || phone) && currentStep >= 5;
             if (hasDetails) { $('#mcsEnteredDetails').css('display', 'grid'); } else { $('#mcsEnteredDetails').hide(); }
         }
 
@@ -8584,23 +8663,47 @@
                 $('#summaryBookingDate').text(state.date || '\u2013');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Time');
                 $('#summaryBookingTime').text(state.time || '\u2013');
-                $('#summaryFlightNumber').text(state.flightNumber || '\u2013');
+
+                const airportDetails = [state.flightNumber, state.comingFrom, state.dropoffAddress]
+                    .filter(v => v && v.trim() !== '' && v.trim() !== '\u2013' && v.trim() !== '-')
+                    .join(', ') || '\u2013';
+
+                $('#summaryFlightLabel').html('<i class="fas fa-plane text-navy"></i>');
+                $('#summaryFlightNumber').text(airportDetails);
                 $('#summaryFlightContainer').show();
-                $('#summaryComingFrom').text(state.comingFrom || '\u2013');
-                $('#summaryComingFromContainer').show();
-                $('#summaryDropoffAddress').text(state.dropoffAddress || '\u2013');
-                $('#summaryDropoffAddressContainer').show();
+                $('#summaryComingFromContainer').hide();
+                $('#summaryDropoffAddressContainer').hide();
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
+
+                $('#mcsFlightLabel').html('<i class="fas fa-plane text-navy"></i>');
+                $('#mcsFlightNumber').text(airportDetails);
+                $('#mcsFlightContainer').show();
+                $('#mcsComingFromContainer').hide();
+                $('#mcsDropoffAddressContainer').hide();
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else if (pickupType === 'seaport') {
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Docking Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Docking Time');
                 $('#summaryBookingTime').text(state.dockingTime || state.time || '\u2013');
-                $('#summaryFlightNumber').text(state.ferryName || '\u2013');
+
+                const seaportDetails = [state.ferryName, state.comingFromPort, state.dropoffAddressSeaport]
+                    .filter(v => v && v.trim() !== '' && v.trim() !== '\u2013' && v.trim() !== '-')
+                    .join(', ') || '\u2013';
+
+                $('#summaryFlightLabel').html('<i class="fas fa-ship text-navy"></i>');
+                $('#summaryFlightNumber').text(seaportDetails);
                 $('#summaryFlightContainer').show();
-                $('#summaryComingFrom').text(state.comingFromPort || '\u2013');
-                $('#summaryComingFromContainer').show();
-                $('#summaryDropoffAddress').text(state.dropoffAddressSeaport || '\u2013');
-                $('#summaryDropoffAddressContainer').show();
+                $('#summaryComingFromContainer').hide();
+                $('#summaryDropoffAddressContainer').hide();
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
+
+                $('#mcsFlightLabel').html('<i class="fas fa-ship text-navy"></i>');
+                $('#mcsFlightNumber').text(seaportDetails);
+                $('#mcsFlightContainer').show();
+                $('#mcsComingFromContainer').hide();
+                $('#mcsDropoffAddressContainer').hide();
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else {
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Journey Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
@@ -8609,6 +8712,12 @@
                 $('#summaryFlightContainer').hide();
                 $('#summaryComingFromContainer').hide();
                 $('#summaryDropoffAddressContainer').hide();
+                $('#summaryJourneyDetailsHeader').hide();
+
+                $('#mcsFlightContainer').hide();
+                $('#mcsComingFromContainer').hide();
+                $('#mcsDropoffAddressContainer').hide();
+                $('#mcsJourneyDetailsHeader').hide();
             }
 
             // Special requirements
@@ -9317,7 +9426,8 @@
             const currentBookingState = BookingStore.getState();
             let selDate = currentBookingState.date ? formatUIOrdinalDate(currentBookingState.date) : ($('#date').val() || 'Today');
             let selTime = currentBookingState.time || 'Now';
-            $('#mcsDateTime').text(selDate + ' ' + selTime);
+            $('#mcsDateValue').text(selDate);
+            $('#mcsTimeValue').text(selTime);
             $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
                     $(this).addClass('sections-hidden');
@@ -10352,32 +10462,28 @@
                 $('#summaryBookingDate').text(bookingData.date || '–');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Flight Time');
                 $('#summaryBookingTime').text(bookingData.time || '–');
-                $('#summaryFlightLabel').html('<i class="fas fa-plane text-navy"></i> Flight No.');
+
                 const flightNum = $('#flightNumber').val() || '';
-                $('#summaryFlightNumber').text(flightNum || '–');
-                $('#summaryFlightContainer').show();
-                $('#summaryComingFromLabel').html('<i class="fas fa-plane-arrival text-navy"></i> Coming From');
                 const comingFrom = $('#comingFrom').val() || '';
-                $('#summaryComingFrom').text(comingFrom || '–');
-                $('#summaryComingFromContainer').show();
-                $('#summaryDropoffAddressLabel').html('<i class="fas fa-map-marker-alt text-navy"></i> Dropoff Address');
                 const dropoffAddress = $('#dropoffAddress').val() || '';
-                $('#summaryDropoffAddress').text(dropoffAddress || '–');
-                $('#summaryDropoffAddressContainer').show();
-                $('#summaryJourneyDetailsHeader').text('FLIGHT DETAILS').show();
+                const airportDetails = [flightNum, comingFrom, dropoffAddress]
+                    .filter(v => v && v.trim() !== '' && v.trim() !== '–' && v.trim() !== '-')
+                    .join(', ') || '–';
 
-                // Mobile Flight details labels and text
-                $('#mcsFlightLabel').html('<i class="fas fa-plane text-navy"></i> Flight No.');
-                $('#mcsComingFromLabel').html('<i class="fas fa-plane-arrival text-navy"></i> Coming From');
-                $('#mcsDropoffAddressLabel').html('<i class="fas fa-map-marker-alt text-navy"></i> Dropoff Address');
+                $('#summaryFlightLabel').html('<i class="fas fa-plane text-navy"></i>');
+                $('#summaryFlightNumber').text(airportDetails);
+                $('#summaryFlightContainer').show();
+                $('#summaryComingFromContainer').hide();
+                $('#summaryDropoffAddressContainer').hide();
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
 
-                $('#mcsFlightNumber').text(flightNum || '–');
+                // Mobile Flight details
+                $('#mcsFlightLabel').html('<i class="fas fa-plane text-navy"></i>');
+                $('#mcsFlightNumber').text(airportDetails);
                 $('#mcsFlightContainer').show();
-                $('#mcsComingFrom').text(comingFrom || '–');
-                $('#mcsComingFromContainer').show();
-                $('#mcsDropoffAddress').text(dropoffAddress || '–');
-                $('#mcsDropoffAddressContainer').show();
-                $('#mcsJourneyDetailsHeader').text('FLIGHT DETAILS').show();
+                $('#mcsComingFromContainer').hide();
+                $('#mcsDropoffAddressContainer').hide();
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
 
                 if (flightNum.trim() !== '' || comingFrom.trim() !== '' || dropoffAddress.trim() !== '') {
                     showEnteredDetails = true;
@@ -10389,32 +10495,28 @@
                 $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Docking Time');
                 const dockingTime = $('#seaportArrivalTime').val() || bookingData.time || '–';
                 $('#summaryBookingTime').text(dockingTime);
-                $('#summaryFlightLabel').html('<i class="fas fa-ship text-navy"></i> Cruise/Ferry');
+
                 const ferryName = $('#ferryName').val() || '';
-                $('#summaryFlightNumber').text(ferryName || '–');
-                $('#summaryFlightContainer').show();
-                $('#summaryComingFromLabel').html('<i class="fas fa-anchor text-navy"></i> Coming From');
                 const comingFromPort = $('#comingFromPort').val() || '';
-                $('#summaryComingFrom').text(comingFromPort || '–');
-                $('#summaryComingFromContainer').show();
-                $('#summaryDropoffAddressLabel').html('<i class="fas fa-map-marker-alt text-navy"></i> Dropoff Address');
                 const dropoffAddressSeaport = $('#dropoffAddressSeaport').val() || '';
-                $('#summaryDropoffAddress').text(dropoffAddressSeaport || '–');
-                $('#summaryDropoffAddressContainer').show();
-                $('#summaryJourneyDetailsHeader').text('FERRY DETAILS').show();
+                const seaportDetails = [ferryName, comingFromPort, dropoffAddressSeaport]
+                    .filter(v => v && v.trim() !== '' && v.trim() !== '–' && v.trim() !== '-')
+                    .join(', ') || '–';
 
-                // Mobile Cruise details labels and text
-                $('#mcsFlightLabel').html('<i class="fas fa-ship text-navy"></i> Cruise/Ferry');
-                $('#mcsComingFromLabel').html('<i class="fas fa-anchor text-navy"></i> Coming From');
-                $('#mcsDropoffAddressLabel').html('<i class="fas fa-map-marker-alt text-navy"></i> Dropoff Address');
+                $('#summaryFlightLabel').html('<i class="fas fa-ship text-navy"></i>');
+                $('#summaryFlightNumber').text(seaportDetails);
+                $('#summaryFlightContainer').show();
+                $('#summaryComingFromContainer').hide();
+                $('#summaryDropoffAddressContainer').hide();
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
 
-                $('#mcsFlightNumber').text(ferryName || '–');
+                // Mobile Cruise details
+                $('#mcsFlightLabel').html('<i class="fas fa-ship text-navy"></i>');
+                $('#mcsFlightNumber').text(seaportDetails);
                 $('#mcsFlightContainer').show();
-                $('#mcsComingFrom').text(comingFromPort || '–');
-                $('#mcsComingFromContainer').show();
-                $('#mcsDropoffAddress').text(dropoffAddressSeaport || '–');
-                $('#mcsDropoffAddressContainer').show();
-                $('#mcsJourneyDetailsHeader').text('FERRY DETAILS').show();
+                $('#mcsComingFromContainer').hide();
+                $('#mcsDropoffAddressContainer').hide();
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
 
                 if (ferryName.trim() !== '' || comingFromPort.trim() !== '' || dropoffAddressSeaport.trim() !== '') {
                     showEnteredDetails = true;
@@ -10456,7 +10558,8 @@
                 $('#mcsSpecialReqContainer').hide();
             }
 
-            if (showEnteredDetails) {
+            const currentStep = bData.currentStep || 1;
+            if (showEnteredDetails && currentStep >= 5) {
                 $('#mcsEnteredDetails').css('display', 'grid');
             } else {
                 $('#mcsEnteredDetails').hide();
@@ -10541,6 +10644,13 @@
             if (!emailCheck.valid) {
                 showToast(emailCheck.message, 'error');
                 $('#passengerEmail').focus();
+                return;
+            }
+
+            // --- Special Requirements Validation ---
+            if (bookingData.isSpecialReq && !bookingData.specialRequirements) {
+                showToast('Please enter your special requirements.', 'error');
+                $('#specialRequirements').focus();
                 return;
             }
 
@@ -11557,6 +11667,13 @@
         }
 
         function showStep(stepNumber) {
+            const currentStep = BookingStore.getState().currentStep || 1;
+
+            // Prevent going back to pre-bidding steps if already in bidding or beyond
+            if (currentStep >= 5 && stepNumber < 5) {
+                return;
+            }
+
             BookingStore.setState({ currentStep: stepNumber });
             updateStepperHeader(stepNumber);
             $('body').css('overflow', 'auto');
@@ -11601,28 +11718,36 @@
                     }
                 }
             }
-            // DYNAMIC SIDEBAR VISIBILITY BASED ON STATE
+            // DYNAMIC SIDEBAR & MOBILE SUMMARY VISIBILITY BASED ON STATE
             if (stepNumber >= 3) {
                 if (bookingData.vehicle) {
                     $('#selectedCarSummary').show();
+                    $('#mcsCarDetails').show();
                 } else {
                     $('#selectedCarSummary').hide();
+                    $('#mcsCarDetails').hide();
                 }
                 if (stepNumber >= 5) {
                     $('#enteredDetailsSummary').show();
+                    $('#mcsEnteredDetails').css('display', 'grid');
                     updateBookingSummary();
                 } else {
                     $('#enteredDetailsSummary').hide();
+                    $('#mcsEnteredDetails').hide();
                 }
+            } else {
+                $('#selectedCarSummary').hide();
+                $('#mcsCarDetails').hide();
+                $('#enteredDetailsSummary').hide();
+                $('#mcsEnteredDetails').hide();
             }
             if (stepNumber >= 5) {
-                // $('#selectedCarSummary').hide();
                 $('.edit-icon-btn').hide();
-            } else if (stepNumber === 2) {
-                $('.edit-icon-btn').show();
             } else {
-                // $('#selectedCarSummary').hide();
-                $('#enteredDetailsSummary').hide();
+                $('.edit-icon-btn').show();
+                if (stepNumber === 3) {
+                    $('#selectedCarSummary .edit-icon-btn').hide();
+                }
             }
             $('.hero-form-section').scrollTop(0);
             if (window.innerWidth <= 768) {

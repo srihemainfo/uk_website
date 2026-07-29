@@ -113,6 +113,166 @@
                 padding: 9px 12px;
                 font-size: 14px;
             }
+
+            /* Custom Premium Mobile driver card styling */
+            .driver-item.driver-card {
+                padding: 16px !important;
+                border-radius: 16px !important;
+                background: #ffffff !important;
+                border: 1px solid #e2e8f0 !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.025) !important;
+            }
+
+            .driver-item.driver-card .driver-info {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 12px !important;
+                width: 100% !important;
+            }
+
+            .driver-item.driver-card .driver-details {
+                width: 100% !important;
+                flex: unset !important;
+            }
+
+            .driver-item.driver-card .driver-header {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                gap: 12px !important;
+                width: 100% !important;
+           
+                margin-bottom: 0px !important;
+            }
+
+            .driver-item.driver-card .driver-car-banner {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                flex-shrink: 0 !important;
+                margin-bottom: 0 !important;
+                 /* flex: 1 !important; */
+            }
+
+            .driver-item.driver-card .driver-car-banner img {
+                width: 110px !important;
+                height: auto !important;
+                max-height: 55px !important;
+                object-fit: cover !important;
+         
+            }
+
+            .driver-item.driver-card .driver-car-banner-details {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 2px !important;
+            }
+
+            .driver-item.driver-card .driver-wrap {
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+               
+                min-width: 0 !important;
+                justify-content: end !important;
+            }
+
+            .driver-item.driver-card .driver-avatar {
+                width: 46px !important;
+                height: 46px !important;
+                border-radius: 50% !important;
+                border: 2px solid #f5c00b !important;
+                overflow: hidden !important;
+                flex-shrink: 0 !important;
+            }
+
+            .driver-item.driver-card .driver-text {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 3px !important;
+                min-width: 0 !important;
+                align-items: flex-start !important;
+            }
+
+            .driver-item.driver-card .driver-text h4 {
+                font-size: 15px !important;
+                font-weight: 600 !important;
+                color: #0f172a !important;
+                margin: 0 !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            .driver-item.driver-card .driver-rating-info {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                gap: 4px !important;
+                font-size: 11px !important;
+                color: #64748b !important;
+            }
+
+            .driver-item.driver-card .driver-rating-info i {
+                color: #f5c00b !important;
+            }
+
+            .driver-item.driver-card .driver-divider {
+                display: inline-block !important;
+                color: #cbd5e1 !important;
+            }
+
+            .driver-item.driver-card .driver-review-link {
+                display: inline-block !important;
+                font-size: 11px !important;
+                color: #ffffff !important;
+                background: #475569 !important;
+                padding: 3px 8px !important;
+                border-radius: 6px !important;
+                text-decoration: none !important;
+                font-weight: 500 !important;
+                width: fit-content !important;
+                transition: background-color 0.2s !important;
+                margin-top: 2px !important;
+            }
+
+            .driver-item.driver-card .driver-review-link:hover {
+                background-color: #334155 !important;
+            }
+
+            .driver-item.driver-card .driver-bid-box {
+               display: flex !important;
+        flex-direction: row !important;
+        justify-content: end !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        gap: 26px !important;
+            }
+
+            .driver-item.driver-card .driver-price-row {
+                margin: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .driver-item.driver-card .bid-amount {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+                color: #0f172a !important;
+            }
+
+            .driver-item.driver-card .driver-accept-btn {
+               margin-top:0px !important;
+            }
+
+            .driver-item.driver-card .driver-accept-btn:hover {
+                background-color: #1e293b !important;
+            }
         }
     </style>
     <div id="mobileActionBar">
@@ -176,7 +336,12 @@
                             </div>
                         </div>
                     </div>
-                    <i class="fas fa-chevron-down" id="tripSummaryArrow" style="margin-top: 6px;"></i>
+                    <div style="display: flex; align-items: center; gap: 14px; margin-top: 6px; padding-left: 8px;">
+                        <button type="button" class="edit-icon-btn" onclick="event.stopPropagation(); goBackToLocations()" title="Edit trip" style="width: 28px; height: 28px; flex-shrink: 0; padding: 0; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px;">
+                            <i class="fas fa-pencil" style="font-size: 12px; color: #495057;"></i>
+                        </button>
+                        <i class="fas fa-chevron-down" id="tripSummaryArrow"></i>
+                    </div>
                 </div>
                 <div class="mobile-trip-body" id="mobileTripBody">
                     <div class="row g-2">
@@ -228,10 +393,15 @@
                     <div id="mcsCarDetails" style="display:none;">
                         <div class="selected-car-row">
                             <div class="summary-car-details">
-                                <h4 class="mcs-car-name-header">
-                                    <i class="fas fa-car"></i>
-                                    <span id="mcsCarName">-</span>
-                                </h4>
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <h4 class="mcs-car-name-header mb-0">
+                                        <i class="fas fa-car"></i>
+                                        <span id="mcsCarName">-</span>
+                                    </h4>
+                                    <button type="button" class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle" style="width: 24px; height: 24px; flex-shrink: 0; padding: 0; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px;">
+                                        <i class="fas fa-pencil" style="font-size: 10px; color: #495057;"></i>
+                                    </button>
+                                </div>
                                 <div class="summary-car-info" id="mcsCarInfo">
                                     <span><i class="fas fa-user"></i> <span id="mcsCarCapacity"></span></span>
                                     <span><i class="fas fa-suitcase"></i> <span id="mcsCarLuggage"></span></span>
@@ -1282,7 +1452,7 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>
                                         <i class="fas fa-clock"></i>
-                                        Pick Up Time After Landing?
+                                        PickUp  After Landing?
                                     </label>
                                     <select id="pickupAfterLandingSelect">
                                         <option value="">Select</option>
@@ -1651,7 +1821,7 @@
                     </div>
 
                     <!-- Vehicle Details Card -->
-                    <div class="rc-vehicle-card">
+                    <div class="rc-vehicle-card mb-2">
                         <div class="rc-card-subtitle">VEHICLE DETAILS</div>
                         <div class="rc-vehicle-top">
                             <div class="rc-vehicle-img-wrapper" style="position: relative;">

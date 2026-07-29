@@ -2943,19 +2943,19 @@
         .mobile-menu {
             position: fixed;
             top: 0;
-            left: -320px;
+            right: -320px;
             width: 300px;
-            height: max-content;
+            height: 100vh;
             background: #fff;
             z-index: 9999;
             transition: .35s;
             display: flex;
             flex-direction: column;
-            box-shadow: 5px 0 30px rgba(0, 0, 0, .15);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, .15);
         }
 
         .mobile-menu.show {
-            left: 0;
+            right: 0;
         }
 
         .mobile-menu-header {
@@ -6218,8 +6218,8 @@
                 padding-bottom: 30px !important;
             }
 
-            .navbar-menu.hide-on-mobile {
-                display: none;
+            .navbar-menu {
+                display: none !important;
             }
 
             .section-title {
@@ -12549,59 +12549,14 @@
 
         // Show the user icon/button in the navbar
         function _showNavbarUserBtn(fullName, initials, avatar) {
-            // Check if a user button already exists
-            let existingBtn = document.getElementById('navbarUserBtn');
-            if (!existingBtn) {
-                const navMenu = document.querySelector('.navbar-menu');
-                if (!navMenu) return;
+            // Ensure values are strings to prevent undefined/empty
+            fullName = (fullName && fullName.trim() !== '') ? fullName.trim() : 'User';
+            initials = (initials && initials.trim() !== '') ? initials.trim() : 'U';
 
-                const li = document.createElement('li');
-                li.className = "navbar-user-item";
-
-                li.innerHTML = `
-    <button id="navbarUserBtn" class="navbar-user-btn" onclick="_toggleUserDropdown(event)">
-        <span id="navbarUserAvatar" class="navbar-user-avatar"></span>
-        <span id="navbarUserName"></span>
-        <i class="fas fa-chevron-down navbar-user-arrow"></i>
-    </button>
-
-    <div id="navbarUserDropdown" class="navbar-user-dropdown">
-       <ul class="navbar-user-menu">
-
-         <li>
-        <a href="uk-profile" class="navbar-user-menu-btn">
-            <i class="far fa-user me-2"></i>
-            Profile
-        </a>
-    </li>
-
-    <li style="display:none;">
-        <a href="uk-dashboard" class="navbar-user-menu-btn">
-            <i class="fas fa-chart-line me-2"></i>
-            Dashboard
-        </a>
-    </li>
-
-    <li>
-        <a href="javascript:void(0)" class="navbar-user-menu-btn navbar-user-logout" onclick="handleLogout()">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
-        </a>
-    </li>
-
-</ul>
-    </div>
-`;
-                navMenu.appendChild(li);
-
-                // Close dropdown if clicked outside
-                document.addEventListener('click', function (e) {
-                    const dropdown = document.getElementById('navbarUserDropdown');
-                    const btn = document.getElementById('navbarUserBtn');
-                    if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
-                        dropdown.style.display = 'none';
-                    }
-                });
+            // Un-hide the hardcoded desktop auth menu item if it exists
+            const desktopAuthItem = document.getElementById('desktopUserAuthItem');
+            if (desktopAuthItem) {
+                desktopAuthItem.style.setProperty('display', 'block', 'important');
             }
 
             // Update values
@@ -12611,11 +12566,43 @@
                 if (avatar) {
                     avatarSpan.innerHTML = `<img src="${avatar}" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">`;
                 } else {
+                    avatarSpan.innerHTML = ''; // Clear img if any
                     avatarSpan.textContent = initials;
                 }
             }
-            if (nameSpan) nameSpan.textContent = fullName.split(' ')[0]; // First name only
+            if (nameSpan) {
+                nameSpan.textContent = fullName.split(' ')[0]; // First name only
+            }
+
+            // Update mobile user block
+            const mobileUserBlock = document.getElementById('mobileUserBlock');
+            const mobileUserAvatar = document.getElementById('mobileUserAvatar');
+            const mobileUserName = document.getElementById('mobileUserName');
+            
+            if (mobileUserBlock) {
+                mobileUserBlock.style.display = 'flex';
+            }
+            if (mobileUserAvatar) {
+                if (avatar) {
+                    mobileUserAvatar.innerHTML = `<img src="${avatar}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
+                } else {
+                    mobileUserAvatar.innerHTML = '';
+                    mobileUserAvatar.textContent = initials;
+                }
+            }
+            if (mobileUserName) {
+                mobileUserName.textContent = fullName;
+            }
         }
+
+        // Close dropdown if clicked outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('navbarUserDropdown');
+            const btn = document.getElementById('navbarUserBtn');
+            if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
 
         // Toggle user dropdown
         function _toggleUserDropdown(e) {
@@ -12905,6 +12892,736 @@
                 } catch (e) { /* ignore malformed cookie */ }
             }
         })();
+    </script>
+    <!-- Track Ride Overlay -->
+    <div class="track-ride-overlay" id="trackRideOverlay">
+        <button class="track-close-btn" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-times"></i></button>
+
+        <!-- Search Container -->
+        <div class="track-ride-container" id="trackSearchContainer">
+            <h3>Track Your Ride</h3>
+            <p>Enter your booking number to get live status</p>
+            <div class="track-input-wrapper">
+                <i class="fas fa-hashtag"></i>
+                <input type="text" id="trackBookingNumber" placeholder="e.g. BKG-12345" />
+            </div>
+            <button class="btn-track-submit" id="btnTrackSubmit" onclick="submitTrackRide()">
+                Track Now <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
+
+        <!-- Result Container -->
+        <div class="track-result-container" id="trackResultContainer" style="display: none;">
+            <div class="track-status-header">
+                <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
+                <h4 id="displayTrackingMessage">Driver is on the way.</h4>
+                <div id="trackingBookingDetails" style="display: none;"></div>
+            </div>
+
+            <div class="track-content-flex">
+                <div class="track-timeline-wrapper">
+                    <ul class="tracking-timeline" id="trackingTimeline">
+                        <!-- Rendered by JS -->
+                    </ul>
+                </div>
+
+                <div class="track-map-wrapper" id="trackMapWrapper" style="display: none;">
+                    <div id="liveTrackingMap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .track-ride-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .track-ride-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .track-close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .track-ride-container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .track-ride-overlay.show .track-ride-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .track-ride-container h3 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .track-ride-container p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .track-input-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .track-input-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+        }
+
+        .track-input-wrapper input {
+            width: 100%;
+            padding: 18px 20px 18px 50px;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #111;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #f9fafb;
+            text-transform: uppercase;
+        }
+
+        .track-input-wrapper input:focus {
+            border-color: #111;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .track-input-wrapper input::placeholder {
+            text-transform: none;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+
+        .btn-track-submit {
+            width: 100%;
+            padding: 18px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-track-submit:hover {
+            background: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-track-submit:active {
+            transform: translateY(0);
+            color: #fff !important;
+        }
+
+        /* Result Container */
+        .track-result-container {
+            background: #fff;
+            border-radius: 24px;
+            padding: 30px;
+            width: 95%;
+            max-width: 900px;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .track-ride-overlay.show .track-result-container {
+            transform: translateY(0) scale(1);
+        }
+
+        .track-status-header {
+            text-align: left;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .booking-id-badge {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .track-status-header h4 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111;
+            margin: 0;
+        }
+
+        .booking-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .booking-detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .booking-detail-item .detail-label {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .booking-detail-item .detail-value {
+            font-size: 14px;
+            color: #111;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .booking-detail-item .otp-value {
+            color: #10b981;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 576px) {
+            .booking-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .track-content-flex {
+            display: flex;
+            flex: 1;
+            gap: 30px;
+            overflow: hidden;
+        }
+
+        .track-timeline-wrapper {
+            flex: 0 0 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .track-map-wrapper {
+            flex: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            background: #f9fafb;
+            border: 1px solid #eee;
+        }
+
+        #liveTrackingMap {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Modern Timeline */
+        .tracking-timeline {
+            list-style: none;
+            padding: 10px 0 0 15px;
+            margin: 0;
+            border-left: 3px solid #e5e7eb;
+            position: relative;
+        }
+
+        .tracking-timeline li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .tracking-timeline li:last-child {
+            margin-bottom: 0;
+        }
+
+        .tracking-timeline li::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .tracking-timeline li.active::before {
+            border-color: #111;
+            background: #111;
+            box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.1);
+        }
+
+        .tracking-timeline li.completed::before {
+            border-color: #10b981;
+            background: #10b981;
+        }
+
+        .tracking-timeline li.cancelled::before {
+            border-color: #ef4444;
+            background: #ef4444;
+        }
+
+        .tracking-timeline .step-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #9ca3af;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .tracking-timeline li.active .step-title,
+        .tracking-timeline li.completed .step-title {
+            color: #111;
+        }
+
+        .tracking-timeline .step-desc {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .tracking-timeline li.cancelled .step-title {
+            color: #ef4444;
+        }
+
+        /* Loading Spinner */
+        .track-spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .track-content-flex {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            .track-timeline-wrapper {
+                flex: none;
+                height: auto;
+            }
+
+            .track-map-wrapper {
+                min-height: 300px;
+                flex: none;
+            }
+
+            .track-result-container {
+                height: 90vh;
+                padding: 20px;
+                overflow-y: auto;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script>
+        let liveTrackingSocket = null;
+        let driverMarker = null;
+        let trackingMap = null;
+
+        function toggleTrackRideOverlay(e) {
+            if (e) e.preventDefault();
+            const overlay = document.getElementById('trackRideOverlay');
+            if (overlay.classList.contains('show')) {
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+
+                // reset state
+                setTimeout(() => {
+                    document.getElementById('trackSearchContainer').style.display = 'block';
+                    document.getElementById('trackResultContainer').style.display = 'none';
+                    document.getElementById('trackBookingNumber').value = '';
+                    if (liveTrackingSocket) liveTrackingSocket.close();
+                }, 400);
+
+            } else {
+                overlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    document.getElementById('trackBookingNumber').focus();
+                }, 400);
+            }
+        }
+
+        async function submitTrackRide() {
+            const num = document.getElementById('trackBookingNumber').value.trim();
+            if (!num) {
+                showGlobalToast('Please enter a booking number', false);
+                return;
+            }
+
+            const btn = document.getElementById('btnTrackSubmit');
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<div class="track-spinner" style="display:block"></div>';
+            btn.disabled = true;
+
+            try {
+                // Determine API URL
+                let apiUrl = '{{ env("API_URL") }}';
+                if (!apiUrl || apiUrl.includes('env(')) apiUrl = window.location.origin + '/api';
+
+                const response = await fetch(apiUrl + '/tracking/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ job_no: num })
+                });
+
+                const res = await response.json();
+
+                if (res.status === true && res.data) {
+                    renderTrackingResult(num, res.data);
+                } else {
+                    showGlobalToast(res.message || 'Booking not found', false);
+                }
+            } catch (error) {
+                console.error('Tracking Error:', error);
+                showGlobalToast('Failed to track booking. Try again.', false);
+            } finally {
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
+        }
+
+        function renderTrackingResult(jobNo, data) {
+            document.getElementById('trackSearchContainer').style.display = 'none';
+            document.getElementById('trackResultContainer').style.display = 'flex';
+
+            document.getElementById('displayBookingNo').innerText = jobNo;
+            document.getElementById('displayTrackingMessage').innerText = data.tracking.message;
+
+            const bookingDetails = document.getElementById('trackingBookingDetails');
+            if (data.booking) {
+                bookingDetails.style.display = 'block';
+                bookingDetails.innerHTML = `
+                    <div class="booking-details-grid">
+                        <div class="booking-detail-item">
+                            <span class="detail-label">From</span>
+                            <span class="detail-value">${data.booking.from_place || '-'}</span>
+                        </div>
+                        <div class="booking-detail-item">
+                            <span class="detail-label">To</span>
+                            <span class="detail-value">${data.booking.to_place || '-'}</span>
+                        </div>
+                        <div class="booking-detail-item">
+                            <span class="detail-label">Pickup Time</span>
+                            <span class="detail-value">${data.booking.pickup_date || '-'}</span>
+                        </div>
+                        <div class="booking-detail-item">
+                            <span class="detail-label">OTP</span>
+                            <span class="detail-value otp-value">${data.booking.otp || '-'}</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                bookingDetails.style.display = 'none';
+                bookingDetails.innerHTML = '';
+            }
+
+            // Render Timeline
+            const tl = data.timeline;
+            const ul = document.getElementById('trackingTimeline');
+            ul.innerHTML = '';
+
+            const steps = [
+                { key: 'created', title: 'Booking Created', desc: 'Your booking has been placed' },
+                { key: 'confirmed', title: 'Confirmed', desc: 'Driver has accepted your ride' },
+                { key: 'dispatch', title: 'Dispatched', desc: 'Driver is on the way to pickup' },
+                { key: 'onboard', title: 'Onboard', desc: 'Trip has started' },
+                { key: 'completed', title: 'Completed', desc: 'You have reached destination' }
+            ];
+
+            if (tl.cancelled) {
+                ul.innerHTML += `<li class="cancelled"><span class="step-title">Cancelled</span><span class="step-desc">This booking was cancelled</span></li>`;
+            } else {
+                let lastActive = -1;
+                steps.forEach((step, idx) => {
+                    if (tl[step.key]) lastActive = idx;
+                });
+
+                steps.forEach((step, idx) => {
+                    let liClass = '';
+                    if (idx < lastActive) liClass = 'completed';
+                    else if (idx === lastActive) liClass = 'active';
+
+                    ul.innerHTML += `<li class="${liClass}">
+                        <span class="step-title">${step.title}</span>
+                        <span class="step-desc">${step.desc}</span>
+                    </li>`;
+                });
+            }
+
+            // Handle Live Tracking Map
+            const mapWrap = document.getElementById('trackMapWrapper');
+            if (data.tracking.live_tracking === 'yes' && data.tracking.socket_url) {
+                mapWrap.style.display = 'block';
+                initLiveTrackingMap();
+                connectLiveTrackingSocket(data.tracking.socket_url, data.tracking.tracking_id);
+            } else {
+                mapWrap.style.display = 'none';
+            }
+        }
+
+        function initLiveTrackingMap() {
+            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+                const script = document.createElement('script');
+                script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCtkJtXBZPLBZIgjgpu-eAG5WQ1HwW4EwE&libraries=geometry";
+                script.onload = () => setupMap();
+                document.head.appendChild(script);
+            } else {
+                setupMap();
+            }
+        }
+
+        function setupMap() {
+            const mapOptions = {
+                zoom: 15,
+                center: { lat: 51.5074, lng: -0.1278 }, // Default to London initially
+                disableDefaultUI: true,
+                zoomControl: true,
+                styles: [
+                    { "featureType": "all", "elementType": "geometry.fill", "stylers": [{ "weight": "2.00" }] },
+                    { "featureType": "all", "elementType": "geometry.stroke", "stylers": [{ "color": "#9c9c9c" }] },
+                    { "featureType": "all", "elementType": "labels.text", "stylers": [{ "visibility": "on" }] },
+                    { "featureType": "landscape", "elementType": "all", "stylers": [{ "color": "#f2f2f2" }] },
+                    { "featureType": "landscape", "elementType": "geometry.fill", "stylers": [{ "color": "#ffffff" }] },
+                    { "featureType": "landscape.man_made", "elementType": "geometry.fill", "stylers": [{ "color": "#ffffff" }] },
+                    { "featureType": "poi", "elementType": "all", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "road", "elementType": "all", "stylers": [{ "saturation": -100 }, { "lightness": 45 }] },
+                    { "featureType": "road", "elementType": "geometry.fill", "stylers": [{ "color": "#eeeeee" }] },
+                    { "featureType": "road", "elementType": "labels.text.fill", "stylers": [{ "color": "#7b7b7b" }] },
+                    { "featureType": "road", "elementType": "labels.text.stroke", "stylers": [{ "color": "#ffffff" }] },
+                    { "featureType": "road.highway", "elementType": "all", "stylers": [{ "visibility": "simplified" }] },
+                    { "featureType": "road.arterial", "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "transit", "elementType": "all", "stylers": [{ "visibility": "off" }] },
+                    { "featureType": "water", "elementType": "all", "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }] },
+                    { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
+                ]
+            };
+            trackingMap = new google.maps.Map(document.getElementById('liveTrackingMap'), mapOptions);
+
+            driverMarker = new google.maps.Marker({
+                map: trackingMap,
+                icon: {
+                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                    scale: 6,
+                    fillColor: '#111',
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    strokeColor: '#fff',
+                    rotation: 0
+                }
+            });
+        }
+
+        function connectLiveTrackingSocket(url, trackingId) {
+            try {
+                if (typeof io === 'undefined') {
+                    console.error("Socket.io is not loaded.");
+                    return;
+                }
+
+                // 1. Connect Customer to Socket Server
+                let token = '';
+                if(typeof getCookieValue === 'function') {
+                    token = getCookieValue('auth_token') || 'CUSTOMER_BEARER_TOKEN';
+                } else {
+                    token = 'CUSTOMER_BEARER_TOKEN';
+                }
+                
+                liveTrackingSocket = io(url, {
+                    transports: ['websocket'],
+                    auth: {
+                        token: token,
+                        user_type: "customer",
+                        platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                    }
+                });
+
+                // 2. Join the specific trip room after connecting
+                liveTrackingSocket.on("connect", () => {
+                    console.log('Customer connected to socket');
+                    liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
+                });
+
+                let lastPos = null;
+
+                // 3. Listen for driver location updates
+                liveTrackingSocket.on("driver_location", (locationData) => {
+                    try {
+                        console.log("New Driver Location Received:", locationData);
+                        if (locationData && locationData.lat && locationData.lng) {
+                            const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
+
+                            if (!lastPos) {
+                                trackingMap.setCenter(newPos);
+                                driverMarker.setPosition(newPos);
+                                if (locationData.heading !== undefined) {
+                                    const icon = driverMarker.getIcon();
+                                    icon.rotation = locationData.heading;
+                                    driverMarker.setIcon(icon);
+                                }
+                            } else {
+                                animateMarker(driverMarker, lastPos, newPos);
+                                const icon = driverMarker.getIcon();
+                                icon.rotation = locationData.heading !== undefined ? locationData.heading : 
+                                                (google.maps.geometry && google.maps.geometry.spherical 
+                                                    ? google.maps.geometry.spherical.computeHeading(lastPos, newPos) 
+                                                    : icon.rotation);
+                                driverMarker.setIcon(icon);
+                                trackingMap.panTo(newPos);
+                            }
+                            lastPos = newPos;
+                        }
+                    } catch (e) { console.error('Socket message parse error', e); }
+                });
+
+                // 4. Listen for other trip status events
+                liveTrackingSocket.on("driver_arrived", () => {
+                    showGlobalToast("Driver has arrived at your pickup location!", true);
+                });
+
+                liveTrackingSocket.on("trip_started", () => {
+                    showGlobalToast("Your trip has started.", true);
+                });
+
+                liveTrackingSocket.on("trip_completed", () => {
+                    showGlobalToast("Trip finished successfully.", true);
+                    liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
+                    setTimeout(() => toggleTrackRideOverlay(), 3000); // auto-close after 3s
+                });
+
+                liveTrackingSocket.on("connect_error", (e) => console.error('Socket Error', e));
+
+            } catch (e) {
+                console.error("WebSocket connection failed", e);
+            }
+        }
+
+        function animateMarker(marker, startPos, endPos) {
+            let start = null;
+            const duration = 1000;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                const percent = Math.min(progress / duration, 1);
+
+                const currentLat = startPos.lat() + (endPos.lat() - startPos.lat()) * percent;
+                const currentLng = startPos.lng() + (endPos.lng() - startPos.lng()) * percent;
+
+                marker.setPosition(new google.maps.LatLng(currentLat, currentLng));
+
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    marker.setPosition(endPos);
+                }
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        function showGlobalToast(msg, success = true) {
+            const toastMsg = document.getElementById('globalToastMsg');
+            if (toastMsg) {
+                toastMsg.innerText = msg;
+                document.getElementById('globalToastIcon').className = success ? 'fas fa-check-circle' : 'fas fa-exclamation-circle text-danger';
+                document.getElementById('globalToast').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('globalToast').classList.remove('show');
+                    document.getElementById('globalToastIcon').className = 'fas fa-check-circle';
+                }, 3000);
+            } else {
+                alert(msg);
+            }
+        }
     </script>
     <!-- Global Toast -->
     <div id="globalToast" class="global-toast">

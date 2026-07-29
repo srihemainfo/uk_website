@@ -3,22 +3,46 @@
             <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
         </div>
         <ul class="navbar-menu">
-            <!--<li><button onclick="toggleDropdown('language')">-->
-            <!--        <i class="fas fa-globe me-2"></i>EN-->
-            <!--    </button></li>-->
+            <li>
+                <a href="#" onclick="toggleTrackRideOverlay(event)">
+                    Track Ride
+                </a>
+            </li>
             <li>
                 <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
                     Help
                 </a>
             </li>
-            <!--<li style="position:relative;">-->
-            <!--    <button class="user-btn" onclick="toggleDropdown('user')">-->
-            <!--        <i class="fas fa-user-circle"></i>-->
-            <!--        Mogana-->
-            <!--        <i class="fas fa-chevron-down"></i>-->
-            <!--    </button>-->
-            <!--</li>-->
+            <li class="navbar-user-item" id="desktopUserAuthItem" style="display: block !important;">
+                <button id="navbarUserBtn" class="navbar-user-btn" onclick="_toggleUserDropdown(event)">
+                    <span id="navbarUserAvatar" class="navbar-user-avatar"></span>
+                    <span id="navbarUserName"></span>
+                    <i class="fas fa-chevron-down navbar-user-arrow"></i>
+                </button>
+                <div id="navbarUserDropdown" class="navbar-user-dropdown">
+                    <ul class="navbar-user-menu">
+                        <li>
+                            <a href="{{ route('uk-profile') }}" class="navbar-user-menu-btn">
+                                <i class="far fa-user me-2"></i> Profile
+                            </a>
+                        </li>
+                        <li id="desktopNavDashboardLink" style="display:none;">
+                            <a href="{{ route('uk-dashboard') }}" class="navbar-user-menu-btn">
+                                <i class="fas fa-chart-line me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="navbar-user-menu-btn navbar-user-logout" onclick="handleLogout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
+        <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
         <div id="language-dropdown" class="dropdown-menu-navbar">
             <button onclick="selectLanguage('en')">English</button>
             <button onclick="selectLanguage('hi')">à¤¹à¤¿à¤‚à¤¦à¥€</button>
@@ -35,20 +59,16 @@
                 </div>
             </div>
             <div class="account-menu">
-                <a href="#"><i class="fas fa-user"></i><span>My Profile</span></a>
-                <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>
-                <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>
-                <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-                <a href="#"><i class="fas fa-tag"></i><span>Offers</span></a>
-                <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
+                <a href="{{ route('uk-profile') }}"><i class="fas fa-user"></i><span>Profile</span></a>
+                <a href="{{ route('uk-dashboard') }}"><i class="fas fa-table-columns"></i><span>Dashboard</span></a>
+                <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i><span>Track Ride</span></a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i class="fas fa-circle-question"></i><span>Help</span></a>
             </div>
             <div class="account-footer">
                 <a href="javascript:void(0)" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
             </div>
         </div>
-        <!--<button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">-->
-        <!--    <i class="fas fa-bars"></i>-->
-        <!--</button>-->
+
         <div class="mobile-menu-btn" id="mobileMapBtn" style="display:none;" onclick="toggleMobileMap()">
             <i class="fas fa-map"></i>
         </div>
@@ -60,25 +80,18 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <div class="mobile-user">
-                <div class="mobile-avatar">MG</div>
+            <div class="mobile-user" id="mobileUserBlock" style="display:none;">
+                <div class="mobile-avatar" id="mobileUserAvatar">--</div>
                 <div>
-                    <h5>Mogana Priya</h5>
-                    <span>mogana@email.com</span>
+                    <h5 id="mobileUserName">--</h5>
                 </div>
             </div>
             <div class="mobile-menu-links">
-                <a href="#"><i class="fas fa-user"></i>My Profile</a>
-                <a href="#"><i class="fas fa-car"></i>My Rides</a>
-                <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
-                <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
-                <a href="#"><i class="fas fa-tag"></i>Offers</a>
-                <a href="#"><i class="fas fa-language"></i>Language</a>
-                <a href="#"><i class="fas fa-circle-question"></i>Help</a>
-                <a href="#"><i class="fas fa-gear"></i>Settings</a>
-            </div>
-            <div class="mobile-menu-footer">
-                <button onclick="handleLogout()"><i class="fas fa-right-from-bracket"></i>Logout</button>
+                <a href="{{ route('uk-profile') }}"><i class="fas fa-user"></i>Profile</a>
+                <a href="{{ route('uk-dashboard') }}"><i class="fas fa-table-columns"></i>Dashboard</a>
+                <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i>Track Ride</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i class="fas fa-circle-question"></i>Help</a>
+                <a href="javascript:void(0)" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
             </div>
         </div>
     </nav>

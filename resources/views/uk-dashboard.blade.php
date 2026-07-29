@@ -2,11 +2,16 @@
 
 @section('content')
     <style>
+        body {
+            background-color: #f8f9fa !important;
+        }
+
         /* Skeleton Loader Styles */
         @keyframes shimmer {
             0% {
                 background-position: -468px 0;
             }
+
             100% {
                 background-position: 468px 0;
             }
@@ -16,13 +21,13 @@
             background: #f6f7f8;
             background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
             background-repeat: no-repeat;
-            background-size: 800px 100%; 
+            background-size: 800px 100%;
             animation: shimmer 1.5s infinite linear forwards;
             border-radius: 8px;
             color: transparent !important;
             user-select: none;
         }
-        
+
         .skeleton * {
             visibility: hidden !important;
         }
@@ -43,6 +48,7 @@
             align-items: center;
             gap: 8px;
             margin-top: 30px;
+            margin-bottom: 50px;
         }
 
         .page-btn {
@@ -84,22 +90,22 @@
             padding: 40px 20px;
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
-        
+
         .empty-state i {
             font-size: 40px;
             color: #d1d5db;
             margin-bottom: 15px;
         }
-        
+
         .empty-state h5 {
             font-weight: 700;
             color: #111;
             margin-bottom: 5px;
         }
-        
+
         .empty-state p {
             color: #6b7280;
             font-size: 14px;
@@ -261,9 +267,33 @@
 
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            align-items: stretch;
+            justify-content: flex-end;
             gap: 20px;
+        }
+
+        .btn-book-now {
+            background: #111;
+            color: #fff;
+            padding: 0 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-book-now:hover {
+            background: #333;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .stat-card {
@@ -952,7 +982,7 @@
                 gap: 15px;
             }
 
-          
+
 
             .stat-value {
                 font-size: 17px;
@@ -968,20 +998,24 @@
                 gap: 6px;
                 flex-direction: column;
             }
-.stat-info{
-    text-align: center;
-}
-.driver-card{
-     flex-wrap: wrap;   
-     justify-content: end;
-}
-.btn-outline-dark-custom{
-        padding: 9px 13px;
-}
-.stats-grid
-{
-    gap:10px;
-}
+
+            .stat-info {
+                text-align: center;
+            }
+
+            .driver-card {
+                flex-wrap: wrap;
+                justify-content: end;
+            }
+
+            .btn-outline-dark-custom {
+                padding: 9px 13px;
+            }
+
+            .stats-grid {
+                gap: 10px;
+            }
+
             .trip-header {
                 flex-direction: column;
                 align-items: flex-start;
@@ -999,7 +1033,8 @@
 
         <div class="dashboard-header-flex">
             <div class="welcome-section">
-                <h1 class="welcome-title" id="welcomeTitle"><span class="skeleton skeleton-text" style="display: inline-block; width: 250px; height: 34px;"></span></h1>
+                <h1 class="welcome-title" id="welcomeTitle"><span class="skeleton skeleton-text"
+                        style="display: inline-block; width: 250px; height: 34px;"></span></h1>
                 <p class="welcome-subtitle" id="welcomeSubtitle">Here is what's happening with your rides today.</p>
             </div>
 
@@ -1010,27 +1045,16 @@
                 <!-- Stats Grid -->
                 <div class="stats-grid" id="summaryStatsGrid">
                     <!-- Skeleton Stats -->
-                    <div class="stat-card">
+                    <div class="stat-card" style="min-width: 180px;">
                         <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
                         <div class="stat-info" style="width:100%">
                             <div class="skeleton skeleton-text" style="width: 60%; height: 24px;"></div>
                             <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
-                        <div class="stat-info" style="width:100%">
-                            <div class="skeleton skeleton-text" style="width: 70%; height: 24px;"></div>
-                            <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
-                        <div class="stat-info" style="width:100%">
-                            <div class="skeleton skeleton-text" style="width: 50%; height: 24px;"></div>
-                            <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
-                        </div>
-                    </div>
+                    <a href="{{ url('/') }}" class="btn-book-now skeleton" style="pointer-events: none; opacity: 0.5; min-width: 140px;">
+                        <i class="fas fa-arrow-left"></i> Book Now
+                    </a>
                 </div>
             </div>
         </div>
@@ -1097,10 +1121,84 @@
             <div id="completedRidesContainer">
                 <div class="row g-4">
                     <!-- Skeletons -->
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="completedPagination" class="pagination-container"></div>
@@ -1111,14 +1209,120 @@
             <div id="cancelledRidesContainer">
                 <div class="row g-4">
                     <!-- Skeletons -->
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
-                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="compact-trip-card" style="cursor: default; pointer-events: none;">
+                            <div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;">
+                            </div>
+                            <div class="compact-trip-details w-100">
+                                <div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;">
+                                </div>
+                                <div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="cancelledPagination" class="pagination-container"></div>
         </div>
 
     </div>
+    </div>
+
+    <!-- Cancel Trip Modal -->
+    <div id="cancelJobModal" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center;">
+        <div class="modal-dialog" role="document"
+            style="background: white; border-radius: 20px; padding: 30px; max-width: 380px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center;">
+            <div class="modal-content" style="border: none;">
+                <div
+                    style="width: 60px; height: 60px; background: #fff0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 24px;"></i>
+                </div>
+                <h4 style="margin: 0 0 10px; font-weight: 700; color: #333; font-size: 22px;">Cancel Job?</h4>
+                <p style="color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 15px;">
+                    Are you sure you want to cancel this booking? This action cannot be undone.
+                </p>
+                <textarea id="cancelJobReason" rows="3" placeholder="Reason for cancellation (optional)"
+                    style="width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 25px; font-family: inherit; font-size: 14px; resize: none; background: #fafafa;"></textarea>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button type="button" onclick="confirmDashboardCancelJob(this)"
+                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
+                        Yes, Cancel
+                    </button>
+                    <button type="button" onclick="hideDashboardCancelModal()"
+                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: 1px solid #ddd; background: #fff; color: #333; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        Keep It
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Live Map Modal -->
@@ -1245,16 +1449,16 @@
                 container.innerHTML = '';
                 return;
             }
-            
+
             let html = '';
-            
+
             // Prev Button
             if (paginationData.current_page > 1) {
                 html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${paginationData.current_page - 1})" class="page-btn"><i class="fas fa-chevron-left"></i></a>`;
             } else {
                 html += `<button disabled class="page-btn"><i class="fas fa-chevron-left"></i></button>`;
             }
-            
+
             // Page numbers
             for (let i = 1; i <= paginationData.total_pages; i++) {
                 if (i === paginationData.current_page) {
@@ -1263,14 +1467,14 @@
                     html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${i})" class="page-btn">${i}</a>`;
                 }
             }
-            
+
             // Next Button
             if (paginationData.current_page < paginationData.total_pages) {
                 html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${paginationData.current_page + 1})" class="page-btn"><i class="fas fa-chevron-right"></i></a>`;
             } else {
                 html += `<button disabled class="page-btn"><i class="fas fa-chevron-right"></i></button>`;
             }
-            
+
             container.innerHTML = html;
         }
 
@@ -1284,32 +1488,21 @@
                     const data = res.data;
                     document.getElementById('welcomeTitle').innerHTML = `Hello, ${data.customer_name}`;
                     document.getElementById('welcomeSubtitle').innerHTML = `Here is what's happening with your rides today.`;
-                    
 
-                    
+
+
                     document.getElementById('summaryStatsGrid').innerHTML = `
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="fas fa-car"></i></div>
-                            <div class="stat-info">
-                                <div class="stat-value">${data.total_rides}</div>
-                                <div class="stat-label">Total Rides</div>
+                            <div class="stat-card" style="min-width: 180px;">
+                                <div class="stat-icon"><i class="fas fa-car"></i></div>
+                                <div class="stat-info">
+                                    <div class="stat-value">${data.total_rides}</div>
+                                    <div class="stat-label">Total Rides</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="fas fa-route"></i></div>
-                            <div class="stat-info">
-                                <div class="stat-value">${data.total_distance} <small class="fs-6 fw-bold">${data.distance_unit}</small></div>
-                                <div class="stat-label">Total Distance</div>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
-                            <div class="stat-info">
-                                <div class="stat-value">${data.average_rating}</div>
-                                <div class="stat-label">Avg Rating Given</div>
-                            </div>
-                        </div>
-                    `;
+                            <a href="{{ url('/') }}" class="btn-book-now">
+                                <i class="fas fa-arrow-left"></i> Book Now
+                            </a>
+                        `;
                 }
             } catch (error) {
                 console.error("Error fetching summary", error);
@@ -1327,136 +1520,136 @@
                     let html = '';
                     res.data.forEach(trip => {
                         html += `
-                        <div class="trip-card mb-4">
-                            <div class="trip-header">
-                                <div class="trip-id">
-                                    <div class="trip-status-dot"></div>
-                                    Trip #${trip.job_no} (${trip.is_live ? 'Live' : trip.job_status})
+                            <div class="trip-card mb-4">
+                                <div class="trip-header">
+                                    <div class="trip-id">
+                                        <div class="trip-status-dot"></div>
+                                        Trip #${trip.job_no} (${trip.is_live ? 'Live' : trip.job_status})
+                                    </div>
+                                    <div class="trip-actions">
+                                        ${trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
+                                        ${trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
+                                    </div>
                                 </div>
-                                <div class="trip-actions">
-                                    ${trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
-                                    ${trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
-                                </div>
-                            </div>
 
-                            <div class="row g-4">
-                                <div class="col-md-6">
-                                    <div class="car-image-container">
-                                        <img src="${trip.vehicle.image}" alt="${trip.vehicle.name}" onerror="this.src='/goride/img/saloon.png'">
-                                        <div class="car-details mb-2">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="car-image-container">
+                                            <img src="/goride/img/${trip.vehicle.image.toLowerCase()}.webp" alt="${trip.vehicle.name}" onerror="this.src='/goride/img/saloon.png'">
+                                            <div class="car-details mb-2">
+                                                <div>
+                                                    <div class="car-name">${trip.vehicle.name}</div>
+                                                    <div class="car-number">${trip.vehicle.number}</div>
+                                                </div>
+                                                <div class="car-amenities">
+                                                    <span><i class="fas fa-user-friends"></i> ${trip.vehicle.seats} Seats</span>
+                                                    <span><i class="fas fa-cog"></i> ${trip.vehicle.transmission}</span>
+                                                    <span><i class="fas fa-suitcase"></i> ${trip.vehicle.bags} Bags</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="fare-breakdown mt-3">
+                                            <div class="fare-breakdown-title">FARE BREAKDOWN</div>
+                                            <div class="d-flex justify-content-between mb-2 fs-13">
+                                                <span>Base Fare</span>
+                                                <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2 fs-13">
+                                                <span>Tax and Other charges</span>
+                                                <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
+                                                <span>Total</span>
+                                                <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="otp-banner">
                                             <div>
-                                                <div class="car-name">${trip.vehicle.name}</div>
-                                                <div class="car-number">${trip.vehicle.number}</div>
+                                                <div class="otp-label">TRIP OTP</div>
+                                                <div class="otp-value">${trip.trip_otp}</div>
                                             </div>
-                                            <div class="car-amenities">
-                                                <span><i class="fas fa-user-friends"></i> ${trip.vehicle.seats} Seats</span>
-                                                <span><i class="fas fa-cog"></i> ${trip.vehicle.transmission}</span>
-                                                <span><i class="fas fa-suitcase"></i> ${trip.vehicle.bags} Bags</span>
+                                            <div class="otp-icon">
+                                                <i class="fas fa-shield-alt"></i>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="fare-breakdown mt-3">
-                                        <div class="fare-breakdown-title">FARE BREAKDOWN</div>
-                                        <div class="d-flex justify-content-between mb-2 fs-13">
-                                            <span>Base Fare</span>
-                                            <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                        <div class="route-timeline mt-4">
+                                            <div class="route-point">
+                                                <div class="point-icon"></div>
+                                                <div class="point-details">
+                                                    <div class="point-label">PICKUP</div>
+                                                    <div class="point-address">${trip.pickup}</div>
+                                                </div>
+                                            </div>
+                                            <div class="route-point">
+                                                <div class="point-icon drop"></div>
+                                                <div class="point-details">
+                                                    <div class="point-label">DROP</div>
+                                                    <div class="point-address">${trip.drop}</div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-between mb-2 fs-13">
-                                            <span>Tax and Other charges</span>
-                                            <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+
+                                        <div class="row g-3 mb-4 mt-3">
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-block-title">DATE</div>
+                                                <div class="info-block-value">${trip.pickup_date}</div>
+                                            </div>
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-block-title">PICKUP TIME</div>
+                                                <div class="info-block-value">${trip.pickup_time}</div>
+                                            </div>
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-block-title">PAYMENT STATUS</div>
+                                                <div class="info-block-value text-dark d-flex align-items-center gap-2">
+                                                    <i class="far fa-clock"></i> ${trip.payment_status}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-block-title">PAYMENT MODE</div>
+                                                <div class="info-block-value"><i class="far fa-money-bill-alt"></i> ${trip.payment_mode}</div>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
-                                            <span>Total</span>
-                                            <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+
+                                        <div class="driver-details-heading mt-2">
+                                            <i class="fas fa-id-badge me-2"></i>
+                                            DRIVER DETAILS
+                                        </div>
+
+                                        <div class="driver-card">
+                                            <div class="driver-img-wrapper">
+                                                <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
+                                                <div class="driver-rating-badge">
+                                                    <i class="fas fa-star text-warning me-1"></i> ${trip.driver.rating ?? 4.2}
+                                                </div>
+                                            </div>
+                                            <div class="driver-info">
+                                                <div class="driver-name">${trip.driver.name}</div>
+                                                <div class="driver-trips d-none">${trip.driver.completed_trips} trips completed</div>
+                                            </div>
+                                            <div class="driver-contact-btns">
+                                                ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
+                                                ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
+                                            </div>
+                                            ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2" onclick="showDashboardCancelModal('${trip.booking_id || trip.job_id || ''}', '${trip.job_no || trip.job_no || ''}')">CANCEL TRIP</button>` : ''}
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="otp-banner">
-                                        <div>
-                                            <div class="otp-label">TRIP OTP</div>
-                                            <div class="otp-value">${trip.trip_otp}</div>
-                                        </div>
-                                        <div class="otp-icon">
-                                            <i class="fas fa-shield-alt"></i>
-                                        </div>
-                                    </div>
-
-                                    <div class="route-timeline mt-4">
-                                        <div class="route-point">
-                                            <div class="point-icon"></div>
-                                            <div class="point-details">
-                                                <div class="point-label">PICKUP</div>
-                                                <div class="point-address">${trip.pickup}</div>
-                                            </div>
-                                        </div>
-                                        <div class="route-point">
-                                            <div class="point-icon drop"></div>
-                                            <div class="point-details">
-                                                <div class="point-label">DROP</div>
-                                                <div class="point-address">${trip.drop}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row g-3 mb-4 mt-3">
-                                        <div class="col-md-3 col-6">
-                                            <div class="info-block-title">DATE</div>
-                                            <div class="info-block-value">${trip.pickup_date}</div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="info-block-title">PICKUP TIME</div>
-                                            <div class="info-block-value">${trip.pickup_time}</div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="info-block-title">PAYMENT STATUS</div>
-                                            <div class="info-block-value text-dark d-flex align-items-center gap-2">
-                                                <i class="far fa-clock"></i> ${trip.payment_status}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="info-block-title">PAYMENT MODE</div>
-                                            <div class="info-block-value"><i class="far fa-money-bill-alt"></i> ${trip.payment_mode}</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="driver-details-heading mt-2">
-                                        <i class="fas fa-id-badge me-2"></i>
-                                        DRIVER DETAILS
-                                    </div>
-
-                                    <div class="driver-card">
-                                        <div class="driver-img-wrapper">
-                                            <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
-                                            <div class="driver-rating-badge">
-                                                <i class="fas fa-star text-warning me-1"></i> ${trip.driver.rating}
-                                            </div>
-                                        </div>
-                                        <div class="driver-info">
-                                            <div class="driver-name">${trip.driver.name}</div>
-                                            <div class="driver-trips">${trip.driver.completed_trips} trips completed</div>
-                                        </div>
-                                        <div class="driver-contact-btns">
-                                            ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
-                                            ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
-                                        </div>
-                                        ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2">CANCEL TRIP</button>` : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
+                            </div>`;
                     });
                     container.innerHTML = html;
                 } else {
                     container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-car-side"></i>
-                            <h5>No active rides</h5>
-                            <p>You don't have any ongoing trips right now.</p>
-                        </div>
-                    `;
+                            <div class="empty-state">
+                                <i class="fas fa-car-side"></i>
+                                <h5>No active rides</h5>
+                                <p>You don't have any ongoing trips right now.</p>
+                            </div>
+                        `;
                 }
             } catch (error) {
                 console.error("Error fetching current rides", error);
@@ -1465,42 +1658,48 @@
 
         async function fetchCompletedRides(page = 1) {
             try {
+                const container = document.getElementById('completedRidesContainer');
+                container.innerHTML = `
+                        <div class="row g-4">
+                            ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
+                        </div>
+                    `;
+
                 const response = await fetch(`${API_BASE_URL}/customer-dashboard/completed-rides?page=${page}&limit=10`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
-                const container = document.getElementById('completedRidesContainer');
                 if (res.status && res.data && res.data.length > 0) {
                     let html = '<div class="row g-4">';
                     res.data.forEach(trip => {
                         html += `
-                        <div class="col-md-6">
-                            <div class="compact-trip-card">
-                                <div class="compact-car-img-wrapper">
-                                    <img src="${trip.vehicle_image}" class="compact-car-img" onerror="this.src='/goride/img/saloon.png'">
-                                </div>
-                                <div class="compact-trip-details">
-                                    <div class="compact-trip-title">${trip.drop}</div>
-                                    <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
-                                    <div class="compact-trip-price-status">£${parseFloat(trip.amount).toFixed(2)} ${trip.currency} • Completed</div>
-                                    <div class="compact-trip-actions">
-                                        ${trip.receipt_available ? `<a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>` : ''}
+                            <div class="col-md-6">
+                                <div class="compact-trip-card">
+                                    <div class="compact-car-img-wrapper">
+                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img" onerror="this.src='/goride/img/saloon.png'">
+                                    </div>
+                                    <div class="compact-trip-details">
+                                        <div class="compact-trip-title">${trip.drop}</div>
+                                        <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                        <div class="compact-trip-price-status">£${parseFloat(trip.amount).toFixed(2)} ${trip.currency} • Completed</div>
+                                        <div class="compact-trip-actions">
+                                            ${trip.receipt_available ? `<a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>` : ''}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>`;
+                            </div>`;
                     });
                     html += '</div>';
                     container.innerHTML = html;
                     buildPagination(res.pagination, 'completedPagination', 'fetchCompletedRides');
                 } else {
                     container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-history"></i>
-                            <h5>No completed rides</h5>
-                            <p>You haven't completed any trips yet.</p>
-                        </div>
-                    `;
+                            <div class="empty-state">
+                                <i class="fas fa-history"></i>
+                                <h5>No completed rides</h5>
+                                <p>You haven't completed any trips yet.</p>
+                            </div>
+                        `;
                     document.getElementById('completedPagination').innerHTML = '';
                 }
             } catch (error) {
@@ -1510,39 +1709,45 @@
 
         async function fetchCancelledRides(page = 1) {
             try {
+                const container = document.getElementById('cancelledRidesContainer');
+                container.innerHTML = `
+                        <div class="row g-4">
+                            ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
+                        </div>
+                    `;
+
                 const response = await fetch(`${API_BASE_URL}/customer-dashboard/cancelled-rides?page=${page}&limit=10`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
-                const container = document.getElementById('cancelledRidesContainer');
                 if (res.status && res.data && res.data.length > 0) {
                     let html = '<div class="row g-4">';
                     res.data.forEach(trip => {
                         html += `
-                        <div class="col-md-6">
-                            <div class="compact-trip-card">
-                                <div class="compact-car-img-wrapper">
-                                    <img src="${trip.vehicle_image}" class="compact-car-img img-grayscale" onerror="this.src='/goride/img/saloon.png'">
+                            <div class="col-md-6">
+                                <div class="compact-trip-card">
+                                    <div class="compact-car-img-wrapper">
+                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img img-grayscale" onerror="this.src='/goride/img/saloon.png'">
+                                    </div>
+                                    <div class="compact-trip-details">
+                                        <div class="compact-trip-title">${trip.drop}</div>
+                                        <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                        <div class="compact-trip-price-status text-danger">${trip.cancel_reason || 'Cancelled'}</div>
+                                    </div>
                                 </div>
-                                <div class="compact-trip-details">
-                                    <div class="compact-trip-title">${trip.drop}</div>
-                                    <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
-                                    <div class="compact-trip-price-status text-danger">${trip.cancel_reason || 'Cancelled'}</div>
-                                </div>
-                            </div>
-                        </div>`;
+                            </div>`;
                     });
                     html += '</div>';
                     container.innerHTML = html;
                     buildPagination(res.pagination, 'cancelledPagination', 'fetchCancelledRides');
                 } else {
                     container.innerHTML = `
-                        <div class="empty-state">
-                            <i class="fas fa-ban"></i>
-                            <h5>No cancelled rides</h5>
-                            <p>You don't have any cancelled trips.</p>
-                        </div>
-                    `;
+                            <div class="empty-state">
+                                <i class="fas fa-ban"></i>
+                                <h5>No cancelled rides</h5>
+                                <p>You don't have any cancelled trips.</p>
+                            </div>
+                        `;
                     document.getElementById('cancelledPagination').innerHTML = '';
                 }
             } catch (error) {
@@ -1550,7 +1755,82 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        let currentCancelJobId = null;
+        let currentCancelJobNo = null;
+
+        function showDashboardCancelModal(jobId, jobNo) {
+            currentCancelJobId = jobId;
+            currentCancelJobNo = jobNo || jobId;
+            document.getElementById('cancelJobReason').value = '';
+            document.getElementById('cancelJobModal').style.display = 'flex';
+        }
+
+        function hideDashboardCancelModal() {
+            document.getElementById('cancelJobModal').style.display = 'none';
+        }
+
+        function confirmDashboardCancelJob(btn) {
+            const reason = document.getElementById('cancelJobReason').value.trim();
+
+            if (!currentCancelJobId) {
+                alert('Job details are missing. Cannot cancel.');
+                return;
+            }
+
+            const payload = {
+                job_id: currentCancelJobId,
+                job_no: currentCancelJobNo,
+                reason: reason
+            };
+
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
+            btn.disabled = true;
+
+            fetch('{{ env("API_URL") }}' + '/cancel-job', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                if (data.status) {
+                    hideDashboardCancelModal();
+                    if(typeof showToast === 'function') {
+                        showToast(data.message || 'Job cancelled successfully.', 'success');
+                    } else {
+                        alert(data.message || 'Job cancelled successfully.');
+                    }
+                    
+                    fetchCurrentRides();
+                    fetchCancelledRides(1);
+                    fetchDashboardSummary();
+                } else {
+                    if(typeof showToast === 'function') {
+                        showToast(data.message || 'Failed to cancel job.', 'error');
+                    } else {
+                        alert(data.message || 'Failed to cancel job.');
+                    }
+                }
+            })
+            .catch(err => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                if(typeof showToast === 'function') {
+                    showToast('An error occurred while cancelling the job.', 'error');
+                } else {
+                    alert('An error occurred while cancelling the job.');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
             fetchDashboardSummary();
             fetchCurrentRides();
             fetchCompletedRides(1);

@@ -13592,13 +13592,14 @@
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
                 icon: {
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 6,
+                    path: 'M17.4 0h-11.8c-3.1 0-5.6 3.5-5.6 6.6v34.8c0 3.1 2.5 5.6 5.6 5.6h11.8c3.1 0 5.6-2.5 5.6-5.6v-34.8c0-3.1-2.5-6.6-5.6-6.6z M22.1 14.2v11.7l-2.7 0.4v-12.3l2.7 0.2z M20.6 10.8c-1 3.9-2.2 8.5-2.2 8.5h-13.8l-2.2-8.5c0 0 8.9-3 18.2 0z M3.7 21.7v4.5l-2.7-0.3v-3.9l2.7-0.3z M1 37.9v-10.4l2.7 0.3v8.2l-2.7 1.9z M2.6 40.9l2.2-3.3h13.8l2.2 3.3h-18.2z M19.3 35.8v-7.9l2.7-0.4v10.1l-2.7-1.8z',
+                    scale: 0.7,
                     fillColor: '#111',
                     fillOpacity: 1,
-                    strokeWeight: 2,
+                    strokeWeight: 1,
                     strokeColor: '#fff',
-                    rotation: 0
+                    rotation: 0,
+                    anchor: new google.maps.Point(11.5, 23.5)
                 }
             });
         }
@@ -13668,14 +13669,18 @@
                 // 4. Listen for other trip status events
                 liveTrackingSocket.on("driver_arrived", () => {
                     showGlobalToast("Driver has arrived at your pickup location!", true);
+                    const msgEl = document.getElementById('displayTrackingMessage');
+                    if (msgEl) msgEl.innerText = "Driver has arrived.";
                 });
 
                 liveTrackingSocket.on("trip_started", () => {
                     showGlobalToast("Your trip has started.", true);
+                    updateLiveTrackingTimeline('onboard');
                 });
 
                 liveTrackingSocket.on("trip_completed", () => {
                     showGlobalToast("Trip finished successfully.", true);
+                    updateLiveTrackingTimeline('completed');
                     liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
                     setTimeout(() => toggleTrackRideOverlay(), 3000); // auto-close after 3s
                 });
@@ -13684,6 +13689,33 @@
 
             } catch (e) {
                 console.error("WebSocket connection failed", e);
+            }
+        }
+
+        function updateLiveTrackingTimeline(activeKey) {
+            const steps = ['created', 'confirmed', 'dispatch', 'onboard', 'completed'];
+            const activeIdx = steps.indexOf(activeKey);
+            if (activeIdx === -1) return;
+            
+            const ul = document.getElementById('trackingTimeline');
+            if (!ul) return;
+            const lis = ul.querySelectorAll('li');
+            
+            lis.forEach((li, idx) => {
+                li.className = '';
+                if (idx < activeIdx) li.classList.add('completed');
+                else if (idx === activeIdx) li.classList.add('active');
+            });
+            
+            // Also update the display message based on activeKey
+            const msgs = {
+                'dispatch': 'Driver is on the way.',
+                'onboard': 'Trip has started.',
+                'completed': 'Trip finished successfully.'
+            };
+            if (msgs[activeKey]) {
+                const msgEl = document.getElementById('displayTrackingMessage');
+                if (msgEl) msgEl.innerText = msgs[activeKey];
             }
         }
 

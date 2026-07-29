@@ -26,7 +26,7 @@
                                 <i class="far fa-user me-2"></i> Profile
                             </a>
                         </li>
-                        <li id="desktopNavDashboardLink" style="display:none;">
+                        <li id="desktopNavDashboardLink">
                             <a href="{{ route('uk-dashboard') }}" class="navbar-user-menu-btn">
                                 <i class="fas fa-chart-line me-2"></i> Dashboard
                             </a>

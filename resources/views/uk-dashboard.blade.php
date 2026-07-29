@@ -1433,8 +1433,20 @@
         function switchTab(tabId) {
             document.querySelectorAll('.custom-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelector(`.custom-tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
-            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            // Safely find the tab to make active
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('custom-tab')) {
+                window.event.currentTarget.classList.add('active');
+            } else {
+                document.querySelectorAll('.custom-tab').forEach(tab => {
+                    if (tab.getAttribute('onclick') && tab.getAttribute('onclick').includes(tabId)) {
+                        tab.classList.add('active');
+                    }
+                });
+            }
+            
+            const tabContent = document.getElementById('tab-' + tabId);
+            if(tabContent) tabContent.classList.add('active');
         }
 
         function setAmount(amount) {

@@ -1,23 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide - Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <!-- Bootstrap JS (needed for modals and dropdowns) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+@section('content')
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            padding-bottom: 30px;
+        /* Skeleton Loader Styles */
+        @keyframes shimmer {
+            0% {
+                background-position: -468px 0;
+            }
+            100% {
+                background-position: 468px 0;
+            }
         }
+
+        .skeleton {
+            background: #f6f7f8;
+            background-image: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+            background-repeat: no-repeat;
+            background-size: 800px 100%; 
+            animation: shimmer 1.5s infinite linear forwards;
+            border-radius: 8px;
+            color: transparent !important;
+            user-select: none;
+        }
+        
+        .skeleton * {
+            visibility: hidden !important;
+        }
+
+        .skeleton-circle {
+            border-radius: 50%;
+        }
+
+        .skeleton-text {
+            height: 18px;
+            margin-bottom: 6px;
+        }
+
+        /* Pagination Styles */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .page-btn {
+            min-width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            color: #111;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .page-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .page-btn.active {
+            background: #111;
+            color: #fff;
+            border-color: #111;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f9fafb;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .empty-state i {
+            font-size: 40px;
+            color: #d1d5db;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state h5 {
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 5px;
+        }
+        
+        .empty-state p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
 
         /* Navbar */
         .dash-navbar {
@@ -906,55 +994,13 @@
             }
         }
     </style>
-</head>
-
-<body>
-
-    <!-- Navbar -->
-    <nav class="dash-navbar px-3 px-md-4">
-        <div class="navbar-brand-wrapper gap-2 gap-md-3">
-            <a href="/" class="nav-logo fs-5 fs-md-4">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
-
-            </a>
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Find a ride, location, or transaction...">
-            </div>
-        </div>
-
-        <div class="nav-actions gap-2 gap-md-3">
-            <a href="/" class="btn-book-ride px-2 px-md-3">
-                <i class="fas fa-plus"></i> <span class="d-none d-md-inline">Book Ride</span>
-            </a>
-
-            <div class="dropdown">
-                <img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="Profile" class="profile-img"
-                    data-bs-toggle="dropdown">
-                <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm mt-2">
-                    <li><a class="dropdown-item  py-2" href="/uk-profile"><i class="far fa-user me-2 w-20px"></i>
-                            Profile</a></li>
-                    <li><a class="dropdown-item  py-2" href="/uk-dashboard"><i class="fas fa-chart-line me-2"></i>
-                            Dashboard</a></li>
-                    <!-- <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-cog me-2"></i> Settings</a>
-                    </li> -->
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item  py-2" href="#"><i class="fas fa-sign-out-alt me-2"></i>
-                            Logout</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <!-- Dashboard Content -->
     <div class="container">
 
         <div class="dashboard-header-flex">
             <div class="welcome-section">
-                <h1 class="welcome-title">Hello, Alex</h1>
-                <p class="welcome-subtitle">Here is what's happening with your rides today.</p>
+                <h1 class="welcome-title" id="welcomeTitle"><span class="skeleton skeleton-text" style="display: inline-block; width: 250px; height: 34px;"></span></h1>
+                <p class="welcome-subtitle" id="welcomeSubtitle">Here is what's happening with your rides today.</p>
             </div>
 
             <!-- Top Overview -->
@@ -962,27 +1008,27 @@
 
 
                 <!-- Stats Grid -->
-                <div class="stats-grid">
+                <div class="stats-grid" id="summaryStatsGrid">
+                    <!-- Skeleton Stats -->
                     <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-car"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-value">148</div>
-                            <div class="stat-label">Total Rides</div>
+                        <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
+                        <div class="stat-info" style="width:100%">
+                            <div class="skeleton skeleton-text" style="width: 60%; height: 24px;"></div>
+                            <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-route"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-value">1,240 <small class="fs-6 fw-bold">mi</small></div>
-                            <div class="stat-label">Total Distance</div>
+                        <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
+                        <div class="stat-info" style="width:100%">
+                            <div class="skeleton skeleton-text" style="width: 70%; height: 24px;"></div>
+                            <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
-                   
                     <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
-                        <div class="stat-info">
-                            <div class="stat-value">4.9</div>
-                            <div class="stat-label">Avg Rating Given</div>
+                        <div class="stat-icon skeleton skeleton-circle" style="width:38px; height:38px;"></div>
+                        <div class="stat-info" style="width:100%">
+                            <div class="skeleton skeleton-text" style="width: 50%; height: 24px;"></div>
+                            <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
                 </div>
@@ -1001,141 +1047,46 @@
 
         <!-- Current Rides -->
         <div id="tab-current" class="tab-content active">
-            <div class="trip-card">
-                <div class="trip-header">
-                    <div class="trip-id">
-                        <div class="trip-status-dot"></div>
-                        Trip #CB-98231 (Live)
+            <div id="currentRidesContainer">
+                <div class="trip-card">
+                    <div class="trip-header">
+                        <div class="trip-id skeleton skeleton-text" style="width: 200px; height: 20px;"></div>
+                        <div class="trip-actions skeleton skeleton-rect" style="width: 150px; height: 30px;"></div>
                     </div>
-                    <div class="trip-actions">
-
-                        <button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i
-                                class="fas fa-map-marked-alt"></i> Live Map</button>
-                        <button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>
-                    </div>
-                </div>
-
-                <div class="row g-4">
-                    <!-- Left Side: Car Details -->
-                    <div class="col-md-6">
-                        <div class="car-image-container">
-                            <img src="/goride/img/saloon.png" alt="Innova Crysta">
-
-                            <div class="car-details mb-2">
-                                <div>
-                                    <div class="car-name">Innova Crysta</div>
-                                    <div class="car-number">TN 09 AB 4567</div>
-                                </div>
-                                <div class="car-amenities">
-                                    <span><i class="fas fa-user-friends"></i> 7 Seats</span>
-                                    <span><i class="fas fa-cog"></i> Automatic</span>
-                                    <span><i class="fas fa-suitcase"></i> 3 Bags</span>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="car-image-container" style="height: 180px; padding: 20px;">
+                                <div class="skeleton skeleton-rect" style="width: 60%; height: 100px;"></div>
+                                <div class="car-details mb-2 w-100 ps-4">
+                                    <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                                    <div class="skeleton skeleton-text" style="width: 50%;"></div>
                                 </div>
                             </div>
-                        </div>
-
-
-
-
-
-                        <div class="fare-breakdown">
-                            <div class="fare-breakdown-title">FARE BREAKDOWN</div>
-                            <div class="d-flex justify-content-between mb-2 fs-13">
-                                <span>Base Fare</span>
-                                <span>£10.00</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2 fs-13">
-                                <span>Distance (12.4 mi)</span>
-                                <span>£25.00</span>
-                            </div>
-                            <div class="d-flex justify-content-between mb-2 fs-13">
-                                <span>Surge & Taxes</span>
-                                <span>£10.00</span>
-                            </div>
-                            <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
-                                <span>Total</span>
-                                <span>£45.00</span>
+                            <div class="fare-breakdown mt-3">
+                                <div class="skeleton skeleton-text" style="width: 40%;"></div>
+                                <div class="skeleton skeleton-text mt-3" style="width: 100%;"></div>
+                                <div class="skeleton skeleton-text" style="width: 100%;"></div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Right Side: Trip Details -->
-                    <div class="col-md-6">
-                        <div class="otp-banner">
-                            <div>
-                                <div class="otp-label">TRIP OTP</div>
-                                <div class="otp-value">4829</div>
-                            </div>
-                            <div class="otp-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                        </div>
-
-                        <div class="route-timeline">
-                            <div class="route-point">
-                                <div class="point-icon"></div>
-                                <div class="point-details">
-                                    <div class="point-label">PICKUP</div>
-                                    <div class="point-address">123 Tech Park Blvd, Sector 64</div>
+                        <div class="col-md-6">
+                            <div class="otp-banner skeleton skeleton-rect" style="height: 50px;"></div>
+                            <div class="route-timeline mt-4">
+                                <div class="route-point">
+                                    <div class="point-icon skeleton skeleton-circle"></div>
+                                    <div class="point-details w-100">
+                                        <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                                        <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="route-point">
-                                <div class="point-icon drop"></div>
-                                <div class="point-details">
-                                    <div class="point-label">DROP</div>
-                                    <div class="point-address">Grand Central Mall</div>
+                                <div class="route-point">
+                                    <div class="point-icon drop skeleton skeleton-circle"></div>
+                                    <div class="point-details w-100">
+                                        <div class="skeleton skeleton-text" style="width: 80%;"></div>
+                                        <div class="skeleton skeleton-text" style="width: 60%;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-3 col-6">
-                                <div class="info-block-title">DATE</div>
-                                <div class="info-block-value">Oct 24, 2023</div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="info-block-title">PICKUP TIME</div>
-                                <div class="info-block-value">10:30 AM</div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="info-block-title">PAYMENT STATUS</div>
-                                <div class="info-block-value text-dark d-flex align-items-center gap-2"><i
-                                        class="far fa-clock"></i> Pending</div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="info-block-title">PAYMENT MODE</div>
-                                <div class="info-block-value"><i class="far fa-money-bill-alt"></i> Wallet</div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="driver-details-heading">
-                            <i class="fas fa-id-badge me-2"></i>
-                            DRIVER DETAILS
-                        </div>
-
-                        <div class="driver-card">
-                            <div class="driver-img-wrapper">
-                                <img src="https://ui-avatars.com/api/?name=RS&amp;background=random" class="driver-img">
-                                <div class="driver-rating-badge">
-                                    <i class="fas fa-star text-warning me-1"></i> 4.9
-                                </div>
-                            </div>
-
-                            <div class="driver-info">
-                                <div class="driver-name">James Wilson</div>
-                                <div class="driver-trips">3.2k+ trips completed</div>
-                            </div>
-
-                            <div class="driver-contact-btns">
-                                <a href="tel:#" class="btn-contact"><i class="fas fa-phone-alt"
-                                        style="  transform: rotate(90deg);"></i></a>
-                                <a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>
-                            </div>
-                            <button class="btn-outline-dark-custom">CANCEL TRIP</button>
-                        </div>
-
-
                     </div>
                 </div>
             </div>
@@ -1143,96 +1094,28 @@
 
         <!-- Completed Rides -->
         <div id="tab-completed" class="tab-content">
-            <div class="row g-4">
-                <!-- Completed Trip 1 -->
-                <div class="col-md-6">
-                    <div class="compact-trip-card">
-                        <div class="compact-car-img-wrapper">
-                            <img src="/goride/img/saloon.png" class="compact-car-img" alt="Innova">
-                        </div>
-                        <div class="compact-trip-details">
-                            <div class="compact-trip-title">Downtown Hotel, Central Blvd</div>
-                            <div class="compact-trip-meta">23 Oct • 09:00 AM</div>
-                            <div class="compact-trip-price-status">£35.00 • Completed</div>
-                            <div class="compact-trip-actions">
-
-                                <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Completed Trip 2 -->
-                <div class="col-md-6">
-                    <div class="compact-trip-card">
-                        <div class="compact-car-img-wrapper">
-                            <img src="/goride/img/saloon.png" class="compact-car-img" alt="Innova">
-                        </div>
-                        <div class="compact-trip-details">
-                            <div class="compact-trip-title">Business Park, Sector 45</div>
-                            <div class="compact-trip-meta">20 Oct • 02:15 PM</div>
-                            <div class="compact-trip-price-status">£45.00 • Completed</div>
-                            <div class="compact-trip-actions">
-
-                                <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Completed Trip 3 -->
-                <div class="col-md-6">
-                    <div class="compact-trip-card">
-                        <div class="compact-car-img-wrapper">
-                            <img src="/goride/img/saloon.png" class="compact-car-img" alt="Innova">
-                        </div>
-                        <div class="compact-trip-details">
-                            <div class="compact-trip-title">Airport Terminal 2</div>
-                            <div class="compact-trip-meta">15 Oct • 06:30 AM</div>
-                            <div class="compact-trip-price-status">£65.00 • Completed</div>
-                            <div class="compact-trip-actions">
-
-                                <a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>
-                            </div>
-                        </div>
-                    </div>
+            <div id="completedRidesContainer">
+                <div class="row g-4">
+                    <!-- Skeletons -->
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
                 </div>
             </div>
+            <div id="completedPagination" class="pagination-container"></div>
         </div>
 
         <!-- Cancelled Rides -->
         <div id="tab-cancelled" class="tab-content">
-            <div class="row g-4">
-                <!-- Cancelled Trip 1 -->
-                <div class="col-md-6">
-                    <div class="compact-trip-card ">
-                        <div class="compact-car-img-wrapper">
-                            <img src="/goride/img/saloon.png" class="compact-car-img img-grayscale" alt="Innova">
-                        </div>
-                        <div class="compact-trip-details">
-                            <div class="compact-trip-title">Residential Complex, North St</div>
-                            <div class="compact-trip-meta">22 Oct • 04:30 PM</div>
-                            <div class="compact-trip-price-status">£0.00 • Cancelled</div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cancelled Trip 2 -->
-                <div class="col-md-6">
-                    <div class="compact-trip-card ">
-                        <div class="compact-car-img-wrapper">
-                            <img src="/goride/img/saloon.png" class="compact-car-img img-grayscale" alt="Innova">
-                        </div>
-                        <div class="compact-trip-details">
-                            <div class="compact-trip-title">Tech Hub 2, City Center</div>
-                            <div class="compact-trip-meta">18 Oct • 08:15 AM</div>
-                            <div class="compact-trip-price-status">£0.00 • Cancelled</div>
-
-                        </div>
-                    </div>
+            <div id="cancelledRidesContainer">
+                <div class="row g-4">
+                    <!-- Skeletons -->
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
+                    <div class="col-md-6"><div class="compact-trip-card skeleton skeleton-rect" style="height: 120px;"></div></div>
                 </div>
             </div>
+            <div id="cancelledPagination" class="pagination-container"></div>
         </div>
 
     </div>
@@ -1338,10 +1221,15 @@
     </div>
 
     <script>
+
+        function getToken() {
+            return typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '';
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.custom-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            document.querySelector(`.custom-tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
             document.getElementById('tab-' + tabId).classList.add('active');
         }
 
@@ -1350,7 +1238,323 @@
             event.currentTarget.classList.add('active');
             document.getElementById('customAmount').value = amount;
         }
-    </script>
-</body>
 
-</html>
+        function buildPagination(paginationData, containerId, fetchFunctionStr) {
+            const container = document.getElementById(containerId);
+            if (!paginationData || paginationData.total_pages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            // Prev Button
+            if (paginationData.current_page > 1) {
+                html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${paginationData.current_page - 1})" class="page-btn"><i class="fas fa-chevron-left"></i></a>`;
+            } else {
+                html += `<button disabled class="page-btn"><i class="fas fa-chevron-left"></i></button>`;
+            }
+            
+            // Page numbers
+            for (let i = 1; i <= paginationData.total_pages; i++) {
+                if (i === paginationData.current_page) {
+                    html += `<a href="javascript:void(0)" class="page-btn active">${i}</a>`;
+                } else {
+                    html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${i})" class="page-btn">${i}</a>`;
+                }
+            }
+            
+            // Next Button
+            if (paginationData.current_page < paginationData.total_pages) {
+                html += `<a href="javascript:void(0)" onclick="${fetchFunctionStr}(${paginationData.current_page + 1})" class="page-btn"><i class="fas fa-chevron-right"></i></a>`;
+            } else {
+                html += `<button disabled class="page-btn"><i class="fas fa-chevron-right"></i></button>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        async function fetchDashboardSummary() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/customer-dashboard/summary`, {
+                    headers: { 'Authorization': `Bearer ${getToken()}` }
+                });
+                const res = await response.json();
+                if (res.status && res.data) {
+                    const data = res.data;
+                    document.getElementById('welcomeTitle').innerHTML = `Hello, ${data.customer_name}`;
+                    document.getElementById('welcomeSubtitle').innerHTML = `Here is what's happening with your rides today.`;
+                    
+
+                    
+                    document.getElementById('summaryStatsGrid').innerHTML = `
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-car"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">${data.total_rides}</div>
+                                <div class="stat-label">Total Rides</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-route"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">${data.total_distance} <small class="fs-6 fw-bold">${data.distance_unit}</small></div>
+                                <div class="stat-label">Total Distance</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-star text-warning"></i></div>
+                            <div class="stat-info">
+                                <div class="stat-value">${data.average_rating}</div>
+                                <div class="stat-label">Avg Rating Given</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Error fetching summary", error);
+            }
+        }
+
+        async function fetchCurrentRides() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/customer-dashboard/current-rides`, {
+                    headers: { 'Authorization': `Bearer ${getToken()}` }
+                });
+                const res = await response.json();
+                const container = document.getElementById('currentRidesContainer');
+                if (res.status && res.data && res.data.length > 0) {
+                    let html = '';
+                    res.data.forEach(trip => {
+                        html += `
+                        <div class="trip-card mb-4">
+                            <div class="trip-header">
+                                <div class="trip-id">
+                                    <div class="trip-status-dot"></div>
+                                    Trip #${trip.job_no} (${trip.is_live ? 'Live' : trip.job_status})
+                                </div>
+                                <div class="trip-actions">
+                                    ${trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
+                                    ${trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
+                                </div>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="car-image-container">
+                                        <img src="${trip.vehicle.image}" alt="${trip.vehicle.name}" onerror="this.src='/goride/img/saloon.png'">
+                                        <div class="car-details mb-2">
+                                            <div>
+                                                <div class="car-name">${trip.vehicle.name}</div>
+                                                <div class="car-number">${trip.vehicle.number}</div>
+                                            </div>
+                                            <div class="car-amenities">
+                                                <span><i class="fas fa-user-friends"></i> ${trip.vehicle.seats} Seats</span>
+                                                <span><i class="fas fa-cog"></i> ${trip.vehicle.transmission}</span>
+                                                <span><i class="fas fa-suitcase"></i> ${trip.vehicle.bags} Bags</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="fare-breakdown mt-3">
+                                        <div class="fare-breakdown-title">FARE BREAKDOWN</div>
+                                        <div class="d-flex justify-content-between mb-2 fs-13">
+                                            <span>Base Fare</span>
+                                            <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2 fs-13">
+                                            <span>Tax and Other charges</span>
+                                            <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
+                                            <span>Total</span>
+                                            <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="otp-banner">
+                                        <div>
+                                            <div class="otp-label">TRIP OTP</div>
+                                            <div class="otp-value">${trip.trip_otp}</div>
+                                        </div>
+                                        <div class="otp-icon">
+                                            <i class="fas fa-shield-alt"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="route-timeline mt-4">
+                                        <div class="route-point">
+                                            <div class="point-icon"></div>
+                                            <div class="point-details">
+                                                <div class="point-label">PICKUP</div>
+                                                <div class="point-address">${trip.pickup}</div>
+                                            </div>
+                                        </div>
+                                        <div class="route-point">
+                                            <div class="point-icon drop"></div>
+                                            <div class="point-details">
+                                                <div class="point-label">DROP</div>
+                                                <div class="point-address">${trip.drop}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3 mb-4 mt-3">
+                                        <div class="col-md-3 col-6">
+                                            <div class="info-block-title">DATE</div>
+                                            <div class="info-block-value">${trip.pickup_date}</div>
+                                        </div>
+                                        <div class="col-md-3 col-6">
+                                            <div class="info-block-title">PICKUP TIME</div>
+                                            <div class="info-block-value">${trip.pickup_time}</div>
+                                        </div>
+                                        <div class="col-md-3 col-6">
+                                            <div class="info-block-title">PAYMENT STATUS</div>
+                                            <div class="info-block-value text-dark d-flex align-items-center gap-2">
+                                                <i class="far fa-clock"></i> ${trip.payment_status}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-6">
+                                            <div class="info-block-title">PAYMENT MODE</div>
+                                            <div class="info-block-value"><i class="far fa-money-bill-alt"></i> ${trip.payment_mode}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="driver-details-heading mt-2">
+                                        <i class="fas fa-id-badge me-2"></i>
+                                        DRIVER DETAILS
+                                    </div>
+
+                                    <div class="driver-card">
+                                        <div class="driver-img-wrapper">
+                                            <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
+                                            <div class="driver-rating-badge">
+                                                <i class="fas fa-star text-warning me-1"></i> ${trip.driver.rating}
+                                            </div>
+                                        </div>
+                                        <div class="driver-info">
+                                            <div class="driver-name">${trip.driver.name}</div>
+                                            <div class="driver-trips">${trip.driver.completed_trips} trips completed</div>
+                                        </div>
+                                        <div class="driver-contact-btns">
+                                            ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
+                                            ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
+                                        </div>
+                                        ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2">CANCEL TRIP</button>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-car-side"></i>
+                            <h5>No active rides</h5>
+                            <p>You don't have any ongoing trips right now.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error("Error fetching current rides", error);
+            }
+        }
+
+        async function fetchCompletedRides(page = 1) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/customer-dashboard/completed-rides?page=${page}&limit=10`, {
+                    headers: { 'Authorization': `Bearer ${getToken()}` }
+                });
+                const res = await response.json();
+                const container = document.getElementById('completedRidesContainer');
+                if (res.status && res.data && res.data.length > 0) {
+                    let html = '<div class="row g-4">';
+                    res.data.forEach(trip => {
+                        html += `
+                        <div class="col-md-6">
+                            <div class="compact-trip-card">
+                                <div class="compact-car-img-wrapper">
+                                    <img src="${trip.vehicle_image}" class="compact-car-img" onerror="this.src='/goride/img/saloon.png'">
+                                </div>
+                                <div class="compact-trip-details">
+                                    <div class="compact-trip-title">${trip.drop}</div>
+                                    <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                    <div class="compact-trip-price-status">£${parseFloat(trip.amount).toFixed(2)} ${trip.currency} • Completed</div>
+                                    <div class="compact-trip-actions">
+                                        ${trip.receipt_available ? `<a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                    container.innerHTML = html;
+                    buildPagination(res.pagination, 'completedPagination', 'fetchCompletedRides');
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-history"></i>
+                            <h5>No completed rides</h5>
+                            <p>You haven't completed any trips yet.</p>
+                        </div>
+                    `;
+                    document.getElementById('completedPagination').innerHTML = '';
+                }
+            } catch (error) {
+                console.error("Error fetching completed rides", error);
+            }
+        }
+
+        async function fetchCancelledRides(page = 1) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/customer-dashboard/cancelled-rides?page=${page}&limit=10`, {
+                    headers: { 'Authorization': `Bearer ${getToken()}` }
+                });
+                const res = await response.json();
+                const container = document.getElementById('cancelledRidesContainer');
+                if (res.status && res.data && res.data.length > 0) {
+                    let html = '<div class="row g-4">';
+                    res.data.forEach(trip => {
+                        html += `
+                        <div class="col-md-6">
+                            <div class="compact-trip-card">
+                                <div class="compact-car-img-wrapper">
+                                    <img src="${trip.vehicle_image}" class="compact-car-img img-grayscale" onerror="this.src='/goride/img/saloon.png'">
+                                </div>
+                                <div class="compact-trip-details">
+                                    <div class="compact-trip-title">${trip.drop}</div>
+                                    <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                    <div class="compact-trip-price-status text-danger">${trip.cancel_reason || 'Cancelled'}</div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                    container.innerHTML = html;
+                    buildPagination(res.pagination, 'cancelledPagination', 'fetchCancelledRides');
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-ban"></i>
+                            <h5>No cancelled rides</h5>
+                            <p>You don't have any cancelled trips.</p>
+                        </div>
+                    `;
+                    document.getElementById('cancelledPagination').innerHTML = '';
+                }
+            } catch (error) {
+                console.error("Error fetching cancelled rides", error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchDashboardSummary();
+            fetchCurrentRides();
+            fetchCompletedRides(1);
+            fetchCancelledRides(1);
+        });
+    </script>
+@endsection

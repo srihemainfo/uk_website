@@ -6932,7 +6932,7 @@
             }
 
             .vehicle-left {
-                width: 130px;
+                width: 135px;
                 height: auto;
                 min-height: 90px;
                 margin: 0;
@@ -7017,7 +7017,7 @@
 
             .v-features {
                 display: flex;
-                gap: 16px;
+                gap: 5px;
                 font-size: 15px;
                 margin-top: 4px;
                 margin-bottom: 0;
@@ -11750,6 +11750,11 @@
         function showStep(stepNumber) {
             const currentStep = BookingStore.getState().currentStep || 1;
 
+            // Close mobile summary if it is open (so it doesn't block the screen)
+            if ($('#mobileTripBody').length && $('#mobileTripBody').is(':visible') && typeof toggleTripSummary === 'function') {
+                toggleTripSummary();
+            }
+
             // Prevent going back to pre-bidding steps if already in bidding or beyond
             if (currentStep >= 5 && stepNumber < 5) {
                 return;
@@ -11831,6 +11836,7 @@
                 $('.edit-icon-btn').show();
                 if (stepNumber === 3) {
                     $('#selectedCarSummary .edit-icon-btn').hide();
+                    $('#mcsCarDetails .edit-icon-btn').hide();
                 }
             }
             $('.hero-form-section').scrollTop(0);

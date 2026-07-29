@@ -858,7 +858,7 @@
             border: 2px solid #e0e0e0 !important;
             border-radius: 10px !important;
             font-size: 17px !important;
-            background: #f7f7f7 !important;
+            background: #fff !important;
             transition: border-color 0.25s ease;
             /* box-shadow 0.25s ease; */
             background 0.25s ease !important;
@@ -2134,7 +2134,7 @@
         .passenger-details-layout {
             display: flex;
             gap: 15px;
-            align-items: stretch;
+            align-items: center;
             justify-content: space-between;
         }
 
@@ -3225,7 +3225,10 @@
         #bookingDetailsIcon {
             background: none;
             color: #3a3434;
-            height: 0px;
+            height: auto;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
         }
 
         .summary-title {
@@ -4875,7 +4878,8 @@
             padding: 14px 16px;
             background: white;
             overflow-y: auto;
-            height: calc(100vh - 150px);
+            max-height: calc(100vh - 150px);
+            -webkit-overflow-scrolling: touch;
         }
 
         .mobile-trip-item {
@@ -5850,6 +5854,9 @@
                 top: 70px !important;
                 left: 0;
                 width: 100%;
+                max-height: calc(100vh - 75px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
                 z-index: 1000;
                 background: #fff;
                 border-bottom: 1px solid #eee;
@@ -7963,11 +7970,11 @@
             </div>
             <div class="form-group-uber">
                 <label>Passenger Name</label>
-                <input type="text" id="otherPassengerName" placeholder="Enter passenger name">
+                <input type="text" id="otherPassengerName" placeholder="Enter passenger name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
             </div>
             <div class="form-group-uber">
                 <label>Mobile Number(Optional)</label>
-                <input type="text" id="otherPassengerPhone" placeholder="+44 7123456789">
+                <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
             </div>
             <button class="btn-search-uber" onclick="saveOtherPassenger()">
                 Save Details
@@ -8266,6 +8273,7 @@
             // Payment (Step 5)
             paymentMethod: '',
             meetAndGreet: false,
+            wheelchairOption: false,
 
             // Driver (Steps 6/7)
             bookingId: null,
@@ -8541,6 +8549,18 @@
             $('#mcsDateValue').text(d);
             $('#mcsTimeValue').text(t);
 
+            // Dynamic Date and Time header labels for Desktop & Mobile stat boxes
+            if (state.pickupType === 'airport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+            } else if (state.pickupType === 'seaport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
+            } else {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+            }
+
             // pickupNowBtn label
             const pnb = document.getElementById('pickupNowBtn');
             if (pnb && state.date && state.time) {
@@ -8595,9 +8615,16 @@
         }
 
         function _updatePassengerSummaryUI(state) {
+            function _fmtPhone(val) {
+                if (!val) return '';
+                const clean = val.trim();
+                if (clean.startsWith('+')) return clean;
+                return '+44 ' + clean;
+            }
+
             // Passenger name
             const pName = (state.passengerFirstName + ' ' + (state.passengerLastName || '')).trim();
-            $('#summaryPassengerName').text(state.passengerFirstName || '\u2013');
+            $('#summaryPassengerName').text(state.passengerFirstName || '–');
             if (pName) {
                 $('#mcsPassengerName').text(pName);
                 $('#mcsPassengerNameContainer').css('display', 'flex');
@@ -8605,11 +8632,31 @@
                 $('#mcsPassengerNameContainer').hide();
             }
 
+            // Booked for someone else support
+            const isOther = state.rideFor === 'other' && state.otherPassengerData && state.otherPassengerData.name;
+            if (isOther) {
+                const otherName = state.otherPassengerData.name;
+                const otherPhone = state.otherPassengerData.phone || '';
+
+                $('#summaryBookedByLabel, #mcsBookedByLabel').show();
+                $('#summaryBookedForName, #mcsBookedForName').text(otherName);
+                if (otherPhone) {
+                    $('#summaryBookedForPhone, #mcsBookedForPhone').text('(' + _fmtPhone(otherPhone) + ')').show();
+                } else {
+                    $('#summaryBookedForPhone, #mcsBookedForPhone').hide().text('');
+                }
+                $('#summaryBookedForContainer, #mcsBookedForContainer').show();
+            } else {
+                $('#summaryBookedByLabel, #mcsBookedByLabel').hide();
+                $('#summaryBookedForContainer, #mcsBookedForContainer').hide();
+            }
+
             // Phone
             const phone = state.passengerPhone || '';
-            $('#summaryPassengerContact').text(phone ? ('+44 ' + phone) : '\u2013');
+            const fmtMainPhone = _fmtPhone(phone);
+            $('#summaryPassengerContact').text(fmtMainPhone || '–');
             if (phone) {
-                $('#mcsPassengerPhone').text('+44 ' + phone);
+                $('#mcsPassengerPhone').text(fmtMainPhone);
                 $('#mcsPassengerPhoneContainer').css('display', 'flex');
             } else {
                 $('#mcsPassengerPhoneContainer').hide();
@@ -8659,9 +8706,11 @@
         function _updateJourneySummaryUI(state) {
             const pickupType = state.pickupType;
             if (pickupType === 'airport') {
-                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Flight Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Flight Arrival Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Landing Time');
                 $('#summaryBookingTime').text(state.time || '\u2013');
 
                 const airportDetails = [state.flightNumber, state.comingFrom, state.dropoffAddress]
@@ -8682,6 +8731,8 @@
                 $('#mcsDropoffAddressContainer').hide();
                 $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else if (pickupType === 'seaport') {
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Docking Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Docking Time');
@@ -8705,9 +8756,11 @@
                 $('#mcsDropoffAddressContainer').hide();
                 $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').show();
             } else {
-                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Journey Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Journey Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Time');
                 $('#summaryBookingTime').text(state.time || '\u2013');
                 $('#summaryFlightContainer').hide();
                 $('#summaryComingFromContainer').hide();
@@ -8850,13 +8903,13 @@
             });
 
             // Realtime formatters for Personal Info fields
-            $(document).on('input', '#passengerFirstName, #authNameInput', function () {
+            $(document).on('input', '#passengerFirstName, #authNameInput, #otherPassengerName', function () {
                 formatFullName(this);
-            }).on('blur', '#passengerFirstName, #authNameInput', function () {
+            }).on('blur', '#passengerFirstName, #authNameInput, #otherPassengerName', function () {
                 this.value = this.value.trim();
             });
 
-            $(document).on('input', '#passengerPhone, #authContactInput', function () {
+            $(document).on('input', '#passengerPhone, #authContactInput, #otherPassengerPhone', function () {
                 formatContactNumber(this);
             });
 
@@ -9659,10 +9712,11 @@
             if (type === 'Me') {
                 $('#forMeRadioMe').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
                 $('#forMeRadioOther').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
-                $('#forMeTitle').text('For me');
-                $('#forMeDetails').hide();
+                $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('For me');
+                $('#forMeDetails').hide().text('');
                 // Batch update rideFor + clear other passenger
                 BookingStore.setState({ rideFor: 'me', otherPassengerData: null });
+                closeForMeModal();
             } else {
                 $('#forMeRadioMe').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
                 $('#forMeRadioOther').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
@@ -10023,13 +10077,15 @@
             v = v.replace(/[^A-Za-z ]/g, '');
             v = v.replace(/^ +/, '');
             v = v.replace(/ {2,}/g, ' ');
-            if (v.length > 100) v = v.substring(0, 100);
+            if (v.length > 75) v = v.substring(0, 75);
             inputEl.value = v;
         }
 
         function formatContactNumber(inputEl) {
             if (!inputEl) return;
-            inputEl.value = inputEl.value.replace(/\D/g, '');
+            let v = inputEl.value.replace(/\D/g, '');
+            if (v.length > 12) v = v.substring(0, 12);
+            inputEl.value = v;
         }
 
         function formatEmailAddress(inputEl) {
@@ -10045,8 +10101,8 @@
             if (!trimmed) {
                 return { valid: false, message: 'Full Name is mandatory.' };
             }
-            if (trimmed.length > 100) {
-                return { valid: false, message: 'Full Name cannot exceed 100 characters.' };
+            if (trimmed.length > 75) {
+                return { valid: false, message: 'Full Name cannot exceed 75 characters.' };
             }
             if (!/^[A-Za-z]+( [A-Za-z]+)*$/.test(trimmed)) {
                 return { valid: false, message: 'Full Name must contain only alphabets (A-Z, a-z) with single spaces between words.' };
@@ -10365,7 +10421,10 @@
 
             if (pName) {
                 $('#mcsPassengerName').text(pName);
-                $('#mcsPassengerNameContainer').css('display', 'flex');
+                $('#mcsPassengerNameContainer').css({
+                    'display': 'flex',
+                    'flex-direction': 'column'
+                });
             } else {
                 $('#mcsPassengerNameContainer').hide();
             }
@@ -10458,9 +10517,11 @@
             const pickupType = bookingData.pickupType;
             if (pickupType === 'airport') {
                 // Flight details
-                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Flight Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('FLIGHT LANDING TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Flight Arrival Date');
                 $('#summaryBookingDate').text(bookingData.date || '–');
-                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Flight Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Flight Landing Time');
                 $('#summaryBookingTime').text(bookingData.time || '–');
 
                 const flightNum = $('#flightNumber').val() || '';
@@ -10490,6 +10551,8 @@
                 }
             } else if (pickupType === 'seaport') {
                 // Cruise details
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DOCKING DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('DOCKING TIME');
                 $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Docking Date');
                 $('#summaryBookingDate').text(bookingData.date || '–');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Docking Time');
@@ -10523,10 +10586,12 @@
                 }
             } else {
                 // Normal details
-                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Journey Date');
+                $('#dtStatDateLabel, #mcsStatDateLabel').text('DATE');
+                $('#dtStatTimeLabel, #mcsStatTimeLabel').text('TIME');
+                $('#summaryDateLabel').html('<i class="fas fa-calendar text-yellow"></i> Date');
                 const normalDate = $('#normalJourneyDate').val() || bookingData.date || '–';
                 $('#summaryBookingDate').text(normalDate);
-                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Journey Time');
+                $('#summaryTimeLabel').html('<i class="fas fa-clock text-yellow"></i> Time');
                 const normalTime = $('#normalJourneyTime').val() || bookingData.time || '–';
                 $('#summaryBookingTime').text(normalTime);
                 // Hide airport/seaport specific details
@@ -10578,6 +10643,9 @@
             const isSpecialReq = $('#specialReqCheckbox').is(':checked');
             const currentPickupType = BookingStore.getState().pickupType;
 
+            const isMeetGreet = $('#meetAndGreet').is(':checked') || $('#meetAndGreetSeaport').is(':checked');
+            const isWheelchair = $('#wheelchairOptionAirport').is(':checked') || $('#wheelchairOptionSeaport').is(':checked') || $('#wheelchairOptionNormal').is(':checked');
+
             // Build journey-specific fields
             let journeyFields = {};
             if (currentPickupType === 'airport') {
@@ -10587,7 +10655,8 @@
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
                     pickAfterTime: $('#pickupAfterLandingSelect').val(),
-                    meetAndGreet: $('#meetAndGreet').is(':checked') ? '1' : '0'
+                    meetAndGreet: isMeetGreet ? '1' : '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             } else if (currentPickupType === 'seaport') {
                 journeyFields = {
@@ -10595,11 +10664,15 @@
                     ferryName: $('#ferryName').val(),
                     comingFromPort: $('#comingFromPort').val(),
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
+                    meetAndGreet: isMeetGreet ? '1' : '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             } else {
                 journeyFields = {
                     pickupAddressNormal: $('#pickupAddressNormal').val(),
                     dropoffAddressNormal: $('#dropoffAddressNormal').val(),
+                    meetAndGreet: '0',
+                    wheelchairOption: isWheelchair ? '1' : '0',
                 };
             }
 
@@ -11593,9 +11666,17 @@
                 updateSeaportArrivalTime();
             }
 
+            // Sync meet and greet & wheelchair checkboxes across pickup types
+            $(document).on('change', '.meet-and-greet-cb', function () {
+                $('.meet-and-greet-cb').prop('checked', this.checked);
+            });
+            $(document).on('change', '.wheelchair-option-cb', function () {
+                $('.wheelchair-option-cb').prop('checked', this.checked);
+            });
+
             // Bind input change events to update the store + booking summary live
             $(document).on('input change',
-                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
+                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
                     // _updatePassengerSummaryUI and _updateJourneySummaryUI subscribers
@@ -11730,16 +11811,19 @@
                 if (stepNumber >= 5) {
                     $('#enteredDetailsSummary').show();
                     $('#mcsEnteredDetails').css('display', 'grid');
+                    $('#riderSelectCard').hide();
                     updateBookingSummary();
                 } else {
                     $('#enteredDetailsSummary').hide();
                     $('#mcsEnteredDetails').hide();
+                    $('#riderSelectCard').show();
                 }
             } else {
                 $('#selectedCarSummary').hide();
                 $('#mcsCarDetails').hide();
                 $('#enteredDetailsSummary').hide();
                 $('#mcsEnteredDetails').hide();
+                $('#riderSelectCard').show();
             }
             if (stepNumber >= 5) {
                 $('.edit-icon-btn').hide();
@@ -11756,7 +11840,7 @@
                 if (stepNumber === 1) {
                     $('.navbar-menu').removeClass('hide-on-mobile');
                     $('#mobileHamburger').css('display', 'flex');
-                    $('#mobileMapBtn').hide();
+                    $('#mobileMapBtn, #mobileHeaderRiderBtn').hide();
                     $('#bookingImage').show();
                     $('#bookingMap').hide();
                     $('#mapRouteBadge').hide();
@@ -11769,7 +11853,7 @@
                 } else if (stepNumber === 8) {
                     $('.navbar-menu').addClass('hide-on-mobile');
                     $('#mobileHamburger').hide();
-                    $('#mobileMapBtn').hide();
+                    $('#mobileMapBtn, #mobileHeaderRiderBtn').hide();
                     $('#bookingImage').hide();
                     $('#mapRouteBadge').hide();
                     $('#mobileCompactSummary').removeClass('visible');
@@ -11782,6 +11866,11 @@
                     $('.navbar-menu').addClass('hide-on-mobile');
                     $('#mobileHamburger').hide();
                     $('#mobileMapBtn').css('display', 'flex');
+                    if (stepNumber < 5) {
+                        $('#mobileHeaderRiderBtn').css('display', 'inline-flex');
+                    } else {
+                        $('#mobileHeaderRiderBtn').hide();
+                    }
                     $('#bookingImage').hide();
                     $('#mobileCompactSummary').addClass('visible');
                     if (actionBar.length) actionBar.addClass('hidden');
@@ -11803,20 +11892,33 @@
             answer.toggleClass('show');
         }
         function saveOtherPassenger() {
-            const name = $('#otherPassengerName').val().trim();
-            const phone = $('#otherPassengerPhone').val().trim();
+            let name = $('#otherPassengerName').val().trim();
+            let phone = $('#otherPassengerPhone').val().trim();
+
             if (!name) {
-                showToast('Please enter recipient name', 'error');
+                showToast('Please enter passenger name', 'error');
                 return;
             }
-            otherPassengerData = {
-                name,
-                phone
+            if (!/^[a-zA-Z\s]{1,75}$/.test(name)) {
+                showToast('Passenger name can only contain letters (max 75 characters)', 'error');
+                return;
+            }
+            if (phone && !/^[0-9]{1,12}$/.test(phone)) {
+                showToast('Mobile number can only contain numbers (max 12 digits)', 'error');
+                return;
+            }
+
+            const otherData = {
+                name: name,
+                phone: phone
             };
-            $('#forMeTitle').text('Book for someone');
-            $('#forMeDetails').html(phone ?
-                `${name}<br><small style="font-size:18px;">${phone}</small>` :
-                name).show();
+            $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Booked for ' + name);
+            if (phone) {
+                $('#forMeDetails').text(phone).show();
+            } else {
+                $('#forMeDetails').hide().text('');
+            }
+            BookingStore.setState({ rideFor: 'other', otherPassengerData: otherData });
             closeModal('bookForOtherModal');
             closeForMeModal();
         }

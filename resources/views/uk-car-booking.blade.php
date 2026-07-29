@@ -1,5 +1,120 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .rider-select-card {
+            margin-top: 10px;
+            padding: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .rider-select-strip {
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            font-weight: 600;
+            color: #111827;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .rider-select-strip:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .passenger-booked-wrapper {
+            /* display: flex; */
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .passenger-details-label {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #555;
+        }
+
+        /* .passenger-booked-for-container {
+                margin-top: 6px;
+                padding-top: 6px;
+                border-top: 1px dashed #e2e8f0;
+            } */
+
+        .passenger-booked-for-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .passenger-booked-for-phone {
+            font-size: 14px;
+        }
+
+        .mobile-map-bar-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-rider-select-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f172a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-rider-select-btn:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .mobile-header-rider-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-header-rider-btn:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        @media (max-width: 768px) {
+            .rider-select-strip {
+                padding: 9px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
     <div id="mobileActionBar">
         <a href="tel:+441234567890" class="mob-action-btn">
             <div class="mob-action-icon">
@@ -26,9 +141,16 @@
             <div id="mobileMapBar" style="display: none;">
                 <span><i class="fas fa-location-dot" style="color: #333; margin-right:5px;"></i> <span
                         id="mobileMapRouteText">Your route</span></span>
-                <button onclick="toggleMobileMap()">
-                    <i class="fas fa-map"></i> View Map
-                </button>
+                <div class="mobile-map-bar-actions">
+                    <button type="button" class="mobile-rider-select-btn" onclick="showForMeModal()">
+                        <i class="fas fa-user"></i>
+                        <span id="mobileRiderTitle">For me</span>
+                        <i class="fas fa-chevron-down" style="font-size: 10px;"></i>
+                    </button>
+                    <button type="button" class="mobile-view-map-btn" onclick="toggleMobileMap()">
+                        <i class="fas fa-map"></i> View Map
+                    </button>
+                </div>
             </div>
             <!-- Mobile Summary Backdrop -->
             <div id="mobileSummaryBackdrop" class="mobile-summary-backdrop" onclick="toggleTripSummary()"></div>
@@ -64,7 +186,7 @@
                                     <i class="far fa-calendar-alt"></i>
                                 </div>
                                 <div class="stat-info-group">
-                                    <span class="stat-header-label">DATE</span>
+                                    <span class="stat-header-label" id="mcsStatDateLabel">DATE</span>
                                     <div class="stat-main-value" id="mcsDateValue">--</div>
                                 </div>
                             </div>
@@ -75,7 +197,7 @@
                                     <i class="far fa-clock"></i>
                                 </div>
                                 <div class="stat-info-group">
-                                    <span class="stat-header-label">TIME</span>
+                                    <span class="stat-header-label" id="mcsStatTimeLabel">TIME</span>
                                     <div class="stat-main-value" id="mcsTimeValue">--</div>
                                 </div>
                             </div>
@@ -131,7 +253,17 @@
                         <div class="passenger-details-layout">
                             <div class="passenger-details-left">
                                 <div id="mcsPassengerNameContainer" class="passenger-details-name-container">
-                                    <span class="passenger-details-name" id="mcsPassengerName">-</span>
+                                    <div id="mcsBookedForContainer" class="passenger-booked-for-container"
+                                        style="display:none;">
+                                        <span class="passenger-details-label">Booked for: </span>
+                                        <span class="passenger-booked-for-name" id="mcsBookedForName">-</span>
+                                        <span id="mcsBookedForPhone" class="passenger-booked-for-phone"></span>
+                                    </div>
+                                    <div id="mcsBookedByWrapper" class="passenger-booked-wrapper">
+                                        <span class="passenger-details-label" id="mcsBookedByLabel"
+                                            style="display:none;">Booked by: </span>
+                                        <span class="passenger-details-name" id="mcsPassengerName">-</span>
+                                    </div>
                                 </div>
                                 <div class="booking-summary-item passenger-details-item" id="mcsPassengerPhoneContainer">
                                     <span class="summary-label"><i class="fas fa-phone p-icon-contact"></i></span>
@@ -319,8 +451,8 @@
                     </div>
                 </div>
                 <!-- <p class="time-hint">
-                                <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
-                            </p> -->
+                                    <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
+                                </p> -->
                 <button id="timePanelDoneBtn" class="btn-search-uber mt-5" onclick="saveSchedule()">
                     See Prices
                 </button>
@@ -458,18 +590,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- FOR ME (KEEP EXISTING) -->
-                                <button type="button" class="trip-location-item for-me-btn-hidden"
-                                    onclick="showForMeModal()">
-                                    <div class="trip-location-icon">
-                                        <i class="fas fa-user"></i>
-                                        <div class="d-flex flex-column text-start">
-                                            <span id="forMeTitle">For me</span>
-                                            <small id="forMeDetails" class="for-me-details-subtext"></small>
-                                        </div>
-                                    </div>
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
                             </div>
                         </div>
 
@@ -483,7 +603,7 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </div>
                                         <div class="stat-info-group">
-                                            <span class="stat-header-label">DATE</span>
+                                            <span class="stat-header-label" id="dtStatDateLabel">DATE</span>
                                             <div class="stat-main-value" id="tripSelectedDate">--</div>
                                         </div>
                                     </div>
@@ -496,7 +616,7 @@
                                             <i class="far fa-clock"></i>
                                         </div>
                                         <div class="stat-info-group">
-                                            <span class="stat-header-label">TIME</span>
+                                            <span class="stat-header-label" id="dtStatTimeLabel">TIME</span>
                                             <div class="stat-main-value" id="tripSelectedTime">--</div>
                                         </div>
                                     </div>
@@ -531,6 +651,21 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- RIDER SELECTION STRIP BELOW DATE & TIME BOX -->
+                        <div class="rider-select-card summary-box-card" id="riderSelectCard">
+                            <button type="button" class="trip-location-item rider-select-strip" onclick="showForMeModal()">
+                                <div class="trip-location-icon">
+                                    <i class="fas fa-user text-navy"></i>
+                                    <div class="d-flex flex-column text-start">
+                                        <span id="forMeTitle" class="rider-select-title">For me</span>
+                                        <small id="forMeDetails" class="for-me-details-subtext"
+                                            style="display:none;"></small>
+                                    </div>
+                                </div>
+                                <i class="fas fa-chevron-down text-secondary ms-auto"></i>
+                            </button>
                         </div>
 
                         <!-- BOX 3: SELECTED VEHICLE CARD -->
@@ -594,17 +729,29 @@
                             }
                         </script>
                         <div id="enteredDetailsSummary" class="booking-summary dropdown-desktop summary-box-card">
-                            <h5 class="summary-title mb-2" onclick="toggleBookingDetailsDesktop()" style="cursor:pointer;">
-                                PASSENGER DETAILS
-                                <i class="fas fa-chevron-down d-none d-lg-block" id="bookingDetailsIcon"></i>
+                            <h5 class="summary-title mb-0" onclick="toggleBookingDetailsDesktop()"
+                                style="cursor:pointer; display: flex; align-items: center; justify-content: space-between; min-height: 24px;">
+                                <span>PASSENGER DETAILS</span>
+                                <i class="fas fa-chevron-down d-none d-lg-inline-flex align-items-center justify-content-center"
+                                    id="bookingDetailsIcon" style="line-height: 1; height: auto;"></i>
                             </h5>
 
                             <div class="booking-summary-list" id="bookingSummaryListDesktop">
                                 <div class="passenger-details-layout">
                                     <div class="passenger-details-left">
                                         <div id="summaryPassengerContainer" class="passenger-details-name-container">
-                                            <span id="summaryPassengerName" class="passenger-details-name"
-                                                style="font-weight:600;">-</span>
+                                            <div id="summaryBookedForContainer" class="passenger-booked-for-container"
+                                                style="display:none;">
+                                                <div class="passenger-details-label">Booked for: </div>
+                                                <span class="passenger-booked-for-name" id="summaryBookedForName">-</span>
+                                                <span id="summaryBookedForPhone" class="passenger-booked-for-phone"></span>
+                                            </div>
+                                            <div id="summaryBookedByWrapper" class="passenger-booked-wrapper">
+                                                <div class="passenger-details-label" id="summaryBookedByLabel"
+                                                    style="display:none;">Booked by: </div>
+                                                <span id="summaryPassengerName" class="passenger-details-name"
+                                                    style="font-weight:600;">-</span>
+                                            </div>
                                         </div>
                                         <div class="booking-summary-item passenger-details-item mb-1"
                                             id="summaryContactContainer">
@@ -982,8 +1129,8 @@
                         </div>
                     </div>
                     <!-- =======================
-                 SECTION 1 : PERSONAL INFO
-            ======================== -->
+                     SECTION 1 : PERSONAL INFO
+                ======================== -->
                     <div class="booking-form-section" id="personalInfoSection">
                         <div class="booking-section-title">
                             Personal Info
@@ -991,7 +1138,7 @@
                         <div class="booking-form-grid">
                             <div class="form-group-uber booking-form-group">
                                 <label>Full Name</label>
-                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="100">
+                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
                             </div>
                             <div class="form-group-uber booking-form-group">
                                 <label>Contact Number</label>
@@ -1015,8 +1162,8 @@
                     </div>
                     <div id="additionalBookingDetails" style="display: none;">
                         <!-- =======================
-                 SECTION 2 : PASSENGERS & LUGGAGE
-            ======================== -->
+                     SECTION 2 : PASSENGERS & LUGGAGE
+                ======================== -->
                         <div class="passenger-luggage-card">
                             <div class="passenger-card-title">
                                 Passengers & Luggage
@@ -1095,43 +1242,43 @@
                                     <input type="text" id="flightNumber" placeholder="Flight Number">
                                 </div>
                                 <!--<div class="form-group-uber booking-form-group">
-                                        <label>
-                                            <i class="fas fa-clock"></i>
-                                            Flight Arriving Time *
-                                        </label>
-                                        <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
-                                            <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
-                                                onclick="toggleFlightTimeDropdown()">
-                                                <span id="flightTimeDropdownValue"> <i
-                                                        class="fas fa-clock me-1"></i>11:00</span>
-                                                <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
-                                            </button>
-                                            <div class="time-dropdown-list flight-time-dual-dropdown"
-                                                id="flightTimeDropdownList">
-                                                <div class="flight-time-col-header">
-                                                    <div>Hour</div>
-                                                    <div>Min</div>
-                                                </div>
-                                                <div class="flight-time-cols-container">
-                                                    <div class="flight-time-col flight-hours-col">
-                                                        @for ($h = 0; $h < 24; $h++)
-                                                            @php $val = sprintf('%02d', $h); @endphp
-                                                            <div class="flight-time-item hour-item" data-val="{{ $val }}"
-                                                                onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
-                                                        @endfor
+                                            <label>
+                                                <i class="fas fa-clock"></i>
+                                                Flight Arriving Time *
+                                            </label>
+                                            <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
+                                                <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
+                                                    onclick="toggleFlightTimeDropdown()">
+                                                    <span id="flightTimeDropdownValue"> <i
+                                                            class="fas fa-clock me-1"></i>11:00</span>
+                                                    <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+                                                </button>
+                                                <div class="time-dropdown-list flight-time-dual-dropdown"
+                                                    id="flightTimeDropdownList">
+                                                    <div class="flight-time-col-header">
+                                                        <div>Hour</div>
+                                                        <div>Min</div>
                                                     </div>
-                                                    <div class="flight-time-col flight-minutes-col">
-                                                        @for ($m = 0; $m < 60; $m++)
-                                                            @php $val = sprintf('%02d', $m); @endphp
-                                                            <div class="flight-time-item minute-item" data-val="{{ $val }}"
-                                                                onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
-                                                        @endfor
+                                                    <div class="flight-time-cols-container">
+                                                        <div class="flight-time-col flight-hours-col">
+                                                            @for ($h = 0; $h < 24; $h++)
+                                                                @php $val = sprintf('%02d', $h); @endphp
+                                                                <div class="flight-time-item hour-item" data-val="{{ $val }}"
+                                                                    onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
+                                                            @endfor
+                                                        </div>
+                                                        <div class="flight-time-col flight-minutes-col">
+                                                            @for ($m = 0; $m < 60; $m++)
+                                                                @php $val = sprintf('%02d', $m); @endphp
+                                                                <div class="flight-time-item minute-item" data-val="{{ $val }}"
+                                                                    onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
+                                                            @endfor
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <input type="hidden" id="flightArrivingTime" value="11:00">
-                                    </div>-->
+                                            <input type="hidden" id="flightArrivingTime" value="11:00">
+                                        </div>-->
                                 <div class="form-group-uber booking-form-group">
                                     <label>
                                         <i class="fas fa-clock"></i>
@@ -1158,28 +1305,31 @@
                                 <style>
                                     .meet-greet-tooltip {
                                         position: relative;
-                                        display: flex;
+                                        display: inline-flex;
                                         align-items: center;
                                     }
 
                                     .meet-greet-tooltip .tooltip-text {
                                         visibility: hidden;
                                         width: max-content;
+                                        max-width: 220px;
                                         background-color: #333;
                                         color: #fff;
                                         text-align: center;
                                         border-radius: 6px;
                                         padding: 6px 12px;
-                                        font-size: 13px;
+                                        font-size: 12px;
                                         font-weight: 500;
                                         position: absolute;
-                                        z-index: 1;
-                                        bottom: 125%;
+                                        z-index: 1050;
+                                        bottom: 135%;
                                         left: 50%;
                                         transform: translateX(-50%);
                                         opacity: 0;
                                         transition: opacity 0.3s;
-                                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+                                        pointer-events: none;
+                                        white-space: normal;
                                     }
 
                                     .meet-greet-tooltip .tooltip-text::after {
@@ -1199,19 +1349,38 @@
                                     }
                                 </style>
                                 <div class="form-group-uber booking-form-group"
-                                    style="grid-column: 1 / -1; margin-top: 5px;">
-                                    <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
-                                        <input type="checkbox" id="meetAndGreet" class="booking-checkbox"
-                                            style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
-                                            onchange="if(this.checked) showToast('Meet &amp; Greet may have additional Payment', 'info')">
-                                        <label for="meetAndGreet"
-                                            style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
-                                            Meet and Greet Options
-                                        </label>
-                                        <div class="meet-greet-tooltip">
-                                            <i class="fas fa-info-circle text-dark"
-                                                style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
-                                            <span class="tooltip-text">Meet &amp; Greet may have additional Payment</span>
+                                    style="grid-column: 1 / -1; margin-top: 10px;">
+                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
+                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                            <input type="checkbox" id="meetAndGreet"
+                                                class="booking-checkbox meet-and-greet-cb"
+                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
+                                                onchange="if(this.checked) showToast('Meet &amp; Greet may have additional Payment', 'info')">
+                                            <label for="meetAndGreet"
+                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                                Meet and Greet Options
+                                            </label>
+                                            <div class="meet-greet-tooltip">
+                                                <i class="fas fa-info-circle text-dark"
+                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                                <span class="tooltip-text">Meet &amp; Greet may have additional
+                                                    Payment</span>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                            <input type="checkbox" id="wheelchairOptionAirport"
+                                                class="booking-checkbox wheelchair-option-cb"
+                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
+                                                onchange="if(this.checked) showToast('Wheelchair Option selected', 'info')">
+                                            <label for="wheelchairOptionAirport"
+                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                                Wheelchair Accessible
+                                            </label>
+                                            <div class="meet-greet-tooltip">
+                                                <i class="fas fa-info-circle text-dark"
+                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                                <span class="tooltip-text">Wheelchair accessibility option</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1272,6 +1441,42 @@
                                     <label>Drop off Address</label>
                                     <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode">
                                 </div>
+                                <div class="form-group-uber booking-form-group"
+                                    style="grid-column: 1 / -1; margin-top: 10px;">
+                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
+                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                            <input type="checkbox" id="meetAndGreetSeaport"
+                                                class="booking-checkbox meet-and-greet-cb"
+                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
+                                                onchange="if(this.checked) showToast('Meet &amp; Greet may have additional Payment', 'info')">
+                                            <label for="meetAndGreetSeaport"
+                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                                Meet and Greet Options
+                                            </label>
+                                            <div class="meet-greet-tooltip">
+                                                <i class="fas fa-info-circle text-dark"
+                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                                <span class="tooltip-text">Meet &amp; Greet may have additional
+                                                    Payment</span>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                            <input type="checkbox" id="wheelchairOptionSeaport"
+                                                class="booking-checkbox wheelchair-option-cb"
+                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
+                                                onchange="if(this.checked) showToast('Wheelchair Option selected', 'info')">
+                                            <label for="wheelchairOptionSeaport"
+                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                                Wheelchair Accessible
+                                            </label>
+                                            <div class="meet-greet-tooltip">
+                                                <i class="fas fa-info-circle text-dark"
+                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                                <span class="tooltip-text">Wheelchair accessibility option</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- Normal -->
@@ -1288,11 +1493,31 @@
                                     <input type="text" id="dropoffAddressNormal"
                                         placeholder="Full dropoff address with postcode">
                                 </div>
+                                <div class="form-group-uber booking-form-group"
+                                    style="grid-column: 1 / -1; margin-top: 10px;">
+                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
+                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                            <input type="checkbox" id="wheelchairOptionNormal"
+                                                class="booking-checkbox wheelchair-option-cb"
+                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
+                                                onchange="if(this.checked) showToast('Wheelchair Option selected', 'info')">
+                                            <label for="wheelchairOptionNormal"
+                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
+                                                Wheelchair Accessible
+                                            </label>
+                                            <div class="meet-greet-tooltip">
+                                                <i class="fas fa-info-circle text-dark"
+                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
+                                                <span class="tooltip-text">Wheelchair accessibility option</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- =======================
-                 SECTION 5 : SPECIAL REQUIREMENTS
-            ======================== -->
+                     SECTION 5 : SPECIAL REQUIREMENTS
+                ======================== -->
                         <div class="booking-form-section">
                             <div class="booking-section-title">
                                 Special Requirements
@@ -1471,19 +1696,19 @@
                                         </div>
                                     </div>
                                     <!-- <div class="rc-driver-stat-col border-left-right">
-                                            <i class="far fa-user"></i>
-                                            <div>
-                                                <strong id="rcDriverTrips">2,145</strong>
+                                                <i class="far fa-user"></i>
+                                                <div>
+                                                    <strong id="rcDriverTrips">2,145</strong>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="rc-driver-stat-col">
-                                            <i class="far fa-comment-dots"></i>
-                                            <div>
-                                                <strong id="rcDriverReviewsPct">98%</strong>
+                                            <div class="rc-driver-stat-col">
+                                                <i class="far fa-comment-dots"></i>
+                                                <div>
+                                                    <strong id="rcDriverReviewsPct">98%</strong>
 
-                                            </div>
-                                        </div> -->
+                                                </div>
+                                            </div> -->
                                 </div>
                             </div>
 
@@ -1556,8 +1781,8 @@
                     </div>
                     <div class="confirm-modal-content" style="padding: 0px 0;">
                         <!-- <div class="confirm-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div> -->
+                                        <i class="fas fa-check-circle"></i>
+                                    </div> -->
                         <h2 class="confirm-title" style="text-align: center; margin-top: 15px; margin-bottom: 12px;">
                             Booking Confirmed!</h2>
                         <div class="confirm-booking-id"
@@ -1781,34 +2006,34 @@
 
                         // We create the SVG for this specific car with the rotation applied
                         const carSvg = `
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-                                        <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
-                                            <!-- Car Body -->
-                                            <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+                                            <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                                                <!-- Car Body -->
+                                                <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
 
-                                            <!-- Windshield (dark tinted) -->
-                                            <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
+                                                <!-- Windshield (dark tinted) -->
+                                                <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
 
-                                            <!-- Rear Window (dark tinted) -->
-                                            <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
+                                                <!-- Rear Window (dark tinted) -->
+                                                <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
 
-                                            <!-- Side Mirrors -->
-                                            <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
-                                            <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                                <!-- Side Mirrors -->
+                                                <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                                <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
 
-                                            <!-- Subtle Metallic Highlights -->
-                                            <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+                                                <!-- Subtle Metallic Highlights -->
+                                                <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
 
-                                            <!-- Headlights -->
-                                            <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
-                                            <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                                <!-- Headlights -->
+                                                <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                                <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
 
-                                            <!-- Taillights -->
-                                            <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                            <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                        </g>
-                                    </svg>
-                                `;
+                                                <!-- Taillights -->
+                                                <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                                <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                            </g>
+                                        </svg>
+                                    `;
                         const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg);
 
                         // Stagger animation for a smooth, organic feel
@@ -1963,45 +2188,45 @@
         </div>
     </div>
     <!-- <section class="fleet-section pt-5">
-                    <div class="container">
-                        <div class="section-head text-center mb-4">
-                            <h2 class="section-title">Available Fleets</h2>
-                            <p>Choose the perfect ride for your journey</p>
+                        <div class="container">
+                            <div class="section-head text-center mb-4">
+                                <h2 class="section-title">Available Fleets</h2>
+                                <p>Choose the perfect ride for your journey</p>
+                            </div>
+                            <div class="owl-carousel fleet-carousel">
+                                <div class="fleet-card">
+                                    <img src="/goride/img/saloon.png" alt="Saloon">
+                                    <h5>Saloon</h5>
+                                    <span>Up to 4 Passengers</span>
+                                </div>
+                                <div class="fleet-card">
+                                    <img src="/goride/img/executive.png" alt="Executive">
+                                    <h5>Executive</h5>
+                                    <span>Luxury Business Ride</span>
+                                </div>
+                                <div class="fleet-card">
+                                    <img src="/goride/img/executive mv5.png" alt="Executive MPV">
+                                    <h5>Executive MPV</h5>
+                                    <span>Up to 6 Passengers</span>
+                                </div>
+                                <div class="fleet-card">
+                                    <img src="/goride/img/estate.png" alt="Estate">
+                                    <h5>Estate</h5>
+                                    <span>Extra Luggage Space</span>
+                                </div>
+                                <div class="fleet-card">
+                                    <img src="/goride/img/8seater.png" alt="8 Seater">
+                                    <h5>8 Seater</h5>
+                                    <span>Up to 8 Passengers</span>
+                                </div>
+                                <div class="fleet-card">
+                                    <img src="/goride/img/mpv.png" alt="MPV">
+                                    <h5>MPV</h5>
+                                    <span>Family Friendly</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="owl-carousel fleet-carousel">
-                            <div class="fleet-card">
-                                <img src="/goride/img/saloon.png" alt="Saloon">
-                                <h5>Saloon</h5>
-                                <span>Up to 4 Passengers</span>
-                            </div>
-                            <div class="fleet-card">
-                                <img src="/goride/img/executive.png" alt="Executive">
-                                <h5>Executive</h5>
-                                <span>Luxury Business Ride</span>
-                            </div>
-                            <div class="fleet-card">
-                                <img src="/goride/img/executive mv5.png" alt="Executive MPV">
-                                <h5>Executive MPV</h5>
-                                <span>Up to 6 Passengers</span>
-                            </div>
-                            <div class="fleet-card">
-                                <img src="/goride/img/estate.png" alt="Estate">
-                                <h5>Estate</h5>
-                                <span>Extra Luggage Space</span>
-                            </div>
-                            <div class="fleet-card">
-                                <img src="/goride/img/8seater.png" alt="8 Seater">
-                                <h5>8 Seater</h5>
-                                <span>Up to 8 Passengers</span>
-                            </div>
-                            <div class="fleet-card">
-                                <img src="/goride/img/mpv.png" alt="MPV">
-                                <h5>MPV</h5>
-                                <span>Family Friendly</span>
-                            </div>
-                        </div>
-                    </div>
-                </section> -->
+                    </section> -->
     <section class="reviews-section section-padding mt-5" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>

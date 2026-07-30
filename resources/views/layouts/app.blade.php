@@ -3192,21 +3192,26 @@
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 5px;
-            background: black;
-            border: 1px solid #dcdcdc;
-            border-radius: 2px;
-            color: white;
-
+            padding: 0;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            color: #495057;
             cursor: pointer;
             transition: all 0.25s ease;
-            border-radius: 50%;
-            height: 27px;
-            width: 27px;
+            height: 28px;
+            width: 28px;
+            flex-shrink: 0;
         }
 
         .edit-icon-btn i {
-            font-size: 11px;
+            font-size: 12px;
+            color: #495057;
+        }
+
+        .edit-icon-btn:hover {
+            background: #e9ecef;
+            color: #212529;
         }
 
         .edit-icon-btn:active {
@@ -4823,10 +4828,80 @@
         .mobile-trip-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             padding: 14px 16px;
             cursor: pointer;
             transition: .3s;
+        }
+
+        .mobile-trip-header .location-group-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-trip-header .location-fields {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .mobile-trip-header .mobile-from,
+        .mobile-trip-header .mobile-to {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111;
+            line-height: 1.4;
+            position: relative;
+            min-width: 0;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .mobile-trip-header .mobile-from .route-dot-start {
+            color: #f9c106;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .mobile-trip-header .mobile-from::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 20px;
+            bottom: -8px;
+            border-left: 2px dotted #bbb;
+        }
+
+        .mobile-trip-header .mobile-to .route-dot-end {
+            color: #000;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .mobile-trip-header #mcsPickup,
+        .mobile-trip-header #mcsDropoff {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-trip-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            padding-left: 8px;
+            margin-top: 4px;
         }
 
         /*.mobile-trip-header:hover {*/
@@ -5477,23 +5552,21 @@
             }
 
             .mobile-trip-header {
-                padding: 12px 14px 10px 3px;
+                padding: 12px 14px;
             }
 
             .mobile-from,
             .mobile-to {
-                font-size: 16px !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: block;
+                font-size: 14px !important;
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
                 width: 100%;
                 cursor: pointer;
-                max-width: 300px;
             }
 
-            .mobile-from.expanded-text,
-            .mobile-to.expanded-text {
+            .mobile-from.expanded-text #mcsPickup,
+            .mobile-to.expanded-text #mcsDropoff {
                 white-space: normal;
                 word-wrap: break-word;
             }
@@ -5719,12 +5792,14 @@
 
         @media (max-width: 768px) {
             .edit-icon-btn {
-                padding: 8px 10px;
-                font-size: 12px;
+                padding: 0;
+                width: 28px;
+                height: 28px;
+                flex-shrink: 0;
             }
 
             .edit-icon-btn i {
-                font-size: 10px;
+                font-size: 12px;
             }
 
             .pickup-now-btn {

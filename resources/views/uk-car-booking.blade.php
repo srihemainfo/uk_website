@@ -439,21 +439,21 @@
                             </div>
 
                             <div class="passenger-details-right">
-                                <div class="booking-summary-item passenger-details-item" id="mcsPassengerCountContainer">
-                                    <span class="summary-label"><i class="fas fa-user text-navy"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsPassengerCountContainer" title="Passenger Count" data-tooltip="Passenger Count">
+                                    <span class="summary-label"><i class="fas fa-user text-navy" title="Passenger Count"></i></span>
                                     <span class="summary-value" id="mcsPassengerCount">1</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item" id="mcsLuggageContainer">
-                                    <span class="summary-label"><i class="fas fa-suitcase text-navy"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsLuggageContainer" title="Luggage" data-tooltip="Luggage">
+                                    <span class="summary-label"><i class="fas fa-suitcase text-navy" title="Luggage"></i></span>
                                     <span class="summary-value" id="mcsLuggageCount">0</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item" id="mcsHandLuggageContainer">
-                                    <span class="summary-label"><i class="fas fa-briefcase text-navy"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsHandLuggageContainer" title="Hand Luggage" data-tooltip="Hand Luggage">
+                                    <span class="summary-label"><i class="fas fa-briefcase text-navy" title="Hand Luggage"></i></span>
                                     <span class="summary-value" id="mcsHandLuggageCount">0</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item" id="mcsBabySeatContainer"
-                                    style="display:none;">
-                                    <span class="summary-label"><i class="fas fa-baby-carriage text-navy"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsBabySeatContainer"
+                                    style="display:none;" title="Baby Seats" data-tooltip="Baby Seats">
+                                    <span class="summary-label"><i class="fas fa-baby-carriage text-navy" title="Baby Seats"></i></span>
                                     <span class="summary-value" id="mcsBabySeats">0</span>
                                 </div>
                             </div>
@@ -479,10 +479,20 @@
                                     class="fas fa-map-marker-alt text-navy"></i> Dropoff Address</span>
                             <span id="mcsDropoffAddress" class="summary-value">–</span>
                         </div>
+                        <div class="booking-summary-item booking-summary-span2-item" id="mcsOptionsInlineRow" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
+                            <div id="mcsMeetGreetContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Meet &amp; Greet Included" data-tooltip="Meet &amp; Greet Included">
+                                <i class="fas fa-user-check text-navy"></i>
+                                <span>Meet &amp; Greet</span>
+                            </div>
+                            <div id="mcsWheelchairContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Wheelchair Access Requested" data-tooltip="Wheelchair Access Requested">
+                                <i class="fas fa-wheelchair text-navy"></i>
+                                <span>Wheelchair</span>
+                            </div>
+                        </div>
 
                         <!-- Special Requirements -->
                         <div class="booking-summary-item booking-summary-span2-item mcs-special-req-container"
-                            id="mcsSpecialReqContainer">
+                            id="mcsSpecialReqContainer" style="display:none;">
                             <span class="summary-label"><i class="fas fa-comment-dots text-navy"></i> Special Req.</span>
                             <span id="mcsSpecialRequirements" class="summary-value">–</span>
                         </div>
@@ -930,19 +940,19 @@
                                     </div>
 
                                     <div class="passenger-details-right">
-                                        <div class="booking-summary-item passenger-details-item"
-                                            id="summaryPassengersCountContainer">
-                                            <span class="summary-label"><i class="fas fa-user text-navy"></i></span>
+                                        <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                            id="summaryPassengersCountContainer" title="Passenger Count" data-tooltip="Passenger Count">
+                                            <span class="summary-label"><i class="fas fa-user text-navy" title="Passenger Count"></i></span>
                                             <span id="summaryPassengerCount" class="summary-value">1</span>
                                         </div>
-                                        <div class="booking-summary-item passenger-details-item"
-                                            id="summaryLuggageCountContainer">
-                                            <span class="summary-label"><i class="fas fa-suitcase text-navy"></i></span>
+                                        <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                            id="summaryLuggageCountContainer" title="Luggage" data-tooltip="Luggage">
+                                            <span class="summary-label"><i class="fas fa-suitcase text-navy" title="Luggage"></i></span>
                                             <span id="summaryLuggageCount" class="summary-value">0</span>
                                         </div>
-                                        <div class="booking-summary-item passenger-details-item"
-                                            id="summaryHandLuggageContainer">
-                                            <span class="summary-label"><i class="fas fa-briefcase text-navy"></i></span>
+                                        <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                            id="summaryHandLuggageContainer" title="Hand Luggage" data-tooltip="Hand Luggage">
+                                            <span class="summary-label"><i class="fas fa-briefcase text-navy" title="Hand Luggage"></i></span>
                                             <span id="summaryHandLuggageCount" class="summary-value">0</span>
                                         </div>
                                     </div>
@@ -975,6 +985,17 @@
                                         <i class="fas fa-location-dot"></i> Destination
                                     </span>
                                     <span id="summaryDropoffAddress" class="summary-value">–</span>
+                                </div>
+
+                                <div id="summaryOptionsInlineRow" class="summary-options-inline-row" style="display: flex; align-items: center; gap: 23px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
+                                    <div id="summaryMeetGreetContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Meet &amp; Greet Included" data-tooltip="Meet &amp; Greet Included">
+                                        <i class="fas fa-user-check text-navy"></i>
+                                        <span>Meet &amp; Greet</span>
+                                    </div>
+                                    <div id="summaryWheelchairContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Wheelchair Access Requested" data-tooltip="Wheelchair Access Requested">
+                                        <i class="fas fa-wheelchair text-navy"></i>
+                                        <span>Wheelchair</span>
+                                    </div>
                                 </div>
 
                                 <div id="summarySpecialReqContainer" class="booking-summary-item" style="display:none;">
@@ -1236,7 +1257,10 @@
                                     </div>
                                 </div>
                             </span>
-                            <span id="pbTotalFare">£0.00</span>
+                            <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                                <span id="pbTotalFare">£0.00</span>
+                                <div class="estimated-fare-badge" style="margin-top: 4px; font-size: 10px; padding: 2px 8px; font-weight: 600;">Estimated Fare</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group-uber">

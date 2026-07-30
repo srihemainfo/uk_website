@@ -605,11 +605,24 @@
                             </div>
                         </div> <!-- Close Time Column -->
                     </div> <!-- Close Grid -->
-                    <!-- ONLY VISIBLE WHEN AIRPORT †’ AIRPORT -->
                     <div id="airportLandingFields" style="display: none;">
                         <div class="form-group-uber">
                             <label><i class="fas fa-hourglass-end"></i> Pickup After Landing</label>
                             <select id="pickupAfterLanding">
+                                <option value="15">15 Min After</option>
+                                <option value="30">30 Min After</option>
+                                <option value="45" selected>45 Min After</option>
+                                <option value="60">60 Min After</option>
+                                <option value="75">75 Min After</option>
+                                <option value="90">90 Min After</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="seaportDockingFields" style="display: none;">
+                        <div class="form-group-uber">
+                            <label><i class="fas fa-clock"></i> PickUp After Docking?</label>
+                            <select id="pickupAfterDockingSelect">
+                                <option value="">Select</option>
                                 <option value="15">15 Min After</option>
                                 <option value="30">30 Min After</option>
                                 <option value="45" selected>45 Min After</option>
@@ -1212,10 +1225,7 @@
                             <span>Tax and Other charges</span>
                             <span id="pbTax">£0.00</span>
                         </div>
-                        <div class="payment-item" id="pbMeetGreetRow" style="display:none;">
-                            <span>Meet and Greet</span>
-                            <span id="pbMeetGreet">£0.00</span>
-                        </div>
+
                         <div class="payment-total grand-total">
                             <span style="display: flex; align-items: center; gap: 8px;">
                                 Total
@@ -1409,7 +1419,7 @@
                                         <i class="fas fa-plane-departure"></i>
                                         Flight Number *
                                     </label>
-                                    <input type="text" id="flightNumber" placeholder="Flight Number">
+                                    <input type="text" id="flightNumber" placeholder="Flight Number" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <!--<div class="form-group-uber booking-form-group">
                                             <label>
@@ -1449,7 +1459,7 @@
                                             </div>
                                             <input type="hidden" id="flightArrivingTime" value="11:00">
                                         </div>-->
-                                <div class="form-group-uber booking-form-group">
+                                <div class="form-group-uber booking-form-group d-none">
                                     <label>
                                         <i class="fas fa-clock"></i>
                                         PickUp  After Landing?
@@ -1466,11 +1476,11 @@
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Coming From *</label>
-                                    <input type="text" id="comingFrom" placeholder="Coming From">
+                                    <input type="text" id="comingFrom" placeholder="Coming From" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddress" placeholder="Full address with postcode">
+                                    <input type="text" id="dropoffAddress" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <style>
                                     .meet-greet-tooltip {
@@ -1562,13 +1572,13 @@
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
                                     <label><i class="fas fa-ship"></i> Cruise/Ferry Name</label>
-                                    <input type="text" id="ferryName" placeholder="Cruise or Ferry name">
+                                    <input type="text" id="ferryName" placeholder="Cruise or Ferry name" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
-                                <div class="form-group-uber booking-form-group">
+                                <div class="form-group-uber booking-form-group d-none">
                                     <label><i class="fas fa-calendar-alt"></i> Docking Date</label>
                                     <input type="text" id="seaportArrivalDate" placeholder="Select Date">
                                 </div>
-                                <div class="form-group-uber booking-form-group">
+                                <div class="form-group-uber booking-form-group d-none">
                                     <label><i class="fas fa-clock"></i> Docking Time</label>
                                     <div class="time-dropdown-wrapper" id="seaportTimeDropdownWrapper">
                                         <button type="button" class="time-dropdown-btn" id="seaportTimeDropdownBtn"
@@ -1603,33 +1613,17 @@
                                     </div>
                                     <input type="hidden" id="seaportArrivalTime" value="">
                                 </div>
-                                <div class="form-group-uber booking-form-group">
+                                <div class="form-group-uber booking-form-group d-none">
                                     <label><i class="fas fa-map-marker-alt"></i> Terminal</label>
-                                    <input type="text" id="comingFromPort" placeholder="Terminal name">
+                                    <input type="text" id="comingFromPort" placeholder="Terminal name" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode">
+                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
                                     <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
-                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
-                                            <input type="checkbox" id="meetAndGreetSeaport"
-                                                class="booking-checkbox meet-and-greet-cb"
-                                                style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
-                                                onchange="if(this.checked) showToast('Meet &amp; Greet may have additional Payment', 'info')">
-                                            <label for="meetAndGreetSeaport"
-                                                style="margin: 0; font-weight: 500; font-size: 15px; cursor: pointer; white-space: nowrap;">
-                                                Meet and Greet Options
-                                            </label>
-                                            <div class="meet-greet-tooltip">
-                                                <i class="fas fa-info-circle text-dark"
-                                                    style="cursor: pointer; font-size: 16px; margin-top: 2px;"></i>
-                                                <span class="tooltip-text">Meet &amp; Greet may have additional
-                                                    Payment</span>
-                                            </div>
-                                        </div>
                                         <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
                                             <input type="checkbox" id="wheelchairOptionSeaport"
                                                 class="booking-checkbox wheelchair-option-cb"
@@ -1656,12 +1650,12 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>Pickup Address</label>
                                     <input type="text" id="pickupAddressNormal"
-                                        placeholder="Full pickup address with postcode">
+                                        placeholder="Full pickup address with postcode" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Dropoff Address</label>
                                     <input type="text" id="dropoffAddressNormal"
-                                        placeholder="Full dropoff address with postcode">
+                                        placeholder="Full dropoff address with postcode" oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
@@ -1703,7 +1697,7 @@
                             <!-- TEXTAREA (HIDDEN BY DEFAULT) -->
                             <div class="form-group-uber booking-form-group">
                                 <textarea id="specialRequirements" rows="3" placeholder="Enter any special requirements"
-                                    style="display: none;"></textarea>
+                                    style="display: none;" oninput="this.value = this.value.slice(0, 150)"></textarea>
                             </div>
                         </div>
                     </div> <!-- End of additionalBookingDetails -->
@@ -2008,13 +2002,16 @@
                             Your booking has been successfully confirmed.
                         </p>
                     </div>
-                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap;">
+                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
                         <button class="btn-modal-primary" onclick="completeBooking()">
                             <i class="fas fa-check"></i> Done
                         </button>
                         <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary">
                             <i class="fas fa-file-invoice"></i> View Booking Preview
                         </a>
+                        <button class="btn-modal-primary" onclick="openTrackRideWithCurrentBooking()">
+                            <i class="fas fa-map-marker-alt"></i> Track Driver
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2130,9 +2127,7 @@
                         if (polylineStr) _drawPolyline(polylineStr);
                         else if (routeBounds) bookingGoogleMap.fitBounds(routeBounds);
 
-                        if (bookingData.nearby_drivers && bookingData.nearby_drivers.length > 0) {
-                            _drawNearbyDrivers(bookingData.nearby_drivers);
-                        }
+                        _drawNearbyDrivers(bookingData.nearby_drivers || []);
                         return;
                     }
 
@@ -2149,16 +2144,14 @@
                         _drawPolyline(polylineStr);
                     }
 
-                    if (bookingData.nearby_drivers && bookingData.nearby_drivers.length > 0) {
-                        _drawNearbyDrivers(bookingData.nearby_drivers);
-                    }
+                    _drawNearbyDrivers(bookingData.nearby_drivers || []);
                 }
 
                 let _nearbyDriverMarkers = [];
                 function _drawNearbyDrivers(drivers) {
-                    if (!bookingGoogleMap || !drivers || drivers.length === 0) return;
+                    if (!bookingGoogleMap) return;
 
-                    // Clear existing markers
+                    // Clear existing markers first
                     _nearbyDriverMarkers.forEach(marker => {
                         if (marker && typeof marker.setMap === 'function') {
                             marker.setMap(null);
@@ -2168,6 +2161,8 @@
                         }
                     });
                     _nearbyDriverMarkers = [];
+
+                    if (!drivers || drivers.length === 0) return;
 
                     drivers.forEach((driver, index) => {
                         // Generate a pseudo-random angle (0 to 359) based on lat/lng or just random
@@ -2229,6 +2224,9 @@
                 }
 
                 let _lastEncodedPolyline = null;
+                let _routePickupMarker = null;
+                let _routeDropoffMarker = null;
+
                 function _drawPolyline(encodedPolyline) {
                     if (!bookingGoogleMap || !encodedPolyline) return;
 
@@ -2241,6 +2239,16 @@
                     if (currentRoutePolyline) {
                         currentRoutePolyline.setMap(null);
                         currentRoutePolyline = null;
+                    }
+                    
+                    // Remove previous markers if any
+                    if (_routePickupMarker) {
+                        _routePickupMarker.setMap(null);
+                        _routePickupMarker = null;
+                    }
+                    if (_routeDropoffMarker) {
+                        _routeDropoffMarker.setMap(null);
+                        _routeDropoffMarker = null;
                     }
 
                     // Cancel any previous animation
@@ -2310,7 +2318,7 @@
                         const dropoffName = getShortAddress(bookingData.dropoff) || 'Drop-off';
 
                         if (!isNaN(fromLat) && !isNaN(fromLng)) {
-                            new google.maps.Marker({
+                            _routePickupMarker = new google.maps.Marker({
                                 position: { lat: fromLat, lng: fromLng },
                                 map: bookingGoogleMap,
                                 title: 'Pickup',
@@ -2327,7 +2335,7 @@
                             });
                         }
                         if (!isNaN(toLat) && !isNaN(toLng)) {
-                            new google.maps.Marker({
+                            _routeDropoffMarker = new google.maps.Marker({
                                 position: { lat: toLat, lng: toLng },
                                 map: bookingGoogleMap,
                                 title: 'Drop-off',
@@ -2659,11 +2667,13 @@
                         hideCancelJobModal();
                         showToast(data.message || 'Job cancelled successfully.', 'success');
 
-                        if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
-                            BookingStore.clear();
-                        }
+                        // Show a full-screen loading overlay to prevent empty UI flash
+                        $('<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;"><i class="fas fa-spinner fa-spin fa-3x" style="color:#fff;"></i></div>').appendTo('body');
 
                         setTimeout(() => {
+                            if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
+                                BookingStore.clear();
+                            }
                             window.location.href = '/';
                         }, 1500);
                     } else {

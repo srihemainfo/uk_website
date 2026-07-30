@@ -7829,10 +7829,7 @@
                         <span>Base Fare</span>
                         <span id="confirmBaseFare">£0.00</span>
                     </div>
-                    <div class="fare-row">
-                        <span>Meet & Greet</span>
-                        <span id="confirmMeetGreet">£0.00</span>
-                    </div>
+
                     <div class="fare-total">
                         <span>Estimated Fare</span>
                         <span class="total-amount" id="confirmTotalFare">£0.00</span>
@@ -7970,11 +7967,13 @@
             </div>
             <div class="form-group-uber">
                 <label>Passenger Name</label>
-                <input type="text" id="otherPassengerName" placeholder="Enter passenger name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
+                <input type="text" id="otherPassengerName" placeholder="Enter passenger name" maxlength="75"
+                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
             </div>
             <div class="form-group-uber">
                 <label>Mobile Number(Optional)</label>
-                <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
+                <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
             </div>
             <button class="btn-search-uber" onclick="saveOtherPassenger()">
                 Save Details
@@ -8549,6 +8548,16 @@
             $('#mcsDateValue').text(d);
             $('#mcsTimeValue').text(t);
 
+            // Sync the actual date picker input
+            if (state.date) {
+                const dateElement = document.getElementById('date');
+                if (dateElement && dateElement._flatpickr) {
+                    dateElement._flatpickr.setDate(state.date, false);
+                } else if (dateElement) {
+                    dateElement.value = state.date;
+                }
+            }
+
             // Dynamic Date and Time header labels for Desktop & Mobile stat boxes
             if (state.pickupType === 'airport') {
                 $('#dtStatDateLabel, #mcsStatDateLabel').text('FLIGHT ARRIVAL DATE');
@@ -8812,6 +8821,43 @@
             if (_restoredState.pickup) { $('#pickupInput').val(_restoredState.pickup); }
             if (_restoredState.dropoff) { $('#dropoffInput').val(_restoredState.dropoff); }
             if (_restoredState.date) { /* flatpickr will be set after init below */ }
+            if (_restoredState.flightNumber) { $('#flightNumber').val(_restoredState.flightNumber); }
+            if (_restoredState.comingFrom) { $('#comingFrom').val(_restoredState.comingFrom); }
+            if (_restoredState.dropoffAddress) { $('#dropoffAddress').val(_restoredState.dropoffAddress); }
+            if (_restoredState.pickAfterTime) { $('#pickupAfterLanding').val(_restoredState.pickAfterTime); }
+            if (_restoredState.ferryName) { $('#ferryName').val(_restoredState.ferryName); }
+            if (_restoredState.dockingTime) { $('#seaportArrivalTime').val(_restoredState.dockingTime); }
+            if (_restoredState.comingFromPort) { $('#comingFromPort').val(_restoredState.comingFromPort); }
+            if (_restoredState.dropoffAddressSeaport) { $('#dropoffAddressSeaport').val(_restoredState.dropoffAddressSeaport); }
+            if (_restoredState.normalJourneyDate) { $('#normalJourneyDate').val(_restoredState.normalJourneyDate); }
+            if (_restoredState.normalJourneyTime) { $('#normalJourneyTime').val(_restoredState.normalJourneyTime); }
+
+            if (_restoredState.passengerFirstName) { $('#passengerFirstName').val(_restoredState.passengerFirstName); }
+            if (_restoredState.passengerLastName) { $('#passengerLastName').val(_restoredState.passengerLastName); }
+            if (_restoredState.passengerEmail) { $('#passengerEmail').val(_restoredState.passengerEmail); }
+            if (_restoredState.passengerPhone) { $('#passengerPhone').val(_restoredState.passengerPhone); }
+            if (_restoredState.passengerCount) { $('#passengerCount').val(_restoredState.passengerCount); }
+            if (_restoredState.luggageCount) { $('#luggageCount').val(_restoredState.luggageCount); }
+            if (_restoredState.handLuggageCount) { $('#handLuggageCount').val(_restoredState.handLuggageCount); }
+
+            if (_restoredState.rideFor === 'other' && _restoredState.otherPassengerData) {
+                $('#otherPassengerName').val(_restoredState.otherPassengerData.name || '');
+                $('#otherPassengerPhone').val(_restoredState.otherPassengerData.phone || '');
+                $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Booked for ' + _restoredState.otherPassengerData.name);
+                if (_restoredState.otherPassengerData.phone) {
+                    $('#forMeDetails').text(_restoredState.otherPassengerData.phone).show();
+                } else {
+                    $('#forMeDetails').hide().text('');
+                }
+                $('#forMeRadioMe').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
+                $('#forMeRadioOther').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
+            }
+
+            if (_restoredState.specialRequirements) { $('#specialRequirements').val(_restoredState.specialRequirements); }
+            if (_restoredState.isSpecialReq) {
+                $('#specialReqCheckbox').prop('checked', true);
+                $('#specialRequirements').show();
+            }
 
             // ---- Register view-updater subscribers ----
             // These fire automatically on every BookingStore.setState() call
@@ -8883,6 +8929,9 @@
             }
             _updateLocationUI(_restoredState);
             _updateDateTimeUI(_restoredState);
+            if (typeof updateTimePanel === 'function') {
+                updateTimePanel();
+            }
             _updateVehicleSummaryUI(_restoredState);
 
             // Invalidate location selections if user manually types/edits inputs
@@ -8953,7 +9002,7 @@
                 if (_restoredState.currentStep === 8) {
                     BookingStore.clear();
                     showStep(1);
-                } else if (_restoredState.currentStep === 5 || _restoredState.currentStep === 6) {
+                } else if (_restoredState.currentStep === 5 || _restoredState.currentStep === 6 || _restoredState.currentStep === 7) {
                     showStep(6);
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
@@ -9575,16 +9624,19 @@
                 $('#dateLabel').html('<i class="fas fa-calendar"></i> Flight Landing Date *');
                 $('#timeLabel').html('<i class="fas fa-plane-departure"></i> Flight Landing Time *');
                 $('#airportLandingFields').show();
+                $('#seaportDockingFields').hide();
             } else if (pickupType === 'seaport') {
                 $('#timePanelTitle').text('Cruise/Ferry Docking Details');
                 $('#dateLabel').html('<i class="fas fa-anchor"></i> Cruise/Ferry Docking Date *');
                 $('#timeLabel').html('<i class="fas fa-clock"></i> Cruise/Ferry Docking Time *');
                 $('#airportLandingFields').hide();
+                $('#seaportDockingFields').show();
             } else {
                 $('#timePanelTitle').text('When do you want to be picked up?');
                 $('#dateLabel').html('<i class="fas fa-calendar"></i> Journey Date *');
                 $('#timeLabel').html('<i class="fas fa-clock"></i> Journey Time *');
                 $('#airportLandingFields').hide();
+                $('#seaportDockingFields').hide();
             }
         }
         function goBackToLocations() {
@@ -9669,7 +9721,8 @@
             );
         }
         function saveSchedule() {
-            const date = $("#date").val();
+            const date = BookingStore.getState().date;
+            $("#date").val(date);
             const currentTime = BookingStore.getState().time;
             if (!date) {
                 showToast('Please select a date', 'error');
@@ -9788,6 +9841,13 @@
                 }
             } else {
                 // No fares — show unavailable message
+                BookingStore.setState({
+                    fareDataObj: null,
+                    selectedVehicle: null,
+                    apiDistance: null,
+                    apiDuration: null,
+                    apiPolyline: null
+                });
                 console.warn('Fares API returned no data.', faresResult);
                 $('#vehicleGrid').html(`
                     <div style="padding: 40px 20px; text-align: center;">
@@ -9795,7 +9855,7 @@
                             <i class="fas fa-map-marker-slash" style="font-size: 36px; color: #e53e3e;"></i>
                             <h4 style="font-size: 18px; font-weight: 800; color: #1a1a1a; margin: 0;">No Cabs Available</h4>
                             <p style="font-size: 14px; color: #666; margin: 0; line-height: 1.6;">Cab service is not available in this selected area. Please try a different pickup or drop-off location.</p>
-                            <button onclick="goBack(2)" style="margin-top: 4px; padding: 10px 24px; background: #111; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer;">
+                            <button onclick="goBack(1)" style="margin-top: 4px; padding: 10px 24px; background: #111; color: #fff; border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer;">
                                 <i class="fas fa-arrow-left"></i> Change Location
                             </button>
                         </div>
@@ -10651,21 +10711,22 @@
             if (currentPickupType === 'airport') {
                 journeyFields = {
                     flightNumber: $('#flightNumber').val(),
-                    flightArrivingTime: $('#flightArrivingTime').val(),
+                    flightArrivingTime: BookingStore.getState().time || $('#flightArrivingTime').val(),
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
-                    pickAfterTime: $('#pickupAfterLandingSelect').val(),
+                    pickAfterTime: $('#pickupAfterLanding').val(),
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
                 };
             } else if (currentPickupType === 'seaport') {
                 journeyFields = {
-                    dockingTime: $('#seaportArrivalTime').val(),
+                    dockingTime: BookingStore.getState().time || $('#seaportArrivalTime').val(),
                     ferryName: $('#ferryName').val(),
                     comingFromPort: $('#comingFromPort').val(),
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
+                    pickAfterTime: $('#pickupAfterDockingSelect').val(),
                 };
             } else {
                 journeyFields = {
@@ -10731,10 +10792,10 @@
             const currentVehicle = bookingData.vehicle;
             const maxLuggageCap = currentVehicle ? (parseInt(currentVehicle.luggage) || 8) : 8;
             const totalLuggageCount = (parseInt(bookingData.luggageCount) || 0) + (parseInt(bookingData.handLuggageCount) || 0);
-            if (totalLuggageCount > maxLuggageCap) {
-                showToast(`Total combined luggage (Luggage + Hand Luggage) cannot exceed ${maxLuggageCap} for this vehicle.`, 'error');
-                return;
-            }
+            // if (totalLuggageCount > maxLuggageCap) {
+            //     showToast(`Total combined luggage (Luggage + Hand Luggage) cannot exceed ${maxLuggageCap} for this vehicle.`, 'error');
+            //     return;
+            // }
 
             // --- Journey specific validation ---
             if (bookingData.pickupType === 'airport') {
@@ -10797,7 +10858,8 @@
                 fare: String(bookingData.vehicle?.price || '0'),
                 distance: String(bookingData.apiDistance || fareDetails.distance || '0'),
                 duration: String(bookingData.apiDuration || fareDetails.duration || '0'),
-                cab_type: (bookingData.vehicle?.key || bookingData.vehicle?.name || 'standard').toLowerCase().trim(),
+                cab_type: (bookingData.vehicle?.key || 'standard').toLowerCase().trim(),
+                cab_name: (bookingData.vehicle?.name || 'standard'),
                 add_fare_details: {
                     bata: String(fareDetails.bata || '0'),
                     parking: String(fareDetails.parking_charge || '0'),
@@ -10821,7 +10883,11 @@
                 c_special_require: bookingData.specialRequirements || 'none',
                 c_flight_arriving_time: bookingData.flightArrivingTime || '',
                 c_meet_and_greet: bookingData.meetAndGreet || '0',
-                c_seaport_arrival_time: bookingData.dockingTime || ''
+                c_wheel_chair: bookingData.wheelchairOption || '0',
+                c_seaport_arrival_time: bookingData.dockingTime || '',
+                c_pass_name: (bookingData.rideFor === 'other' && bookingData.otherPassengerData) ? bookingData.otherPassengerData.name : '',
+                c_pass_mobile: (bookingData.rideFor === 'other' && bookingData.otherPassengerData) ? bookingData.otherPassengerData.phone : '',
+                c_is_other: bookingData.rideFor === 'other'
             };
 
             // Using the user-provided API Route via the local controller proxy
@@ -11079,7 +11145,7 @@
                     const d = {
                         id: key,
                         name: bid.b_name || 'Driver',
-                        rating: bid.b_rating || '4.9',
+                        rating: bid.b_rating || '4.2',
                         trips: '100+',
                         experience: 'Pro',
                         bid: bid.show_amount || 0,
@@ -11123,7 +11189,7 @@
                     <div class="driver-rating-info">
                         <span>
                             <i class="fas fa-star"></i>
-                            ${d.rating} (${d.trips} trips)
+                            ${d.rating}
                         </span>
                 
                         <span class="driver-divider">•</span>
@@ -11418,7 +11484,7 @@
                             if (uDetails.review) $('#rcDriverReviewsPct').text(uDetails.review + '%');
 
                             if (uDetails.profile_image_url) {
-                                $('#rcDriverAvatar').html(`<img src="${uDetails.profile_image_url}"`);
+                                $('#rcDriverAvatar').html(`<img src="${uDetails.profile_image_url}" style="width:100%;height:100%;object-fit:cover;">`);
                             } else {
                                 $('#rcDriverAvatar').html(`<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(uDetails.name || driver.name || 'Driver')}&background=f5c00b&color=000" style="width:100%;height:100%;object-fit:cover;">`);
                             }
@@ -11485,16 +11551,12 @@
                     $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
                     $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
 
-                    if (data.data.is_meet_and_greet == 1) {
-                        $('#pbMeetGreetRow').show();
-                        $('#pbMeetGreet').text('£' + parseFloat(data.data.meet_amount || 0).toFixed(2));
-                    } else {
-                        $('#pbMeetGreetRow').hide();
-                    }
+                    // Meet & greet is removed from the fare breakdown UI per updated logic
+                    $('#pbMeetGreetRow').hide();
 
                     $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || 0).toFixed(2));
 
-                    $('#dynamicIncludedMiles').text(bookingData.apiDistance || '360 Miles');
+                    $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || 360} miles`);
 
                     $('#dynamicPaymentSummary').show();
 
@@ -11618,7 +11680,6 @@
             $('#confirmDistance').text(finalDistance);
             $('#confirmDuration').text(finalDuration);
             $('#confirmBaseFare').text('\u00a3' + baseFare.toFixed(2));
-            $('#confirmMeetGreet').text('\u00a3' + (meetGreet + totalChildSeat).toFixed(2));
             $('#confirmTotalFare').text('\u00a3' + total.toFixed(2));
             showStep(8);
         }
@@ -11676,7 +11737,7 @@
 
             // Bind input change events to update the store + booking summary live
             $(document).on('input change',
-                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
+                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLanding, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
                     // _updatePassengerSummaryUI and _updateJourneySummaryUI subscribers
@@ -11903,6 +11964,10 @@
 
             if (!name) {
                 showToast('Please enter passenger name', 'error');
+                return;
+            }
+            if (!phone) {
+                showToast('Please enter passenger mobile number', 'error');
                 return;
             }
             if (!/^[a-zA-Z\s]{1,75}$/.test(name)) {
@@ -12686,7 +12751,7 @@
             const mobileUserBlock = document.getElementById('mobileUserBlock');
             const mobileUserAvatar = document.getElementById('mobileUserAvatar');
             const mobileUserName = document.getElementById('mobileUserName');
-            
+
             if (mobileUserBlock) {
                 mobileUserBlock.style.display = 'flex';
             }
@@ -13439,6 +13504,22 @@
             }
         }
 
+        function openTrackRideWithCurrentBooking() {
+            const bookingId = $('#confirmNum').text().trim();
+            if (bookingId) {
+                const overlay = document.getElementById('trackRideOverlay');
+                if (!overlay.classList.contains('show')) {
+                    toggleTrackRideOverlay();
+                }
+                setTimeout(() => {
+                    document.getElementById('trackBookingNumber').value = bookingId;
+                    submitTrackRide();
+                }, 450);
+            } else {
+                toggleTrackRideOverlay();
+            }
+        }
+
         async function submitTrackRide() {
             const num = document.getElementById('trackBookingNumber').value.trim();
             if (!num) {
@@ -13568,6 +13649,31 @@
             }
         }
 
+        function getLiveTrackingCarIcon(angle) {
+            const carSvg = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+                    <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                        <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
+                        <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
+                        <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
+                        <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                        <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                        <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+                        <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                        <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                        <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                        <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                        <rect x="22" y="58" width="20" height="8" rx="2" fill="#FFC107"/>
+                    </g>
+                </svg>
+            `;
+            return {
+                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg.trim()),
+                scaledSize: new google.maps.Size(40, 40),
+                anchor: new google.maps.Point(20, 20)
+            };
+        }
+
         function setupMap() {
             const mapOptions = {
                 zoom: 15,
@@ -13597,16 +13703,7 @@
 
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
-                icon: {
-                    path: 'M17.4 0h-11.8c-3.1 0-5.6 3.5-5.6 6.6v34.8c0 3.1 2.5 5.6 5.6 5.6h11.8c3.1 0 5.6-2.5 5.6-5.6v-34.8c0-3.1-2.5-6.6-5.6-6.6z M22.1 14.2v11.7l-2.7 0.4v-12.3l2.7 0.2z M20.6 10.8c-1 3.9-2.2 8.5-2.2 8.5h-13.8l-2.2-8.5c0 0 8.9-3 18.2 0z M3.7 21.7v4.5l-2.7-0.3v-3.9l2.7-0.3z M1 37.9v-10.4l2.7 0.3v8.2l-2.7 1.9z M2.6 40.9l2.2-3.3h13.8l2.2 3.3h-18.2z M19.3 35.8v-7.9l2.7-0.4v10.1l-2.7-1.8z',
-                    scale: 0.7,
-                    fillColor: '#111',
-                    fillOpacity: 1,
-                    strokeWeight: 1,
-                    strokeColor: '#fff',
-                    rotation: 0,
-                    anchor: new google.maps.Point(11.5, 23.5)
-                }
+                icon: getLiveTrackingCarIcon(0)
             });
         }
 
@@ -13619,12 +13716,12 @@
 
                 // 1. Connect Customer to Socket Server
                 let token = '';
-                if(typeof getCookieValue === 'function') {
+                if (typeof getCookieValue === 'function') {
                     token = getCookieValue('auth_token') || 'CUSTOMER_BEARER_TOKEN';
                 } else {
                     token = 'CUSTOMER_BEARER_TOKEN';
                 }
-                
+
                 liveTrackingSocket = io(url, {
                     transports: ['websocket'],
                     auth: {
@@ -13653,18 +13750,17 @@
                                 trackingMap.setCenter(newPos);
                                 driverMarker.setPosition(newPos);
                                 if (locationData.heading !== undefined) {
-                                    const icon = driverMarker.getIcon();
-                                    icon.rotation = locationData.heading;
-                                    driverMarker.setIcon(icon);
+                                    driverMarker.setIcon(getLiveTrackingCarIcon(locationData.heading));
                                 }
                             } else {
                                 animateMarker(driverMarker, lastPos, newPos);
-                                const icon = driverMarker.getIcon();
-                                icon.rotation = locationData.heading !== undefined ? locationData.heading : 
-                                                (google.maps.geometry && google.maps.geometry.spherical 
-                                                    ? google.maps.geometry.spherical.computeHeading(lastPos, newPos) 
-                                                    : icon.rotation);
-                                driverMarker.setIcon(icon);
+                                let calculatedHeading = 0;
+                                if (locationData.heading !== undefined) {
+                                    calculatedHeading = locationData.heading;
+                                } else if (google.maps.geometry && google.maps.geometry.spherical) {
+                                    calculatedHeading = google.maps.geometry.spherical.computeHeading(lastPos, newPos);
+                                }
+                                driverMarker.setIcon(getLiveTrackingCarIcon(calculatedHeading));
                                 trackingMap.panTo(newPos);
                             }
                             lastPos = newPos;
@@ -13673,13 +13769,13 @@
                 });
 
                 // 4. Listen for other trip status events
-                liveTrackingSocket.on("driver_arrived", () => {
-                    showGlobalToast("Driver has arrived at your pickup location!", true);
-                    const msgEl = document.getElementById('displayTrackingMessage');
-                    if (msgEl) msgEl.innerText = "Driver has arrived.";
-                });
+                // liveTrackingSocket.on("driver_arrived", () => {
+                //     showGlobalToast("Driver has arrived at your pickup location!", true);
+                //     const msgEl = document.getElementById('displayTrackingMessage');
+                //     if (msgEl) msgEl.innerText = "Driver has arrived.";
+                // });
 
-                liveTrackingSocket.on("trip_started", () => {
+                liveTrackingSocket.on("driver_arrived", () => {
                     showGlobalToast("Your trip has started.", true);
                     updateLiveTrackingTimeline('onboard');
                 });
@@ -13702,17 +13798,17 @@
             const steps = ['created', 'confirmed', 'dispatch', 'onboard', 'completed'];
             const activeIdx = steps.indexOf(activeKey);
             if (activeIdx === -1) return;
-            
+
             const ul = document.getElementById('trackingTimeline');
             if (!ul) return;
             const lis = ul.querySelectorAll('li');
-            
+
             lis.forEach((li, idx) => {
                 li.className = '';
                 if (idx < activeIdx) li.classList.add('completed');
                 else if (idx === activeIdx) li.classList.add('active');
             });
-            
+
             // Also update the display message based on activeKey
             const msgs = {
                 'dispatch': 'Driver is on the way.',

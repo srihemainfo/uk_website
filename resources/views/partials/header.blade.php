@@ -13,7 +13,7 @@
                     Help
                 </a>
             </li>
-            <li class="navbar-user-item" id="desktopUserAuthItem" style="display: block !important;">
+            <li class="navbar-user-item" id="desktopUserAuthItem" style="display: none !important;">
                 <button id="navbarUserBtn" class="navbar-user-btn" onclick="_toggleUserDropdown(event)">
                     <span id="navbarUserAvatar" class="navbar-user-avatar"></span>
                     <span id="navbarUserName"></span>

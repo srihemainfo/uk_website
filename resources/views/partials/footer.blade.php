@@ -53,14 +53,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-4">
                     <div class="footer-section">
                         <div class="footer-section-title">Contact</div>
                         <div class="footer-links-list">
-                            <a href="tel:+442083373777">
+                            <div class="footer-phone">
                                 <i class="fas fa-phone footer-contact-icon"></i>
-                                +44 208 337 3777
-                            </a>
+
+                                <a href="tel:+442083373777">+44 208 337 3777</a>
+
+                                <span>/</span>
+
+                                <a href="tel:+447950323242">+44 7950 323242</a>
+                            </div>
                             <a href="mailto:support.uk@goride.run">
                                 <i class="fas fa-envelope footer-contact-icon"></i>
                                 support.uk@goride.run

@@ -3192,21 +3192,26 @@
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 5px;
-            background: black;
-            border: 1px solid #dcdcdc;
-            border-radius: 2px;
-            color: white;
-
+            padding: 0;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            color: #495057;
             cursor: pointer;
             transition: all 0.25s ease;
-            border-radius: 50%;
-            height: 27px;
-            width: 27px;
+            height: 28px;
+            width: 28px;
+            flex-shrink: 0;
         }
 
         .edit-icon-btn i {
-            font-size: 11px;
+            font-size: 12px;
+            color: #495057;
+        }
+
+        .edit-icon-btn:hover {
+            background: #e9ecef;
+            color: #212529;
         }
 
         .edit-icon-btn:active {
@@ -3328,12 +3333,16 @@
             /* align-items: center; */
             font-size: 14px;
             gap: 6px;
+            min-width: 0;
+            word-break: break-all;
+            overflow-wrap: anywhere;
         }
 
         .summary-label {
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .summary-label i {
@@ -3357,7 +3366,9 @@
 
         .summary-value {
             color: #111;
-
+            min-width: 0;
+            word-break: break-all;
+            overflow-wrap: anywhere;
             /* text-align: right; */
         }
 
@@ -4823,10 +4834,80 @@
         .mobile-trip-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             padding: 14px 16px;
             cursor: pointer;
             transition: .3s;
+        }
+
+        .mobile-trip-header .location-group-wrapper {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-trip-header .location-fields {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .mobile-trip-header .mobile-from,
+        .mobile-trip-header .mobile-to {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111;
+            line-height: 1.4;
+            position: relative;
+            min-width: 0;
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .mobile-trip-header .mobile-from .route-dot-start {
+            color: #f9c106;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .mobile-trip-header .mobile-from::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 20px;
+            bottom: -8px;
+            border-left: 2px dotted #bbb;
+        }
+
+        .mobile-trip-header .mobile-to .route-dot-end {
+            color: #000;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            width: 16px;
+            text-align: center;
+        }
+
+        .mobile-trip-header #mcsPickup,
+        .mobile-trip-header #mcsDropoff {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-trip-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            padding-left: 8px;
+            margin-top: 4px;
         }
 
         /*.mobile-trip-header:hover {*/
@@ -5428,6 +5509,9 @@
             color: #000;
 
         }
+        .v-price-onwards{
+font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -5px;
+        }
 
         /* Mobile only */
         @media (max-width:768px) {
@@ -5477,23 +5561,21 @@
             }
 
             .mobile-trip-header {
-                padding: 12px 14px 10px 3px;
+                padding: 12px 14px;
             }
 
             .mobile-from,
             .mobile-to {
-                font-size: 16px !important;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: block;
+                font-size: 14px !important;
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
                 width: 100%;
                 cursor: pointer;
-                max-width: 300px;
             }
 
-            .mobile-from.expanded-text,
-            .mobile-to.expanded-text {
+            .mobile-from.expanded-text #mcsPickup,
+            .mobile-to.expanded-text #mcsDropoff {
                 white-space: normal;
                 word-wrap: break-word;
             }
@@ -5719,12 +5801,14 @@
 
         @media (max-width: 768px) {
             .edit-icon-btn {
-                padding: 8px 10px;
-                font-size: 12px;
+                padding: 0;
+                width: 28px;
+                height: 28px;
+                flex-shrink: 0;
             }
 
             .edit-icon-btn i {
-                font-size: 10px;
+                font-size: 12px;
             }
 
             .pickup-now-btn {
@@ -5928,14 +6012,93 @@
             }
 
             .passenger-details-item .summary-value {
-                word-break: break-word;
+                word-break: break-all;
+                overflow-wrap: anywhere;
                 white-space: normal;
+                min-width: 0;
+            }
+
+            .booking-summary-item {
+                min-width: 0;
+            }
+
+            .booking-summary-item .summary-value {
+                word-break: break-all;
+                overflow-wrap: anywhere;
+                white-space: normal;
+                min-width: 0;
+            }
+
+            .summary-inline-item {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 13px;
+                font-weight: 500;
+                color: #111;
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                padding: 3px 8px;
+                border-radius: 6px;
+            }
+
+            .summary-inline-item i {
+                font-size: 13px;
             }
 
             .p-icon-contact {
                 background: #fff8e7;
                 color: #f39c12;
                 border: 1px solid #fde68a;
+            }
+
+            /* Tooltip styling for Passenger Details Icons */
+            .summary-icon-tooltip {
+                position: relative;
+            }
+
+            .summary-icon-tooltip::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                bottom: 125%;
+                right: 0;
+                transform: translateY(4px);
+                background-color: #111111;
+                color: #ffffff;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 11px;
+                font-weight: 500;
+                white-space: nowrap;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease, transform 0.2s ease;
+                pointer-events: none;
+                z-index: 1000;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            }
+
+            .summary-icon-tooltip::before {
+                content: '';
+                position: absolute;
+                bottom: 105%;
+                right: 12px;
+                transform: translateY(4px);
+                border-width: 5px 5px 0 5px;
+                border-style: solid;
+                border-color: #111111 transparent transparent transparent;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease, transform 0.2s ease;
+                pointer-events: none;
+                z-index: 1000;
+            }
+
+            .summary-icon-tooltip:hover::after,
+            .summary-icon-tooltip:hover::before {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
             }
 
 
@@ -6416,13 +6579,13 @@
 
             #mcsEnteredDetails .booking-summary-span2-item {
                 grid-column: span 2;
-                justify-content: space-between !important;
+              /* justify-content: space-between !important; */
             }
 
-            #mcsEnteredDetails .mcs-special-req-container {
+            /* #mcsEnteredDetails .mcs-special-req-container {
                 border-top: 1px dashed #ddd;
                 padding-top: 8px;
-            }
+            } */
 
             #mcsEnteredDetails .summary-label {
                 flex-shrink: 0;
@@ -6932,7 +7095,7 @@
             }
 
             .vehicle-left {
-                width: 135px;
+                width: 125px;
                 height: auto;
                 min-height: 90px;
                 margin: 0;
@@ -8782,12 +8945,46 @@
                 $('#mcsJourneyDetailsHeader').hide();
             }
 
+            // Meet & Greet
+            const isMeetGreetSub = state.meetAndGreet === '1' || state.meetAndGreet === true;
+            if (isMeetGreetSub) {
+                $('#summaryMeetGreetContainer').css('display', 'inline-flex');
+                $('#mcsMeetGreetContainer').css('display', 'inline-flex');
+            } else {
+                $('#summaryMeetGreetContainer').hide();
+                $('#mcsMeetGreetContainer').hide();
+            }
+
+            // Wheelchair Access
+            const isWheelchairSub = state.wheelchairOption === '1' || state.wheelchairOption === true;
+            if (isWheelchairSub) {
+                $('#summaryWheelchairContainer').css('display', 'inline-flex');
+                $('#mcsWheelchairContainer').css('display', 'inline-flex');
+            } else {
+                $('#summaryWheelchairContainer').hide();
+                $('#mcsWheelchairContainer').hide();
+            }
+
             // Special requirements
-            if (state.isSpecialReq && state.specialRequirements) {
+            const isSpecialReqSub = state.isSpecialReq && state.specialRequirements;
+            if (isSpecialReqSub) {
                 $('#summarySpecialRequirements').text(state.specialRequirements);
                 $('#summarySpecialReqContainer').show();
+                $('#mcsSpecialRequirements').text(state.specialRequirements);
+                $('#mcsSpecialReqContainer').show();
             } else {
                 $('#summarySpecialReqContainer').hide();
+                $('#mcsSpecialReqContainer').hide();
+            }
+
+            const hasFlightOrCruiseSub = (pickupType === 'airport' || pickupType === 'seaport');
+            const hasAddInfoSub = hasFlightOrCruiseSub || isMeetGreetSub || isWheelchairSub || !!isSpecialReqSub;
+            if (hasAddInfoSub) {
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').css('display', 'block');
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').css('display', 'block');
+            } else {
+                $('#summaryJourneyDetailsHeader').hide();
+                $('#mcsJourneyDetailsHeader').hide();
             }
         }
 
@@ -9964,7 +10161,10 @@
             <i class="fas fa-info-circle"></i>
         </button>
     </div>
-    <div class="v-price">${priceHtml}${tripInfoHtml}</div>
+    <div class="v-price">
+        ${priceHtml}${tripInfoHtml}
+        <div class="v-price-onwards">Onwards</div>
+    </div>
 </div>
         <div class="v-sub">
            <div class="v-features">
@@ -10667,20 +10867,52 @@
                 $('#mcsJourneyDetailsHeader').hide();
             }
 
+            // Meet & Greet
+            const isMeetGreet = $('#meetAndGreet').is(':checked') || $('#meetAndGreetSeaport').is(':checked') || $('.meet-and-greet-cb').is(':checked') || bData.meetAndGreet === '1' || bData.meetAndGreet === true;
+            if (isMeetGreet) {
+                $('#summaryMeetGreetContainer').css('display', 'inline-flex');
+                $('#mcsMeetGreetContainer').css('display', 'inline-flex');
+                showEnteredDetails = true;
+            } else {
+                $('#summaryMeetGreetContainer').hide();
+                $('#mcsMeetGreetContainer').hide();
+            }
+
+            // Wheelchair Access
+            const isWheelchair = $('#wheelchairOptionAirport').is(':checked') || $('#wheelchairOptionSeaport').is(':checked') || $('#wheelchairOptionNormal').is(':checked') || $('.wheelchair-option-cb').is(':checked') || bData.wheelchairOption === '1' || bData.wheelchairOption === true;
+            if (isWheelchair) {
+                $('#summaryWheelchairContainer').css('display', 'inline-flex');
+                $('#mcsWheelchairContainer').css('display', 'inline-flex');
+                showEnteredDetails = true;
+            } else {
+                $('#summaryWheelchairContainer').hide();
+                $('#mcsWheelchairContainer').hide();
+            }
+
             // Special Requirements
-            const isSpecialReq = $('#specialReqCheckbox').is(':checked');
-            if (isSpecialReq) {
-                const specReq = $('#specialRequirements').val().trim() || '';
-                $('#summarySpecialRequirements').text(specReq || '–');
+            const isSpecialReq = $('#specialReqCheckbox').is(':checked') || (bData.isSpecialReq && bData.specialRequirements);
+            const specReqVal = $('#specialRequirements').val() ? $('#specialRequirements').val().trim() : (bData.specialRequirements || '');
+            if (isSpecialReq && specReqVal !== '') {
+                $('#summarySpecialRequirements').text(specReqVal);
                 $('#summarySpecialReqContainer').show();
 
                 // Mobile
-                $('#mcsSpecialRequirements').text(specReq || '–');
+                $('#mcsSpecialRequirements').text(specReqVal);
                 $('#mcsSpecialReqContainer').show();
                 showEnteredDetails = true;
             } else {
                 $('#summarySpecialReqContainer').hide();
                 $('#mcsSpecialReqContainer').hide();
+            }
+
+            const hasFlightOrCruise = (pickupType === 'airport' || pickupType === 'seaport');
+            const hasAddInfo = hasFlightOrCruise || isMeetGreet || isWheelchair || (isSpecialReq && specReqVal !== '');
+            if (hasAddInfo) {
+                $('#summaryJourneyDetailsHeader').text('ADDITIONAL INFORMATION').css('display', 'block');
+                $('#mcsJourneyDetailsHeader').text('ADDITIONAL INFORMATION').css('display', 'block');
+            } else {
+                $('#summaryJourneyDetailsHeader').hide();
+                $('#mcsJourneyDetailsHeader').hide();
             }
 
             const currentStep = bData.currentStep || 1;

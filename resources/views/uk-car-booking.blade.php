@@ -316,29 +316,22 @@
             <div id="mobileSummaryBackdrop" class="mobile-summary-backdrop" onclick="toggleTripSummary()"></div>
             <!-- COMPACT MOBILE SUMMARY -->
             <div id="mobileCompactSummary" class="mobile-trip-summary">
-                <div class="mobile-trip-header" onclick="toggleTripSummary()" style="align-items: flex-start;">
-                    <div class="location-group-wrapper" style="width: 100%; gap: 12px; ">
-                        <div class="route-indicator"
-                            style="padding-top: 4px; padding-bottom: 4px; justify-content: space-between;">
-                            <i class="fas fa-location-dot route-dot-start" style="font-size: 15px;"></i>
-                            <div class="route-line" style="min-height: 18px; margin: 4px 0;"></div>
-                            <i class="fas fa-location-dot route-dot-end" style="font-size: 15px;"></i>
-                        </div>
-                        <div class="location-fields"
-                            style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 2px 0;">
-                            <div class="mobile-from"
-                                style="font-weight: 600; font-size: 14px; color: #111; display: flex; align-items: center; gap: 0;">
+                <div class="mobile-trip-header" onclick="toggleTripSummary()">
+                    <div class="location-group-wrapper">
+                        <div class="location-fields">
+                            <div class="mobile-from">
+                                <i class="fas fa-location-dot route-dot-start"></i>
                                 <span id="mcsPickup" class="text-truncate"></span>
                             </div>
-                            <div class="mobile-to"
-                                style="font-weight: 600; font-size: 14px; color: #111; margin-top: 10px; display: flex; align-items: center; gap: 0;">
+                            <div class="mobile-to">
+                                <i class="fas fa-location-dot route-dot-end"></i>
                                 <span id="mcsDropoff" class="text-truncate"></span>
                             </div>
                         </div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 14px; margin-top: 6px; padding-left: 8px;">
-                        <button type="button" class="edit-icon-btn" onclick="event.stopPropagation(); goBackToLocations()" title="Edit trip" style="width: 28px; height: 28px; flex-shrink: 0; padding: 0; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px;">
-                            <i class="fas fa-pencil" style="font-size: 12px; color: #495057;"></i>
+                    <div class="mobile-trip-header-actions">
+                        <button type="button" class="edit-icon-btn" onclick="event.stopPropagation(); goBackToLocations()" title="Edit trip">
+                            <i class="fas fa-pencil"></i>
                         </button>
                         <i class="fas fa-chevron-down" id="tripSummaryArrow"></i>
                     </div>
@@ -398,8 +391,8 @@
                                         <i class="fas fa-car"></i>
                                         <span id="mcsCarName">-</span>
                                     </h4>
-                                    <button type="button" class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle" style="width: 24px; height: 24px; flex-shrink: 0; padding: 0; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px;">
-                                        <i class="fas fa-pencil" style="font-size: 10px; color: #495057;"></i>
+                                    <button type="button" class="edit-icon-btn" onclick="showStep(3)" title="Edit vehicle">
+                                        <i class="fas fa-pencil"></i>
                                     </button>
                                 </div>
                                 <div class="summary-car-info" id="mcsCarInfo">

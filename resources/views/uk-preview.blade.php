@@ -61,9 +61,9 @@
             background: rgba(16, 185, 129, 0.12);
             color: #059669;
             border: 1px solid rgba(16, 185, 129, 0.25);
-            padding: 5px 12px;
+            padding: 9px 23px;
             border-radius: 50px;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
@@ -71,7 +71,7 @@
         }
 
         .hero-meta-item {
-            font-size: 12px;
+            font-size: 14px;
             color: #4b5563;
             margin-bottom: 0;
             display: inline-flex;
@@ -79,7 +79,7 @@
             gap: 6px;
             background: #f9fafb;
             border: 1px solid #e5e7eb;
-            padding: 5px 12px;
+            padding: 9px 23px;
             border-radius: 50px;
         }
 

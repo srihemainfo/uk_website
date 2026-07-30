@@ -996,11 +996,21 @@
                 padding: 9px;
                 justify-content: center;
                 gap: 6px;
-                flex-direction: column;
+                /* flex-direction: column; */
             }
 
             .stat-info {
                 text-align: center;
+                   
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 11px;
+            }
+            .stat-icon {
+                width: 30px;
+    height: 30px;   
+     font-size: 12px;
             }
 
             .driver-card {
@@ -1504,7 +1514,7 @@
 
 
                     document.getElementById('summaryStatsGrid').innerHTML = `
-                            <div class="stat-card" style="min-width: 180px;">
+                            <div class="stat-card">
                                 <div class="stat-icon"><i class="fas fa-car"></i></div>
                                 <div class="stat-info">
                                     <div class="stat-value">${data.total_rides}</div>

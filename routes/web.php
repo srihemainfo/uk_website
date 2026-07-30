@@ -34,6 +34,10 @@ Route::get('/uk-about', function () {
     return view('uk-global');
 })->name('uk-global');
 
+ Route::get('/uk-preview', function () {
+    return view('uk-preview');
+})->name('uk-preview');
+
  Route::get('/operator-signup', function () {
     return view('uk-operator');
 })->name('uk-operator');

@@ -7007,7 +7007,7 @@
             }
 
             .vehicle-left {
-                width: 135px;
+                width: 125px;
                 height: auto;
                 min-height: 90px;
                 margin: 0;

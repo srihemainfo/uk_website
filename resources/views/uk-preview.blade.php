@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoRide | Booking Confirmation Preview</title>
     <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
@@ -25,14 +22,13 @@
             margin: 0 auto;
         }
 
-        /* Top Brand Header Bar */
         .top-brand-bar {
             background: #ffffff;
             padding: 12px 20px;
             border-radius: 14px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
             border: 1px solid #e5e7eb;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -115,19 +111,17 @@
             color: #f9c106;
         }
 
-        /* Hero Banner Card */
         .hero-banner-card {
             background: #ffffff;
             color: #111827;
             border-radius: 14px;
             padding: 20px 24px;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             border: 1px solid #e5e7eb;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
             position: relative;
         }
 
-        /* Stacked Location Route Container */
         .route-stacked-container {
             position: relative;
             height: 100%;
@@ -187,7 +181,6 @@
             overflow-wrap: anywhere;
         }
 
-        /* Integrated Security & Fare Card */
         .hero-security-fare-card {
             background: #f9fafb;
             border: 1px solid #e5e7eb;
@@ -284,12 +277,113 @@
             line-height: 1;
         }
 
-        /* Standard Compact Preview Card */
+        .btn-fare-info {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 0;
+            color: #4b5563;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+        }
+
+        .btn-fare-info:hover,
+        .btn-fare-info.active {
+            color: white;
+            background: black;
+            border-color: black;
+        }
+
+        .btn-fare-info i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-fare-info.active i {
+            transform: rotate(180deg);
+        }
+
+        .fare-breakdown-collapse {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .fare-breakdown-collapse.show {
+            max-height: 220px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        .fare-breakdown-inner {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px 14px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+        }
+
+        .fare-breakdown-header {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #111827;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+            border-bottom: 1px dashed #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .fare-breakdown-header i {
+            color: #f9c106;
+        }
+
+        .fare-line-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #4b5563;
+            padding: 3px 0;
+        }
+
+        .fare-line-item span {
+            font-weight: 500;
+        }
+
+        .fare-line-item strong {
+            color: #111827;
+            font-weight: 700;
+        }
+
+        .fare-total-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 800;
+            color: #111827;
+            padding-top: 6px;
+            margin-top: 4px;
+            border-top: 1.5px solid #111827;
+        }
+
+        .fare-total-line strong {
+            color: #059669;
+        }
+
         .preview-card {
             background: #ffffff;
             border-radius: 14px;
             padding: 18px 22px;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             border: 1px solid #e5e7eb;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
         }
@@ -300,9 +394,7 @@
             letter-spacing: 0.8px;
             color: #111827;
             font-weight: 800;
-            margin-bottom: 14px;
             padding-bottom: 8px;
-            border-bottom: 1px solid #f3f4f6;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -312,7 +404,6 @@
             color: #f9c106;
         }
 
-        /* Person Card Box (Passenger & Driver Details) */
         .person-box {
             background: #f9fafb;
             border: 1px solid #e5e7eb;
@@ -329,6 +420,12 @@
             padding-bottom: 6px;
             border-bottom: 1px dashed #e5e7eb;
             margin-bottom: 6px;
+        }
+
+        .person-info-item a {
+            color: #111827;
+            font-weight: 700;
+            text-decoration: none;
         }
 
         .person-info-item:last-child {
@@ -357,31 +454,11 @@
             border-radius: 5px;
         }
 
-        .btn-call-driver {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 3px 10px;
-            background: #111827;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 11px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-call-driver:hover {
-            background: #f9c106;
-            color: #111827;
-        }
-
-        /* Grid Info Boxes */
         .info-item-box {
             background: #f9fafb;
             border: 1px solid #f3f4f6;
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 6px 10px;
             height: 100%;
             transition: all 0.2s ease;
         }
@@ -411,15 +488,9 @@
             color: #111827;
         }
 
-        /* Special Requirements Banner */
         .note-alert-banner {
-            background: #fffdf0;
-            border: 1px solid #fef08a;
-            border-left: 4px solid #f9c106;
-            padding: 12px 16px;
-            border-radius: 10px;
             color: #111827;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -442,11 +513,21 @@
             margin-bottom: 0;
         }
 
-        /* Responsive Breakpoints */
         @media (max-width: 768px) {
-            .badge-status-confirmed,.hero-meta-item{
-                padding: 7px 13px;
+
+            .badge-status-confirmed,
+            .hero-meta-item {
+                background: none;
+                border: none;
             }
+
+            .badge-status-confirmed,
+            .hero-meta-item {
+                padding: 0px;
+                font-size: 15px;
+                margin: 5px;
+            }
+
             body {
                 padding: 10px 8px;
             }
@@ -476,7 +557,7 @@
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 8px;
+                gap: 0px;
             }
 
             .hero-banner-card {
@@ -493,22 +574,94 @@
         }
 
         @media print {
+            @page {
+                size: A4 portrait;
+                margin: 6mm 8mm;
+            }
+
             body {
                 background: #ffffff !important;
-                padding: 0;
+                padding: 0 !important;
+                color: #000000 !important;
+                font-size: 12px !important;
+            }
+
+            .main-wrapper {
+                max-width: 100% !important;
+                width: 100% !important;
+                margin: 0 !important;
             }
 
             .btn-action-icon,
-            .btn-call-driver,
+            .btn-fare-info,
             .hero-btn-track {
                 display: none !important;
             }
 
-            .preview-card,
-            .hero-banner-card,
             .top-brand-bar {
+                margin-bottom: 4px !important;
+                padding: 6px 12px !important;
                 box-shadow: none !important;
                 border: 1px solid #cbd5e1 !important;
+            }
+
+            .hero-banner-card {
+                margin-bottom: 4px !important;
+                padding: 8px 12px !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .preview-card {
+                margin-bottom: 4px !important;
+                padding: 8px 12px !important;
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .card-heading {
+                font-size: 11px !important;
+                padding-bottom: 3px !important;
+                margin-bottom: 4px !important;
+            }
+
+            .info-item-box {
+                padding: 4px 6px !important;
+            }
+
+            .person-box {
+                padding: 6px 8px !important;
+            }
+
+            .person-info-item {
+                font-size: 11px !important;
+                padding-bottom: 3px !important;
+                margin-bottom: 3px !important;
+            }
+
+            .policy-list li {
+                font-size: 11px !important;
+                margin-bottom: 2px !important;
+                line-height: 1.3 !important;
+            }
+
+            .fare-amount {
+                font-size: 22px !important;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            .card-heading {
+                page-break-after: avoid;
+                break-after: avoid;
             }
         }
     </style>
@@ -518,15 +671,12 @@
 
     <div class="main-wrapper">
 
-        <!-- Top Brand Header Bar -->
         <div class="top-brand-bar">
-            <!-- Left Logo -->
             <a href="#" class="brand-logo text-decoration-none">
                 <img src="https://www.goride.net.in/goride/img/logo-dark.png" alt="GoRide Logo"
                     style="height: 36px; width: auto;">
             </a>
 
-            <!-- Right Info & Action Buttons -->
             <div class="top-brand-meta">
                 <div class="badge-status-confirmed">
                     <i class="fa-solid fa-circle-check"></i> Booking Confirmed
@@ -535,8 +685,6 @@
                     <i class="fa-solid fa-hashtag"></i> Booking ID : <strong>GRC-260730-00125</strong>
                 </div>
             </div>
-
-            <!-- Action Buttons (Print & Support Icons) -->
             <div class="brand-actions">
                 <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
                     <i class="fa-solid fa-print"></i>
@@ -547,14 +695,11 @@
             </div>
         </div>
 
-        <!-- Hero Banner Card -->
         <div class="hero-banner-card">
             <div class="row align-items-center g-3">
 
-                <!-- Left Info Column: Stacked Route Locations -->
                 <div class="col-lg-6 col-md-12">
                     <div class="route-stacked-container">
-                        <!-- Pickup Location -->
                         <div class="route-location-row">
                             <div class="route-pin-icon pickup">
                                 <i class="fa-solid fa-location-dot"></i>
@@ -565,10 +710,8 @@
                             </div>
                         </div>
 
-                        <!-- Connector Dotted Line -->
                         <div class="route-connector-line"></div>
 
-                        <!-- Dropoff Location -->
                         <div class="route-location-row">
                             <div class="route-pin-icon dropoff">
                                 <i class="fa-solid fa-location-dot"></i>
@@ -581,10 +724,9 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Unified Security & Total Fare Card -->
                 <div class="col-lg-6 col-md-12">
                     <div class="hero-security-fare-card">
-                        <!-- Top Row: Security Modules -->
+
                         <div class="row g-2 align-items-center pb-2 mb-2 border-bottom">
                             <div class="col-6">
                                 <div class="hero-sec-item-compact">
@@ -614,11 +756,40 @@
                             </div>
                         </div>
 
-                        <!-- Bottom Row: Fare Amount -->
                         <div class="d-flex align-items-center justify-content-between pt-1">
-                            <span class="text-uppercase text-secondary fw-bold"
-                                style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-uppercase text-secondary fw-bold"
+                                    style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
+                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
+                                    title="View Fare Breakdown">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </button>
+                            </div>
                             <div class="fare-amount">£80.14</div>
+                        </div>
+
+                        <div class="fare-breakdown-collapse" id="fareBreakdownCollapse">
+                            <div class="fare-breakdown-inner">
+                                <div class="fare-breakdown-header">
+                                    <i class="fa-solid fa-receipt"></i> Fare Breakdown
+                                </div>
+                                <div class="fare-line-item">
+                                    <span>Base Fare</span>
+                                    <strong>£60.14</strong>
+                                </div>
+                                <div class="fare-line-item">
+                                    <span>Airport Taxes &amp; Tolls</span>
+                                    <strong>£10.00</strong>
+                                </div>
+                                <div class="fare-line-item">
+                                    <span>Meet &amp; Greet</span>
+                                    <strong>£10.00</strong>
+                                </div>
+                                <div class="fare-total-line">
+                                    <span>Total Fare</span>
+                                    <strong>£80.14</strong>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -626,10 +797,8 @@
             </div>
         </div>
 
-        <!-- 1. PASSENGER & DRIVER DETAILS SECTION -->
         <div class="preview-card">
             <div class="row g-3">
-                <!-- Passenger Details -->
                 <div class="col-md-6">
                     <div class="person-box">
                         <div class="card-heading border-0 pb-0 mb-2">
@@ -650,7 +819,6 @@
                     </div>
                 </div>
 
-                <!-- Driver Details -->
                 <div class="col-md-6">
                     <div class="person-box">
                         <div class="card-heading border-0 pb-0 mb-2">
@@ -665,11 +833,11 @@
                             <strong>Mercedes E-Class</strong>
                         </div>
                         <div class="person-info-item">
-                            <span>Reg & Contact</span>
+                            <span>Contact</span>
                             <div class="d-flex align-items-center gap-2">
-                                <span class="reg-badge">AB12 XYZ</span>
+
                                 <a class="btn-call-driver" href="tel:+449176333791">
-                                    <i class="fa-solid fa-phone"></i> Call
+                                    +449176333791
                                 </a>
                             </div>
                         </div>
@@ -678,7 +846,6 @@
             </div>
         </div>
 
-        <!-- 2. PICKUP INFORMATION SECTION -->
         <div class="preview-card">
             <div class="card-heading">
                 <i class="fa-solid fa-plane-arrival"></i> Pickup Information
@@ -711,7 +878,6 @@
             </div>
         </div>
 
-        <!-- 3. RIDE DETAILS SECTION -->
         <div class="preview-card">
             <div class="card-heading">
                 <i class="fa-solid fa-sliders"></i> Ride Details
@@ -792,18 +958,20 @@
             </div>
         </div>
 
-        <!-- 4. SPECIAL REQUIREMENTS SECTION -->
         <div class="preview-card">
             <div class="card-heading">
                 <i class="fa-solid fa-clipboard-list"></i> Special Requirements
             </div>
             <div class="note-alert-banner">
-                <i class="fa-solid fa-circle-info fs-5" style="color: #f9c106;"></i>
-                <div>Meet & Greet required. Please assist with luggage on arrival.</div>
+                <ul class="policy-list">
+                    <li>Meet & Greet required. Please assist with luggage on arrival.
+                    </li>
+
+                </ul>
+
             </div>
         </div>
 
-        <!-- TERMS AND CONDITIONS SECTION -->
         <div class="preview-card">
             <h6 class="fw-bold mb-2 text-dark">Terms and Conditions</h6>
             <ul class="policy-list">
@@ -820,7 +988,6 @@
             </ul>
         </div>
 
-        <!-- INCLUSIONS & EXCLUSIONS SECTION -->
         <div class="preview-card">
             <h6 class="fw-bold mb-2 text-dark">Inclusions & Exclusions</h6>
             <div class="row g-3">
@@ -846,7 +1013,6 @@
             </div>
         </div>
 
-        <!-- SAFETY GUIDELINES SECTION -->
         <div class="preview-card">
             <h6 class="fw-bold mb-2 text-dark">Safety Guidelines</h6>
             <div class="row g-3">
@@ -872,7 +1038,6 @@
             </div>
         </div>
 
-        <!-- SUPPORT & ASSISTANCE SECTION -->
         <div class="preview-card">
             <h6 class="fw-bold mb-2 text-dark">Support & Assistance</h6>
             <p class="text-secondary mb-2" style="font-size: 13px; line-height: 1.5;">
@@ -890,17 +1055,30 @@
                 Best Regards, GoRide Team
             </div>
             <div>
-                <a href="#" class="fw-bold text-dark text-decoration-underline" style="font-size: 13px;">Terms &
+                <a href="/uk-terms" class="fw-bold text-dark text-decoration-underline" style="font-size: 13px;">Terms &
                     Conditions</a>
             </div>
         </div>
 
-        <!-- COPYRIGHT FOOTER -->
         <div class="text-center py-2 text-secondary" style="font-size: 12px;">
             © 2026 GoRide • Safe • Reliable • Affordable
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const btnToggle = document.getElementById('btnToggleFareBreakdown');
+            const collapseEl = document.getElementById('fareBreakdownCollapse');
+
+            if (btnToggle && collapseEl) {
+                btnToggle.addEventListener('click', function () {
+                    btnToggle.classList.toggle('active');
+                    collapseEl.classList.toggle('show');
+                });
+            }
+        });
+    </script>
 
 </body>
 

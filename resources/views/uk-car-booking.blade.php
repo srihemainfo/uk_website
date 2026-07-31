@@ -624,7 +624,7 @@
                     <div id="seaportDockingFields" style="display: none;">
                         <div class="form-group-uber">
                             <label><i class="fas fa-clock"></i> PickUp After Docking?</label>
-                            <select id="pickupAfterDockingSelect">
+                            <select id="pickupAfterDocking">
                                 <option value="">Select</option>
                                 <option value="15">15 Min After</option>
                                 <option value="30">30 Min After</option>
@@ -1476,7 +1476,7 @@
                                             </div>
                                             <input type="hidden" id="flightArrivingTime" value="11:00">
                                         </div>-->
-                                <div class="form-group-uber booking-form-group d-none">
+                                <!-- <div class="form-group-uber booking-form-group d-none">
                                     <label>
                                         <i class="fas fa-clock"></i>
                                         PickUp  After Landing?
@@ -1490,7 +1490,7 @@
                                         <option value="75">75 Min After</option>
                                         <option value="90">90 Min After</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="form-group-uber booking-form-group">
                                     <label>Coming From *</label>
                                     <input type="text" id="comingFrom" placeholder="Coming From" oninput="this.value = this.value.slice(0, 150)">
@@ -1498,6 +1498,19 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
                                     <input type="text" id="dropoffAddress" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                </div>
+                                <div class="form-group-uber booking-form-group">
+                                    <label>
+                                        <i class="fas fa-hourglass-end"></i> Pickup After Landing
+                                    </label>
+                                    <select id="pickupAfterLandingSelect">
+                                        <option value="15">15 Min After</option>
+                                        <option value="30">30 Min After</option>
+                                        <option value="45" selected>45 Min After</option>
+                                        <option value="60">60 Min After</option>
+                                        <option value="75">75 Min After</option>
+                                        <option value="90">90 Min After</option>
+                                    </select>
                                 </div>
                                 <style>
                                     .meet-greet-tooltip {
@@ -1637,6 +1650,20 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
                                     <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                </div>
+                                <div class="form-group-uber booking-form-group">
+                                    <label>
+                                        <i class="fas fa-clock"></i> PickUp After Docking?
+                                    </label>
+                                    <select id="pickupAfterDockingSelect">
+                                        <option value="">Select</option>
+                                        <option value="15">15 Min After</option>
+                                        <option value="30">30 Min After</option>
+                                        <option value="45" selected>45 Min After</option>
+                                        <option value="60">60 Min After</option>
+                                        <option value="75">75 Min After</option>
+                                        <option value="90">90 Min After</option>
+                                    </select>
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
@@ -2073,7 +2100,7 @@
                     font-family: inherit;
                 }
             </style>
-            <script
+            <script async defer
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtkJtXBZPLBZIgjgpu-eAG5WQ1HwW4EwE&libraries=geometry"></script>
 
             <script>

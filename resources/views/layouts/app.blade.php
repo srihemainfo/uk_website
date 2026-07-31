@@ -3284,9 +3284,9 @@
 
         .estimated-fare-badge {
             display: inline-block;
-            margin-top: 6px;
-            padding: 4px 10px;
-            font-size: 11px;
+            margin-top: 2px;
+         padding: 7px 10px;
+    font-size: 13px;
             font-weight: 600;
             color: #d4a017;
             background: #fff5d9;

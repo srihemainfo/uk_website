@@ -3288,8 +3288,8 @@
          padding: 7px 10px;
     font-size: 13px;
             font-weight: 600;
-            color: #d4a017;
-            background: #fff5d9;
+         color: white;
+    background: black;
             border-radius: 20px;
             line-height: 1;
         }

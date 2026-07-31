@@ -2362,6 +2362,15 @@
             margin-bottom: 16px;
             color: #fff;
         }
+        .footer-phone{
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .footer-phone a{
+            display:inline;
+        }
 
         .footer-links-list {
             display: flex;

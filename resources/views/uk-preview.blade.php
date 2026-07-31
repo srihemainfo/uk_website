@@ -33,6 +33,30 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
             border: 1px solid #e5e7eb;
             margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-brand-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .brand-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-action-icon {
@@ -420,12 +444,39 @@
 
         /* Responsive Breakpoints */
         @media (max-width: 768px) {
+            .badge-status-confirmed,.hero-meta-item{
+                padding: 7px 13px;
+            }
             body {
                 padding: 10px 8px;
             }
 
             .top-brand-bar {
-                padding: 10px 14px;
+                padding: 12px 14px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+
+            .brand-logo {
+                order: 1;
+            }
+
+            .brand-actions {
+                order: 2;
+                margin-left: auto;
+            }
+
+            .top-brand-meta {
+                order: 3;
+                width: 100%;
+                margin-left: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
             .hero-banner-card {
@@ -468,29 +519,31 @@
     <div class="main-wrapper">
 
         <!-- Top Brand Header Bar -->
-        <div class="top-brand-bar d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="top-brand-bar">
             <!-- Left Logo -->
-            <a href="#" class="d-flex align-items-center gap-2 text-decoration-none">
+            <a href="#" class="brand-logo text-decoration-none">
                 <img src="https://www.goride.net.in/goride/img/logo-dark.png" alt="GoRide Logo"
                     style="height: 36px; width: auto;">
             </a>
 
             <!-- Right Info & Action Buttons -->
-            <div class="d-flex align-items-center gap-2 flex-wrap ms-auto">
+            <div class="top-brand-meta">
                 <div class="badge-status-confirmed">
                     <i class="fa-solid fa-circle-check"></i> Booking Confirmed
                 </div>
                 <div class="hero-meta-item">
                     <i class="fa-solid fa-hashtag"></i> Booking ID : <strong>GRC-260730-00125</strong>
                 </div>
-                <div class="d-flex align-items-center gap-2 ms-lg-2">
-                    <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
-                        <i class="fa-solid fa-print"></i>
-                    </button>
-                    <a href="tel:+442083373777" class="btn-action-icon" title="Call Support">
-                        <i class="fa-solid fa-headset"></i>
-                    </a>
-                </div>
+            </div>
+
+            <!-- Action Buttons (Print & Support Icons) -->
+            <div class="brand-actions">
+                <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
+                    <i class="fa-solid fa-print"></i>
+                </button>
+                <a href="tel:+442083373777" class="btn-action-icon" title="Call Support">
+                    <i class="fa-solid fa-headset"></i>
+                </a>
             </div>
         </div>
 

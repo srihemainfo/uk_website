@@ -38,6 +38,10 @@ Route::get('/uk-about', function () {
     return view('uk-preview');
 })->name('uk-preview');
 
+ Route::get('/uk-invoice', function () {
+    return view('uk-invoice');
+})->name('uk-invoice');
+
  Route::get('/operator-signup', function () {
     return view('uk-operator');
 })->name('uk-operator');

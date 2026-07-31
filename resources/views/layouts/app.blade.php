@@ -11468,7 +11468,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             </div>
          
             <button onclick="acceptDriverFromList(${driverJson}, this)" class="driver-accept-btn">
-    <i class="fas fa-check me-1"></i> Accept
+    <i class="fas fa-check me-1"></i>Review & Pay
 </button>
         </div>
     </div>

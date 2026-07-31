@@ -8192,10 +8192,21 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
         // Returns a Date object whose local fields match the current UK time.
         // This ensures the frontend date comparisons and flatpickr instances use UK time regardless of the user's timezone.
-        function getUKDate() {
-            const ukTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/London" });
-            return new Date(ukTimeStr);
-        }
+    // Cache the formatter to prevent heavy instantiation lag on mobile devices
+    const _ukTimeFormatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Europe/London",
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true
+    });
+
+    function getUKDate() {
+        return new Date(_ukTimeFormatter.format(new Date()));
+    }
 
         function normalizeLocationType(type) {
             if (!type) return 'address';

@@ -9030,7 +9030,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             if (_restoredState.flightNumber) { $('#flightNumber').val(_restoredState.flightNumber); }
             if (_restoredState.comingFrom) { $('#comingFrom').val(_restoredState.comingFrom); }
             if (_restoredState.dropoffAddress) { $('#dropoffAddress').val(_restoredState.dropoffAddress); }
-            if (_restoredState.pickAfterTime) { $('#pickupAfterLanding').val(_restoredState.pickAfterTime); }
+            if (_restoredState.pickAfterTime) { $('#pickupAfterLandingSelect').val(_restoredState.pickAfterTime); }
             if (_restoredState.ferryName) { $('#ferryName').val(_restoredState.ferryName); }
             if (_restoredState.dockingTime) { $('#seaportArrivalTime').val(_restoredState.dockingTime); }
             if (_restoredState.comingFromPort) { $('#comingFromPort').val(_restoredState.comingFromPort); }
@@ -11978,7 +11978,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
             // Bind input change events to update the store + booking summary live
             $(document).on('input change',
-                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLanding, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
+                '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLanding, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
                     // _updatePassengerSummaryUI and _updateJourneySummaryUI subscribers
@@ -11986,6 +11986,49 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                     updateBookingSummary();
                 }
             );
+
+            $(document).on('change', '#pickupAfterLanding', function () {
+                const val = $(this).val();
+                console.log('pickupAfterLanding ' + val);
+
+                const $target = $('#pickupAfterLandingSelect');
+                // Only update and trigger if value actually changed (prevents infinite loop)
+                if ($target.val() !== val) {
+                    $target.val(val).trigger('change'); 
+                }
+            });
+
+            $(document).on('change', '#pickupAfterLandingSelect', function () {
+                const val = $(this).val();
+                console.log('pickupAfterLandingSelect ' + val);
+
+                const $target = $('#pickupAfterLanding');
+                if ($target.val() !== val) {
+                    $target.val(val).trigger('change');
+                }
+            });
+
+            $(document).on('change', '#pickupAfterDocking', function () {
+                const val = $(this).val();
+                // console.log('pickupAfterDocking ' + val);
+
+                const $target = $('#pickupAfterDockingSelect');
+                // Only update and trigger if value actually changed (prevents infinite loop)
+                if ($target.val() !== val) {
+                    $target.val(val).trigger('change'); 
+                }
+            });
+
+            $(document).on('change', '#pickupAfterDockingSelect', function () {
+                const val = $(this).val();
+                // console.log('pickupAfterDockingSelect ' + val);
+
+                const $target = $('#pickupAfterDocking');
+                if ($target.val() !== val) {
+                    $target.val(val).trigger('change');
+                }
+            });
+
             // Synchronize normal journey date/time back to store
             $(document).on('change', '#normalJourneyDate', function () {
                 BookingStore.setState({ date: $(this).val() });
@@ -12677,9 +12720,9 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
     </div>
 
     <!-- Firebase Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js" defer></script>
 
     <!-- intl-tel-input JS config -->
     <script>
@@ -13715,7 +13758,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
         }
     </style>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
     <script>
         let liveTrackingSocket = null;
         let driverMarker = null;

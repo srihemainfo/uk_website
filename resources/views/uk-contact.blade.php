@@ -919,7 +919,7 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <a href="/">
-                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
             </a>
         </div>
         <ul class="navbar-menu">

@@ -1,6 +1,6 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
-            <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+            <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
         </div>
         <ul class="navbar-menu">
             <li>
@@ -80,7 +80,7 @@
         <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>

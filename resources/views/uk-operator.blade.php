@@ -456,7 +456,7 @@
                 <!-- Login Card (Shown First) -->
                 <div id="loginCard" class="form-card">
                     <div class="logo-container d-block d-md-none">
-                        <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide Logo">
+                        <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                     </div>
                     <h2>Welcome Back</h2>
                     <p class="form-subtitle">Sign in to manage your operator account.</p>
@@ -487,7 +487,7 @@
                 <!-- Register Card (Hidden) -->
                 <div id="registerCard" class="form-card hidden-form">
                     <div class="logo-container d-block d-md-none">
-                        <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide Logo">
+                        <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                     </div>
                     <h2>Create Your Operator Account</h2>
                     <p class="form-subtitle">Register your business and start managing your fleet.</p>

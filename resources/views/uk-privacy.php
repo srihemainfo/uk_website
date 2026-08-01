@@ -702,7 +702,7 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <a href="/">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
             </a>
         </div>
         <ul class="navbar-menu">
@@ -758,7 +758,7 @@
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+            <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -920,7 +920,7 @@
                     <div class="footer-logo-section">
                         <div class="footer-logo">
                             <a href="/">
-                                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+             <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                             </a>
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>

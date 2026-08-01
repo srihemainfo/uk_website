@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-3">
                     <div class="footer-logo-section">
                         <div class="footer-logo">
-                            <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                            <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                     </div>

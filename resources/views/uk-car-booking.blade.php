@@ -1243,29 +1243,6 @@
                         <div class="payment-total grand-total">
                             <span style="display: flex; align-items: center; gap: 8px;">
                                 Total
-                                <div class="premium-tooltip-container">
-                                    <i class="fas fa-info-circle"></i>
-                                    <div class="premium-tooltip-content">
-                                        <span class="tooltip-section-title"><i class="fas fa-check-circle"
-                                                style="color:#28a745; margin-right:6px;"></i> Inclusions</span>
-                                        <ul class="tooltip-list">
-                                            <li><span id="dynamicIncludedMiles">360 Miles</span> included in the fare.
-                                                Additional mileage: £1.50 per mile.</li>
-                                            <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per
-                                                minute applies.</li>
-                                            <li>VAT included (where applicable).</li>
-                                            <li>Fuel charges included.</li>
-                                        </ul>
-                                        <span class="tooltip-section-title"><i class="fas fa-times-circle"
-                                                style="color:#dc3545; margin-right:6px;"></i> Exclusions</span>
-                                        <ul class="tooltip-list">
-                                            <li>Parking charges will be charged at actuals.</li>
-                                            <li>Road tolls, Congestion Charge, and ULEZ charges (where applicable).</li>
-                                            <li>Any government or local authority charges, if applicable.</li>
-                                            <li>Additional mileage and waiting charges beyond the included limits.</li>
-                                        </ul>
-                                    </div>
-                                </div>
                             </span>
                             <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                 <span id="pbTotalFare">£0.00</span>
@@ -1279,6 +1256,35 @@
                             <option value="cash" selected>Pay Cash to the Driver</option>
                         </select>
                     </div>
+
+                    <!-- Modern Premium Tab View for Inclusions & Exclusions -->
+                    <div class="premium-tab-container" style="margin-bottom: 25px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <div class="accordion-content" style="display: block; padding: 0;">
+                            <div class="accordion-tabs">
+                                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle" style="color:#28a745; margin-right:6px;"></i> Inclusions</button>
+                                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle" style="color:#dc3545; margin-right:6px;"></i> Exclusions</button>
+                            </div>
+                            <div class="tab-pane inclusions-pane active" style="padding: 16px;">
+                                <ul class="vehicle-details-list inclusions-list" style="margin-bottom: 0;">
+                                    <li><span id="dynamicIncludedMiles">360 Miles</span> included in the fare. Additional mileage: £1.50 per mile.</li>
+                                    <li>Congestion Charge</li>
+                                    <li>VAT included (where applicable).</li>
+                                    <li>Fuel charges included.</li>
+                                    <li>Parking charges included.</li>
+                                    <li>Special Day charges included.</li>
+                                    <li>Night charges included.</li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane exclusions-pane" style="display: none; padding: 16px;">
+                                <ul class="vehicle-details-list exclusions-list" style="margin-bottom: 0;">
+                                    <li>Road tolls, Congestion Charge, and ULEZ charges (where applicable).</li>
+                                    <li>Any government or local authority charges, if applicable.</li>
+                                    <li>Additional mileage and waiting charges beyond the included limits.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="btn-group-uber step-bottom-btns">
                         <button class="btn-back-uber" onclick="goBack(6)">
                             <i class="fas fa-chevron-left"></i> Back
@@ -1577,7 +1583,7 @@
                                                     Payment</span>
                                             </div>
                                         </div>
-                                        <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
+                                        <div style="display: none; align-items: center; flex-wrap: nowrap; gap: 8px;">
                                             <input type="checkbox" id="wheelchairOptionAirport"
                                                 class="booking-checkbox wheelchair-option-cb"
                                                 style="margin: 0; flex-shrink: 0; width: 20px; height: 20px; cursor: pointer;"
@@ -1667,7 +1673,7 @@
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
-                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
+                                    <div style="display: none; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
                                         <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
                                             <input type="checkbox" id="wheelchairOptionSeaport"
                                                 class="booking-checkbox wheelchair-option-cb"
@@ -1703,7 +1709,7 @@
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
-                                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
+                                    <div style="display: none; align-items: center; flex-wrap: wrap; gap: 15px 25px;">
                                         <div style="display: flex; align-items: center; flex-wrap: nowrap; gap: 8px;">
                                             <input type="checkbox" id="wheelchairOptionNormal"
                                                 class="booking-checkbox wheelchair-option-cb"

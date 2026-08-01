@@ -2362,14 +2362,15 @@
             margin-bottom: 16px;
             color: #fff;
         }
-        .footer-phone{
-            display:flex;
-            align-items:center;
-            gap:8px;
+
+        .footer-phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .footer-phone a{
-            display:inline;
+        .footer-phone a {
+            display: inline;
         }
 
         .footer-links-list {
@@ -5518,8 +5519,13 @@
             color: #000;
 
         }
-        .v-price-onwards{
-font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -5px;
+
+        .v-price-onwards {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            text-align: right;
+            margin-top: -5px;
         }
 
         /* Mobile only */
@@ -6588,7 +6594,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
             #mcsEnteredDetails .booking-summary-span2-item {
                 grid-column: span 2;
-              /* justify-content: space-between !important; */
+                /* justify-content: space-between !important; */
             }
 
             /* #mcsEnteredDetails .mcs-special-req-container {
@@ -6916,7 +6922,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             margin-bottom: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
-            gap: 20px;
+            gap: 12px;
         }
 
         .vehicle-item:hover {
@@ -6956,7 +6962,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
         .v-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 4px;
         }
 
@@ -7309,6 +7315,17 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 font-size: 10.5px;
                 color: #777;
                 line-height: 1.3;
+            }
+
+            /* Absolute positioning for Tax Ribbon on Mobile */
+            .driver-item .driver-info {
+                position: relative;
+            }
+            .driver-item .tax-ribbon-wrapper {
+                position: absolute !important;
+                top: -22px !important;
+                right: -12px !important;
+                margin: 0 !important;
             }
         }
     </style>
@@ -8192,21 +8209,21 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
         // Returns a Date object whose local fields match the current UK time.
         // This ensures the frontend date comparisons and flatpickr instances use UK time regardless of the user's timezone.
-    // Cache the formatter to prevent heavy instantiation lag on mobile devices
-    const _ukTimeFormatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/London",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true
-    });
+        // Cache the formatter to prevent heavy instantiation lag on mobile devices
+        const _ukTimeFormatter = new Intl.DateTimeFormat("en-US", {
+            timeZone: "Europe/London",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: true
+        });
 
-    function getUKDate() {
-        return new Date(_ukTimeFormatter.format(new Date()));
-    }
+        function getUKDate() {
+            return new Date(_ukTimeFormatter.format(new Date()));
+        }
 
         function normalizeLocationType(type) {
             if (!type) return 'address';
@@ -9018,7 +9035,8 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 pickupSelected: !!state.dropoffSelected,
                 dropoff: state.pickup || '',
                 dropoffType: state.pickupType || '',
-                dropoffSelected: !!state.pickupSelected
+                dropoffSelected: !!state.pickupSelected,
+                vehicle: null
             });
 
             if (typeof updateTimePanel === 'function') updateTimePanel();
@@ -9156,7 +9174,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const currentVal = $(this).val();
                 const state = BookingStore.getState();
                 if (currentVal !== state.pickup || !state.pickupSelected) {
-                    BookingStore.setState({ pickup: currentVal, pickupSelected: false, pickupType: '' });
+                    BookingStore.setState({ pickup: currentVal, pickupSelected: false, pickupType: '', vehicle: null });
                 }
             });
 
@@ -9164,7 +9182,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const currentVal = $(this).val();
                 const state = BookingStore.getState();
                 if (currentVal !== state.dropoff || !state.dropoffSelected) {
-                    BookingStore.setState({ dropoff: currentVal, dropoffSelected: false, dropoffType: '' });
+                    BookingStore.setState({ dropoff: currentVal, dropoffSelected: false, dropoffType: '', vehicle: null });
                 }
             });
 
@@ -9534,7 +9552,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             }
             const normalizedType = normalizeLocationType(type);
             // Batch update (fires subscribers once)
-            BookingStore.setState({ pickup: location, pickupType: normalizedType, pickupSelected: true });
+            BookingStore.setState({ pickup: location, pickupType: normalizedType, pickupSelected: true, vehicle: null });
             $('#pickupInput').val(location);
             $('#pickupSuggestions').removeClass('show');
             updateTimePanel();
@@ -9549,7 +9567,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             }
             const normalizedType = normalizeLocationType(type);
             // Batch update (fires subscribers once)
-            BookingStore.setState({ dropoff: location, dropoffType: normalizedType, dropoffSelected: true });
+            BookingStore.setState({ dropoff: location, dropoffType: normalizedType, dropoffSelected: true, vehicle: null });
             $('#dropoffInput').val(location);
             $('#dropoffSuggestions').removeClass('show');
             updateTimePanel();
@@ -10164,8 +10182,29 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 // Distance/duration badge if available
                 const tripInfoHtml = '';
 
+                const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
+                    fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
+                    `<li>Parking Charges</li>
+                     <li>Congestion Charges</li>
+                     <li>Night Charges</li>
+                     <li>Special Day Charges</li>
+                     <li>Waiting Charges</li>
+                     <li>VAT 20% Included</li>
+                     <li>Meet & Greet</li>
+                     <li>Fuel charges included.</li>`;
+
+                const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
+                    fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
+                    `<li>Any government or local authority charges, if applicable.</li>
+                     <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+
+                const stateVehicle = typeof BookingStore !== 'undefined' ? BookingStore.getState().vehicle : null;
+                const isSelected = stateVehicle && (stateVehicle.id === vData.id || stateVehicle.key === vData.key);
+                const selectedClass = isSelected ? 'selected' : '';
+                const btnHtml = isSelected ? '<i class="fas fa-check"></i> Selected' : 'Select';
+
                 const html = `
-<div class="vehicle-item" id="vehicle-item-${vData.id}" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
+<div class="vehicle-item ${selectedClass}" id="vehicle-item-${vData.id}" onclick="selectVehicle(this, ${JSON.stringify(vData).replace(/"/g, '&quot;')})">
     <div class="vehicle-left">
         <img src="${vData.image}" alt="${vData.name}">
     </div>
@@ -10181,8 +10220,46 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             <i class="fas fa-info-circle"></i>
         </button>
     </div>
-    <div class="v-price">
-        ${priceHtml}${tripInfoHtml}
+    <div class="v-price" style="display: flex; flex-direction: column; align-items: flex-end;">
+        <div class="tax-ribbon-wrapper" style="
+            position: relative; 
+            margin-top: -16px; 
+            margin-bottom: 4px; 
+            margin-right: 8px; 
+            display: flex; 
+            align-items: flex-start; 
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
+            z-index: 10;
+        ">
+            <!-- Fold (dark triangle) -->
+            <div style="
+                position: relative; 
+                top: 1px; 
+                width: 0; 
+                height: 0; 
+                right: -1px;
+                border-bottom: 5px solid #064e3b; 
+                border-left: 5px solid transparent;
+            "></div>
+            <!-- Premium Ribbon Body -->
+            <div style="
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: #ffffff;
+                font-size: 8px;
+                font-weight: 800;
+                padding: 6px 8px 8px 8px;
+                text-transform: uppercase;
+                text-align: center;
+                letter-spacing: 0.5px;
+                line-height: 1.2;
+                -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                border-radius: 3px 3px 0 0;
+            ">
+                Tax (VAT 20%)<br>Included
+            </div>
+        </div>
+        <div>${priceHtml}${tripInfoHtml}</div>
         <div class="v-price-onwards">Onwards</div>
     </div>
 </div>
@@ -10199,7 +10276,29 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             <div class="v-amenities">
                 ${amenitiesHtml}
             </div>
-            <button class="btn-v-select">Select</button>
+            <button class="btn-v-select">${btnHtml}</button>
+        </div>
+    </div>
+    <!-- Accordion Section -->
+    <div class="vehicle-accordion" onclick="event.stopPropagation();">
+        <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
+            <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
+        </button>
+        <div class="accordion-content">
+            <div class="accordion-tabs">
+                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
+                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
+            </div>
+            <div class="tab-pane inclusions-pane active">
+                <ul class="vehicle-details-list inclusions-list">
+                    ${inclusionsHtml}
+                </ul>
+            </div>
+            <div class="tab-pane exclusions-pane" style="display:none;">
+                <ul class="vehicle-details-list exclusions-list">
+                    ${exclusionsHtml}
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -11406,7 +11505,8 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                         mobile: bid.b_mobile || '',
                         carName: bid.b_cab || null,
                         carCapacity: bid.b_seater || null,
-                        carLuggage: bid.b_luggage || null
+                        carLuggage: bid.b_luggage || null,
+                        isTax: bid.isTax === true || bid.isTax === 'true'
                     };
 
                     const vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
@@ -11415,6 +11515,63 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                     const vehicleImg = bookingData.vehicle?.image || '/goride/img/saloon.png';
 
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
+                    
+                    const fare = bookingData.vehicle?.fareBreakdown || {};
+                    const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
+                        fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
+                        `<li>Meet & Greet included</li>
+                         <li>Free waiting time (up to 45 mins at airports)</li>
+                         <li>Flight tracking included</li>`;
+
+                    const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
+                        fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
+                        `<li>Any government or local authority charges, if applicable.</li>
+                         <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+                         
+                    const taxBg = d.isTax ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                    const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
+                    const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
+                    
+                    const taxHtml = `
+            <div class="tax-ribbon-wrapper" style="
+                position: relative; 
+                margin-top: -36px; 
+                margin-bottom: 4px; 
+                margin-right: -4px; 
+                display: flex; 
+                align-items: flex-start; 
+                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
+                z-index: 10;
+            ">
+                <!-- Fold (dark triangle) -->
+                <div style="
+                    position: relative; 
+                    top: 1px; 
+                    width: 0; 
+                    height: 0; 
+                    right: -1px;
+                    border-bottom: 5px solid ${taxBorder}; 
+                    border-left: 5px solid transparent;
+                "></div>
+                <!-- Premium Ribbon Body -->
+                <div style="
+                    background: ${taxBg};
+                    color: #ffffff;
+                    font-size: 8px;
+                    font-weight: 800;
+                    padding: 6px 8px 8px 8px;
+                    text-transform: uppercase;
+                    text-align: center;
+                    letter-spacing: 0.5px;
+                    line-height: 1.2;
+                    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                    border-radius: 3px 3px 0 0;
+                ">
+                    ${taxText}
+                </div>
+            </div>
+                    `;
 
                     const html = `
 <div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px;">
@@ -11461,15 +11618,40 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             </div>
         </div>
         <div class="driver-bid-box">
-            <div class="driver-price-row">
-                <div class="bid-amount">
-                    £${d.bid}
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
+                ${taxHtml}
+                <div class="driver-price-row" style="margin-bottom: 0;">
+                    <div class="bid-amount">
+                        £${d.bid}
+                    </div>
                 </div>
             </div>
          
             <button onclick="acceptDriverFromList(${driverJson}, this)" class="driver-accept-btn">
     <i class="fas fa-check me-1"></i> Accept
 </button>
+        </div>
+    </div>
+    <!-- Accordion Section -->
+    <div class="vehicle-accordion" style="display: none;" onclick="event.stopPropagation();">
+        <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
+            <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
+        </button>
+        <div class="accordion-content">
+            <div class="accordion-tabs">
+                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
+                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
+            </div>
+            <div class="tab-pane inclusions-pane active">
+                <ul class="vehicle-details-list inclusions-list">
+                    ${inclusionsHtml}
+                </ul>
+            </div>
+            <div class="tab-pane exclusions-pane" style="display:none;">
+                <ul class="vehicle-details-list exclusions-list">
+                    ${exclusionsHtml}
+                </ul>
+            </div>
         </div>
     </div>
 </div>`;
@@ -11570,8 +11752,66 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             const vehiclePrice = vehicle?.price || '-';
             const vehiclePriceMax = vehicle?.priceMax || '';
             const priceDisplay = vehiclePriceMax ? `£${vehiclePrice} – £${vehiclePriceMax}` : `£${vehiclePrice}`;
+            const fare = bookingData.vehicle?.fareBreakdown || {};
+            const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
+                fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
+                `<li>Meet & Greet included</li>
+                 <li>Free waiting time (up to 45 mins at airports)</li>
+                 <li>Flight tracking included</li>`;
+
+            const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
+                fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
+                `<li>Any government or local authority charges, if applicable.</li>
+                 <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
+                
+                const taxBg = d.isTax ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
+                const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
+                
+                const taxHtml = `
+        <div class="tax-ribbon-wrapper" style="
+            position: relative; 
+            margin-top: -16px; 
+            margin-bottom: 4px; 
+            margin-right: -4px; 
+            display: flex; 
+            align-items: flex-start; 
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
+            z-index: 10;
+        ">
+            <!-- Fold (dark triangle) -->
+            <div style="
+                position: relative; 
+                top: 1px; 
+                width: 0; 
+                height: 0; 
+                right: -1px;
+                border-bottom: 5px solid ${taxBorder}; 
+                border-left: 5px solid transparent;
+            "></div>
+            <!-- Premium Ribbon Body -->
+            <div style="
+                background: ${taxBg};
+                color: #ffffff;
+                font-size: 8px;
+                font-weight: 800;
+                padding: 6px 8px 8px 8px;
+                text-transform: uppercase;
+                text-align: center;
+                letter-spacing: 0.5px;
+                line-height: 1.2;
+                -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
+                border-radius: 3px 3px 0 0;
+            ">
+                ${taxText}
+            </div>
+        </div>
+                `;
+
                 const html = `
 <div class="driver-item driver-card">
     <!-- Car Banner -->
@@ -11604,16 +11844,41 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             </div>
         </div>
         <div class="driver-bid-box">
-            <div class="driver-price-row">
-                <div class="bid-amount">
-                    £${d.bid}
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
+                ${taxHtml}
+                <div class="driver-price-row" style="margin-bottom: 0;">
+                    <div class="bid-amount">
+                        £${d.bid}
+                    </div>
+                </div>
+                <div class="bid-eta" style="margin-top: 0;">
+                    <i class="fas fa-clock"></i>
+                    ${d.eta} away
                 </div>
             </div>
-            <div class="bid-eta">
-                <i class="fas fa-clock"></i>
-                ${d.eta} away
-            </div>
             <button onclick="acceptDriverFromList(${driverJson}, this)" style="width:100%;     padding: 6px 10px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600;cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
+        </div>
+    </div>
+    <!-- Accordion Section -->
+    <div class="vehicle-accordion" style="display: none;" onclick="event.stopPropagation();">
+        <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
+            <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
+        </button>
+        <div class="accordion-content">
+            <div class="accordion-tabs">
+                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
+                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
+            </div>
+            <div class="tab-pane inclusions-pane active">
+                <ul class="vehicle-details-list inclusions-list">
+                    ${inclusionsHtml}
+                </ul>
+            </div>
+            <div class="tab-pane exclusions-pane" style="display:none;">
+                <ul class="vehicle-details-list exclusions-list">
+                    ${exclusionsHtml}
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -12005,7 +12270,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const $target = $('#pickupAfterLandingSelect');
                 // Only update and trigger if value actually changed (prevents infinite loop)
                 if ($target.val() !== val) {
-                    $target.val(val).trigger('change'); 
+                    $target.val(val).trigger('change');
                 }
             });
 
@@ -12026,7 +12291,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const $target = $('#pickupAfterDockingSelect');
                 // Only update and trigger if value actually changed (prevents infinite loop)
                 if ($target.val() !== val) {
-                    $target.val(val).trigger('change'); 
+                    $target.val(val).trigger('change');
                 }
             });
 
@@ -12329,6 +12594,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             }
         }
         function goBackToLocationsFromVehicles() {
+            BookingStore.setState({ vehicle: null });
             $('#selectedCarSummary').hide();
             goBackToLocations();
         }
@@ -12398,22 +12664,22 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 case 'Standard':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 3 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 2 Large Luggage</li>
                             <li><i class="fas fa-check-circle"></i> 2 Passengers + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 1 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 2 Cabin Bags</li>
-                            <li><i class="fas fa-exclamation-triangle"></i> Not recommended for 4 passengers with more than 2 large suitcases.</li>
+                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 2 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 2 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 2 Large Bags, 2 Hand Bags.</li>
                         </ul>
                     `;
                     break;
                 case 'Estate':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 3 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 3 Large Luggage</li>
                             <li><i class="fas fa-check-circle"></i> 3 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Ideal for airport transfers with extra baggage.</li>
+                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 3 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 3 Large Bags, 3 Hand Bags.</li>
                         </ul>
                     `;
                     break;
@@ -12429,7 +12695,18 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                     `;
                     break;
                 case 'MPV':
+                    recommendedHtml = `
+                        <ul class="vehicle-recommended-list">
+                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 4 Large Bags, 4 Hand Bags.</li>
+                        </ul>
+                    `;
+                    break;
                 case 'MPV+ (6 Passengers)':
+                case 'MPV 6':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>
@@ -12440,7 +12717,21 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                         </ul>
                     `;
                     break;
+                case 'MPV 7':
+                case 'MPV 7 Luxury':
+                    recommendedHtml = `
+                        <ul class="vehicle-recommended-list">
+                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 7 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 5 Passengers + 5 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 6 Passengers + 4 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> 7 Passengers + 3 Large Luggage</li>
+                            <li><i class="fas fa-check-circle"></i> Spacious and comfortable for large groups and extended families.</li>
+                        </ul>
+                    `;
+                    break;
                 case '8 Seater':
+                case 'MPV 8':
+                case 'MPV 8 Luxury':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 4 Passengers + 8 Large Luggage</li>
@@ -12453,6 +12744,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                     break;
                 case 'Executive MPV':
                 case 'Executive MPV +':
+                case 'MPV 6 Luxury':
                     recommendedHtml = `
                         <ul class="vehicle-recommended-list">
                             <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>
@@ -12460,6 +12752,15 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                             <li><i class="fas fa-check-circle"></i> 5 Passengers + 3 Large Luggage</li>
                             <li><i class="fas fa-check-circle"></i> 6 Passengers + 4 Large Luggage</li>
                             <li><i class="fas fa-star"></i> Luxury MPV with premium comfort for executive and VIP travel.</li>
+                        </ul>
+                    `;
+                    break;
+                default:
+                    recommendedHtml = `
+                        <ul class="vehicle-recommended-list">
+                            <li><i class="fas fa-check-circle"></i> Comfortable and reliable airport transfer.</li>
+                            <li><i class="fas fa-check-circle"></i> Ample space for passengers and standard luggage.</li>
+                            <li><i class="fas fa-check-circle"></i> Professional driver and meet & greet service included.</li>
                         </ul>
                     `;
                     break;
@@ -13767,6 +14068,156 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 overflow-y: auto;
             }
         }
+
+        /* Vehicle Accordion Styles - Premium & Elegant */
+        .vehicle-item {
+            flex-wrap: wrap;
+        }
+
+        .vehicle-accordion {
+            flex: 1 1 100%;
+            margin-top: 4px;
+            border-top: 1px solid #f0f0f0;
+            width: 100%;
+            background-color: #fdfbf7;
+            border-radius: 8px;
+        }
+
+        .accordion-toggle {
+            background: transparent;
+            border: none;
+            color: #666;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .accordion-toggle:hover {
+            color: #111;
+        }
+
+        .accordion-toggle i {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 8px;
+            font-size: 11px;
+        }
+
+        .accordion-toggle.open {
+            color: #111;
+        }
+
+        .accordion-toggle.open i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            display: none;
+            background: #ffffff;
+            border-radius: 0 0 12px 12px;
+            padding: 15px 20px 20px;
+            margin-top: 5px;
+            border-top: none;
+            box-shadow: inset 0 4px 6px -6px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .accordion-tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .accordion-tabs .tab-btn {
+            background: none;
+            border: none;
+            font-weight: 500;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+            padding: 8px 4px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .accordion-tabs .tab-btn:hover {
+            color: #111;
+        }
+
+        .accordion-tabs .tab-btn.active {
+            color: #111;
+            font-weight: 600;
+        }
+
+        .accordion-tabs .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #111;
+            border-radius: 2px 2px 0 0;
+        }
+
+        .vehicle-details-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+            column-count: 2;
+            column-gap: 15px;
+        }
+
+        .vehicle-details-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+
+        .vehicle-details-list li::before {
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 12px;
+        }
+
+        .inclusions-list li::before {
+            content: "\f00c";
+            color: #27ae60;
+        }
+
+        .exclusions-list li::before {
+            content: "\f00d";
+            color: #e74c3c;
+        }
     </style>
 
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
@@ -14152,6 +14603,29 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
             } else {
                 alert(msg);
             }
+        }
+
+        // Vehicle Accordion Functions
+        function toggleVehicleAccordion(btn) {
+            $(btn).toggleClass('open');
+            $(btn).next('.accordion-content').slideToggle(300);
+
+            if ($(btn).hasClass('open')) {
+                $(btn).find('.acc-text').text('Hide Details');
+            } else {
+                $(btn).find('.acc-text').text('View Inclusions & Exclusions');
+            }
+        }
+
+        function switchVehicleTab(btn, tab) {
+            const tabsContainer = $(btn).closest('.accordion-tabs');
+            const contentContainer = $(btn).closest('.accordion-content');
+
+            tabsContainer.find('.tab-btn').removeClass('active');
+            $(btn).addClass('active');
+
+            contentContainer.find('.tab-pane').hide();
+            contentContainer.find('.' + tab + '-pane').fadeIn(300);
         }
     </script>
     <!-- Global Toast -->

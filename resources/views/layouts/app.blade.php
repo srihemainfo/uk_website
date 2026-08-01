@@ -2362,14 +2362,15 @@
             margin-bottom: 16px;
             color: #fff;
         }
-        .footer-phone{
-            display:flex;
-            align-items:center;
-            gap:8px;
+
+        .footer-phone {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .footer-phone a{
-            display:inline;
+        .footer-phone a {
+            display: inline;
         }
 
         .footer-links-list {
@@ -3285,11 +3286,11 @@
         .estimated-fare-badge {
             display: inline-block;
             margin-top: 2px;
-         padding: 7px 10px;
-    font-size: 13px;
+            padding: 7px 10px;
+            font-size: 13px;
             font-weight: 600;
-         color: white;
-    background: black;
+            color: white;
+            background: black;
             border-radius: 20px;
             line-height: 1;
         }
@@ -5518,8 +5519,13 @@
             color: #000;
 
         }
-        .v-price-onwards{
-font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -5px;
+
+        .v-price-onwards {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            text-align: right;
+            margin-top: -5px;
         }
 
         /* Mobile only */
@@ -6588,7 +6594,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
             #mcsEnteredDetails .booking-summary-span2-item {
                 grid-column: span 2;
-              /* justify-content: space-between !important; */
+                /* justify-content: space-between !important; */
             }
 
             /* #mcsEnteredDetails .mcs-special-req-container {
@@ -8192,21 +8198,21 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
         // Returns a Date object whose local fields match the current UK time.
         // This ensures the frontend date comparisons and flatpickr instances use UK time regardless of the user's timezone.
-    // Cache the formatter to prevent heavy instantiation lag on mobile devices
-    const _ukTimeFormatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Europe/London",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: true
-    });
+        // Cache the formatter to prevent heavy instantiation lag on mobile devices
+        const _ukTimeFormatter = new Intl.DateTimeFormat("en-US", {
+            timeZone: "Europe/London",
+            year: "numeric",
+            month: "numeric",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: true
+        });
 
-    function getUKDate() {
-        return new Date(_ukTimeFormatter.format(new Date()));
-    }
+        function getUKDate() {
+            return new Date(_ukTimeFormatter.format(new Date()));
+        }
 
         function normalizeLocationType(type) {
             if (!type) return 'address';
@@ -12005,7 +12011,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const $target = $('#pickupAfterLandingSelect');
                 // Only update and trigger if value actually changed (prevents infinite loop)
                 if ($target.val() !== val) {
-                    $target.val(val).trigger('change'); 
+                    $target.val(val).trigger('change');
                 }
             });
 
@@ -12026,7 +12032,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
                 const $target = $('#pickupAfterDockingSelect');
                 // Only update and trigger if value actually changed (prevents infinite loop)
                 if ($target.val() !== val) {
-                    $target.val(val).trigger('change'); 
+                    $target.val(val).trigger('change');
                 }
             });
 
@@ -12615,7 +12621,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

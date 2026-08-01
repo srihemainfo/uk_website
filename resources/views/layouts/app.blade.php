@@ -12615,7 +12615,7 @@ font-size: 12px; color: #666; font-weight: 500; text-align: right; margin-top: -
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

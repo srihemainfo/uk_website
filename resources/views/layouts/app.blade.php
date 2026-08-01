@@ -3285,12 +3285,12 @@
 
         .estimated-fare-badge {
             display: inline-block;
-            margin-top: 6px;
-            padding: 4px 10px;
-            font-size: 11px;
+            margin-top: 2px;
+            padding: 7px 10px;
+            font-size: 13px;
             font-weight: 600;
-            color: #d4a017;
-            background: #fff5d9;
+            color: white;
+            background: black;
             border-radius: 20px;
             line-height: 1;
         }
@@ -11628,7 +11628,7 @@
             </div>
          
             <button onclick="acceptDriverFromList(${driverJson}, this)" class="driver-accept-btn">
-    <i class="fas fa-check me-1"></i> Accept
+    <i class="fas fa-check me-1"></i>Review & Pay
 </button>
         </div>
     </div>
@@ -12916,7 +12916,7 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

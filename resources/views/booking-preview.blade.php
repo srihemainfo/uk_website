@@ -664,11 +664,11 @@
     @php
         if (!isset($user_details) || $user_details == null) {
             $base_fare = $base_fare ?? 0;
-        }else{
+        } else {
             $user_details = json_decode($user_details, true);
         }
 
-        
+
 
     @endphp
 
@@ -690,7 +690,7 @@
         <div class="card">
             <div class="header">
                 <div class="brand">
-                    <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide">
+                    <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide">
                     <div>
                         <span class="status">{{ $job_status ?? '' }}</span>
                     </div>
@@ -746,8 +746,8 @@
                     <small>Distance Upto</small>
                     <strong>{{ $distance ?? '' }} miles</strong>
                 </div>
-                                
-                @if(!empty($user_details['c_flight_number']))   
+
+                @if(!empty($user_details['c_flight_number']))
                     <div class="info">
                         <small>Flight Number</small>
                         <strong>{{ $user_details['c_flight_number'] }}</strong>
@@ -786,7 +786,7 @@
                         <strong>{{ $user_details['c_coming_from_port'] ?? '' }}</strong>
                     </div>
                 @endif
-                
+
                 @if(!empty($user_details['c_special_require']))
                     <div class="info">
                         <small>Special Requirements</small>
@@ -847,10 +847,10 @@
             </div>
 
             @if(isset($meet_amt) && $meet_amt > 0)
-            <div class="fare-row">
-                <span>Meet & Greet</span>
-                <span>£{{ $meet_amt }}</span>
-            </div>
+                <div class="fare-row">
+                    <span>Meet & Greet</span>
+                    <span>£{{ $meet_amt }}</span>
+                </div>
             @endif
 
 
@@ -981,10 +981,16 @@
 
             <div>
                 <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.6;">
-                    <li><strong>Platform Role:</strong> GoRide acts as a technology platform connecting you with independent, licensed drivers. The transportation agreement is solely between you and the driver.</li>
-                    <li><strong>Fares & Payments:</strong> Final fares may vary depending on actual distance, wait times, traffic conditions, and applicable tolls. You are responsible for all applicable booking charges.</li>
-                    <li><strong>Cancellations:</strong> Cancellation charges may apply depending on when the booking is cancelled, in accordance with our Refund Policy.</li>
-                    <li><strong>Liability:</strong> GoRide provides the booking platform only and is not responsible for the actions, conduct, or performance of independent drivers.</li>
+                    <li><strong>Platform Role:</strong> GoRide acts as a technology platform connecting you with
+                        independent, licensed drivers. The transportation agreement is solely between you and the
+                        driver.</li>
+                    <li><strong>Fares & Payments:</strong> Final fares may vary depending on actual distance, wait
+                        times, traffic conditions, and applicable tolls. You are responsible for all applicable booking
+                        charges.</li>
+                    <li><strong>Cancellations:</strong> Cancellation charges may apply depending on when the booking is
+                        cancelled, in accordance with our Refund Policy.</li>
+                    <li><strong>Liability:</strong> GoRide provides the booking platform only and is not responsible for
+                        the actions, conduct, or performance of independent drivers.</li>
                 </ul>
             </div>
         </div>
@@ -999,8 +1005,10 @@
                         Included
                     </p>
                     <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.6;">
-                        <li>{{ $distance ?? '360' }} miles included in the fare. Additional mileage: £{{ $perKm ?? '1.50' }} per mile.</li>
-                        <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per minute applies.</li>
+                        <li>{{ $distance ?? '360' }} miles included in the fare. Additional mileage:
+                            £{{ $perKm ?? '1.50' }} per mile.</li>
+                        <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per minute applies.
+                        </li>
                         <li>VAT included (where applicable).</li>
                         <li>Fuel charges included.</li>
                     </ul>

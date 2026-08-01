@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - GoRide UK</title>
+    <title>Privacy Policy - GoRide</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -16,7 +16,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* --- global reset & base --- */
         * {
             margin: 0;
             padding: 0;
@@ -31,7 +30,7 @@
             overflow-x: hidden;
         }
 
-        /* --- navbar --- */
+        /* ===== NAVBAR ===== */
         .navbar-uber {
             background: white;
             height: 70px;
@@ -42,41 +41,6 @@
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .why-choose-section {
-            position: relative;
-            background: url("goride/img/car.webp") center center/cover no-repeat fixed;
-            overflow: hidden;
-        }
-
-        .why-choose-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            /* Overlay */
-            z-index: 1;
-        }
-
-        .why-choose-section .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Text Color */
-        .why-choose-section .section-title,
-        .why-choose-section .promise-title,
-        .why-choose-section .stat-number,
-        .why-choose-section .stat-label {
-            color: #fff;
-        }
-
-        /* Mobile fix (background-attachment: fixed doesn't work well on many mobile browsers) */
-        @media (max-width: 991px) {
-            .why-choose-section {
-                background-attachment: scroll;
-            }
         }
 
         .navbar-brand-uber {
@@ -408,11 +372,11 @@
             opacity: .9;
         }
 
-        /* --- page header --- */
+        /* ===== CONTENT SECTIONS ===== */
         .page-header {
             position: relative;
             background: url("/goride/img/main-banner.webp") center center/cover no-repeat;
-            padding: 160px 0;
+            padding: 120px 0;
             text-align: center;
             color: #fff;
             overflow: hidden;
@@ -426,51 +390,6 @@
             z-index: 1;
         }
 
-        .help-modal {
-            border: 0;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .help-modal .modal-header {
-            border-bottom: 1px solid #eee;
-            padding: 16px 20px;
-        }
-
-        .help-modal .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .help-modal .btn-close {
-            font-size: 14px;
-            opacity: 1;
-        }
-
-        .help-modal .modal-body {
-            padding: 28px 20px;
-        }
-
-        .help-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            background: #f8be00;
-            color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .help-modal a {
-            color: #111;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-
         .page-header .container {
             position: relative;
             z-index: 2;
@@ -483,176 +402,65 @@
             color: #fff;
         }
 
-        /* --- sections --- */
+
+
         .section-padding {
             padding: 60px 0;
         }
 
-        .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: #000;
-        }
 
-        .content-block {
+        .privacy-section {
             margin-bottom: 40px;
         }
 
-        .content-block h2 {
+        .privacy-section h2 {
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 16px;
             color: #000;
         }
 
-        .content-block p {
+        .privacy-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .privacy-section p {
             font-size: 16px;
 
             line-height: 1.8;
             margin-bottom: 12px;
         }
 
-        .content-block ul {
+        .privacy-section ul,
+        .privacy-section ol {
             margin-left: 20px;
 
             line-height: 1.8;
         }
 
-        .content-block ul li {
+        .privacy-section ul li,
+        .privacy-section ol li {
             margin-bottom: 12px;
             font-size: 16px;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
 
-        .feature-card {
-            background: #f9f9f9;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid #eee;
-        }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 35px;
-            color: white;
-            margin-bottom: 16px;
-            background: black;
-            display: inline-flex;
-            height: 70px;
-            width: 70px;
-            border-radius: 50%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .privacy-section a {
             color: #000;
-        }
-
-        .feature-card p {
-            font-size: 15px;
-
-            margin: 0;
-        }
-
-        /* stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .stats-grid-item {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 30px 20px;
-            text-align: center;
-            transition: all .3s ease;
-        }
-
-        .stats-grid-item:hover {
-            transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .stat-number {
-            font-size: 32px;
-            color: #000;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-
-            font-size: 15px;
-        }
-
-        /* promise */
-        .promise-title {
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 16px;
-            color: #000;
-        }
-
-        /* cta */
-        .cta-section {
-            background: #dbdbdb;
-            color: black;
-            padding: 55px 0;
-            text-align: center;
-        }
-
-        .cta-title {
-            font-size: 31px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .cta-text {
-            font-size: 16px;
-            color: black;
-            margin-bottom: 24px;
-        }
-
-        .cta-btn {
-            display: inline-block;
-            background: #fff;
-            color: #000;
-            padding: 10px 22px;
-            border-radius: 8px;
+            font-weight: 600;
             text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s;
         }
 
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            color: #000;
+        .privacy-section a:hover {
+            text-decoration: underline;
         }
 
-        /* --- footer --- */
+        /* ===== FOOTER ===== */
         footer {
             background: #000;
             color: #fff;
@@ -729,6 +537,50 @@
             transform: translateY(-3px);
         }
 
+        .help-modal {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .help-modal .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+        }
+
+        .help-modal .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .help-modal .btn-close {
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .help-modal .modal-body {
+            padding: 28px 20px;
+        }
+
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #f8be00;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 20px;
@@ -737,15 +589,8 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* --- responsive --- */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-
-            .feature-icon {
-                height: 55px;
-                width: 55px;
-                font-size: 29px;
-            }
-
             /* .navbar-menu {
                 display: none;
             } */
@@ -755,36 +600,41 @@
             }
 
             .page-header {
-                padding: 90px 0;
-                background-position: center;
+                padding: 80px 0;
             }
 
             .page-header h1 {
-                font-size: 32px;
+                font-size: 29px;
             }
 
-            .section-title {
-                font-size: 24px;
+            .page-header p {
+                font-size: 16px;
             }
 
             .section-padding {
                 padding: 40px 0;
             }
 
-            .feature-grid {
-                grid-template-columns: 1fr;
+            .privacy-section h2 {
+                font-size: 21px;
+            }
+
+            .privacy-section p {
+                font-size: 17px;
+            }
+
+            .privacy-section ul li,
+            .privacy-section ol li {
+                font-size: 17px;
+            }
+
+            .privacy-section ul,
+            .privacy-section ol {
+                margin-left: 0px;
             }
 
             .footer-tagline {
                 font-size: 14px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .cta-title {
-                font-size: 28px;
             }
 
             .account-dropdown {
@@ -802,52 +652,24 @@
                 height: 40px;
             }
 
-            .page-header h1 {
-                font-size: 29px;
+            .page-header {
+                padding: 60px 0;
             }
+
+            /*.page-header h1 {*/
+            /*    font-size: 24px;*/
+            /*}*/
 
             .section-padding {
                 padding: 30px 0;
             }
 
-            .content-block h2 {
-                font-size: 21px;
-            }
 
-            .content-block p {
-                font-size: 17px;
-            }
-
-            .feature-card p,
-            .promise-title {
-                font-size: 17px;
-            }
-
-            .stats-grid-item {
-                padding: 12px 12px;
-            }
 
 
             .account-dropdown {
                 width: 260px;
                 right: -20px;
-            }
-
-            .page-header {
-                padding: 70px 0;
-            }
-
-            .cta-title {
-                font-size: 24px;
-            }
-
-            .cta-text {
-                font-size: 19px;
-            }
-
-            .cta-btn {
-                padding: 12px 30px;
-                font-size: 19px;
             }
         }
 
@@ -880,7 +702,7 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <a href="/">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
             </a>
         </div>
         <ul class="navbar-menu">
@@ -936,7 +758,7 @@
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -973,166 +795,119 @@
     <!-- ===== PAGE HEADER ===== -->
     <section class="page-header">
         <div class="container">
-            <h1 data-aos="fade-up" data-aos-duration="800">About GoRide</h1>
+            <h1 data-aos="fade-up" data-aos-duration="800">Privacy Policy</h1>
+
         </div>
     </section>
 
     <!-- ===== MAIN CONTENT ===== -->
     <section class="section-padding">
         <div class="container">
-            <div class="content-block" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
-                <h2>Our Mission</h2>
-                <p>At GoRide, we're transforming the way people book taxis across the United Kingdom. Unlike traditional
-                    taxi booking apps that automatically assign a driver, GoRide puts customers in control.</p>
-                <p>When you book a journey, your trip is shared with nearby verified drivers. Interested drivers submit
-                    their fare offers, and you choose the driver that best suits your needs based on price, vehicle
-                    type, ratings, reviews, and estimated arrival time. This unique Driver Bidding Model gives you
-                    complete transparency, greater flexibility, and better value for every journey.</p>
+
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                <h2>Introduction</h2>
+                <p>GoRide ("we", "our", or "us"), operated by GoRide Plus Ltd, is committed to protecting your privacy.
+                    This Privacy Policy explains how we collect, use, store, and protect your personal information when
+                    you use the GoRide website, mobile application, and related services ("Platform").</p>
+                <p>By using the Platform, you agree to this Privacy Policy.</p>
             </div>
 
-            <div class="content-block" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
-                <h2>Who We Serve</h2>
-                <p>Whether you need a local taxi, airport transfer, seaport transfer, railway station pickup, executive
-                    vehicle, business travel, long-distance journey, or a pre-booked cab, GoRide connects you with
-                    trusted professional drivers across the UK.</p>
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">
+                <h2>1. Information We Collect</h2>
+                <p>We may collect:</p>
+                <ul>
+                    <li>Name</li>
+                    <li>Mobile number</li>
+                    <li>Email address</li>
+                    <li>Profile information</li>
+                    <li>Payment information (processed securely by third-party payment providers)</li>
+                    <li>Device information, IP address, browser type, and app usage</li>
+                    <li>Location data (only when required for booking and trip services)</li>
+                </ul>
             </div>
 
-            <!-- Features Grid -->
-            <div class="feature-grid">
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-hand-holding-heart"></i>
-                    </div>
-                    <h3>Customer Choice</h3>
-                    <p>You decide who drives you. Compare offers and pick the best option for your needs.</p>
-                </div>
-
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-pound-sign"></i>
-                    </div>
-                    <h3>Competitive Pricing</h3>
-                    <p>Transparent pricing with no hidden charges. Compare driver rates and choose what works for you.
-                    </p>
-                </div>
-
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="300" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Verified Drivers</h3>
-                    <p>All drivers undergo thorough background checks and vehicle inspections for your safety.</p>
-                </div>
-
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h3>Ratings & Reviews</h3>
-                    <p>Real feedback from real passengers. Make informed decisions based on driver ratings and reviews.
-                    </p>
-                </div>
-
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="500" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                    <h3>Seamless Platform</h3>
-                    <p>Easy-to-use website and mobile app for hassle-free booking anytime, anywhere.</p>
-                </div>
-
-                <div class="feature-card" data-aos="zoom-in" data-aos-delay="600" data-aos-duration="600">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our dedicated customer support team is always available to help you.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== WHY CHOOSE US SECTION ===== -->
-    <section class="section-padding why-choose-section">
-        <div class="container">
-            <h2 class="section-title text-center" data-aos="fade-up" data-aos-duration="700">Why Choose GoRide?</h2>
-
-            <div class="content-block" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
-                <h3 class="promise-title">With competitive pricing, customer choice, verified drivers, and a seamless
-                    booking experience, GoRide is redefining taxi travel by giving passengers the freedom to decide who
-                    they travel with—not the system.</h3>
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+                <h2>2. How We Use Your Information</h2>
+                <p>We use your information to:</p>
+                <ul>
+                    <li>Create and manage your account</li>
+                    <li>Process bookings and payments</li>
+                    <li>Connect passengers with drivers</li>
+                    <li>Provide customer support</li>
+                    <li>Improve our services</li>
+                    <li>Prevent fraud and enhance security</li>
+                    <li>Send booking updates and service notifications</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
             </div>
 
-            <div class="stats-grid">
-                <div data-aos="flip-up" data-aos-delay="100" data-aos-duration="600" class="stats-grid-item">
-                    <div class="stat-number">10k+</div>
-                    <p class="stat-label">Professional Drivers Across UK</p>
-                </div>
-                <div data-aos="flip-up" data-aos-delay="200" data-aos-duration="600" class="stats-grid-item">
-                    <div class="stat-number">50k+</div>
-                    <p class="stat-label">Happy Customers</p>
-                </div>
-                <div data-aos="flip-up" data-aos-delay="300" data-aos-duration="600" class="stats-grid-item">
-                    <div class="stat-number">100k+</div>
-                    <p class="stat-label">Journeys Completed</p>
-                </div>
-                <div data-aos="flip-up" data-aos-delay="400" data-aos-duration="600" class="stats-grid-item">
-                    <div class="stat-number">4.8★</div>
-                    <p class="stat-label">Average Rating</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== OUR PROMISE SECTION ===== -->
-    <section class="section-padding">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up" data-aos-duration="700">Our Promise to You</h2>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="content-block" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
-                        <h3 class="promise-title">Safety First</h3>
-                        <p>Your safety is our priority. All drivers are verified, background-checked, and insured. Every
-                            journey is tracked, and you have complete visibility.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="content-block" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
-                        <h3 class="promise-title">Transparent Pricing</h3>
-                        <p>No hidden charges. See all costs upfront. Compare multiple driver offers and choose the price
-                            that works best for you.</p>
-                    </div>
-                </div>
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="250" data-aos-duration="700">
+                <h2>3. Sharing Your Information</h2>
+                <p>We do not sell your personal information.</p>
+                <p>We may share your information with:</p>
+                <ul>
+                    <li>Drivers or passengers where necessary to complete a booking</li>
+                    <li>Payment providers</li>
+                    <li>Technology and service partners</li>
+                    <li>Government or regulatory authorities where legally required</li>
+                </ul>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="content-block" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
-                        <h3 class="promise-title">Complete Control</h3>
-                        <p>You're in charge. Select from multiple driver options, choose your preferred vehicle, and
-                            decide your pick-up time.</p>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="content-block" data-aos="fade-up" data-aos-delay="400" data-aos-duration="700">
-                        <h3 class="promise-title">Dedicated Support</h3>
-                        <p>Our support team is available 24/7 to help with any questions or concerns during your booking
-                            and journey.</p>
-                    </div>
-                </div>
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
+                <h2>4. Cookies</h2>
+                <p>We use cookies and similar technologies to improve your experience, remember your preferences, and
+                    analyse Platform usage. You can manage cookies through your browser settings.</p>
             </div>
-        </div>
-    </section>
 
-    <!-- ===== CTA SECTION ===== -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title" data-aos="fade-up" data-aos-duration="700">Ready to Experience GoRide?</h2>
-            <p class="cta-text" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">Book your next ride with
-                confidence. Get started in seconds.</p>
-            <a href="/" class="cta-btn" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="600">Book a Ride
-                Now</a>
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="350" data-aos-duration="700">
+                <h2>5. Data Security</h2>
+                <p>We use appropriate technical and organisational measures to protect your personal information,
+                    including secure servers, encrypted communications, and restricted access.</p>
+            </div>
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="400" data-aos-duration="700">
+                <h2>6. Your Rights</h2>
+                <p>Under the UK GDPR and the Data Protection Act 2018, you may have the right to:</p>
+                <ul>
+                    <li>Access your personal data</li>
+                    <li>Correct inaccurate information</li>
+                    <li>Request deletion of your data</li>
+                    <li>Object to or restrict certain processing</li>
+                    <li>Withdraw consent where applicable</li>
+                </ul>
+                <p>To exercise your rights, please contact us using the details below.</p>
+            </div>
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="450" data-aos-duration="700">
+                <h2>7. Third-Party Websites</h2>
+                <p>Our Platform may contain links to third-party websites. We are not responsible for their privacy
+                    practices or content.</p>
+            </div>
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="500" data-aos-duration="700">
+                <h2>8. Children's Privacy</h2>
+                <p>The Platform is intended for users aged 18 years or over. We do not knowingly collect personal
+                    information from children.</p>
+            </div>
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="550" data-aos-duration="700">
+                <h2>9. Changes to This Policy</h2>
+                <p>We may update this Privacy Policy from time to time. Any changes will be published on this page with
+                    the updated "Last Updated" date.</p>
+            </div>
+
+            <div class="privacy-section" data-aos="fade-up" data-aos-delay="600" data-aos-duration="700">
+                <h2>10. Contact Us</h2>
+                <p>
+                    <strong>GoRide Plus Ltd</strong><br>
+                    Email: <a href="mailto:support.uk@goride.run">support.uk@goride.run</a><br>
+                    Phone: <a href="tel:+442083373777">+44 208 337 3777</a>
+                </p>
+                <p style="margin-top: 16px; font-size: 14px; color: #999;">If you have any concerns about our privacy
+                    practices or how we handle your data, please don't hesitate to reach out. We're committed to
+                    resolving any issues promptly and maintaining your trust in our platform.</p>
+            </div>
         </div>
     </section>
 
@@ -1145,7 +920,7 @@
                     <div class="footer-logo-section">
                         <div class="footer-logo">
                             <a href="/">
-                                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
                             </a>
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
@@ -1201,7 +976,7 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Contact</div>
                         <div class="footer-links-list">
-                           <div class="footer-phone">
+                            <div class="footer-phone">
                                 <i class="fas fa-phone footer-contact-icon"></i>
 
                                 <a href="tel:+442083373777">+44 208 337 3777</a>
@@ -1232,6 +1007,7 @@
             </div>
         </div>
     </footer>
+
     <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content help-modal">
@@ -1269,7 +1045,7 @@
             </div>
         </div>
     </div>
-    <!-- jQuery -->
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -1285,11 +1061,19 @@
             easing: 'ease-out-cubic'
         });
 
-        // Toggle dropdown functions
         function toggleDropdown(type) {
             const dropdown = document.getElementById(`${type}-dropdown`);
             dropdown.classList.toggle('show');
         }
+
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.navbar-menu').length && !$(e.target).closest('.dropdown-menu-navbar').length) {
+                $('.dropdown-menu-navbar').removeClass('show');
+            }
+            if (!$(e.target).closest('.user-btn').length && !$(e.target).closest('.account-dropdown').length) {
+                $('.account-dropdown').removeClass('show');
+            }
+        });
 
         function selectLanguage(lang) {
             toggleDropdown('language');
@@ -1301,17 +1085,7 @@
             document.body.classList.toggle("menu-open");
         }
 
-        // Close dropdowns when clicking outside using jQuery
-        $(document).on('click', function (e) {
-            if (!$(e.target).closest('.navbar-menu').length && !$(e.target).closest('.dropdown-menu-navbar').length) {
-                $('.dropdown-menu-navbar').removeClass('show');
-            }
-            if (!$(e.target).closest('.user-btn').length && !$(e.target).closest('.account-dropdown').length) {
-                $('.account-dropdown').removeClass('show');
-            }
-        });
-
-        // Refresh AOS on window resize for better responsiveness
+        // Refresh AOS on resize
         $(window).on('resize', function () {
             AOS.refresh();
         });

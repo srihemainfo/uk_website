@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - GoRide</title>
+    <title>Terms & Conditions - GoRide</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -257,51 +257,6 @@
             opacity: 1;
         }
 
-        .help-modal {
-            border: 0;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .help-modal .modal-header {
-            border-bottom: 1px solid #eee;
-            padding: 16px 20px;
-        }
-
-        .help-modal .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .help-modal .btn-close {
-            font-size: 14px;
-            opacity: 1;
-        }
-
-        .help-modal .modal-body {
-            padding: 28px 20px;
-        }
-
-        .help-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 18px;
-            border-radius: 50%;
-            background: #f8be00;
-            color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-        }
-
-        .help-modal a {
-            color: #111;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -324,7 +279,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 20px;
             border-bottom: 1px solid #eee;
         }
 
@@ -373,7 +328,7 @@
 
         .mobile-menu-links {
             flex: 1;
-            /*padding: 10px 0;*/
+            padding: 10px 0;
             overflow-y: auto;
         }
 
@@ -381,7 +336,7 @@
             display: flex;
             align-items: center;
             gap: 18px;
-            padding: 10px 22px;
+            padding: 15px 22px;
             text-decoration: none;
             color: #222;
             font-size: 15px;
@@ -420,8 +375,8 @@
         /* ===== CONTENT SECTIONS ===== */
         .page-header {
             position: relative;
-            background: url("/goride/img/main-banner.webp") center center/cover no-repeat;
-            padding: 120px 0;
+            background: url(/goride/img/main-banner.webp) center center / cover no-repeat;
+            padding: 160px 0;
             text-align: center;
             color: #fff;
             overflow: hidden;
@@ -447,240 +402,62 @@
             color: #fff;
         }
 
+
+
         .section-padding {
             padding: 60px 0;
         }
 
-        .contact-container {
-            max-width: 1100px;
-            margin: 0 auto;
+
+        .terms-section {
+            margin-bottom: 40px;
         }
 
-        .contact-info-box {
-            background: #f9f9f9;
-            padding: 40px;
-            border-radius: 16px;
-            height: 100%;
-            border: 1px solid #eee;
-        }
-
-        .contact-info-box h3 {
-            font-size: 20px;
+        .terms-section h2 {
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             color: #000;
         }
 
-        .contact-info-text {
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            /*color: #666;*/
-        }
-
-        .contact-info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .contact-info-item .icon-circle {
-            width: 48px;
-            height: 48px;
-            min-width: 48px;
-            border-radius: 50%;
-            background: #000;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .terms-section h3 {
             font-size: 18px;
-        }
-
-        .contact-info-item .info-text {
-            flex: 1;
-        }
-
-        .contact-info-item .info-text h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 12px;
             color: #000;
         }
 
-        .contact-info-item .info-text p {
-            font-size: 14px;
-            /*color: #666;*/
-            margin: 0;
-            line-height: 1.6;
+        .terms-section p {
+            font-size: 16px;
+
+            line-height: 1.8;
+            margin-bottom: 12px;
         }
 
-        .contact-info-item .info-text a {
-            color: inherit;
-            /*color: #666;*/
+        .terms-section ul,
+        .terms-section ol {
+            margin-left: 20px;
+
+            line-height: 1.8;
+        }
+
+        .terms-section ul li,
+        .terms-section ol li {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+
+
+        .terms-section a {
+            color: #000;
+            font-weight: 600;
             text-decoration: none;
         }
 
-        .contact-info-item .info-text a:hover {
-            color: #000;
-        }
-
-        .contact-form-box {
-            background: #fff;
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid #eee;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .contact-form-box h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #000;
-        }
-
-        .contact-form-box .form-subtitle {
-            font-size: 14px;
-
-            margin-bottom: 30px;
-        }
-
-        .form-control-custom {
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-size: 14px;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        .form-control-custom:focus {
-            border-color: #000;
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
-            outline: none;
-        }
-
-        .form-control-custom::placeholder {
-            color: #aaa;
-        }
-
-        .form-label-custom {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-        }
-
-        .btn-submit {
-            background: #000;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 14px 40px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .btn-submit:hover {
-            background: #1a1a1a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        /* ===== SUCCESS POPUP ===== */
-        .success-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            padding: 20px;
-            backdrop-filter: blur(4px);
-        }
-
-        .success-overlay.show {
-            display: flex;
-        }
-
-        .success-popup {
-            background: #fff;
-            border-radius: 20px;
-            padding: 50px 40px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            animation: popIn 0.5s ease;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        @keyframes popIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .success-popup .check-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #10b981;
-            color: #fff;
-            font-size: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
-
-        .success-popup h3 {
-            font-size: 24px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 10px;
-        }
-
-        .success-popup p {
-            font-size: 15px;
-            /*color: #666;*/
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .success-popup .btn-close-popup {
-            background: #000;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 40px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .success-popup .btn-close-popup:hover {
-            background: #1a1a1a;
-            transform: scale(1.02);
-        }
-
-        /* ===== FORM ROW STYLES ===== */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .terms-section a:hover {
+            text-decoration: underline;
         }
 
         /* ===== FOOTER ===== */
@@ -729,6 +506,50 @@
             transition: color 0.3s;
         }
 
+        .help-modal {
+            border: 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .help-modal .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 16px 20px;
+        }
+
+        .help-modal .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .help-modal .btn-close {
+            font-size: 14px;
+            opacity: 1;
+        }
+
+        .help-modal .modal-body {
+            padding: 28px 20px;
+        }
+
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #f8be00;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .footer-links-list a:hover {
             color: #fff;
         }
@@ -770,25 +591,10 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .form-label-custom {
-                font-size: 17px;
-            }
 
-            .contact-info-item .info-text p {
-                font-size: 17px;
-            }
-
-            .contact-info-text {
-                font-size: 17px;
-            }
-
-            .contact-info-item .info-text h4 {
-                font-size: 18px;
-            }
-
-
-            .contact-info-box h3 {
-                font-size: 22px;
+            .terms-section ul,
+            .terms-section ol {
+                margin-left: 0px;
             }
 
             /* .navbar-menu {
@@ -804,28 +610,24 @@
             }
 
             .page-header h1 {
-                font-size: 29px;
+                font-size: 32px;
             }
+
+
 
             .section-padding {
                 padding: 40px 0;
             }
 
-            .contact-info-box {
-                padding: 25px;
-                margin-bottom: 30px;
+
+
+            .terms-section p {
+                font-size: 17px;
             }
 
-            .contact-form-box {
-                padding: 25px;
-            }
-
-            .contact-form-box h3 {
-                font-size: 25px;
-            }
-
-            .contact-form-box .form-subtitle {
-                font-size: 18px;
+            .terms-section ul li,
+            .terms-section ol li {
+                font-size: 17px;
             }
 
             .footer-tagline {
@@ -835,11 +637,6 @@
             .account-dropdown {
                 width: 280px;
                 right: -10px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
             }
         }
 
@@ -856,33 +653,21 @@
                 padding: 60px 0;
             }
 
+            .page-header h1 {
+                font-size: 29px;
+            }
+
             .section-padding {
                 padding: 30px 0;
             }
 
-            .contact-info-box {
-                padding: 20px;
-            }
-
-            .contact-form-box {
-                padding: 20px;
+            .terms-section h2 {
+                font-size: 21px;
             }
 
 
 
-            .success-popup {
-                padding: 30px 20px;
-            }
 
-            .success-popup .check-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
-            }
-
-            .success-popup h3 {
-                font-size: 20px;
-            }
 
             .account-dropdown {
                 width: 260px;
@@ -919,7 +704,7 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <a href="/">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
             </a>
         </div>
         <ul class="navbar-menu">
@@ -975,7 +760,7 @@
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -992,13 +777,12 @@
             <div class="mobile-menu-links">
                 <a href="index.html"><i class="fas fa-home"></i>Home</a>
                 <a href="about.html"><i class="fas fa-info-circle"></i>About Us</a>
-                <a href="contact.html"><i class="fas fa-envelope"></i>Contact</a>
                 <a href="#"><i class="fas fa-user"></i>My Profile</a>
                 <a href="#"><i class="fas fa-car"></i>My Rides</a>
-                <!--<a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>-->
+                <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
                 <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
                 <a href="#"><i class="fas fa-tag"></i>Offers</a>
-                <!--<a href="#"><i class="fas fa-language"></i>Language</a>-->
+                <a href="#"><i class="fas fa-language"></i>Language</a>
                 <a href="terms.html"><i class="fas fa-file-contract"></i>Terms</a>
                 <a href="privacy.html"><i class="fas fa-shield-alt"></i>Privacy</a>
                 <a href="#"><i class="fas fa-gear"></i>Settings</a>
@@ -1013,131 +797,105 @@
     <!-- ===== PAGE HEADER ===== -->
     <section class="page-header">
         <div class="container">
-            <h1 data-aos="fade-up" data-aos-duration="800">Contact Us</h1>
+            <h1 data-aos="fade-up" data-aos-duration="800">Terms & Conditions</h1>
+
         </div>
     </section>
 
-    <!-- ===== CONTACT SECTION ===== -->
+    <!-- ===== MAIN CONTENT ===== -->
     <section class="section-padding">
-        <div class="contact-container">
-            <div class="row g-4">
-                <!-- Left: Contact Info -->
-                <div class="col-lg-5" data-aos="fade-up" data-aos-duration="700">
-                    <div class="contact-info-box">
-                        <h3>Get in Touch</h3>
-                        <p class="contact-info-text">
-                            Have questions about our AI dispatch software? Want to learn more about how GoRide can
-                            transform your transportation business? Contact us today, and our team of experts will be
-                            happy to assist you.
-                        </p>
+        <div class="container">
 
-                        <div class="contact-info-item">
-                            <div class="icon-circle">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="info-text">
-                                <h4>Phone</h4>
-                                <p><a href="tel:+44 208 337 3777">+44 208 337 3777</a></p>
-                            </div>
-                        </div>
 
-                        <div class="contact-info-item">
-                            <div class="icon-circle">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="info-text">
-                                <h4>Email</h4>
-                                <p><a href="mailto:support.uk@goride.run">support.uk@goride.run</a></p>
-                            </div>
-                        </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="100" data-aos-duration="700">
+                <h2>Welcome to GoRide</h2>
+                <p>Welcome to GoRide, operated by GoRide Plus Ltd ("GoRide", "we", "our", or "us"). By accessing or
+                    using our website, mobile application, or services, you agree to these Terms and Conditions. If you
+                    do not agree, please do not use the Platform.</p>
+            </div>
 
-                        <div class="contact-info-item">
-                            <div class="icon-circle">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="info-text">
-                                <h4>Address</h4>
-                                <p>
-                                    Goride Plus Ltd<br>
-                                    83 1st Floor
-                                    Surbiton Road
-                                    Kingston Upon Thames
-                                    KT1 2HW
-                                    United Kingdom
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="150" data-aos-duration="700">
+                <h2>1. About GoRide</h2>
+                <p>GoRide is a technology platform that connects passengers with independent, licensed drivers. We do
+                    not provide transportation services or employ drivers. Any transportation agreement is solely
+                    between the passenger and the driver.</p>
+            </div>
 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="200" data-aos-duration="700">
+                <h2>2. Eligibility</h2>
+                <p>You must be at least 18 years old and legally able to enter into a binding agreement to use the
+                    Platform.</p>
+            </div>
 
-                <!-- Right: Contact Form -->
-                <div class="col-lg-7" data-aos="fade-up" data-aos-duration="700">
-                    <div class="contact-form-box">
-                        <h3>Contact With Us!</h3>
-                        <p class="form-subtitle">Fill in the details below and we'll get back to you shortly.</p>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="250" data-aos-duration="700">
+                <h2>3. Your Account</h2>
+                <p>You are responsible for maintaining the security of your account and for all activities carried out
+                    using your account. Please ensure your information is accurate and up to date.</p>
+            </div>
 
-                        <form id="contactForm" onsubmit="handleSubmit(event)">
-                            <!-- Row 1: Name + Email -->
-                            <div class="form-row">
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Full Name</label>
-                                    <input type="text" class="form-control-custom" id="fullName"
-                                        placeholder="Enter your full name" required>
-                                </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="300" data-aos-duration="700">
+                <h2>4. Bookings & Payments</h2>
+                <ul>
+                    <li>Fares may vary depending on distance, time, traffic, demand, tolls, and other applicable
+                        charges.</li>
+                    <li>Payments can be made using the payment methods available on the Platform.</li>
+                    <li>You are responsible for paying all applicable booking charges.</li>
+                </ul>
+            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Email</label>
-                                    <input type="email" class="form-control-custom" id="email"
-                                        placeholder="Enter your email address" required>
-                                </div>
-                            </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="350" data-aos-duration="700">
+                <h2>5. Cancellations & Refunds</h2>
+                <p>Cancellation charges may apply depending on when a booking is cancelled. Eligible refunds will be
+                    processed in accordance with our Refund Policy.</p>
+            </div>
 
-                            <!-- Row 2: Phone + Subject -->
-                            <div class="form-row">
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Phone Number</label>
-                                    <input type="tel" class="form-control-custom" id="phone"
-                                        placeholder="+91 Enter your phone number" required>
-                                </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="400" data-aos-duration="700">
+                <h2>6. User Responsibilities</h2>
+                <p>You agree to:</p>
+                <ul>
+                    <li>Use the Platform lawfully.</li>
+                    <li>Treat drivers and passengers with respect.</li>
+                    <li>Provide accurate information.</li>
+                    <li>Not misuse or interfere with the Platform.</li>
+                </ul>
+                <p>GoRide may suspend or terminate accounts that violate these Terms.</p>
+            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Subject</label>
-                                    <input type="text" class="form-control-custom" id="subject"
-                                        placeholder="Enter subject" required>
-                                </div>
-                            </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="450" data-aos-duration="700">
+                <h2>7. Privacy</h2>
+                <p>Your personal information is processed in accordance with our Privacy Policy, the UK GDPR, and the
+                    Data Protection Act 2018.</p>
+            </div>
 
-                            <!-- Row 3: Message (full width) -->
-                            <div class="mb-4">
-                                <label class="form-label-custom">Message</label>
-                                <textarea class="form-control-custom" id="message" rows="4"
-                                    placeholder="Write your message here..." required
-                                    style="resize: vertical;"></textarea>
-                            </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="500" data-aos-duration="700">
+                <h2>8. Liability</h2>
+                <p>GoRide provides the booking platform only and is not responsible for the actions, conduct, or
+                    performance of independent drivers or passengers. To the fullest extent permitted by law, GoRide is
+                    not liable for indirect or consequential losses arising from the use of the Platform.</p>
+            </div>
 
-                            <button type="submit" class="btn-submit">
-                                <i class="fas fa-paper-plane me-2"></i>Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="550" data-aos-duration="700">
+                <h2>9. Changes to These Terms</h2>
+                <p>We may update these Terms from time to time. Continued use of the Platform means you accept the
+                    updated Terms.</p>
+            </div>
+
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="600" data-aos-duration="700">
+                <h2>10. Governing Law</h2>
+                <p>These Terms are governed by the laws of England and Wales, and any disputes will be subject to the
+                    exclusive jurisdiction of the courts of England and Wales.</p>
+            </div>
+
+            <div class="terms-section" data-aos="fade-up" data-aos-delay="650" data-aos-duration="700">
+                <h2>11. Contact Us</h2>
+                <p>
+                    <strong>GoRide Plus Ltd</strong><br>
+                    Email: <a href="mailto:support.uk@goride.run">support.uk@goride.run</a><br>
+                    Phone: <a href="tel:+442083373777">+44 208 337 3777</a>
+                </p>
             </div>
         </div>
     </section>
-
-    <!-- ===== SUCCESS POPUP ===== -->
-    <div class="success-overlay" id="successOverlay">
-        <div class="success-popup">
-            <div class="check-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <h3>Message Sent!</h3>
-            <p>Thank you for contacting us. Our team will get back to you within 24 hours. We appreciate your interest
-                in GoRide.</p>
-            <button class="btn-close-popup" onclick="closePopup()">Got It</button>
-        </div>
-    </div>
 
     <!-- ===== FOOTER ===== -->
     <footer>
@@ -1147,7 +905,9 @@
                 <div class="col-12 col-md-3">
                     <div class="footer-logo-section">
                         <div class="footer-logo">
-                            <img src="https://www.goride.net.in/goride/img/logo-light.png" alt="GoRide UK Logo">
+                            <a href="/">
+                                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
+                            </a>
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                     </div>
@@ -1197,11 +957,12 @@
                     </div>
                 </div>
 
+                <!-- Contact -->
                 <div class="col-12 col-md-4">
                     <div class="footer-section">
                         <div class="footer-section-title">Contact</div>
                         <div class="footer-links-list">
-                             <div class="footer-phone">
+                            <div class="footer-phone">
                                 <i class="fas fa-phone footer-contact-icon"></i>
 
                                 <a href="tel:+442083373777">+44 208 337 3777</a>
@@ -1313,49 +1074,6 @@
         // Refresh AOS on resize
         $(window).on('resize', function () {
             AOS.refresh();
-        });
-
-        // Handle form submission
-        function handleSubmit(event) {
-            event.preventDefault();
-
-            // Get form values
-            const name = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-
-            // Basic validation
-            if (!name || !email || !phone || !subject || !message) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            // Show success popup
-            document.getElementById('successOverlay').classList.add('show');
-
-            // Reset form
-            document.getElementById('contactForm').reset();
-        }
-
-        // Close popup
-        function closePopup() {
-            document.getElementById('successOverlay').classList.remove('show');
-        }
-
-        // Close popup on overlay click
-        document.getElementById('successOverlay').addEventListener('click', function (e) {
-            if (e.target === this) {
-                closePopup();
-            }
-        });
-
-        // Close popup with Escape key
-        $(document).on('keydown', function (e) {
-            if (e.key === 'Escape') {
-                closePopup();
-            }
         });
     </script>
 </body>

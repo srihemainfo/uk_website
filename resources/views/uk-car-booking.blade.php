@@ -1246,7 +1246,7 @@
                             </span>
                             <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                 <span id="pbTotalFare">£0.00</span>
-                                <div class="estimated-fare-badge" style="margin-top: 4px; font-size: 10px; padding: 2px 8px; font-weight: 600;">Estimated Fare</div>
+                                <div class="estimated-fare-badge" style="padding: 6px 8px;">Estimated Fare</div>
                             </div>
                         </div>
                     </div>

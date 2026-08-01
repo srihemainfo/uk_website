@@ -690,7 +690,7 @@
         <div class="card">
             <div class="header">
                 <div class="brand">
-                    <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide">
+                    <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide">
                     <div>
                         <span class="status">{{ $job_status ?? '' }}</span>
                     </div>

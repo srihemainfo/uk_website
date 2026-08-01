@@ -12621,7 +12621,7 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
+                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

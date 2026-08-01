@@ -212,19 +212,19 @@
 
         .verify-btn {
             position: absolute;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 9px 8px;
-    font-size: 11px;
-    font-weight: 600;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    background-color: #000000;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 9px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            background-color: #000000;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .verify-btn:hover {
@@ -327,9 +327,10 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .left-logo img{
+            .left-logo img {
                 display: none;
             }
+
             .main-container {
                 flex-direction: column;
             }
@@ -348,7 +349,7 @@
                 min-height: 600PX;
             }
 
-            
+
             .left-content h1 {
                 font-size: 22px;
                 line-height: 28px;
@@ -408,15 +409,15 @@
                 font-size: 14px;
                 margin-bottom: 6px;
             }
-            .form-divider p{
-                  font-size: 14px;
+
+            .form-divider p {
+                font-size: 14px;
             }
 
         }
-
-      
     </style>
 </head>
+
 <body>
     <div class="main-container">
         <!-- Left Section - Benefits -->
@@ -427,7 +428,8 @@
                         <img src="https://www.goride.net.in/goride/img/logo-dark.png" alt="GoRide Logo">
                     </div>
                     <h1>Join GoRide as an Operator</h1>
-                    <p>Manage your fleet, receive more bookings, increase revenue, and grow your transportation business with GoRide's powerful operator platform.</p>
+                    <p>Manage your fleet, receive more bookings, increase revenue, and grow your transportation business
+                        with GoRide's powerful operator platform.</p>
                     <ul class="benefit-list">
                         <li>
                             <span class="check-icon">✓</span>
@@ -456,7 +458,7 @@
                 <!-- Login Card (Shown First) -->
                 <div id="loginCard" class="form-card">
                     <div class="logo-container d-block d-md-none">
-                        <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                        <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
                     </div>
                     <h2>Welcome Back</h2>
                     <p class="form-subtitle">Sign in to manage your operator account.</p>
@@ -468,7 +470,8 @@
                         <div class="form-group form-spacing">
                             <label>Password</label>
                             <div class="password-wrapper">
-                                <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="••••••••"
+                                    required>
                                 <button type="button" class="password-toggle" onclick="toggleLoginPassword()">
                                     <span class="material-icons">visibility</span>
                                 </button>
@@ -487,7 +490,7 @@
                 <!-- Register Card (Hidden) -->
                 <div id="registerCard" class="form-card hidden-form">
                     <div class="logo-container d-block d-md-none">
-                        <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                        <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
                     </div>
                     <h2>Create Your Operator Account</h2>
                     <p class="form-subtitle">Register your business and start managing your fleet.</p>
@@ -512,7 +515,8 @@
                             <div class="form-group form-spacing">
                                 <label>Password</label>
                                 <div class="password-wrapper">
-                                    <input type="password" class="form-control" id="registerPassword" placeholder="••••••••" required>
+                                    <input type="password" class="form-control" id="registerPassword"
+                                        placeholder="••••••••" required>
                                     <button type="button" class="password-toggle" onclick="toggleRegisterPassword()">
                                         <span class="material-icons">visibility</span>
                                     </button>
@@ -521,7 +525,8 @@
                             <div class="form-group form-spacing">
                                 <label>Confirm Password</label>
                                 <div class="password-wrapper">
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="••••••••" required>
+                                    <input type="password" class="form-control" id="confirmPassword"
+                                        placeholder="••••••••" required>
                                     <button type="button" class="password-toggle" onclick="toggleConfirmPassword()">
                                         <span class="material-icons">visibility</span>
                                     </button>
@@ -578,25 +583,25 @@
 
         function switchToRegister(e) {
             e.preventDefault();
-            $('#loginCard').fadeOut(300, function() {
+            $('#loginCard').fadeOut(300, function () {
                 $('#registerCard').fadeIn(300);
             });
         }
 
         function switchToLogin(e) {
             e.preventDefault();
-            $('#registerCard').fadeOut(300, function() {
+            $('#registerCard').fadeOut(300, function () {
                 $('#loginCard').fadeIn(300);
             });
         }
 
-        $(document).ready(function() {
-            $('#loginForm').on('submit', function(e) {
+        $(document).ready(function () {
+            $('#loginForm').on('submit', function (e) {
                 e.preventDefault();
                 showToast('Login submitted!', 'success');
             });
 
-            $('#registerForm').on('submit', function(e) {
+            $('#registerForm').on('submit', function (e) {
                 e.preventDefault();
                 showToast('Registration submitted!', 'success');
             });

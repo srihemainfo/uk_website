@@ -880,7 +880,7 @@
     <nav class="navbar-uber">
         <div class="navbar-brand-uber">
             <a href="/">
-            <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
             </a>
         </div>
         <ul class="navbar-menu">
@@ -936,7 +936,7 @@
 
         <div class="mobile-menu" id="mobileMenu">
             <div class="mobile-menu-header">
-                <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
                 <button onclick="toggleMobileMenu()">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1145,7 +1145,7 @@
                     <div class="footer-logo-section">
                         <div class="footer-logo">
                             <a href="/">
-                                 <img src="{{ asset('goride/img/logo-light.png') }}" alt="GoRide Logo">
+                                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
                             </a>
                         </div>
                         <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
@@ -1201,7 +1201,7 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Contact</div>
                         <div class="footer-links-list">
-                           <div class="footer-phone">
+                            <div class="footer-phone">
                                 <i class="fas fa-phone footer-contact-icon"></i>
 
                                 <a href="tel:+442083373777">+44 208 337 3777</a>

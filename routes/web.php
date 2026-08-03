@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilityController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
     return view('uk-car-booking');
@@ -63,3 +64,8 @@ Route::get('/w-driver-vehicle', [UtilityController::class, 'DriverVehicle']);
 
 // Booking Preview endpoint
 Route::get('/booking-preview/{key}', [UtilityController::class, 'BookingPreview'])->name('booking-preview');
+
+Route::get('/blog', [BlogController::class, 'blogIndex'])->name('blog');
+Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
+Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
+Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');

@@ -10171,7 +10171,6 @@
                 if (!fare || (fare.from_range == null && fare.to_range == null)) {
                     return; // skip vehicles with no API price
                 }
-
                 // If fare doesn't have a name, default to capitalizing the key
                 const vehicleName = fare.name || (vKey.charAt(0).toUpperCase() + vKey.slice(1));
                 const vehicleImage = `/goride/img/${vKey}.webp`;
@@ -11461,16 +11460,20 @@
                         if (doc.exists) {
                             const data = doc.data();
                             if (data.status === 'cancel' || data.status === 'cancelled') {
-                                showToast('Booking already cancelled or no more', 'error');
-                                setTimeout(() => { window.location.reload(); }, 2000);
+                                if (BookingStore.getState().currentStep < 5) {
+                                    showToast('Booking already cancelled or no more', 'error');
+                                    setTimeout(() => { window.location.reload(); }, 2000);
+                                }
                                 return;
                             }
                             if (data.bids_details) {
                                 renderRealtimeDrivers(data.bids_details);
                             }
                         } else {
-                            showToast('Booking already cancelled or no more', 'error');
-                            setTimeout(() => { window.location.reload(); }, 2000);
+                            if (BookingStore.getState().currentStep < 5) {
+                                showToast('Booking already cancelled or no more', 'error');
+                                setTimeout(() => { window.location.reload(); }, 2000);
+                            }
                         }
                     }, (error) => {
                         console.error("Error listening to bids: ", error);
@@ -11571,10 +11574,33 @@
                         isTax: bid.isTax === true || bid.isTax === 'true'
                     };
 
-                    const vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
+                    let vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
                     const vehicleCapacity = bid.b_seater || bookingData.vehicle?.capacity || 4;
                     const vehicleLuggage = bid.b_luggage || bookingData.vehicle?.luggage || 2;
-                    const vehicleImg = bookingData.vehicle?.image || '/goride/img/saloon.png';
+                    let vehicleImg = bookingData.vehicle?.image || '/goride/img/saloon.png';
+
+                    if (bid.b_cab) {
+                        const vKey = bid.b_cab.toLowerCase().replace(/\s+/g, '');
+                        const nameMap = {
+                            'standard': 'Standard',
+                            'estate': 'Estate',
+                            'executive': 'Executive',
+                            'mpv': 'MPV',
+                            'mpv5': 'MPV 5',
+                            'mpv6': 'MPV 6',
+                            'mpv6l': 'MPV 6 Luxury',
+                            'mpv7': 'MPV 7',
+                            'mpv7l': 'MPV 7 Luxury',
+                            'mpv8': 'MPV 8',
+                            'mpv8l': 'MPV 8 Luxury'
+                        };
+                        if (nameMap[vKey]) {
+                            vehicleName = nameMap[vKey];
+                        } else {
+                            vehicleName = bid.b_cab.charAt(0).toUpperCase() + bid.b_cab.slice(1);
+                        }
+                        vehicleImg = `/goride/img/${vKey}.webp`;
+                    }
 
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
                     

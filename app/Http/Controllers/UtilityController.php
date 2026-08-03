@@ -271,6 +271,8 @@ class UtilityController extends Controller
                 
                 if (isset($responseData['success']) && $responseData['success'] === true && isset($responseData['data'])) {
                     // Pass the data array to the view
+
+                    // dd($responseData['data']);
                     return view('booking-preview', $responseData['data']);
                 }
             }

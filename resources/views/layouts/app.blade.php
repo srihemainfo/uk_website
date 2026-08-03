@@ -4012,7 +4012,7 @@
             margin: 12px 0px;
             font-weight: 600;
             font-size: 15px;
-            justify-content: space-between;
+            justify-content: start;
         }
 
         .rc-vehicle-features i {
@@ -4035,9 +4035,9 @@
 
         .rc-vehicle-amenities-grid {
             display: flex;
-            /* grid-template-columns: repeat(2, 1fr); */
-            /* gap: 0px; */
-            justify-content: space-evenly;
+    /* grid-template-columns: repeat(2, 1fr); */
+    gap: 17px;
+    justify-content: start;
         }
 
         .rc-amenity-box {
@@ -5464,6 +5464,9 @@
         }
 
         @media (max-width: 768px) {
+            .track-status-header h4 {
+                font-size: 20px !important;
+            }
             .booking-stepper-wrapper {
                 margin-bottom: 8px;
                 padding: 2px 0;
@@ -10250,20 +10253,24 @@
                 const tripInfoHtml = '';
 
                 const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                    fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
-                    `<li>Parking Charges</li>
-                     <li>Congestion Charges</li>
-                     <li>Night Charges</li>
-                     <li>Special Day Charges</li>
-                     <li>Waiting Charges</li>
-                     <li>VAT 20% Included</li>
-                     <li>Meet & Greet</li>
-                     <li>Fuel charges included.</li>`;
+                    fare.inclusions.map((inc, i) => {
+                        const icons = ['fa-parking', 'fa-road', 'fa-moon', 'fa-calendar-day', 'fa-clock', 'fa-file-invoice-dollar', 'fa-user-check', 'fa-gas-pump'];
+                        const icon = icons[i % icons.length];
+                        return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${inc}</div></li>`;
+                    }).join('') :
+                    `<li class="tab-point-item"><i class="fas fa-parking point-icon point-icon-check"></i><div>Parking Charges</div></li>
+                     <li class="tab-point-item"><i class="fas fa-road point-icon point-icon-check"></i><div>Congestion Charges</div></li>
+                     <li class="tab-point-item"><i class="fas fa-moon point-icon point-icon-check"></i><div>Night Charges</div></li>
+                     <li class="tab-point-item"><i class="fas fa-calendar-day point-icon point-icon-check"></i><div>Special Day Charges</div></li>
+                     <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li>
+                     <li class="tab-point-item"><i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i><div>VAT 20% Included</div></li>
+                     <li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet</div></li>
+                     <li class="tab-point-item"><i class="fas fa-gas-pump point-icon point-icon-check"></i><div>Fuel charges included.</div></li>`;
 
                 const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                    fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
-                    `<li>Any government or local authority charges, if applicable.</li>
-                     <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+                    fare.exclusions.map(exc => `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${exc}</div></li>`).join('') :
+                    `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
+                     <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
 
                 const stateVehicle = typeof BookingStore !== 'undefined' ? BookingStore.getState().vehicle : null;
                 const isSelected = stateVehicle && (stateVehicle.id === vData.id || stateVehicle.key === vData.key);
@@ -10314,20 +10321,22 @@
         <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
             <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
         </button>
-        <div class="accordion-content">
-            <div class="accordion-tabs">
-                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
-                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
-            </div>
-            <div class="tab-pane inclusions-pane active">
-                <ul class="vehicle-details-list inclusions-list">
-                    ${inclusionsHtml}
-                </ul>
-            </div>
-            <div class="tab-pane exclusions-pane" style="display:none;">
-                <ul class="vehicle-details-list exclusions-list">
-                    ${exclusionsHtml}
-                </ul>
+        <div class="premium-tab-container">
+            <div class="accordion-content">
+                <div class="accordion-tabs">
+                    <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle tab-icon-check"></i> Inclusions</button>
+                    <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle tab-icon-cross"></i> Exclusions</button>
+                </div>
+                <div class="tab-pane inclusions-pane active">
+                    <ul class="tab-points-list inclusions-list">
+                        ${inclusionsHtml}
+                    </ul>
+                </div>
+                <div class="tab-pane exclusions-pane" style="display:none;">
+                    <ul class="tab-points-list exclusions-list">
+                        ${exclusionsHtml}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -11657,22 +11666,8 @@
                 <div class="driver-avatar">
                     ${d.avatar}
                 </div>
-               <div class="driver-text">
+                <div class="driver-text">
                     <h4>${d.name}</h4>
-                
-                    <div class="driver-rating-info">
-                        <span>
-                            <i class="fas fa-star"></i>
-                            ${d.rating}
-                        </span>
-                
-                        <span class="driver-divider">•</span>
-                
-                        <span>
-                            <i class="fas fa-id-badge"></i>
-                            ${d.experience}
-                        </span>
-                    </div>
                     <div style="margin-top: 5px;">
                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" class="driver-review-link">
     Click to view more
@@ -11702,20 +11697,22 @@
         <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
             <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
         </button>
-        <div class="accordion-content">
-            <div class="accordion-tabs">
-                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
-                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
-            </div>
-            <div class="tab-pane inclusions-pane active">
-                <ul class="vehicle-details-list inclusions-list">
-                    ${inclusionsHtml}
-                </ul>
-            </div>
-            <div class="tab-pane exclusions-pane" style="display:none;">
-                <ul class="vehicle-details-list exclusions-list">
-                    ${exclusionsHtml}
-                </ul>
+        <div class="premium-tab-container">
+            <div class="accordion-content">
+                <div class="accordion-tabs">
+                    <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle tab-icon-check"></i> Inclusions</button>
+                    <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle tab-icon-cross"></i> Exclusions</button>
+                </div>
+                <div class="tab-pane inclusions-pane active">
+                    <ul class="tab-points-list inclusions-list">
+                        ${inclusionsHtml}
+                    </ul>
+                </div>
+                <div class="tab-pane exclusions-pane" style="display:none;">
+                    <ul class="tab-points-list exclusions-list">
+                        ${exclusionsHtml}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -11898,10 +11895,6 @@
                 </div>
                 <div class="driver-text">
                     <h4>${d.name}</h4>
-                    <div class="driver-rating-info">
-                        <i class="fas fa-star"></i>
-                        ${d.rating} (${d.trips} trips)
-                    </div>
                     <div style="margin-top: 5px;">
                         <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" style="font-size:12px; color:#f5c00b; text-decoration:underline;">Click to view more</a>
                     </div>
@@ -11929,20 +11922,22 @@
         <button type="button" class="accordion-toggle" onclick="toggleVehicleAccordion(this)">
             <span class="acc-text">View Inclusions & Exclusions</span> <i class="fas fa-chevron-down ms-1"></i>
         </button>
-        <div class="accordion-content">
-            <div class="accordion-tabs">
-                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">Inclusions</button>
-                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">Exclusions</button>
-            </div>
-            <div class="tab-pane inclusions-pane active">
-                <ul class="vehicle-details-list inclusions-list">
-                    ${inclusionsHtml}
-                </ul>
-            </div>
-            <div class="tab-pane exclusions-pane" style="display:none;">
-                <ul class="vehicle-details-list exclusions-list">
-                    ${exclusionsHtml}
-                </ul>
+        <div class="premium-tab-container">
+            <div class="accordion-content">
+                <div class="accordion-tabs">
+                    <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle tab-icon-check"></i> Inclusions</button>
+                    <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle tab-icon-cross"></i> Exclusions</button>
+                </div>
+                <div class="tab-pane inclusions-pane active">
+                    <ul class="tab-points-list inclusions-list">
+                        ${inclusionsHtml}
+                    </ul>
+                </div>
+                <div class="tab-pane exclusions-pane" style="display:none;">
+                    <ul class="tab-points-list exclusions-list">
+                        ${exclusionsHtml}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -12735,24 +12730,20 @@
             switch (vehicle.name) {
                 case 'Standard':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 2 Large Bags, 2 Hand Bags.</li>
-                        </ul>
+                  <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Ford Mondeo, VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
+</ul>
                     `;
                     break;
                 case 'Estate':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 3 Large Bags, 3 Hand Bags.</li>
-                        </ul>
+                       <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Volvo Estate, VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 3 large suitcases (20kg max each) + 3 hand luggage</li>
+</ul>
                     `;
                     break;
                 case 'Executive':
@@ -12768,63 +12759,75 @@
                     break;
                 case 'MPV':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Max capacity: 4 Passengers, 4 Large Bags, 4 Hand Bags.</li>
-                        </ul>
+                      <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Sharan, Ford Galaxy or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 4 large suitcases (20kg max each) + 4 hand luggage</li>
+</ul>
                     `;
                     break;
                 case 'MPV+ (6 Passengers)':
                 case 'MPV 6':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 5 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 6 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Great choice for families and group airport transfers.</li>
-                        </ul>
+                       <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes V-Class or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 6 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 6 large suitcases (20kg max each) + 6 hand luggage</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Families and group airport transfers</li>
+</ul>
                     `;
                     break;
                 case 'MPV 7':
+                     recommendedHtml = `
+                       <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes V-Class or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 7 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 7 large suitcases (20kg max each) + 7 hand luggage</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large groups and extended families</li>
+</ul>
+                    `;
+                    break;
                 case 'MPV 7 Luxury':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 7 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 5 Passengers + 5 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 6 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 7 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Spacious and comfortable for large groups and extended families.</li>
-                        </ul>
+                    <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes Vito, Mercedes V-Class or similar Luxury MPV7</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 7 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 7 large suitcases (20kg max each) + 7 hand luggage</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Features:</strong> Spacious cabin, premium interiors & first-class travel experience</li>
+</ul>
                     `;
                     break;
                 case '8 Seater':
                 case 'MPV 8':
+                    recommendedHtml = `
+                       <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Transporter or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 8 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 8 large suitcases (20kg max each) + 8 hand luggage (10kg max each)</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large families, tours & group travel</li>
+</ul>
+                    `;
+                    break;
                 case 'MPV 8 Luxury':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 8 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 6 Passengers + 6 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 7 Passengers + 5 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 8 Passengers + 4–6 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> Best for large families, tours, and group travel.</li>
-                        </ul>
+                       <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes Vito, VW Transporter or similar MPV8</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 8 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 8 large suitcases (20kg max each) + 8 hand luggage (10kg max each)</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large families, tours & group travel</li>
+</ul>
                     `;
                     break;
                 case 'Executive MPV':
                 case 'Executive MPV +':
                 case 'MPV 6 Luxury':
                     recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 6 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 5 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 6 Passengers + 4 Large Luggage</li>
-                            <li><i class="fas fa-star"></i> Luxury MPV with premium comfort for executive and VIP travel.</li>
-                        </ul>
+                      <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes Vito, VW Transporter or similar MPV6</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 6 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 6 large suitcases (20kg max each) + 6 hand luggage</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Executive travel, airport transfers, business trips & family journeys</li>
+</ul>
                     `;
                     break;
                 default:
@@ -13736,10 +13739,9 @@
     </script>
     <!-- Track Ride Overlay -->
     <div class="track-ride-overlay" id="trackRideOverlay">
-        <button class="track-close-btn" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-times"></i></button>
-
         <!-- Search Container -->
         <div class="track-ride-container" id="trackSearchContainer">
+            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i class="fas fa-times"></i></button>
             <h3>Track Your Ride</h3>
             <p>Enter your booking number to get live status</p>
             <div class="track-input-wrapper">
@@ -13753,13 +13755,23 @@
 
         <!-- Result Container -->
         <div class="track-result-container" id="trackResultContainer" style="display: none;">
+            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i class="fas fa-times"></i></button>
             <div class="track-status-header">
-                <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
+                <div class="track-header-badges">
+                    <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
+                    <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span id="displayOtpValue">--</span></div>
+                </div>
                 <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                 <div id="trackingBookingDetails" style="display: none;"></div>
             </div>
 
             <div class="track-content-flex">
+                <div class="mobile-timeline-hint mobile-only" onclick="scrollToTimelineStatus()">
+                    <i class="fas fa-list-check"></i>
+                    <span>Scroll Down for Trip Status</span>
+                    <i class="fas fa-chevron-down bounce-arrow"></i>
+                </div>
+
                 <div class="track-timeline-wrapper">
                     <ul class="tracking-timeline" id="trackingTimeline">
                         <!-- Rendered by JS -->
@@ -13798,28 +13810,55 @@
 
         .track-close-btn {
             position: absolute;
-            top: 30px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.1);
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             color: #fff;
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
         .track-close-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.4);
             transform: rotate(90deg);
         }
 
+        .track-inner-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #111;
+            border: 1px solid #e5e7eb;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            transition: all 0.2s ease;
+        }
+
+        .track-inner-close-btn:hover {
+            background: #111;
+            color: #fff;
+            border-color: #111;
+        }
+
         .track-ride-container {
+            position: relative;
             background: #fff;
             border-radius: 24px;
             padding: 40px;
@@ -13917,9 +13956,10 @@
 
         /* Result Container */
         .track-result-container {
+            position: relative;
             background: #fff;
             border-radius: 24px;
-            padding: 30px;
+            padding: 20px;
             width: 95%;
             max-width: 900px;
             height: 85vh;
@@ -13942,64 +13982,251 @@
             border-bottom: 1px solid #eee;
         }
 
+        .track-header-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 45px;
+        }
+
         .booking-id-badge {
             display: inline-block;
             background: #f3f4f6;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 14px;
-            color: #374151;
-            margin-bottom: 8px;
+            font-size: 13px;
+            color: #111;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 0;
+        }
+
+        .track-otp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #000;
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .track-otp-badge span {
+            /* color: #f9c106; */
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 1px;
         }
 
         .track-status-header h4 {
             font-size: 22px;
-            font-weight: 800;
+            font-weight: 500;
             color: #111;
             margin: 0;
         }
 
-        .booking-details-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+        /* Track Route Details Card & Route Visualizer */
+        .track-route-details-card {
+            position: relative;
             background: #f9fafb;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #eee;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid #e5e7eb;
+            margin-top: 15px;
         }
 
-        .booking-detail-item {
+        .track-pickup-corner {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            text-align: right;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            max-width: 220px;
+        }
+
+        .track-pickup-corner .pickup-label {
             display: flex;
-            flex-direction: column;
-        }
-
-        .booking-detail-item .detail-label {
-            font-size: 12px;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
             color: #6b7280;
             text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
         }
 
-        .booking-detail-item .detail-value {
-            font-size: 14px;
-            color: #111;
+        .track-pickup-corner .pickup-value {
+            font-size: 13px;
             font-weight: 700;
+            color: #111827;
+            display: block;
+        }
+
+        .track-route-flow {
+            margin-top: 4px;
+            position: relative;
+            padding-right: 195px;
+        }
+
+        .route-point-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .route-point-item:first-child {
+            margin-bottom: 14px;
+        }
+
+        .route-point-item:first-child::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 18px;
+            bottom: -14px;
+            width: 0;
+            border-left: 2px dashed #9ca3af;
+            z-index: 1;
+        }
+
+        .point-icon-pin {
+            font-size: 16px;
+            width: 16px;
+            text-align: center;
+            margin-top: 1px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .point-icon-pin.yellow-pin {
+            color: #f9c106;
+        }
+
+        .point-icon-pin.black-pin {
+            color: #111;
+        }
+
+        .point-address {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111827;
+            line-height: 1.35;
             word-break: break-word;
         }
 
-        .booking-detail-item .otp-value {
-            color: #10b981;
-            font-size: 16px;
-            letter-spacing: 2px;
+        .route-line-dots {
+            display: none;
         }
 
-        @media (max-width: 576px) {
-            .booking-details-grid {
-                grid-template-columns: 1fr;
+        .mobile-only {
+            display: none !important;
+        }
+
+        .desktop-only {
+            display: block;
+        }
+
+        .route-expand-btn {
+            display: none;
+        }
+
+        .mobile-pickup-time-bar {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .track-header-badges{
+                 flex-direction: column;
+                 align-items: start;
+            }
+            .mobile-only {
+                display: flex !important;
+            }
+
+            .desktop-only {
+                display: none !important;
+            }
+
+            .track-route-details-card {
+                padding: 12px 42px 12px 14px;
+                cursor: pointer;
+                user-select: none;
+                transition: all 0.3s ease;
+            }
+
+            .track-route-flow {
+                padding-right: 0;
+            }
+
+            .point-address {
+                /* font-size: 13px; */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: calc(100vw - 140px);
+            }
+
+            .track-route-details-card.expanded .point-address {
+                white-space: normal;
+                word-break: break-word;
+                max-width: 100%;
+            }
+
+            .route-expand-btn {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                top: 14px;
+                right: 12px;
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 50%;
+                width: 26px;
+                height: 26px;
+                color: #6b7280;
+                font-size: 11px;
+                pointer-events: none;
+                transition: transform 0.3s ease, background-color 0.2s ease;
+            }
+
+            .track-route-details-card.expanded .route-expand-btn i {
+                transform: rotate(180deg);
+            }
+
+            .mobile-pickup-time-bar {
+                display: flex !important;
+                align-items: center;
+                gap: 6px;
+                margin-top: 10px;
+                color: #4b5563;
+            }
+
+            .mobile-pickup-time-bar .pickup-label {
+                font-weight: 700;
+                color: #6b7280;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .mobile-pickup-time-bar .pickup-value {
+                font-weight: 700;
+                color: #111827;
             }
         }
 
@@ -14013,7 +14240,7 @@
         .track-timeline-wrapper {
             flex: 0 0 300px;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-left: 15px;
         }
 
         .track-map-wrapper {
@@ -14030,19 +14257,18 @@
             height: 100%;
         }
 
-        /* Modern Timeline */
+        /* Modern Stepper-Matching Tracking Timeline */
         .tracking-timeline {
             list-style: none;
-            padding: 10px 0 0 15px;
+            padding: 10px 0 0 0;
             margin: 0;
-            border-left: 3px solid #e5e7eb;
             position: relative;
         }
 
         .tracking-timeline li {
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 30px;
+            padding-left: 48px;
+            margin-bottom: 22px;
             text-align: left;
         }
 
@@ -14050,88 +14276,166 @@
             margin-bottom: 0;
         }
 
-        .tracking-timeline li::before {
+        /* Connecting vertical line */
+        .tracking-timeline li::after {
             content: '';
             position: absolute;
-            left: -28px;
+            left: 17px;
+            top: 34px;
+            bottom: -22px;
+            width: 0;
+            border-left: 2px dotted #9ca3af;
+            transition: all 0.4s ease;
+        }
+
+        .tracking-timeline li:last-child::after {
+            display: none;
+        }
+
+        /* Timeline Icons - Matches Main Booking Stepper */
+        .timeline-icon {
+            position: absolute;
+            left: 0;
             top: 0;
-            width: 20px;
-            height: 20px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: #fff;
-            border: 4px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            background: #f3f4f6;
+            color: #9ca3af;
+            border: 1px solid #e5e7eb;
+            z-index: 2;
             transition: all 0.3s ease;
         }
 
-        .tracking-timeline li.active::before {
-            border-color: #111;
-            background: #111;
-            box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.1);
+        /* Completed & Active State: Brand Yellow (#f9c106) with Dark Icon (#111) */
+        .tracking-timeline li.completed .timeline-icon,
+        .tracking-timeline li.active .timeline-icon {
+            background: #f9c106;
+            color: #111;
+            border-color: #f9c106;
+            box-shadow: 0 3px 8px rgba(249, 193, 6, 0.35);
         }
 
-        .tracking-timeline li.completed::before {
-            border-color: #10b981;
-            background: #10b981;
+        /* Active State Pulse */
+        .tracking-timeline li.active .timeline-icon {
+            animation: stepperPulse 1.8s infinite;
         }
 
-        .tracking-timeline li.cancelled::before {
-            border-color: #ef4444;
+        @keyframes stepperPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(249, 193, 6, 0.6);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(249, 193, 6, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(249, 193, 6, 0);
+            }
+        }
+
+        /* Cancelled State */
+        .tracking-timeline li.cancelled .timeline-icon {
             background: #ef4444;
+            color: #fff;
+            border-color: #ef4444;
         }
 
         .tracking-timeline .step-title {
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             color: #9ca3af;
-            display: block;
-            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+            transition: all 0.3s ease;
         }
 
-        .tracking-timeline li.active .step-title,
-        .tracking-timeline li.completed .step-title {
-            color: #111;
+        .tracking-timeline li.completed .step-title,
+        .tracking-timeline li.active .step-title {
+            color: #111827;
+            /* font-weight: 800; */
         }
 
         .tracking-timeline .step-desc {
             font-size: 13px;
             color: #6b7280;
+            line-height: 1.3;
         }
 
-        .tracking-timeline li.cancelled .step-title {
-            color: #ef4444;
-        }
-
-        /* Loading Spinner */
-        .track-spinner {
+        .mobile-timeline-hint {
             display: none;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
         }
 
         @media (max-width: 768px) {
-            .track-content-flex {
-                flex-direction: column;
-                overflow-y: auto;
+            .track-status-header{
+                margin-bottom:0px;
+                border-bottom:none;
+            }
+            .mobile-timeline-hint {
+                display: none !important;
+            }
+            .mobile-timeline-hint.has-map {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                background: #111827;
+                color: #ffffff;
+                padding: 9px 18px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 700;
+                cursor: pointer;
+                margin: 4px auto 6px auto;
+                width: fit-content;
+                transition: all 0.25s ease;
             }
 
-            .track-timeline-wrapper {
-                flex: none;
-                height: auto;
+            .mobile-timeline-hint:active {
+                transform: scale(0.96);
+            }
+
+            .mobile-timeline-hint .bounce-arrow {
+                font-size: 11px;
+                /* color: #f9c106; */
+                animation: bounceDown 1.6s infinite;
+            }
+
+            @keyframes bounceDown {
+                0%, 20%, 50%, 80%, 100% {
+                    transform: translateY(0);
+                }
+                40% {
+                    transform: translateY(4px);
+                }
+                60% {
+                    transform: translateY(2px);
+                }
+            }
+
+            .track-content-flex {
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+                gap: 16px;
             }
 
             .track-map-wrapper {
-                min-height: 300px;
+                order: 1;
+                min-height: 260px;
                 flex: none;
+            }
+
+            .track-timeline-wrapper {
+                order: 2;
+                flex: none;
+                height: auto;
+                padding-left: 0;
             }
 
             .track-result-container {
@@ -14156,9 +14460,9 @@
         }
 
         .accordion-toggle {
-            background: transparent;
+     
             border: none;
-            color: #666;
+            color: black;
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
@@ -14166,7 +14470,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 10px 0;
+            padding: 8px 0;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -14216,19 +14520,23 @@
         .accordion-tabs {
             display: flex;
             gap: 20px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eaeaea;
+            /* margin-bottom: 20px; */
+            padding-bottom: 4px;
+            /* border-bottom: 1px solid #eaeaea; */
         }
 
         .accordion-tabs .tab-btn {
             background: none;
             border: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
-            color: #888;
+            color: #6b7280;
             cursor: pointer;
-            padding: 8px 4px;
+            /* padding: 8px 4px; */
             position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             transition: color 0.3s ease;
         }
 
@@ -14238,13 +14546,13 @@
 
         .accordion-tabs .tab-btn.active {
             color: #111;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .accordion-tabs .tab-btn.active::after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: -5px;
             left: 0;
             width: 100%;
             height: 2px;
@@ -14252,20 +14560,141 @@
             border-radius: 2px 2px 0 0;
         }
 
+        /* Inclusions & Exclusions Tab Container */
+        .premium-tab-container {
+            margin-bottom: 25px;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            flex-shrink: 0;
+        }
+
+        .premium-tab-container .accordion-content {
+            padding: 0;
+        }
+
+        :not(.vehicle-accordion) > .premium-tab-container .accordion-content,
+        #step5 .premium-tab-container .accordion-content {
+            display: block;
+        }
+
+        .vehicle-accordion .accordion-content {
+            display: none;
+        }
+
+        .vehicle-accordion .premium-tab-container {
+            margin-bottom: 0;
+            border: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .premium-tab-container .accordion-tabs {
+            display: flex;
+            gap: 15px;
+            padding: 12px 18px 0 18px;
+            /* margin-bottom: 16px; */
+            /* border-bottom: 1px solid #eaeaea;
+            background: #fafafa; */
+        }
+
+        .premium-tab-container .tab-btn {
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            color: #6b7280;
+            cursor: pointer;
+            /* padding: 10px 6px; */
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .premium-tab-container .tab-btn.active {
+            color: #111;
+        }
+
+        .tab-icon-check {
+            color: #28a745;
+        }
+
+        .tab-icon-cross {
+            color: #dc3545;
+        }
+
+        .tab-pane {
+            padding: 12px 18px 18px 18px;
+        }
+
+        .tab-points-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .tab-pane.inclusions-pane .tab-points-list,
+        .inclusions-list {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px 24px !important;
+        }
+
+        .inclusions-list li.tab-point-item,
+        .exclusions-list li.tab-point-item {
+            padding-left: 0 !important;
+        }
+
+        .inclusions-list li.tab-point-item::before,
+        .exclusions-list li.tab-point-item::before {
+            display: none !important;
+        }
+
+        @media (max-width: 576px) {
+            .tab-pane.inclusions-pane .tab-points-list,
+            .inclusions-list {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        .tab-point-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13.5px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .tab-point-item .point-icon {
+            font-size: 12px;
+            margin-top: 3.5px;
+            flex-shrink: 0;
+        }
+
+        .tab-point-item .point-icon-check {
+            color: #27ae60;
+        }
+
+        .tab-point-item .point-icon-cross {
+            color: #e74c3c;
+        }
+
         .vehicle-details-list {
             list-style: none;
             padding: 0;
             margin: 0 0 0 10px;
             text-align: left;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px 15px;
-        }
-
-        @media (min-width: 768px) {
-            .vehicle-details-list {
-                grid-template-columns: 1fr 1fr;
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .vehicle-details-list li {
@@ -14293,6 +14722,27 @@
         .exclusions-list li::before {
             content: "\f00d";
             color: #e74c3c;
+        }
+
+        @media (max-width: 576px) {
+            .premium-tab-container {
+                margin-bottom: 20px;
+            }
+            .premium-tab-container .accordion-tabs {
+                padding: 10px 14px 0 14px;
+                gap: 10px;
+            }
+            .premium-tab-container .tab-btn {
+                font-size: 13px;
+                padding: 8px 4px;
+            }
+            .tab-pane {
+                padding: 14px 16px;
+            }
+            .tab-point-item {
+                font-size: 13px;
+                gap: 8px;
+            }
         }
     </style>
 
@@ -14342,6 +14792,12 @@
             }
         }
 
+        function toggleMobileRouteDetails(card) {
+            if (window.innerWidth <= 768) {
+                card.classList.toggle('expanded');
+            }
+        }
+
         async function submitTrackRide() {
             const num = document.getElementById('trackBookingNumber').value.trim();
             if (!num) {
@@ -14388,26 +14844,46 @@
             document.getElementById('displayBookingNo').innerText = jobNo;
             document.getElementById('displayTrackingMessage').innerText = data.tracking.message;
 
+            const otpBadge = document.getElementById('displayOtpBadge');
+            const otpValue = document.getElementById('displayOtpValue');
+            const otp = (data.booking && data.booking.otp) ? data.booking.otp : (data.tracking && data.tracking.otp ? data.tracking.otp : '');
+            if (otpBadge && otp) {
+                otpBadge.style.display = 'inline-flex';
+                if (otpValue) otpValue.innerText = otp;
+            } else if (otpBadge) {
+                otpBadge.style.display = 'none';
+            }
+
             const bookingDetails = document.getElementById('trackingBookingDetails');
             if (data.booking) {
                 bookingDetails.style.display = 'block';
                 bookingDetails.innerHTML = `
-                    <div class="booking-details-grid">
-                        <div class="booking-detail-item">
-                            <span class="detail-label">From</span>
-                            <span class="detail-value">${data.booking.from_place || '-'}</span>
+                    <div class="track-route-details-card" onclick="toggleMobileRouteDetails(this)">
+                        <div class="track-pickup-corner desktop-only">
+                            <span class="pickup-label"><i class="fas fa-clock"></i> PICKUP TIME</span>
+                            <span class="pickup-value">${data.booking.pickup_date || '-'}</span>
                         </div>
-                        <div class="booking-detail-item">
-                            <span class="detail-label">To</span>
-                            <span class="detail-value">${data.booking.to_place || '-'}</span>
+                        <button type="button" class="route-expand-btn mobile-only" aria-label="Expand route details">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="track-route-flow">
+                            <div class="route-point-item">
+                                <div class="point-icon-pin yellow-pin">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <div class="point-address">${data.booking.from_place || '-'}</div>
+                            </div>
+                            <div class="route-line-dots"></div>
+                            <div class="route-point-item">
+                                <div class="point-icon-pin black-pin">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <div class="point-address">${data.booking.to_place || '-'}</div>
+                            </div>
                         </div>
-                        <div class="booking-detail-item">
-                            <span class="detail-label">Pickup Time</span>
-                            <span class="detail-value">${data.booking.pickup_date || '-'}</span>
-                        </div>
-                        <div class="booking-detail-item">
-                            <span class="detail-label">OTP</span>
-                            <span class="detail-value otp-value">${data.booking.otp || '-'}</span>
+                        <div class="mobile-pickup-time-bar mobile-only">
+                            <span class="pickup-label"><i class="fas fa-clock"></i> PICKUP TIME:</span>
+                            <span class="pickup-value">${data.booking.pickup_date || '-'}</span>
                         </div>
                     </div>
                 `;
@@ -14416,47 +14892,75 @@
                 bookingDetails.innerHTML = '';
             }
 
-            // Render Timeline
+            // Render Animated Timeline
             const tl = data.timeline;
             const ul = document.getElementById('trackingTimeline');
             ul.innerHTML = '';
 
             const steps = [
-                { key: 'created', title: 'Booking Created', desc: 'Your booking has been placed' },
-                { key: 'confirmed', title: 'Confirmed', desc: 'Driver has accepted your ride' },
-                { key: 'dispatch', title: 'Dispatched', desc: 'Driver is on the way to pickup' },
-                { key: 'onboard', title: 'Onboard', desc: 'Trip has started' },
-                { key: 'completed', title: 'Completed', desc: 'You have reached destination' }
+                { key: 'created', title: 'Booking Created', desc: 'Your booking has been placed', icon: 'fa-file-invoice' },
+                { key: 'confirmed', title: 'Confirmed', desc: 'Driver has accepted your ride', icon: 'fa-user-check' },
+                { key: 'dispatch', title: 'Dispatched', desc: 'Driver is on the way to pickup', icon: 'fa-car-side' },
+                { key: 'onboard', title: 'Onboard', desc: 'Trip has started', icon: 'fa-route' },
+                { key: 'completed', title: 'Completed', desc: 'You have reached destination', icon: 'fa-check-circle' }
             ];
 
             if (tl.cancelled) {
-                ul.innerHTML += `<li class="cancelled"><span class="step-title">Cancelled</span><span class="step-desc">This booking was cancelled</span></li>`;
+                ul.innerHTML += `
+                    <li class="cancelled">
+                        <div class="timeline-icon"><i class="fas fa-times"></i></div>
+                        <div class="timeline-content">
+                            <span class="step-title">Cancelled</span>
+                            <span class="step-desc">This booking was cancelled</span>
+                        </div>
+                    </li>`;
             } else {
-                let lastActive = -1;
+                let lastActive = 0;
                 steps.forEach((step, idx) => {
-                    if (tl[step.key]) lastActive = idx;
+                    if (tl && tl[step.key]) {
+                        lastActive = idx;
+                    }
                 });
 
                 steps.forEach((step, idx) => {
-                    let liClass = '';
-                    if (idx < lastActive) liClass = 'completed';
-                    else if (idx === lastActive) liClass = 'active';
+                    let liClass = 'inactive';
+                    if (idx < lastActive) {
+                        liClass = 'completed';
+                    } else if (idx === lastActive) {
+                        liClass = 'active';
+                    }
 
-                    ul.innerHTML += `<li class="${liClass}">
-                        <span class="step-title">${step.title}</span>
-                        <span class="step-desc">${step.desc}</span>
-                    </li>`;
+                    const iconHtml = `<i class="fas ${step.icon}"></i>`;
+
+                    ul.innerHTML += `
+                        <li class="${liClass}">
+                            <div class="timeline-icon">${iconHtml}</div>
+                            <div class="timeline-content">
+                                <span class="step-title">${step.title}</span>
+                                <span class="step-desc">${step.desc}</span>
+                            </div>
+                        </li>`;
                 });
             }
 
             // Handle Live Tracking Map
             const mapWrap = document.getElementById('trackMapWrapper');
+            const hintElem = document.querySelector('.mobile-timeline-hint');
             if (data.tracking.live_tracking === 'yes' && data.tracking.socket_url) {
                 mapWrap.style.display = 'block';
+                if (hintElem) hintElem.classList.add('has-map');
                 initLiveTrackingMap();
                 connectLiveTrackingSocket(data.tracking.socket_url, data.tracking.tracking_id);
             } else {
                 mapWrap.style.display = 'none';
+                if (hintElem) hintElem.classList.remove('has-map');
+            }
+        }
+
+        function scrollToTimelineStatus() {
+            const el = document.getElementById('trackingTimeline');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -14684,7 +15188,8 @@
         // Vehicle Accordion Functions
         function toggleVehicleAccordion(btn) {
             $(btn).toggleClass('open');
-            $(btn).next('.accordion-content').slideToggle(300);
+            const content = $(btn).parent().find('.accordion-content');
+            content.slideToggle(300);
 
             if ($(btn).hasClass('open')) {
                 $(btn).find('.acc-text').text('Hide Details');

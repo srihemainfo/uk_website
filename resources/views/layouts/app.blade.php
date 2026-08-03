@@ -1194,6 +1194,10 @@
         .form-group-uber input,
         .form-group-uber select {
             width: 100%;
+            box-sizing: border-box !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             padding: 11px 13px;
             border: 2px solid #ddd;
             border-radius: 8px;
@@ -1206,6 +1210,7 @@
         .form-group-uber select:focus {
             outline: none;
             background: #fff;
+            border-color: #000;
         }
 
         .flight-time-dual-dropdown {
@@ -2046,25 +2051,54 @@
 
         .time-input-wrapper {
             position: relative;
+            width: 100%;
+            box-sizing: border-box !important;
         }
 
         .time-input-icon {
             position: absolute;
-            left: 12px;
-            top: 14px;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #333;
+            z-index: 2;
+            pointer-events: none;
+            font-size: 14px;
         }
 
         .time-input-field {
             width: 100%;
-            padding: 12px 35px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-            font-size: 14px;
-            font-weight: 500;
+            max-width: 100%;
+            box-sizing: border-box !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 12px 35px 12px 38px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            background: #fff;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             color: #000;
+            height: 48px;
+            line-height: 1.2;
+            margin: 0;
+            display: block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .flatpickr-input {
+            box-sizing: border-box !important;
+            -webkit-appearance: none !important;
+            max-width: 100% !important;
+        }
+
+        .time-input-field:hover,
+        .time-input-field:focus {
+            border-color: #000;
+            background: #fff;
+            outline: none;
         }
 
         .form-group-uber textarea {
@@ -2073,6 +2107,8 @@
             border: 2px solid #ddd;
             border-radius: 8px;
             background: #fff;
+            box-sizing: border-box !important;
+            -webkit-appearance: none;
             /*resize:vertical;*/
             /*min-height:120px;*/
         }
@@ -2085,11 +2121,13 @@
 
         .time-input-chevron {
             position: absolute;
-            right: 12px;
-            top: 16px;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #333;
             font-size: 12px;
             pointer-events: none;
+            z-index: 2;
         }
 
         .time-hint {
@@ -3127,6 +3165,18 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
             margin-bottom: 15px;
+        }
+
+        /* Full width for any input box that sits alone in its row (desktop & mobile) */
+        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group[style*="display: none"]),
+        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group[style*="display:none"]),
+        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group.d-none),
+        #journeySeaport .booking-form-grid > .booking-form-group:nth-last-child(2),
+        #journeyAirport .booking-form-grid > .booking-form-group:has(#dropoffAddress[style*="display: none"]) ~ .booking-form-group:has(#pickupAfterLandingSelect),
+        #journeyAirport .booking-form-grid > .booking-form-group:has(#dropoffAddress[style*="display:none"]) ~ .booking-form-group:has(#pickupAfterLandingSelect),
+        .booking-form-grid > .booking-form-group:only-child,
+        .booking-form-grid > .booking-form-group:only-of-type {
+            grid-column: 1 / -1;
         }
 
         .booking-form-group {
@@ -4298,6 +4348,10 @@
 
         /* Responsive */
         @media (max-width: 767px) {
+
+            .accordion-content{
+                padding:12px !important;
+            }
 
             .rc-driver-top-flex {
                 gap: 8px;
@@ -6551,11 +6605,11 @@
 
             .mobile-summary-price-wrapper .estimated-fare-badge {
                 display: inline-block;
-                padding: 4px 10px;
-                font-size: 11px;
+                padding: 6px 12px;
+                font-size: 13px;
                 font-weight: 600;
-                color: #d4a017;
-                background: #fff5d9;
+                color: white;
+                background: black;
                 border-radius: 20px;
                 line-height: 1;
                 margin-top: 0;

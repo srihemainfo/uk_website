@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoRide</title>
 
-    @if(request()->getHost() == 'uk.goride.run')
+    @php
+        // Checks the original domain requested by the browser
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+    @endphp
+
+    {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
+    @if($requestedHost === 'uk.goride.run')
         <meta name="robots" content="noindex, nofollow">
     @endif
 

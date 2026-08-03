@@ -1253,7 +1253,7 @@
                             </span>
                             <div style="display: flex; flex-direction: column; align-items: flex-end;">
                                 <span id="pbTotalFare">£0.00</span>
-                                <div class="estimated-fare-badge" style="padding: 6px 8px;">Estimated Fare</div>
+                                <!-- <div class="estimated-fare-badge" style="padding: 6px 8px;">Estimated Fare</div> -->
                             </div>
                         </div>
                     </div>
@@ -1271,7 +1271,7 @@
                                 <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle" style="color:#28a745; margin-right:6px;"></i> Inclusions</button>
                                 <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle" style="color:#dc3545; margin-right:6px;"></i> Exclusions</button>
                             </div>
-                            <div class="tab-pane inclusions-pane active" style="padding: 16px;">
+                            <div class="tab-pane inclusions-pane active">
                                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                                     <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
                                         <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i>
@@ -1303,7 +1303,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane exclusions-pane" style="display: none; padding: 16px;">
+                            <div class="tab-pane exclusions-pane" style="display: none;">
                                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                                     <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
                                         <i class="fas fa-times" style="color: #e74c3c; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i>
@@ -2086,9 +2086,9 @@
                         </p>
                     </div>
                     <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-                        <button class="btn-modal-primary" onclick="completeBooking()">
+                        <!-- <button class="btn-modal-primary" onclick="completeBooking()">
                             <i class="fas fa-check"></i> Done
-                        </button>
+                        </button> -->
                         <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary">
                             <i class="fas fa-file-invoice"></i> View Booking Preview
                         </a>

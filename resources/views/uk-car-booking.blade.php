@@ -1265,52 +1265,60 @@
                     </div>
 
                     <!-- Modern Premium Tab View for Inclusions & Exclusions -->
-                    <div class="premium-tab-container" style="margin-bottom: 25px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.02); flex-shrink: 0;">
-                        <div class="accordion-content" style="display: block; padding: 0;">
+                    <div class="premium-tab-container">
+                        <div class="accordion-content">
                             <div class="accordion-tabs">
-                                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle" style="color:#28a745; margin-right:6px;"></i> Inclusions</button>
-                                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle" style="color:#dc3545; margin-right:6px;"></i> Exclusions</button>
+                                <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')">
+                                    <i class="fas fa-check-circle tab-icon-check"></i> Inclusions
+                                </button>
+                                <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')">
+                                    <i class="fas fa-times-circle tab-icon-cross"></i> Exclusions
+                                </button>
                             </div>
                             <div class="tab-pane inclusions-pane active">
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i>
-                                        <div><span id="dynamicIncludedMiles"></span> included in the fare. Additional mileage: £1.50 per mile.</div>
+                                <div class="tab-points-list">
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-parking point-icon point-icon-check"></i>
+                                        <div>Parking Charges</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Parking Charges</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-road point-icon point-icon-check"></i>
+                                        <div>Congestion Charges</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Congestion Charges</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-moon point-icon point-icon-check"></i>
+                                        <div>Night Charges</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Night Charges</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-calendar-day point-icon point-icon-check"></i>
+                                        <div>Special Day Charges</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Special Day Charges</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-clock point-icon point-icon-check"></i>
+                                        <div>Waiting Charges</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Waiting Charges</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i>
+                                        <div>VAT 20% Included</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>VAT included (where applicable).</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-user-check point-icon point-icon-check"></i>
+                                        <div>Meet & Greet</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Meet & Greet</div>
-                                    </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-check" style="color: #27ae60; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i> <div>Fuel charges included.</div>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-gas-pump point-icon point-icon-check"></i>
+                                        <div>Fuel charges included.</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane exclusions-pane" style="display: none;">
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-times" style="color: #e74c3c; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i>
+                                <div class="tab-points-list">
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-times point-icon point-icon-cross"></i>
                                         <div>Any government or local authority charges, if applicable.</div>
                                     </div>
-                                    <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #555; line-height: 1.5;">
-                                        <i class="fas fa-times" style="color: #e74c3c; margin-top: 3px; font-size: 11px; flex-shrink: 0;"></i>
+                                    <div class="tab-point-item">
+                                        <i class="fas fa-times point-icon point-icon-cross"></i>
                                         <div>Additional mileage and waiting charges beyond the included limits.</div>
                                     </div>
                                 </div>
@@ -1915,7 +1923,6 @@
                                     <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span></span>
                                     <span><i class="fas fa-suitcase-rolling"></i> <span
                                             id="rcLuggageCapacity">2</span></span>
-                                    <span><i class="fas fa-cogs"></i> <span id="rcTransmission">Automatic</span></span>
                                 </div>
                                 <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
                                     <!-- populated dynamically -->
@@ -1967,7 +1974,6 @@
                                 <div class="rc-bid-bottom">
                                     <div class="rc-bid-amount">
                                         <strong id="rcFareAmount">£0</strong>
-                                        <span class="rc-bid-total-tag">Total</span>
                                     </div>
                                     <div class="rc-bid-note">No hidden charges</div>
                                 </div>

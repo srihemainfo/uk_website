@@ -11406,9 +11406,17 @@
                     .onSnapshot((doc) => {
                         if (doc.exists) {
                             const data = doc.data();
+                            if (data.status === 'cancel' || data.status === 'cancelled') {
+                                showToast('Booking already cancelled or no more', 'error');
+                                setTimeout(() => { window.location.reload(); }, 2000);
+                                return;
+                            }
                             if (data.bids_details) {
                                 renderRealtimeDrivers(data.bids_details);
                             }
+                        } else {
+                            showToast('Booking already cancelled or no more', 'error');
+                            setTimeout(() => { window.location.reload(); }, 2000);
                         }
                     }, (error) => {
                         console.error("Error listening to bids: ", error);
@@ -12071,7 +12079,14 @@
                     // Meet & greet is removed from the fare breakdown UI per updated logic
                     $('#pbMeetGreetRow').hide();
 
-                    $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || 0).toFixed(2));
+                    if (data.data.firstAmt && data.data.firstAmt !== "0" && parseFloat(data.data.firstAmt) > 0) {
+                        $('#pbFirstDiscount').text('-£' + parseFloat(data.data.firstAmt).toFixed(2));
+                        $('#pbFirstDiscountRow').show();
+                    } else {
+                        $('#pbFirstDiscountRow').hide();
+                    }
+
+                    $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || data.data.actual_total_fare || 0).toFixed(2));
 
                     $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || 360} miles`);
 
@@ -14185,19 +14200,23 @@
             padding: 0;
             margin: 0;
             text-align: left;
-            column-count: 2;
-            column-gap: 15px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px 15px;
+        }
+
+        @media (min-width: 768px) {
+            .vehicle-details-list {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         .vehicle-details-list li {
             position: relative;
             padding-left: 24px;
-            margin-bottom: 12px;
             font-size: 13px;
             color: #555;
             line-height: 1.6;
-            break-inside: avoid;
-            page-break-inside: avoid;
         }
 
         .vehicle-details-list li::before {
@@ -14206,7 +14225,7 @@
             position: absolute;
             left: 0;
             top: 2px;
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .inclusions-list li::before {

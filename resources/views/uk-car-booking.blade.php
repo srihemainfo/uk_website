@@ -1266,7 +1266,7 @@
 
                     <!-- Modern Premium Tab View for Inclusions & Exclusions -->
                     <div class="premium-tab-container" style="margin-bottom: 25px; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.02); flex-shrink: 0;">
-                        <div class="accordion-content" style="display: block; padding: 0;">
+                        <div class="accordion-content" style="display: block; padding: 15px 20px;">
                             <div class="accordion-tabs">
                                 <button type="button" class="tab-btn active" onclick="switchVehicleTab(this, 'inclusions')"><i class="fas fa-check-circle" style="color:#28a745; margin-right:6px;"></i> Inclusions</button>
                                 <button type="button" class="tab-btn" onclick="switchVehicleTab(this, 'exclusions')"><i class="fas fa-times-circle" style="color:#dc3545; margin-right:6px;"></i> Exclusions</button>

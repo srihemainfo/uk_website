@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoRide</title>
+
+    @if(request()->getHost() == 'uk.goride.run')
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -3200,6 +3205,9 @@
             width: 18px;
             height: 18px;
             accent-color: #000;
+            appearance: auto !important;
+            -webkit-appearance: auto !important;
+            -moz-appearance: auto !important;
         }
 
         .booking-form-group input,
@@ -10274,44 +10282,7 @@
         </button>
     </div>
     <div class="v-price" style="display: flex; flex-direction: column; align-items: flex-end;">
-        <div class="tax-ribbon-wrapper" style="
-            position: relative; 
-            margin-top: -16px; 
-            margin-bottom: 4px; 
-            margin-right: 8px; 
-            display: flex; 
-            align-items: flex-start; 
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
-            z-index: 10;
-        ">
-            <!-- Fold (dark triangle) -->
-            <div style="
-                position: relative; 
-                top: 1px; 
-                width: 0; 
-                height: 0; 
-                right: -1px;
-                border-bottom: 5px solid #064e3b; 
-                border-left: 5px solid transparent;
-            "></div>
-            <!-- Premium Ribbon Body -->
-            <div style="
-                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-                color: #ffffff;
-                font-size: 8px;
-                font-weight: 800;
-                padding: 6px 8px 8px 8px;
-                text-transform: uppercase;
-                text-align: center;
-                letter-spacing: 0.5px;
-                line-height: 1.2;
-                -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                border-radius: 3px 3px 0 0;
-            ">
-                Tax (VAT 20%)<br>Included
-            </div>
-        </div>
+
         <div>${priceHtml}${tripInfoHtml}</div>
         <div class="v-price-onwards">Onwards</div>
     </div>
@@ -11620,7 +11591,7 @@
                     const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
                     const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
                     
-                    const taxHtml = `
+                    const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper" style="
                 position: relative; 
                 margin-top: -36px; 
@@ -11659,7 +11630,7 @@
                     ${taxText}
                 </div>
             </div>
-                    `;
+                    ` : '';
 
                     const html = `
 <div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px;">
@@ -11859,7 +11830,7 @@
                 const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
                 const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
                 
-                const taxHtml = `
+                const taxHtml = d.isTax ? `
         <div class="tax-ribbon-wrapper" style="
             position: relative; 
             margin-top: -16px; 
@@ -11898,7 +11869,7 @@
                 ${taxText}
             </div>
         </div>
-                `;
+                ` : '';
 
                 const html = `
 <div class="driver-item driver-card">
@@ -14278,7 +14249,7 @@
         .vehicle-details-list {
             list-style: none;
             padding: 0;
-            margin: 0;
+            margin: 0 0 0 10px;
             text-align: left;
             display: grid;
             grid-template-columns: 1fr;

@@ -1571,8 +1571,8 @@
         }
 
         .driver-avatar {
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
@@ -3475,6 +3475,50 @@
             border-radius: 10px;
         }
 
+        .tax-ribbon-wrapper {
+            position: absolute !important;
+            top: -5px !important;
+            right: -4px !important;
+            display: flex !important;
+            align-items: flex-start !important;
+            filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15)) !important;
+            z-index: 10 !important;
+            margin: 0 !important;
+        }
+
+        .tax-ribbon-fold {
+            position: relative !important;
+            top: 1px !important;
+            width: 0 !important;
+            height: 0 !important;
+            right: -1px !important;
+            border-bottom: 5px solid #064e3b !important;
+            border-left: 5px solid transparent !important;
+        }
+
+        .tax-ribbon-fold.not-included {
+            border-bottom-color: #7f1d1d !important;
+        }
+
+        .tax-ribbon-body {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: #ffffff !important;
+            font-size: 8px !important;
+            font-weight: 800 !important;
+            padding: 5px 8px 7px 8px !important;
+            text-transform: uppercase !important;
+            text-align: center !important;
+            letter-spacing: 0.5px !important;
+            line-height: 1.2 !important;
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%) !important;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%) !important;
+            border-radius: 3px 3px 0 0 !important;
+        }
+
+        .tax-ribbon-body.not-included {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        }
+
         /* 
         .driver-car-banner {
             align-items: center;
@@ -3495,14 +3539,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
+            gap: 0px;
+            flex-direction: column;
         }
 
         .driver-car-banner-name {
             font-size: 15px;
             font-weight: 700;
             color: #111;
-            margin-bottom: 4px;
+            /* margin-bottom: 4px; */
         }
 
         .driver-car-banner-meta {
@@ -3526,9 +3571,61 @@
         .driver-header {
             display: flex;
             align-items: baseline;
-            margin-bottom: 8px;
+            /* margin-bottom: 8px; */
             justify-content: space-around;
             align-items: center;
+        }
+
+        .driver-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .driver-avatar-info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .driver-meta-info h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .driver-static-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        .driver-review-link-wrapper {
+            margin-top: 2px;
+        }
+
+        .driver-review-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #000;
+            background: #fff;
+               padding: 4px 15px;
+            border-radius: 6px;
+            border: 1px solid #000;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .driver-review-link:hover {
+            background: #000;
+            color: #fff;
+            text-decoration: none;
         }
 
         .driver-text h4 {
@@ -3605,17 +3702,19 @@
 
         .driver-review-link {
             display: inline-block;
-            font-size: 12px;
-            color: #fff;
-            text-decoration: none;
-            background: #666;
-            padding: 2px 6px;
-            border-radius: 6px;
-            transition: background 0.2s ease;
+    font-size: 12px;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    background: white;
+    padding: 5px 15x;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+    border: 1px solid black;
         }
 
         .driver-review-link:hover {
-            background: #444;
+            background: linear-gradient(135deg, #000 0%, #000 100%)
             color: #fff;
             text-decoration: none;
         }
@@ -3958,18 +4057,17 @@
 
         .rc-vehicle-top {
             display: flex;
-            gap: 16px;
-
+            gap: 24px;
             align-items: center;
-            justify-content: space-between;
         }
 
         .rc-vehicle-img-wrapper {
-            width: 230px;
-            height: 155px;
+            width: 240px;
+            height: 150px;
             flex-shrink: 0;
-            border-radius: 8px;
+            border-radius: 14px;
             overflow: hidden;
+            background: #f8fafc;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -3978,7 +4076,8 @@
         .rc-vehicle-img-wrapper img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            border-radius: 14px;
         }
 
         .rc-vehicle-info-right {
@@ -3986,47 +4085,71 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
         }
 
-        .rc-vehicle-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .rc-vehicle-info-right h4 {
+        .rc-vehicle-name-block h4 {
             margin: 0;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.5px;
         }
 
-        .rc-vehicle-features {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 0;
-            font-weight: 600;
+        .rc-vehicle-subname {
             font-size: 15px;
+            color: #475569;
+            font-weight: 500;
+            margin-top: 2px;
         }
 
-        .rc-vehicle-features i {
-            font-size: 12px;
-            height: 27px;
-            width: 27px;
-            background: black;
+        .rc-vehicle-stats-row {
             display: flex;
-            justify-content: center;
             align-items: center;
-            color: white;
+            gap: 16px;
+        }
+
+        .rc-vehicle-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .rc-stat-icon-circle {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-        }
-
-        .rc-vehicle-features span {
+            background: #f1f5f9;
             display: flex;
             align-items: center;
-            gap: 11px;
+            justify-content: center;
+            color: #0f172a;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .rc-stat-val {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .rc-stat-lbl {
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+            margin-top: 2px;
+            white-space: nowrap;
+        }
+
+        .rc-stat-divider {
+            width: 1px;
+            height: 50px;
+            background: #e2e8f0;
+            flex-shrink: 0;
         }
 
         .rc-vehicle-bottom-row {
@@ -4188,7 +4311,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 8px;
         }
 
         .more-drivers-loader {
@@ -4384,6 +4507,7 @@
 
             .accordion-content{
                 padding:12px !important;
+                margin-top:0px !important;
             }
 
             .rc-driver-top-flex {
@@ -5635,12 +5759,18 @@
 
         /* Mobile only */
         @media (max-width:768px) {
+            .time-panel-title{
+                font-size:18px;
+            }
+            .time-panel-title,.time-panel-subtitle {
+                    margin-bottom: 7px;
+            }
             .stat-header-label {
-                font-size: 13px;
+                font-size: 12px;
             }
 
             .stat-main-value {
-                font-size: 16px;
+                font-size: 14px;
                 font-weight: 600;
             }
 
@@ -5663,7 +5793,7 @@
             }
 
             .time-selection-panel {
-                padding: 10px 40px;
+                padding: 10px 25px;
             }
 
             .driver-divider {
@@ -7208,7 +7338,7 @@
 
             .vehicle-item {
                 flex-direction: row;
-                gap: 10px;
+                gap:2px;
                 padding: 10px;
                 align-items: flex-start;
                 margin-bottom: 0px;
@@ -7313,7 +7443,7 @@
             .v-features span {
                 display: flex;
                 align-items: center;
-                gap: 7px;
+                gap: 4px;
                 font-weight: 600;
                 white-space: nowrap;
             }
@@ -7343,7 +7473,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                gap: 8px;
+                gap: 0px;
                 margin-top: 2px;
             }
 
@@ -7363,7 +7493,7 @@
             .vehicle-item.selected .btn-v-select {
                 background: #101828;
             }
-
+          
             .mob-trust-badges {
                 display: flex;
                 justify-content: space-around;
@@ -7422,16 +7552,6 @@
                 line-height: 1.3;
             }
 
-            /* Absolute positioning for Tax Ribbon on Mobile */
-            .driver-item .driver-info {
-                position: relative;
-            }
-            .driver-item .tax-ribbon-wrapper {
-                position: absolute !important;
-                top: -22px !important;
-                right: -12px !important;
-                margin: 0 !important;
-            }
         }
     </style>
     <style id="three-column-styles">
@@ -9510,6 +9630,19 @@
             $('#seaportTimeDropdownBtn').removeClass('active');
             $('#timeDropdownList').toggleClass('show');
             $('#timeDropdownBtn').toggleClass('active');
+
+            if ($('#timeDropdownList').hasClass('show') && window.innerWidth <= 768) {
+                var panel = document.getElementById('timeSelectionPanel');
+                if (panel) {
+                    panel.scrollTop = 0;
+                }
+                var el = document.getElementById('mainTimeDropdownWrapper') || document.getElementById('timeDropdownBtn');
+                if (el) {
+                    setTimeout(function () {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
+            }
         }
         function selectTime(time) {
             // Store time in the store (triggers subscribers)
@@ -9534,6 +9667,17 @@
             $('#seaportTimeDropdownBtn').removeClass('active');
             $('#flightTimeDropdownList').toggleClass('show');
             $('#flightTimeDropdownBtn').toggleClass('active');
+
+            if ($('#flightTimeDropdownList').hasClass('show') && window.innerWidth <= 768) {
+                var panel = document.getElementById('timeSelectionPanel');
+                if (panel) panel.scrollTop = 0;
+                var el = document.getElementById('flightTimeDropdownBtn');
+                if (el) {
+                    setTimeout(function () {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
+            }
         }
 
         function selectFlightHour(hour) {
@@ -9591,6 +9735,17 @@
             $('#flightTimeDropdownBtn').removeClass('active');
             $('#seaportTimeDropdownList').toggleClass('show');
             $('#seaportTimeDropdownBtn').toggleClass('active');
+
+            if ($('#seaportTimeDropdownList').hasClass('show') && window.innerWidth <= 768) {
+                var panel = document.getElementById('timeSelectionPanel');
+                if (panel) panel.scrollTop = 0;
+                var el = document.getElementById('seaportTimeDropdownBtn');
+                if (el) {
+                    setTimeout(function () {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
+            }
         }
 
         function selectSeaportHour(hour) {
@@ -10296,8 +10451,8 @@
                      <li class="tab-point-item"><i class="fas fa-road point-icon point-icon-check"></i><div>Congestion Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-moon point-icon point-icon-check"></i><div>Night Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-calendar-day point-icon point-icon-check"></i><div>Special Day Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i><div>VAT 20% Included</div></li>
+                     <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li> 
+                     <li class="tab-point-item"><i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i><div>Child Seat is Included</div></li>
                      <li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet</div></li>
                      <li class="tab-point-item"><i class="fas fa-gas-pump point-icon point-icon-check"></i><div>Fuel charges included.</div></li>`;
 
@@ -11589,6 +11744,8 @@
                         avatar: `<img src="${bid.b_image || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(bid.b_name || 'Driver') + '&background=f5c00b&color=000'}" alt="${bid.b_name || 'Driver'}" style="width:100%;height:100%;object-fit:cover;">`,
                         mobile: bid.b_mobile || '',
                         carName: bid.b_cab || null,
+                        childSeat: bid.b_child || 0,
+                        b_child: bid.b_child || 0,
                         carCapacity: bid.b_seater || null,
                         carLuggage: bid.b_luggage || null,
                         isTax: bid.isTax === true || bid.isTax === 'true'
@@ -11636,53 +11793,21 @@
                         `<li>Any government or local authority charges, if applicable.</li>
                          <li>Additional mileage and waiting charges beyond the included limits.</li>`;
                          
-                    const taxBg = d.isTax ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-                    const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
+                    const notIncClass = d.isTax ? '' : ' not-included';
                     const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
                     
-                    const taxHtml = d.isTax ? `
-            <div class="tax-ribbon-wrapper" style="
-                position: relative; 
-                margin-top: -36px; 
-                margin-bottom: 4px; 
-                margin-right: -4px; 
-                display: flex; 
-                align-items: flex-start; 
-                filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
-                z-index: 10;
-            ">
-                <!-- Fold (dark triangle) -->
-                <div style="
-                    position: relative; 
-                    top: 1px; 
-                    width: 0; 
-                    height: 0; 
-                    right: -1px;
-                    border-bottom: 5px solid ${taxBorder}; 
-                    border-left: 5px solid transparent;
-                "></div>
-                <!-- Premium Ribbon Body -->
-                <div style="
-                    background: ${taxBg};
-                    color: #ffffff;
-                    font-size: 8px;
-                    font-weight: 800;
-                    padding: 6px 8px 8px 8px;
-                    text-transform: uppercase;
-                    text-align: center;
-                    letter-spacing: 0.5px;
-                    line-height: 1.2;
-                    -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                    border-radius: 3px 3px 0 0;
-                ">
+                    const taxHtml = `
+            <div class="tax-ribbon-wrapper">
+                <div class="tax-ribbon-fold${notIncClass}"></div>
+                <div class="tax-ribbon-body${notIncClass}">
                     ${taxText}
                 </div>
             </div>
-                    ` : '';
+                    `;
 
                     const html = `
-<div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px;">
+<div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px; position:relative;">
+    ${taxHtml}
     <div class="driver-info">
         <div class="driver-details">
             <div class="driver-header">
@@ -11691,29 +11816,31 @@
                     <div class="driver-car-banner-details">
                         <div class="driver-car-banner-name">${vehicleName}</div>
                         <div class="driver-car-banner-meta">
-                            <span><i class="fas fa-user"></i>  ${vehicleCapacity}</span>
+                            <span><i class="fas fa-user"></i> ${vehicleCapacity}</span>
                             <span><i class="fas fa-suitcase"></i> ${vehicleLuggage}</span>
                         </div>
                     </div>
                 </div>
                 <div class="driver-wrap">
-                <div class="driver-avatar">
-                    ${d.avatar}
-                </div>
-                <div class="driver-text">
-                    <h4>${d.name}</h4>
-                    <div style="margin-top: 5px;">
-                       <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" class="driver-review-link">
-    Click to view more
-</a>
+                    <div class="driver-avatar-info-row">
+                        <div class="driver-avatar">
+                            ${d.avatar}
+                        </div>
+                        <div class="driver-meta-info">
+                            <h4>${d.name}</h4>
+                            <div class="driver-static-label">Driver</div>
+                        </div>
                     </div>
-                </div>
+                    <div class="driver-review-link-wrapper">
+                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" class="driver-review-link">
+                            <i class="fas fa-external-link-alt me-1"></i> Click to view more
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="driver-bid-box">
             <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
-                ${taxHtml}
                 <div class="driver-price-row" style="margin-bottom: 0;">
                     <div class="bid-amount">
                         £${d.bid}
@@ -11863,53 +11990,21 @@
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
                 
-                const taxBg = d.isTax ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-                const taxBorder = d.isTax ? '#064e3b' : '#7f1d1d';
+                const notIncClass = d.isTax ? '' : ' not-included';
                 const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
                 
-                const taxHtml = d.isTax ? `
-        <div class="tax-ribbon-wrapper" style="
-            position: relative; 
-            margin-top: -16px; 
-            margin-bottom: 4px; 
-            margin-right: -4px; 
-            display: flex; 
-            align-items: flex-start; 
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
-            z-index: 10;
-        ">
-            <!-- Fold (dark triangle) -->
-            <div style="
-                position: relative; 
-                top: 1px; 
-                width: 0; 
-                height: 0; 
-                right: -1px;
-                border-bottom: 5px solid ${taxBorder}; 
-                border-left: 5px solid transparent;
-            "></div>
-            <!-- Premium Ribbon Body -->
-            <div style="
-                background: ${taxBg};
-                color: #ffffff;
-                font-size: 8px;
-                font-weight: 800;
-                padding: 6px 8px 8px 8px;
-                text-transform: uppercase;
-                text-align: center;
-                letter-spacing: 0.5px;
-                line-height: 1.2;
-                -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%);
-                border-radius: 3px 3px 0 0;
-            ">
+                const taxHtml = `
+        <div class="tax-ribbon-wrapper">
+            <div class="tax-ribbon-fold${notIncClass}"></div>
+            <div class="tax-ribbon-body${notIncClass}">
                 ${taxText}
             </div>
         </div>
-                ` : '';
+                `;
 
                 const html = `
-<div class="driver-item driver-card">
+<div class="driver-item driver-card" style="position:relative;">
+    ${taxHtml}
     <!-- Car Banner -->
     <div class="driver-info">
         <div class="driver-details">
@@ -11919,25 +12014,29 @@
         <div class="driver-car-banner-details">
             <div class="driver-car-banner-name">${vehicleName}</div>
               <div class="driver-car-banner-meta">
-                <span><i class="fas fa-user"></i>  ${vehicleCapacity}</span>
+                <span><i class="fas fa-user"></i> ${vehicleCapacity}</span>
                 <span><i class="fas fa-suitcase"></i> ${vehicleLuggage}</span>
             </div>
         </div>
     </div>
-                <div class="driver-avatar">
-                    ${d.avatar}
-                </div>
-                <div class="driver-text">
-                    <h4>${d.name}</h4>
-                    <div style="margin-top: 5px;">
-                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" style="font-size:12px; color:#f5c00b; text-decoration:underline;">Click to view more</a>
+                <div class="driver-wrap">
+                    <div class="driver-avatar-info-row">
+                        <div class="driver-avatar">
+                            ${d.avatar}
+                        </div>
+                        <div class="driver-meta-info">
+                            <h4>${d.name}</h4>
+                            <div class="driver-static-label">Driver</div>
+                        </div>
+                    </div>
+                    <div class="driver-review-link-wrapper">
+                        <a href="javascript:void(0)" onclick="openDriverReview(${driverJson})" class="driver-review-link"><i class="fas fa-external-link-alt me-1"></i> Click to view more</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="driver-bid-box">
             <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
-                ${taxHtml}
                 <div class="driver-price-row" style="margin-bottom: 0;">
                     <div class="bid-amount">
                         £${d.bid}
@@ -11984,7 +12083,28 @@
             bookingData.selectedDriver = driver;
             const vehicle = bookingData.vehicle;
             const vehicleImg = bookingData.vehicle?.image || 'goride/img/fleet1.png';
-            const vehicleName = driver.carName || bookingData.vehicle?.name || '-';
+            let vehicleName = driver.carName || bookingData.vehicle?.name || '-';
+            if (driver.carName) {
+                const vKey = driver.carName.toLowerCase().replace(/\s+/g, '');
+                const nameMap = {
+                    'standard': 'Standard',
+                    'estate': 'Estate',
+                    'executive': 'Executive',
+                    'mpv': 'MPV',
+                    'mpv5': 'MPV 5',
+                    'mpv6': 'MPV 6',
+                    'mpv6l': 'MPV 6 Luxury',
+                    'mpv7': 'MPV 7',
+                    'mpv7l': 'MPV 7 Luxury',
+                    'mpv8': 'MPV 8',
+                    'mpv8l': 'MPV 8 Luxury'
+                };
+                if (nameMap[vKey]) {
+                    vehicleName = nameMap[vKey];
+                } else {
+                    vehicleName = driver.carName.charAt(0).toUpperCase() + driver.carName.slice(1);
+                }
+            }
             const vehiclePrice = bookingData.vehicle?.price || driver.bid;
             $('#rcDriverAvatar').html(driver.avatar);
             $('#rcDriverName').text(driver.name);
@@ -12001,11 +12121,12 @@
                 $('#rcDriverBadge').hide();
             }
             $('#rcCarImage').attr('src', vehicleImg);
-            $('#rcFareAmount').text('\u00a3' + (driver.bid || vehiclePrice));
-            $('#rcCarName').text(vehicleName);
-            $('#rcPassengerCapacity').text(driver.carCapacity || vehicle?.capacity || 4);
-            $('#rcLuggageCapacity').text(driver.carLuggage || vehicle?.luggage || 2);
-            $('#rcTransmission').text(vehicle.transmission || 'Automatic');
+            $('#rcFareAmount').text('£' + (driver.bid || vehiclePrice));
+            $('.rc-vehicle-name-block h4').text(vehicleName);
+            $('#rcPassengerCapacity').text(driver.carCapacity || vehicle?.capacity || 8);
+            $('#rcLuggageCapacity').text(driver.carLuggage || vehicle?.luggage || 8);
+            $('#rcChildSeatCapacity').text(driver.b_child !== undefined && driver.b_child !== null ? driver.b_child : (driver.childSeat !== undefined && driver.childSeat !== null ? driver.childSeat : 0));
+            $('#rcTransmission').text(vehicle?.transmission || 'Automatic');
 
             const tagVal = vehicle?.tag || driver.tag || (driver.badge ? driver.badge : null);
             if (tagVal) {
@@ -12603,7 +12724,7 @@
                     $('#bookingImage').hide();
                     $('#mobileCompactSummary').addClass('visible');
                     if (actionBar.length) actionBar.addClass('hidden');
-                    $(`#step${stepNumber}`).css('padding-top', '120px');
+                    $(`#step${stepNumber}`).css('padding-top', '80px');
                 }
             }
         }
@@ -14095,15 +14216,17 @@
             gap: 5px;
             font-size: 11px;
             font-weight: 700;
-            color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 2px;
         }
+        .track-pickup-corner .pickup-label i{
+            color:#f9c106;
+        }
 
         .track-pickup-corner .pickup-value {
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 500;
             color: #111827;
             display: block;
         }
@@ -14112,6 +14235,7 @@
             margin-top: 4px;
             position: relative;
             padding-right: 195px;
+            pointer-events: none;
         }
 
         .route-point-item {
@@ -14247,21 +14371,20 @@
                 display: flex !important;
                 align-items: center;
                 gap: 6px;
-                margin-top: 10px;
-                color: #4b5563;
+                margin-top: 10px;     
             }
 
             .mobile-pickup-time-bar .pickup-label {
                 font-weight: 700;
-                color: #6b7280;
                 font-size: 11px;
                 text-transform: uppercase;
                 letter-spacing: 0.5px;
             }
 
             .mobile-pickup-time-bar .pickup-value {
-                font-weight: 700;
-                color: #111827;
+                       font-size: 13px;
+        font-weight: 500;
+        color: #111827;
             }
         }
 
@@ -14764,7 +14887,7 @@
                 margin-bottom: 20px;
             }
             .premium-tab-container .accordion-tabs {
-                padding: 10px 14px 0 14px;
+                padding:0px;
                 gap: 10px;
             }
             .premium-tab-container .tab-btn {
@@ -14872,6 +14995,46 @@
             }
         }
 
+        function formatPickupDateTime(dateStr) {
+            if (!dateStr || dateStr === '-') return '-';
+            if (typeof dateStr === 'string' && /[a-zA-Z]{3}/.test(dateStr)) {
+                return dateStr;
+            }
+            try {
+                let cleanStr = String(dateStr).trim();
+                let parsableStr = cleanStr.replace(/-/g, '/').replace('T', ' ').split('.')[0];
+                let d = new Date(parsableStr);
+
+                if (isNaN(d.getTime())) {
+                    d = new Date(cleanStr);
+                }
+
+                if (isNaN(d.getTime())) return dateStr;
+
+                const day = d.getDate();
+                let ordinal = 'th';
+                const j = day % 10, k = day % 100;
+                if (j === 1 && k !== 11) ordinal = 'st';
+                else if (j === 2 && k !== 12) ordinal = 'nd';
+                else if (j === 3 && k !== 13) ordinal = 'rd';
+
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const month = monthNames[d.getMonth()];
+                const year = d.getFullYear();
+
+                let hours = d.getHours();
+                const minutes = d.getMinutes().toString().padStart(2, '0');
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const strHours = hours.toString().padStart(2, '0');
+
+                return `${day}${ordinal} ${month} ${year} ${strHours}:${minutes} ${ampm}`;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
         function renderTrackingResult(jobNo, data) {
             document.getElementById('trackSearchContainer').style.display = 'none';
             document.getElementById('trackResultContainer').style.display = 'flex';
@@ -14896,7 +15059,7 @@
                     <div class="track-route-details-card" onclick="toggleMobileRouteDetails(this)">
                         <div class="track-pickup-corner desktop-only">
                             <span class="pickup-label"><i class="fas fa-clock"></i> PICKUP TIME</span>
-                            <span class="pickup-value">${data.booking.pickup_date || '-'}</span>
+                            <span class="pickup-value">${formatPickupDateTime(data.booking.pickup_date)}</span>
                         </div>
                         <button type="button" class="route-expand-btn mobile-only" aria-label="Expand route details">
                             <i class="fas fa-chevron-down"></i>
@@ -14918,7 +15081,7 @@
                         </div>
                         <div class="mobile-pickup-time-bar mobile-only">
                             <span class="pickup-label"><i class="fas fa-clock"></i> PICKUP TIME:</span>
-                            <span class="pickup-value">${data.booking.pickup_date || '-'}</span>
+                            <span class="pickup-value">${formatPickupDateTime(data.booking.pickup_date)}</span>
                         </div>
                     </div>
                 `;

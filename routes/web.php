@@ -43,10 +43,6 @@ Route::get('/uk-about', function () {
     return view('uk-invoice');
 })->name('uk-invoice');
 
- Route::get('/hii', function () {
-    return response()->json(['message' => 'Hello World']);
-})->name('hii');
-
  Route::get('/operator-signup', function () {
     return view('uk-operator');
 })->name('uk-operator');

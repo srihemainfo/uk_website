@@ -116,6 +116,7 @@
 
             /* Custom Premium Mobile driver card styling */
             .driver-item.driver-card {
+                position: relative !important;
                 padding: 16px !important;
                 border-radius: 16px !important;
                 background: #ffffff !important;
@@ -161,6 +162,7 @@
                 height: auto !important;
                 max-height: 55px !important;
                 object-fit: cover !important;
+                margin-bottom: 7px;
          
             }
 
@@ -173,31 +175,38 @@
 
             .driver-item.driver-card .driver-wrap {
                 display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 6px !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            .driver-item.driver-card .driver-avatar-info-row {
+                display: flex !important;
                 align-items: center !important;
                 gap: 10px !important;
-               
-                min-width: 0 !important;
-                justify-content: end !important;
+                width: 100% !important;
             }
 
             .driver-item.driver-card .driver-avatar {
-                width: 46px !important;
-                height: 46px !important;
+                width: 55px !important;
+                height: 55px !important;
                 border-radius: 50% !important;
                 border: 2px solid #f5c00b !important;
                 overflow: hidden !important;
                 flex-shrink: 0 !important;
             }
 
-            .driver-item.driver-card .driver-text {
+            .driver-item.driver-card .driver-meta-info {
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 3px !important;
-                min-width: 0 !important;
                 align-items: flex-start !important;
+                gap: 1px !important;
+                min-width: 0 !important;
             }
 
-            .driver-item.driver-card .driver-text h4 {
+            .driver-item.driver-card .driver-meta-info h4 {
                 font-size: 15px !important;
                 font-weight: 600 !important;
                 color: #0f172a !important;
@@ -207,41 +216,38 @@
                 text-overflow: ellipsis !important;
             }
 
-            .driver-item.driver-card .driver-rating-info {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: wrap !important;
-                align-items: center !important;
-                gap: 4px !important;
-                font-size: 11px !important;
+            .driver-item.driver-card .driver-static-label {
+                font-size: 12px !important;
                 color: #64748b !important;
+                font-weight: 400 !important;
             }
 
-            .driver-item.driver-card .driver-rating-info i {
-                color: #f5c00b !important;
-            }
-
-            .driver-item.driver-card .driver-divider {
-                display: inline-block !important;
-                color: #cbd5e1 !important;
-            }
-
-            .driver-item.driver-card .driver-review-link {
-                display: inline-block !important;
-                font-size: 11px !important;
-                color: #ffffff !important;
-                background: #475569 !important;
-                padding: 3px 8px !important;
-                border-radius: 6px !important;
-                text-decoration: none !important;
-                font-weight: 500 !important;
-                width: fit-content !important;
-                transition: background-color 0.2s !important;
+            .driver-item.driver-card .driver-review-link-wrapper {
+                width: 100% !important;
                 margin-top: 2px !important;
             }
 
+            .driver-item.driver-card .driver-review-link {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                color: #0f172a !important;
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: 6px !important;
+                padding: 4px 8px !important;
+                text-decoration: none !important;
+                text-align: center !important;
+                transition: all 0.2s ease !important;
+            }
+
             .driver-item.driver-card .driver-review-link:hover {
-                background-color: #334155 !important;
+                background-color: #0f172a !important;
+                color: #ffffff !important;
             }
 
             .driver-item.driver-card .driver-bid-box {
@@ -273,6 +279,45 @@
             .driver-item.driver-card .driver-accept-btn:hover {
                 background-color: #1e293b !important;
             }
+        }
+
+        .driver-item.driver-card {
+            position: relative !important;
+        }
+
+      
+
+        .tax-ribbon-fold {
+            position: relative !important;
+            top: 1px !important;
+            width: 0 !important;
+            height: 0 !important;
+            right: -1px !important;
+            border-bottom: 5px solid #064e3b !important;
+            border-left: 5px solid transparent !important;
+        }
+
+        .tax-ribbon-fold.not-included {
+            border-bottom-color: #7f1d1d !important;
+        }
+
+        .tax-ribbon-body {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: #ffffff !important;
+            font-size: 8px !important;
+            font-weight: 800 !important;
+            padding: 5px 8px 7px 8px !important;
+            text-transform: uppercase !important;
+            text-align: center !important;
+            letter-spacing: 0.5px !important;
+            line-height: 1.2 !important;
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%) !important;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 4px), 0 100%) !important;
+            border-radius: 3px 3px 0 0 !important;
+        }
+
+        .tax-ribbon-body.not-included {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
         }
     </style>
     <div id="mobileActionBar">
@@ -639,7 +684,7 @@
                 <!-- <p class="time-hint">
                                     <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
                                 </p> -->
-                <button id="timePanelDoneBtn" class="btn-search-uber mt-5" onclick="saveSchedule()">
+                <button id="timePanelDoneBtn" class="btn-search-uber mt-3 mt-md-5" onclick="saveSchedule()">
                     See Prices
                 </button>
             </div>
@@ -1179,6 +1224,11 @@
                         }
 
                         @media (max-width: 768px) {
+                            .rc-stat-icon-circle{
+                                width: 38px;
+    height: 38px;
+    font-size: 16px;
+                            }
                             .premium-tooltip-content {
                                 left: -10px;
                                 right: auto;
@@ -1299,7 +1349,7 @@
                                     </div>
                                     <div class="tab-point-item">
                                         <i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i>
-                                        <div>VAT 20% Included</div>
+                                        <div>Child Seat is Included</div>
                                     </div>
                                     <div class="tab-point-item">
                                         <i class="fas fa-user-check point-icon point-icon-check"></i>
@@ -1907,30 +1957,42 @@
 
                     <!-- Vehicle Details Card -->
                     <div class="rc-vehicle-card mb-2">
-                        <div class="rc-card-subtitle">VEHICLE DETAILS</div>
                         <div class="rc-vehicle-top">
-                            <div class="rc-vehicle-img-wrapper" style="position: relative;">
+                            <div class="rc-vehicle-img-wrapper">
                                 <img id="rcCarImage" src="goride/img/fleet1.png" alt="Car"
-                                    onclick="showCarDetailsModal(bookingData.selectedDriver)"
-                                    style="cursor:pointer; width:100%;">
+                                    onclick="showCarDetailsModal(bookingData.selectedDriver)">
                             </div>
                             <div class="rc-vehicle-info-right">
-                                <div class="rc-vehicle-header-row">
-                                    <h4 id="rcCarName">-</h4>
-                                    <div class="rc-vehicle-features">
-                                        <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span></span>
-                                        <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span></span>
-                                    </div>
+                                <div class="rc-vehicle-name-block">
+                                    <h4>${vehicleName}</h4>
                                 </div>
-                                <div class="rc-vehicle-bottom-row">
-                                    <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
-                                        <!-- populated dynamically -->
+                                <div class="rc-vehicle-stats-row">
+                                    <div class="rc-vehicle-stat-item">
+                                        <div class="rc-stat-icon-circle">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div class="rc-stat-val" id="rcPassengerCapacity">8</div>
+                                        <div class="rc-stat-lbl">Seats</div>
                                     </div>
-                                    <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
+                                    <div class="rc-stat-divider"></div>
+                                    <div class="rc-vehicle-stat-item">
+                                        <div class="rc-stat-icon-circle">
+                                            <i class="fas fa-suitcase"></i>
+                                        </div>
+                                        <div class="rc-stat-val" id="rcLuggageCapacity">8</div>
+                                        <div class="rc-stat-lbl">Luggage</div>
+                                    </div>
+                                    <div class="rc-stat-divider"></div>
+                                    <div class="rc-vehicle-stat-item">
+                                        <div class="rc-stat-icon-circle">
+                                            <i class="fas fa-child"></i>
+                                        </div>
+                                        <div class="rc-stat-val" id="rcChildSeatCapacity">0</div>
+                                        <div class="rc-stat-lbl">Child Seats</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- Driver Card -->
                     <div class="rc-new-driver-card">

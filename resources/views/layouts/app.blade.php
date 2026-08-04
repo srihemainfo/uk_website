@@ -11793,17 +11793,14 @@
                         `<li>Any government or local authority charges, if applicable.</li>
                          <li>Additional mileage and waiting charges beyond the included limits.</li>`;
                          
-                    const notIncClass = d.isTax ? '' : ' not-included';
-                    const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
-                    
-                    const taxHtml = `
+                    const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper">
-                <div class="tax-ribbon-fold${notIncClass}"></div>
-                <div class="tax-ribbon-body${notIncClass}">
-                    ${taxText}
+                <div class="tax-ribbon-fold"></div>
+                <div class="tax-ribbon-body">
+                    Tax (VAT 20%)<br>Included
                 </div>
             </div>
-                    `;
+                    ` : '';
 
                     const html = `
 <div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px; position:relative;">
@@ -11990,17 +11987,14 @@
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
                 
-                const notIncClass = d.isTax ? '' : ' not-included';
-                const taxText = d.isTax ? 'Tax (VAT 20%)<br>Included' : 'Tax (VAT 20%)<br>Not Included';
-                
-                const taxHtml = `
+                const taxHtml = d.isTax ? `
         <div class="tax-ribbon-wrapper">
-            <div class="tax-ribbon-fold${notIncClass}"></div>
-            <div class="tax-ribbon-body${notIncClass}">
-                ${taxText}
+            <div class="tax-ribbon-fold"></div>
+            <div class="tax-ribbon-body">
+                Tax (VAT 20%)<br>Included
             </div>
         </div>
-                `;
+                ` : '';
 
                 const html = `
 <div class="driver-item driver-card" style="position:relative;">

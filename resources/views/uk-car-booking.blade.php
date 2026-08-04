@@ -1276,7 +1276,7 @@
                                 </button>
                             </div>
                             <div class="tab-pane inclusions-pane active">
-                                <div class="tab-points-list">
+                                <div class="tab-points-list mt-2">
                                     <div class="tab-point-item">
                                         <i class="fas fa-parking point-icon point-icon-check"></i>
                                         <div>Parking Charges</div>
@@ -1915,17 +1915,18 @@
                                     style="cursor:pointer; width:100%;">
                             </div>
                             <div class="rc-vehicle-info-right">
-                                <div class="d-flex justify-content-between gap-4">
+                                <div class="rc-vehicle-header-row">
                                     <h4 id="rcCarName">-</h4>
+                                    <div class="rc-vehicle-features">
+                                        <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span></span>
+                                        <span><i class="fas fa-suitcase-rolling"></i> <span id="rcLuggageCapacity">2</span></span>
+                                    </div>
+                                </div>
+                                <div class="rc-vehicle-bottom-row">
+                                    <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
+                                        <!-- populated dynamically -->
+                                    </div>
                                     <div class="rc-vehicle-tag" id="rcVehicleTag" style="display:none;"></div>
-                                </div>
-                                <div class="rc-vehicle-features">
-                                    <span><i class="far fa-user"></i> <span id="rcPassengerCapacity">4</span></span>
-                                    <span><i class="fas fa-suitcase-rolling"></i> <span
-                                            id="rcLuggageCapacity">2</span></span>
-                                </div>
-                                <div class="rc-vehicle-amenities-grid" id="rcVehicleAmenitiesGrid">
-                                    <!-- populated dynamically -->
                                 </div>
                             </div>
                         </div>
@@ -1940,7 +1941,6 @@
                                     <h4 id="rcDriverName">-</h4>
                                     <div class="rc-driver-badge-top" id="rcDriverBadge" style="display:none;"></div>
                                 </div>
-                                <div class="rc-driver-rating-row" id="rcDriverStars"></div>
                                 <div class="rc-driver-stats-grid">
                                     <div class="rc-driver-stat-col">
                                         <i class="fas fa-medal"></i>
@@ -1975,7 +1975,6 @@
                                     <div class="rc-bid-amount">
                                         <strong id="rcFareAmount">£0</strong>
                                     </div>
-                                    <div class="rc-bid-note">No hidden charges</div>
                                 </div>
                             </div>
 

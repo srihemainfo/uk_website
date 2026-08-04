@@ -3179,12 +3179,6 @@
         }
 
         /* Full width for any input box that sits alone in its row (desktop & mobile) */
-        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group[style*="display: none"]),
-        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group[style*="display:none"]),
-        #journeyNormal .booking-form-grid > .booking-form-group:first-child:has(+ .booking-form-group.d-none),
-        #journeySeaport .booking-form-grid > .booking-form-group:nth-last-child(2),
-        #journeyAirport .booking-form-grid > .booking-form-group:has(#dropoffAddress[style*="display: none"]) ~ .booking-form-group:has(#pickupAfterLandingSelect),
-        #journeyAirport .booking-form-grid > .booking-form-group:has(#dropoffAddress[style*="display:none"]) ~ .booking-form-group:has(#pickupAfterLandingSelect),
         .booking-form-grid > .booking-form-group:only-child,
         .booking-form-grid > .booking-form-group:only-of-type {
             grid-column: 1 / -1;
@@ -9348,6 +9342,7 @@
                     generateTimeOptions(dateStr);
                 }
             });
+            if (typeof adjustBookingFormGrids === 'function') adjustBookingFormGrids();
             $('.fleet-carousel').owlCarousel({
                 loop: true,
                 margin: 20,
@@ -10612,6 +10607,29 @@
             // Optional: Log for debugging
             console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
         }
+        function adjustBookingFormGrids() {
+            $('.booking-form-grid').each(function () {
+                const $grid = $(this);
+                const visibleGroups = $grid.children('.booking-form-group').filter(function () {
+                    const $el = $(this);
+                    if ($el.css('display') === 'none' || $el.hasClass('d-none')) return false;
+                    if ($el.find('input[type="checkbox"]').length && !$el.find('input[type="text"], select').length) return false;
+                    return true;
+                });
+
+                visibleGroups.css('grid-column', 'auto');
+
+                const count = visibleGroups.length;
+                if (count === 1) {
+                    visibleGroups.eq(0).css('grid-column', '1 / -1');
+                } else if (count === 3) {
+                    visibleGroups.eq(2).css('grid-column', '1 / -1');
+                } else if (count === 5) {
+                    visibleGroups.eq(4).css('grid-column', '1 / -1');
+                }
+            });
+        }
+
         function updatePassengerForm() {
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
             console.log('UpdatePassengerForm state:', state);
@@ -10660,6 +10678,11 @@
                 $('#carSeatToggleContainer').hide();
                 $('#carSeatCheckbox').prop('checked', false);
                 if (typeof toggleChildSeatOptions === 'function') toggleChildSeatOptions();
+            }
+
+            if (typeof adjustBookingFormGrids === 'function') {
+                adjustBookingFormGrids();
+                setTimeout(adjustBookingFormGrids, 50);
             }
         }
         // Global Toast implementation

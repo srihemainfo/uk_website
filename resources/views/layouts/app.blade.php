@@ -3964,10 +3964,6 @@
             justify-content: space-between;
         }
 
-        .rc-vehicle-info-right {
-            flex: 1;
-        }
-
         .rc-vehicle-img-wrapper {
             width: 230px;
             height: 155px;
@@ -3985,34 +3981,34 @@
             object-fit: contain;
         }
 
+        .rc-vehicle-info-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .rc-vehicle-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
         .rc-vehicle-info-right h4 {
-            margin: 0 0 6px 0;
+            margin: 0;
             font-size: 22px;
             font-weight: 700;
         }
 
-        .rc-vehicle-tag {
-            display: inline-flex;
-            /* border: 1px solid #f9c106; */
-            background: #d77f002b;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 12px;
-            margin-bottom: 5px;
-            justify-content: center;
-            align-items: center;
-            color: #d77f00;
-        }
-
         .rc-vehicle-features {
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             gap: 12px;
-            margin: 12px 0px;
+            margin: 0;
             font-weight: 600;
             font-size: 15px;
-            justify-content: start;
         }
 
         .rc-vehicle-features i {
@@ -4033,21 +4029,44 @@
             gap: 11px;
         }
 
+        .rc-vehicle-bottom-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
         .rc-vehicle-amenities-grid {
             display: flex;
-    /* grid-template-columns: repeat(2, 1fr); */
-    gap: 17px;
-    justify-content: start;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            margin: 0;
         }
 
         .rc-amenity-box {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 6px 18px;
+            padding: 6px 14px;
             border-radius: 16px;
             font-size: 12px;
             font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .rc-vehicle-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff3e0;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 16px;
+            margin: 0;
+            color: #e67e22;
+            white-space: nowrap;
         }
 
         /* Wi-Fi */
@@ -4416,8 +4435,25 @@
         }
 
         @media (max-width: 576px) {
+            .rc-vehicle-bottom-row {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-wrap: nowrap;
+                justify-content: center;
+            }
+
             .rc-vehicle-amenities-grid {
-                grid-template-columns: repeat(3, 1fr);
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                flex-wrap: nowrap;
+            }
+
+            .rc-amenity-box,
+            .rc-vehicle-tag {
+                padding: 5px 10px;
+                font-size: 11px;
             }
 
             .rc-vehicle-top {
@@ -4427,8 +4463,6 @@
                 justify-content: center;
                 align-items: center;
             }
-
-
         }
 
         @media (max-width: 576px) {
@@ -11954,13 +11988,13 @@
             const vehiclePrice = bookingData.vehicle?.price || driver.bid;
             $('#rcDriverAvatar').html(driver.avatar);
             $('#rcDriverName').text(driver.name);
-            const rating = parseFloat(driver.rating);
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                starsHtml += `<i class="fas fa-star" style="color:${i <= Math.round(rating) ? '#f59e0b' : '#ddd'}"></i>`;
-            }
-            starsHtml += `<span>${rating}</span>`;
-            $('#rcDriverStars').html(starsHtml);
+            // const rating = parseFloat(driver.rating);
+            // let starsHtml = '';
+            // for (let i = 1; i <= 5; i++) {
+            //     starsHtml += `<i class="fas fa-star" style="color:${i <= Math.round(rating) ? '#f59e0b' : '#ddd'}"></i>`;
+            // }
+            // starsHtml += `<span>${rating}</span>`;
+            // $('#rcDriverStars').html(starsHtml);
             if (driver.badge) {
                 $('#rcDriverBadge').text(driver.badge).show();
             } else {
@@ -11973,8 +12007,9 @@
             $('#rcLuggageCapacity').text(driver.carLuggage || vehicle?.luggage || 2);
             $('#rcTransmission').text(vehicle.transmission || 'Automatic');
 
-            if (vehicle.tag) {
-                $('#rcVehicleTag').text(vehicle.tag).show();
+            const tagVal = vehicle?.tag || driver.tag || (driver.badge ? driver.badge : null);
+            if (tagVal) {
+                $('#rcVehicleTag').text(tagVal).show();
             } else {
                 $('#rcVehicleTag').hide();
             }

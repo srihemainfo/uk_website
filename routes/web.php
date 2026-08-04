@@ -35,6 +35,12 @@ Route::get('/uk-about', function () {
     return view('uk-global');
 })->name('uk-global');
 
+ Route::get('/hii', function () {
+    return response()->json([
+        'message' => 'hello world'
+    ]);
+ });
+
  Route::get('/uk-preview', function () {
     return view('uk-preview');
 })->name('uk-preview');

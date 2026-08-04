@@ -9331,6 +9331,7 @@
                 dateFormat: "Y-m-d",
                 minDate: getUKDate(),
                 defaultDate: _restoredState.date || getUKDate(),
+                disableMobile: true,
                 onReady(selectedDates, dateStr, instance) {
                     let dStr = dateStr;
                     if (!dStr && selectedDates.length > 0) {
@@ -10642,6 +10643,7 @@
                         enableTime: false,
                         dateFormat: 'Y-m-d',
                         minDate: getUKDate(),
+                        disableMobile: true,
                         onChange: function () {
                             updateSeaportArrivalTime();
                         }

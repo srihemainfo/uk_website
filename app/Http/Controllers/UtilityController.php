@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class UtilityController extends Controller
@@ -282,6 +284,52 @@ class UtilityController extends Controller
 
         } catch (\Exception $e) {
             return response('An error occurred: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    public function submitContactForm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'fullName' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error', 
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $data = $request->all();
+
+        try {
+            Mail::send([], [], function ($message) use ($data) {
+                $message->to('support@goride.run')
+                        ->subject('New Contact Form Submission: ' . $data['subject'])
+                        ->html(
+                            "<h3>New Contact Form Submission</h3>" .
+                            "<p><strong>Name:</strong> {$data['fullName']}</p>" .
+                            "<p><strong>Email:</strong> {$data['email']}</p>" .
+                            "<p><strong>Phone:</strong> {$data['phone']}</p>" .
+                            "<p><strong>Subject:</strong> {$data['subject']}</p>" .
+                            "<p><strong>Message:</strong><br/>" . nl2br(e($data['message'])) . "</p>"
+                        );
+            });
+
+            return response()->json([
+                'status' => 'success', 
+                'message' => 'Message sent successfully.'
+            ]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error', 
+                'message' => 'Failed to send message. Please try again.'
+            ], 500);
         }
     }
 }

@@ -96,12 +96,12 @@
             </div>
         </div>
         <div class="mobile-menu-links">
-            <a href="{{ route('uk-profile') }}"><i class="fas fa-user"></i>Profile</a>
-            <a href="{{ route('uk-dashboard') }}"><i class="fas fa-table-columns"></i>Dashboard</a>
+            <a href="{{ route('uk-profile') }}" class="mobile-auth-only" style="display: none !important;"><i class="fas fa-user"></i>Profile</a>
+            <a href="{{ route('uk-dashboard') }}" class="mobile-auth-only" style="display: none !important;"><i class="fas fa-table-columns"></i>Dashboard</a>
             <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i>Track Ride</a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i
                     class="fas fa-circle-question"></i>Help</a>
-            <a href="javascript:void(0)" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <a href="javascript:void(0)" class="mobile-auth-only" onclick="handleLogout()" style="display: none !important;"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </div>
     </div>
 </nav>

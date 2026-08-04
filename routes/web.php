@@ -69,3 +69,5 @@ Route::get('/blog', [BlogController::class, 'blogIndex'])->name('blog');
 Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
 Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
 Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
+
+Route::post('/submit-contact', [UtilityController::class, 'submitContactForm'])->name('contact.submit');

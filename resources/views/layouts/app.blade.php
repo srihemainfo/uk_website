@@ -13589,6 +13589,11 @@
             if (mobileUserName) {
                 mobileUserName.textContent = fullName;
             }
+
+            // Un-hide mobile auth-only menu links (Profile, Dashboard, Logout)
+            document.querySelectorAll('.mobile-auth-only').forEach(el => {
+                el.style.setProperty('display', 'flex', 'important');
+            });
         }
 
         // Close dropdown if clicked outside

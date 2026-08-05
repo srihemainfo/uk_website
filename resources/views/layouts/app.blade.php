@@ -11385,6 +11385,23 @@
                 return;
             }
 
+            // --- Baby Seat Validation ---
+            if (bookingData.isBabySeat) {
+                const seatCount = parseInt($('#childSeatCount').val()) || 0;
+                if (seatCount <= 0) {
+                    showToast('Please select at least 1 baby seat.', 'error');
+                    return;
+                }
+                for (let i = 1; i <= seatCount; i++) {
+                    const seatType = $(`#childSeatType_${i}`).val();
+                    if (!seatType) {
+                        showToast(`Please select a type for Baby Seat ${i}.`, 'error');
+                        $(`#childSeatType_${i}`).focus();
+                        return;
+                    }
+                }
+            }
+
             // --- Special Requirements Validation ---
             if (bookingData.isSpecialReq && !bookingData.specialRequirements) {
                 showToast('Please enter your special requirements.', 'error');
@@ -12875,9 +12892,11 @@
             if (!checkbox.length || !options.length) return;
             if (checkbox.is(':checked')) {
                 options.show();
-                $('#childSeatCount').val(0);
-                $('#childSeatCountDisplay').text(0);
-                renderCarSeatDropdowns(0);
+                let count = parseInt($('#childSeatCount').val()) || 0;
+                if (count === 0) count = 1;
+                $('#childSeatCount').val(count);
+                $('#childSeatCountDisplay').text(count);
+                renderCarSeatDropdowns(count);
             } else {
                 options.hide();
                 $('#childSeatCount').val(0);
@@ -13065,16 +13084,21 @@
         function renderCarSeatDropdowns(count) {
             const container = $('#carSeatDropdownsContainer');
             if (!container.length) return;
+            const existingValues = {};
+            for (let i = 1; i <= count; i++) {
+                existingValues[i] = $(`#childSeatType_${i}`).val() || '';
+            }
             container.html('');
             for (let i = 1; i <= count; i++) {
+                const val = existingValues[i] || '';
                 const dropdownHtml = `
             <div class="form-group-uber booking-form-group" style="margin-bottom: 0;">
-                <label style="font-size: 13px;">Baby Seat ${i} Type</label>
-                <select id="childSeatType_${i}" class="carSeatTypeSelect" style="width: 100%;">
-                    <option value="">Select Type</option>
-                    <option value="infant">Infant (0-1 yr)</option>
-                    <option value="toddler">Toddler (1-4 yr)</option>
-                    <option value="booster">Booster (4-12 yr)</option>
+                <label style="font-size: 13px;">Baby Seat ${i} Type *</label>
+                <select id="childSeatType_${i}" class="carSeatTypeSelect" style="width: 100%;" required>
+                    <option value="" ${val === '' ? 'selected' : ''}>Select Type</option>
+                    <option value="infant" ${val === 'infant' ? 'selected' : ''}>Infant (0-1 yr)</option>
+                    <option value="toddler" ${val === 'toddler' ? 'selected' : ''}>Toddler (1-4 yr)</option>
+                    <option value="booster" ${val === 'booster' ? 'selected' : ''}>Booster (4-12 yr)</option>
                 </select>
             </div>
         `;

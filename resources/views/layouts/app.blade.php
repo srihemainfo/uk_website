@@ -9559,6 +9559,13 @@
             // Generate times every 30 minutes from 00:00 to 23:30
             for (let hour = 0; hour < 24; hour++) {
                 for (let minute = 0; minute < 60; minute += 30) {
+                    // Skip past time slots for TODAY
+                    if (isToday) {
+                        if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
+                            continue;
+                        }
+                    }
+
                     const ampm = hour >= 12 ? 'PM' : 'AM';
                     const displayHour = hour % 12 === 0 ? 12 : hour % 12;
                     const displayMinute = minute === 0 ? '00' : '30';
@@ -9572,13 +9579,6 @@
                         currentSelectedTime === timeValueNoZero ||
                         currentSelectedTime.replace(/^0/, '') === timeValueNoZero
                     );
-
-                    // Skip past time slots for today ONLY if no time is selected yet, or if it's not the user's selected time
-                    if (isToday && !currentSelectedTime && !isCurrentSelected) {
-                        if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
-                            continue;
-                        }
-                    }
 
                     if (!firstOptionTime) {
                         firstOptionTime = timeValue;
@@ -9597,11 +9597,11 @@
                 }
             }
 
-            if (currentSelectedTime && currentSelectedTime.trim() !== '') {
-                // Keep the user's existing selected time intact! Never overwrite it on refresh.
-                $('#timeDropdownValue').text(currentSelectedTime);
+            if (foundCurrentTime && currentSelectedTime && currentSelectedTime.trim() !== '') {
+                // Keep existing user-selected valid future time
+                selectTime(currentSelectedTime);
             } else if (firstOptionTime) {
-                // Only if user hasn't selected any time yet, default to first available future slot
+                // Default to the first available valid future time slot
                 selectTime(firstOptionTime);
             } else {
                 if (isToday) {

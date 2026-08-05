@@ -473,6 +473,10 @@
         .person-info-item strong {
             color: #111827;
             font-weight: 700;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .reg-badge {
@@ -517,6 +521,10 @@
             font-size: 14px;
             font-weight: 700;
             color: #111827;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .note-alert-banner {

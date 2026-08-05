@@ -6221,14 +6221,16 @@
                 padding-top: 8px;
 
             }
+            .summary-car-info span{
+                display:inline-flex;
+            }
 
             .passenger-details-left {
-                flex: 1;
+      
                 min-width: 0;
             }
 
             .passenger-details-right {
-
                 border-left: 1px solid #eee;
                 padding-left: 15px;
                 display: flex;

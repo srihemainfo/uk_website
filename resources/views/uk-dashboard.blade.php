@@ -1546,11 +1546,12 @@
                                 <div class="trip-header">
                                     <div class="trip-id">
                                         <div class="trip-status-dot"></div>
-                                        Trip #${trip.job_no} (${trip.is_live ? 'Live' : trip.job_status})
+                                        Trip #${trip.job_no}
                                     </div>
                                     <div class="trip-actions">
-                                        ${trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
-                                        ${trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
+                                        ${trip.buttons && trip.buttons.preview ? `<button class="btn-action-sm" onclick="window.open('${typeof trip.buttons.preview === 'string' ? trip.buttons.preview : '/booking-preview/' + (trip.preview_hash || trip.booking_key || trip.job_no)}', '_blank')"><i class="fas fa-file-alt"></i> Booking Preview</button>` : ''}
+                                        ${trip.buttons && trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
+                                        ${trip.buttons && trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
                                     </div>
                                 </div>
 

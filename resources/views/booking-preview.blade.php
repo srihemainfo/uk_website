@@ -77,10 +77,12 @@
             border-color: #111827;
         }
 
-        .badge-status-confirmed {
-            background: rgba(16, 185, 129, 0.12);
-            color: #059669;
-            border: 1px solid rgba(16, 185, 129, 0.25);
+        .badge-status-pill,
+        .badge-status-confirmed,
+        .badge-status-dispatched,
+        .badge-status-onboarded,
+        .badge-status-completed,
+        .badge-status-cancelled {
             padding: 9px 23px;
             border-radius: 50px;
             font-size: 14px;
@@ -88,6 +90,35 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+        }
+
+        /* Green: Confirmed & Completed */
+        .badge-status-confirmed,
+        .badge-status-completed {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        /* Yellow: Dispatched */
+        .badge-status-dispatched {
+            background: rgba(245, 158, 11, 0.15);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+
+        /* Blue: Onboarded */
+        .badge-status-onboarded {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            border: 1px solid rgba(37, 99, 235, 0.25);
+        }
+
+        /* Red: Cancelled */
+        .badge-status-cancelled {
+            background: rgba(239, 68, 68, 0.12);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.25);
         }
 
         .hero-meta-item {
@@ -561,13 +592,23 @@
 
         @media (max-width: 768px) {
 
+            .badge-status-pill,
             .badge-status-confirmed,
+            .badge-status-dispatched,
+            .badge-status-onboarded,
+            .badge-status-completed,
+            .badge-status-cancelled,
             .hero-meta-item {
                 background: none;
                 border: none;
             }
 
+            .badge-status-pill,
             .badge-status-confirmed,
+            .badge-status-dispatched,
+            .badge-status-onboarded,
+            .badge-status-completed,
+            .badge-status-cancelled,
             .hero-meta-item {
                 padding: 0px;
                 font-size: 15px;
@@ -964,6 +1005,123 @@
             border: 1px solid #eee;
         }
 
+        .track-status-placeholder {
+            flex: 1;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            min-height: 300px;
+        }
+
+        .status-placeholder-card {
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status-icon-wrapper {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .status-icon-wrapper.yellow-pulse {
+            background: rgba(245, 158, 11, 0.12);
+            color: #d97706;
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            animation: pulse-yellow-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.blue-pulse {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            animation: pulse-blue-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.green-pulse {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse-green-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.red-pulse {
+            background: rgba(239, 68, 68, 0.12);
+            color: #dc2626;
+        }
+
+        @keyframes pulse-yellow-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        @keyframes pulse-blue-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        @keyframes pulse-green-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .status-placeholder-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .status-placeholder-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .status-info-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .status-pill-item {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .status-pill-item.green-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border-color: rgba(16, 185, 129, 0.25);
+        }
+
         #liveTrackingMap {
             width: 100%;
             height: 100%;
@@ -1133,6 +1291,10 @@
                     <div class="track-map-wrapper" id="trackMapWrapper" style="display: none;">
                         <div id="liveTrackingMap"></div>
                     </div>
+
+                    <div class="track-status-placeholder" id="trackStatusPlaceholder" style="display: none;">
+                        <!-- Rendered dynamically -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1145,21 +1307,40 @@
             </a>
 
             <div class="top-brand-meta">
-                <div class="badge-status-confirmed">
-                    <i class="fa-solid fa-circle-check"></i> {{ $job_status ?? 'Booking Confirmed' }}
+                @php
+                    $statusRaw = strtolower(trim($job_status ?? 'confirmed'));
+                    if (in_array($statusRaw, ['dispatched', 'dispatch'])) {
+                        $statusClass = 'badge-status-dispatched';
+                        $statusIcon = 'fa-car-side';
+                    } elseif (in_array($statusRaw, ['onboarded', 'onboard', 'started'])) {
+                        $statusClass = 'badge-status-onboarded';
+                        $statusIcon = 'fa-route';
+                    } elseif (in_array($statusRaw, ['completed', 'complete', 'finished'])) {
+                        $statusClass = 'badge-status-completed';
+                        $statusIcon = 'fa-circle-check';
+                    } elseif (in_array($statusRaw, ['cancelled', 'cancel', 'canceled'])) {
+                        $statusClass = 'badge-status-cancelled';
+                        $statusIcon = 'fa-circle-xmark';
+                    } else {
+                        $statusClass = 'badge-status-confirmed';
+                        $statusIcon = 'fa-circle-check';
+                    }
+                @endphp
+                <div class="badge-status-pill {{ $statusClass }}">
+                    <i class="fa-solid {{ $statusIcon }}"></i> {{ $job_status ?? 'Booking Confirmed' }}
                 </div>
                 <div class="hero-meta-item">
                     <i class="fa-solid fa-hashtag"></i> Booking ID : <strong>{{ $job_no ?? '' }}</strong>
                 </div>
             </div>
             <div class="brand-actions">
-                <button onclick="shareBooking()" class="btn-action-icon" title="Share Booking">
+                <button onclick="shareBooking()" class="btn-action-icon d-none" title="Share Booking">
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>
                 <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
                     <i class="fa-solid fa-print"></i>
                 </button>
-                <a href="tel:+442083373777" class="btn-action-icon" title="Call Support">
+                <a href="tel:+{{ env('SUPPORT_NO_I') }}" class="btn-action-icon" title="Call Support">
                     <i class="fa-solid fa-headset"></i>
                 </a>
             </div>
@@ -1212,7 +1393,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 d-none">
                                 <div class="hero-sec-item-compact justify-content-end">
                                     <div class="hero-sec-icon">
                                         <i class="fa-solid fa-location-crosshairs"></i>
@@ -1349,7 +1530,7 @@
                         <div class="card-heading border-0 pb-0 mb-2">
                             <i class="fa-solid fa-id-card"></i> Driver Details
                         </div>
-                        @if(!empty($driver_name) && isset($job_status) && in_array(strtolower($job_status), ['confirmed', 'assign', 'assigned', 'accept', 'started']))
+                        @if(!empty($driver_name) && isset($job_status) && in_array(strtolower($job_status), ['confirmed', 'assign', 'assigned', 'accept', 'started', 'completed', 'onboarded', 'dispatched']))
                         <div class="person-info-item">
                             <span>Driver Name</span>
                             <div class="d-flex align-items-center gap-2">
@@ -1397,6 +1578,161 @@
             </div>
         </div>
 
+
+        <!-- Ride Details Card -->
+        <div class="preview-card">
+            <div class="card-heading">
+                <i class="fa-solid fa-sliders"></i> Ride Details
+            </div>
+            <div class="row g-2">
+                @if(isset($pickup_date))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-calendar-days text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Pickup Time</div>
+                            <div class="info-value" style="font-size: 12px;">{{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(!empty($distance))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-location-arrow text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Distance</div>
+                            <div class="info-value">{{ $distance }} Miles</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(!empty($cab_type))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-car text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Vehicle</div>
+                            <div class="info-value">{{ $cab_type }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(!empty($user_details['c_meet_and_greet']) || (isset($meet_amt) && $meet_amt > 0))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-handshake text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Meet & Greet</div>
+                            <div class="info-value">Included</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(isset($pass_count) && $pass_count !== '')
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-users text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Passengers</div>
+                            <div class="info-value">{{ $pass_count }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(isset($lugg_count) && $lugg_count !== '')
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-suitcase text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Luggage</div>
+                            <div class="info-value">{{ $lugg_count }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if(!empty($hand_lugg_count) || !empty($user_details['c_hand_lagguage']))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-briefcase text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Hand Luggage</div>
+                            <div class="info-value">{{ $hand_lugg_count ?? $user_details['c_hand_lagguage'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <!-- @if(!empty($child_seat) || !empty($user_details['c_child_count']))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-baby text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Child Seat</div>
+                            <div class="info-value">{{ $child_seat ?? $user_details['c_child_count'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif -->
+
+                @php
+                    $childCount = $child_seat ?? $user_details['c_child_count'] ?? 0;
+                    
+                    // Format "toddler,booster" to "Toddler, Booster"
+                    $childTypes = (!empty($user_details['c_child_type']) && strtolower($user_details['c_child_type']) !== 'none')
+                        ? ucwords(str_replace(',', ', ', $user_details['c_child_type']))
+                        : null;
+                @endphp
+
+                @if(!empty($childCount) && $childCount != '0')
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-baby text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Child Seat</div>
+                                <div class="info-value">
+                                    {{ $childCount }}
+                                    @if($childTypes)
+                                        <span class="text-muted">({{ $childTypes }})</span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif                
+
+                @if(!empty($wheelchair) || !empty($user_details['c_wheelchair']))
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-wheelchair text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Wheelchair</div>
+                            <div class="info-value">{{ $wheelchair ?? $user_details['c_wheelchair'] }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif                
+
+                @if(isset($day) && $day)
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="info-item-box d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-clock text-dark fs-5"></i>
+                        <div>
+                            <div class="info-label mb-0">Duration</div>
+                            <div class="info-value">{{ $day }}</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+
         @php
             $keysToCheck = [
                 'c_pick_after_time',
@@ -1428,25 +1764,7 @@
             </div>
             
             <div class="row g-2">
-                {{-- ================= PICKUP & DROP ADDRESSES ================= --}}
-                @if(!empty($user_details['c_pick_address']) && strtolower($user_details['c_pick_address']) !== 'none')
-                <div class="col-md-6 col-12">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Address</div>
-                        <div class="info-value">{{ $user_details['c_pick_address'] }}</div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($user_details['c_drop_address']) && strtolower($user_details['c_drop_address']) !== 'none')
-                <div class="col-md-6 col-12">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-location-pin"></i> Dropoff Address</div>
-                        <div class="info-value">{{ $user_details['c_drop_address'] }}</div>
-                    </div>
-                </div>
-                @endif
-
+                
                 {{-- ================= FLIGHT DETAILS ================= --}}
                 @if(!empty($user_details['c_flight_number']) && strtolower($user_details['c_flight_number']) !== 'none')
                     @if(!empty($user_details['c_flight_number']))
@@ -1485,7 +1803,26 @@
                     </div>
                     @endif
                 @endif
+                
+                {{-- ================= PICKUP & DROP ADDRESSES ================= --}}
+                @if(!empty($user_details['c_pick_address']) && strtolower($user_details['c_pick_address']) !== 'none')
+                <div class="col-md-6 col-12">
+                    <div class="info-item-box">
+                        <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Address</div>
+                        <div class="info-value">{{ $user_details['c_pick_address'] }}</div>
+                    </div>
+                </div>
+                @endif
 
+                @if(!empty($user_details['c_drop_address']) && strtolower($user_details['c_drop_address']) !== 'none')
+                <div class="col-md-6 col-12">
+                    <div class="info-item-box">
+                        <div class="info-label"><i class="fa-solid fa-location-pin"></i> Dropoff Address</div>
+                        <div class="info-value">{{ $user_details['c_drop_address'] }}</div>
+                    </div>
+                </div>
+                @endif 
+                
                 {{-- ================= SEAPORT / CRUISE DETAILS ================= --}}
                 @php
                     $cruiseName = $user_details['c_cruise_name'] ?? $user_details['c_ferry_name'] ?? null;
@@ -1549,7 +1886,7 @@
                 @endif
 
                 {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
-                @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
+                <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
                 <div class="col-md-3 col-6">
                     <div class="info-item-box">
                         <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
@@ -1565,10 +1902,10 @@
                         <div class="info-value">Wheelchair Required</div>
                     </div>
                 </div>
-                @endif
+                @endif -->
 
                 @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
-                <div class="col-12">
+                <div class="col-md-6 col-12">
                     <div class="info-item-box">
                         <div class="info-label"><i class="fa-solid fa-note-sticky"></i> Special Instructions</div>
                         <div class="info-value">{{ $user_details['c_special_require'] }}</div>
@@ -1579,133 +1916,7 @@
         </div>
         @endif
 
-        <!-- Ride Details Card -->
-        <div class="preview-card">
-            <div class="card-heading">
-                <i class="fa-solid fa-sliders"></i> Ride Details
-            </div>
-            <div class="row g-2">
-                @if(isset($pickup_date))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-calendar-days text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Pickup Time</div>
-                            <div class="info-value" style="font-size: 12px;">{{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($cab_type))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-car text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Vehicle</div>
-                            <div class="info-value">{{ $cab_type }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(isset($pass_count) && $pass_count !== '')
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-users text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Passengers</div>
-                            <div class="info-value">{{ $pass_count }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(isset($lugg_count) && $lugg_count !== '')
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-suitcase text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Luggage</div>
-                            <div class="info-value">{{ $lugg_count }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($hand_lugg_count) || !empty($user_details['c_hand_lugg_count']))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-briefcase text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Hand Luggage</div>
-                            <div class="info-value">{{ $hand_lugg_count ?? $user_details['c_hand_lugg_count'] }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($child_seat) || !empty($user_details['c_child_seat']))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-baby text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Child Seat</div>
-                            <div class="info-value">{{ $child_seat ?? $user_details['c_child_seat'] }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($user_details['c_meet_and_greet']) || (isset($meet_amt) && $meet_amt > 0))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-handshake text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Meet & Greet</div>
-                            <div class="info-value">Included</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($wheelchair) || !empty($user_details['c_wheelchair']))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-wheelchair text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Wheelchair</div>
-                            <div class="info-value">{{ $wheelchair ?? $user_details['c_wheelchair'] }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($distance))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-location-arrow text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Distance</div>
-                            <div class="info-value">{{ $distance }} Miles</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-
-                @if(isset($day) && $day)
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-clock text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Duration</div>
-                            <div class="info-value">{{ $day }}</div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
+        
 
         <!-- Special Requirements Card -->
         @if(!empty($user_details['c_special_require']) || !empty($special_require))
@@ -1794,10 +2005,10 @@
             <h6 class="fw-bold mb-2 text-dark">Support & Assistance</h6>
             <p class="text-secondary mb-2" style="font-size: 13px; line-height: 1.5;">
                 If you experience any difficulty in finding a driver or require assistance during your trip, please feel
-                free to contact us via Call at <a href="tel:+442083373777"
-                    class="fw-bold text-dark text-decoration-underline">+44 208 337 3777</a>, or email us at <a
-                    href="mailto:support.uk@goride.run"
-                    class="fw-bold text-dark text-decoration-underline">support.uk@goride.run</a>.
+                free to contact us via Call at <a href="tel:+{{ env('SUPPORT_NO_I') }}"
+                    class="fw-bold text-dark text-decoration-underline">+{{ env('SUPPORT_NO_I') }}</a>, or email us at <a
+                    href="mailto:{{ env('SUPPORT_EMAIL') }}"
+                    class="fw-bold text-dark text-decoration-underline">{{ env('SUPPORT_EMAIL') }}</a>.
             </p>
             <p class="text-secondary mb-2" style="font-size: 13px; line-height: 1.5;">
                 We hope to see you again for your future outstation transport requirements. <strong>Have a safe and
@@ -1960,7 +2171,7 @@
             let originalHtml = '';
             if (btn) {
                 originalHtml = btn.innerHTML;
-                btn.innerHTML = '<div class="track-spinner" style="display:inline-block"></div>';
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin me-2"></i> Tracking...';
                 btn.disabled = true;
             }
 
@@ -2060,15 +2271,107 @@
                 });
             }
 
-            // Handle Live Tracking Map
+            // Handle Live Tracking Map / Status Placeholder
             const mapWrap = document.getElementById('trackMapWrapper');
+            const placeholderWrap = document.getElementById('trackStatusPlaceholder');
+
             if (data.tracking && data.tracking.live_tracking === 'yes' && data.tracking.socket_url) {
-                mapWrap.style.display = 'block';
+                if (mapWrap) mapWrap.style.display = 'block';
+                if (placeholderWrap) placeholderWrap.style.display = 'none';
                 initLiveTrackingMap();
                 connectLiveTrackingSocket(data.tracking.socket_url, data.tracking.tracking_id);
             } else {
-                mapWrap.style.display = 'none';
+                if (mapWrap) mapWrap.style.display = 'none';
+                if (placeholderWrap) {
+                    placeholderWrap.style.display = 'flex';
+                    renderStatusPlaceholder(data);
+                }
             }
+        }
+
+        function renderStatusPlaceholder(data) {
+            const placeholderWrap = document.getElementById('trackStatusPlaceholder');
+            if (!placeholderWrap) return;
+
+            const tl = (data && data.timeline) ? data.timeline : {};
+            let currentStatus = 'confirmed';
+
+            if (tl.cancelled) {
+                currentStatus = 'cancelled';
+            } else if (tl.completed) {
+                currentStatus = 'completed';
+            } else if (tl.onboard) {
+                currentStatus = 'onboard';
+            } else if (tl.dispatch) {
+                currentStatus = 'dispatch';
+            } else if (tl.confirmed) {
+                currentStatus = 'confirmed';
+            } else if (tl.created) {
+                currentStatus = 'created';
+            }
+
+            let html = '';
+            if (currentStatus === 'completed') {
+                html = `
+                    <div class="status-placeholder-card status-completed">
+                        <div class="status-icon-wrapper green-pulse">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Trip Completed Successfully!</h4>
+                        <p class="status-placeholder-desc">
+                            Thank you for riding with GoRide. We hope you enjoyed your journey!
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item green-badge"><i class="fa-solid fa-flag-checkered me-1"></i> Destination Reached</span>
+                        </div>
+                    </div>
+                `;
+            } else if (currentStatus === 'cancelled') {
+                html = `
+                    <div class="status-placeholder-card status-cancelled">
+                        <div class="status-icon-wrapper red-pulse">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Booking Cancelled</h4>
+                        <p class="status-placeholder-desc">
+                            This booking was cancelled. If you need assistance or wish to rebook, please contact support.
+                        </p>
+                    </div>
+                `;
+            } else if (currentStatus === 'dispatch' || currentStatus === 'onboard') {
+                html = `
+                    <div class="status-placeholder-card status-ontheway">
+                        <div class="status-icon-wrapper blue-pulse">
+                            <i class="fa-solid fa-route"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Driver En Route</h4>
+                        <p class="status-placeholder-desc">
+                            Your trip is in progress! Your driver is on the way to your destination.
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item"><i class="fa-solid fa-shield-halved me-1"></i> Driver Assigned</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div class="status-placeholder-card status-preparing">
+                        <div class="status-icon-wrapper yellow-pulse">
+                            <i class="fa-solid fa-car-side"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Driver Preparing for Departure</h4>
+                        <p class="status-placeholder-desc">
+                            Your booking is confirmed! Your assigned driver is currently preparing for your trip. Live map tracking will be activated once the driver starts heading to your location.
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item"><i class="fa-solid fa-clock me-1"></i> Pickup Scheduled</span>
+                            <span class="status-pill-item"><i class="fa-solid fa-circle-check me-1"></i> Booking Confirmed</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            placeholderWrap.innerHTML = html;
         }
 
         function initLiveTrackingMap() {

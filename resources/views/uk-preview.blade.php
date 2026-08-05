@@ -77,10 +77,12 @@
             border-color: #111827;
         }
 
-        .badge-status-confirmed {
-            background: rgba(16, 185, 129, 0.12);
-            color: #059669;
-            border: 1px solid rgba(16, 185, 129, 0.25);
+        .badge-status-pill,
+        .badge-status-confirmed,
+        .badge-status-dispatched,
+        .badge-status-onboarded,
+        .badge-status-completed,
+        .badge-status-cancelled {
             padding: 9px 23px;
             border-radius: 50px;
             font-size: 14px;
@@ -88,6 +90,35 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+        }
+
+        /* Green: Confirmed & Completed */
+        .badge-status-confirmed,
+        .badge-status-completed {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        /* Yellow: Dispatched */
+        .badge-status-dispatched {
+            background: rgba(245, 158, 11, 0.15);
+            color: #d97706;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+
+        /* Blue: Onboarded */
+        .badge-status-onboarded {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            border: 1px solid rgba(37, 99, 235, 0.25);
+        }
+
+        /* Red: Cancelled */
+        .badge-status-cancelled {
+            background: rgba(239, 68, 68, 0.12);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.25);
         }
 
         .hero-meta-item {
@@ -515,13 +546,23 @@
 
         @media (max-width: 768px) {
 
+            .badge-status-pill,
             .badge-status-confirmed,
+            .badge-status-dispatched,
+            .badge-status-onboarded,
+            .badge-status-completed,
+            .badge-status-cancelled,
             .hero-meta-item {
                 background: none;
                 border: none;
             }
 
+            .badge-status-pill,
             .badge-status-confirmed,
+            .badge-status-dispatched,
+            .badge-status-onboarded,
+            .badge-status-completed,
+            .badge-status-cancelled,
             .hero-meta-item {
                 padding: 0px;
                 font-size: 15px;
@@ -678,8 +719,27 @@
             </a>
 
             <div class="top-brand-meta">
-                <div class="badge-status-confirmed">
-                    <i class="fa-solid fa-circle-check"></i> Booking Confirmed
+                @php
+                    $statusRaw = strtolower(trim($job_status ?? 'confirmed'));
+                    if (in_array($statusRaw, ['dispatched', 'dispatch'])) {
+                        $statusClass = 'badge-status-dispatched';
+                        $statusIcon = 'fa-car-side';
+                    } elseif (in_array($statusRaw, ['onboarded', 'onboard', 'started'])) {
+                        $statusClass = 'badge-status-onboarded';
+                        $statusIcon = 'fa-route';
+                    } elseif (in_array($statusRaw, ['completed', 'complete', 'finished'])) {
+                        $statusClass = 'badge-status-completed';
+                        $statusIcon = 'fa-circle-check';
+                    } elseif (in_array($statusRaw, ['cancelled', 'cancel', 'canceled'])) {
+                        $statusClass = 'badge-status-cancelled';
+                        $statusIcon = 'fa-circle-xmark';
+                    } else {
+                        $statusClass = 'badge-status-confirmed';
+                        $statusIcon = 'fa-circle-check';
+                    }
+                @endphp
+                <div class="badge-status-pill {{ $statusClass }}">
+                    <i class="fa-solid {{ $statusIcon }}"></i> {{ $job_status ?? 'Booking Confirmed' }}
                 </div>
                 <div class="hero-meta-item">
                     <i class="fa-solid fa-hashtag"></i> Booking ID : <strong>GRC-260730-00125</strong>

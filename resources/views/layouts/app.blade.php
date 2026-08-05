@@ -8701,6 +8701,10 @@
             firebaseConfig: null,
             firebaseCustomToken: null,
 
+            // Expiration logic
+            effectivePickupDateTime: null,
+            isBookingExpired: false,
+
             // Booking confirmation
             currentStep: 1,
         };
@@ -9532,6 +9536,7 @@
         // ===== CUSTOM TIME DROPDOWN =====
         function generateTimeOptions(dateStr) {
             const timeDropdownList = document.getElementById('timeDropdownList');
+            if (!timeDropdownList) return;
             timeDropdownList.innerHTML = '';
 
             let selectedDate = getUKDate();
@@ -9542,7 +9547,6 @@
                 }
             }
             const now = getUKDate();
-
             const isToday = selectedDate.toDateString() === now.toDateString();
 
             let firstOptionTime = null;
@@ -9553,37 +9557,51 @@
             // Generate times every 30 minutes from 00:00 to 23:30
             for (let hour = 0; hour < 24; hour++) {
                 for (let minute = 0; minute < 60; minute += 30) {
-                    if (isToday) {
-                        if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
-                            continue;
-                        }
-                    }
-
                     const ampm = hour >= 12 ? 'PM' : 'AM';
                     const displayHour = hour % 12 === 0 ? 12 : hour % 12;
                     const displayMinute = minute === 0 ? '00' : '30';
 
                     const timeValue = `${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`;
+                    const timeValueNoZero = `${displayHour}:${displayMinute} ${ampm}`;
                     const timeDisplay = `${displayHour}:${displayMinute} ${ampm}`;
+
+                    const isCurrentSelected = currentSelectedTime && (
+                        currentSelectedTime === timeValue || 
+                        currentSelectedTime === timeValueNoZero ||
+                        currentSelectedTime.replace(/^0/, '') === timeValueNoZero
+                    );
+
+                    // Skip past time slots for today ONLY if no time is selected yet, or if it's not the user's selected time
+                    if (isToday && !currentSelectedTime && !isCurrentSelected) {
+                        if (hour < now.getHours() || (hour === now.getHours() && minute <= now.getMinutes())) {
+                            continue;
+                        }
+                    }
 
                     if (!firstOptionTime) {
                         firstOptionTime = timeValue;
                         firstOptionFormatted = timeDisplay;
                     }
 
-                    if (currentSelectedTime === timeValue) {
+                    if (isCurrentSelected) {
                         foundCurrentTime = true;
                     }
 
                     const item = document.createElement('div');
-                    item.className = 'time-dropdown-item';
+                    item.className = 'time-dropdown-item' + (isCurrentSelected ? ' selected' : '');
                     item.onclick = function () { selectTime(timeValue); };
                     item.textContent = timeDisplay;
                     timeDropdownList.appendChild(item);
                 }
             }
 
-            if (!firstOptionTime) {
+            if (currentSelectedTime && currentSelectedTime.trim() !== '') {
+                // Keep the user's existing selected time intact! Never overwrite it on refresh.
+                $('#timeDropdownValue').text(currentSelectedTime);
+            } else if (firstOptionTime) {
+                // Only if user hasn't selected any time yet, default to first available future slot
+                selectTime(firstOptionTime);
+            } else {
                 if (isToday) {
                     // All times for today have passed (e.g. late night after 23:30)
                     // Automatically advance date to tomorrow and generate time options
@@ -9608,14 +9626,6 @@
                 item.className = 'time-dropdown-item';
                 item.textContent = 'No times available';
                 timeDropdownList.appendChild(item);
-                BookingStore.setState({ time: '' });
-                document.getElementById('timeDropdownValue').textContent = 'Select time';
-            } else {
-                if (foundCurrentTime) {
-                    selectTime(currentSelectedTime);
-                } else {
-                    selectTime(firstOptionTime);
-                }
             }
         }
 
@@ -11555,7 +11565,202 @@
         let existingRenderedDrivers = new Set();
         let _authStateUnsubscribe = null; // Track onAuthStateChanged unsubscribe fn
 
+        // Dedicated separate variables for pickup time expiration logic (Don't disturb existing variables!)
+        let effectivePickupDateTime = null;
+        let bookingExpirationTimer = null;
+
+        function parseDateTimeToJSDate(dateStr, timeStr) {
+            if (!dateStr) return null;
+            let cleanDateStr = String(dateStr).replace(/(\d+)(st|nd|rd|th)/gi, '$1').trim();
+            let dt = new Date(cleanDateStr);
+
+            if (isNaN(dt.getTime())) {
+                const parts = cleanDateStr.split(/[-/\s]+/);
+                if (parts.length >= 3) {
+                    if (parts[0].length === 4) { // YYYY-MM-DD
+                        dt = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                    } else if (parts[2].length === 4) { // DD-MM-YYYY
+                        dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+                    }
+                }
+            }
+
+            if (isNaN(dt.getTime())) return null;
+
+            if (timeStr) {
+                timeStr = String(timeStr).trim().toUpperCase();
+                let hours = 0;
+                let minutes = 0;
+                const match12 = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+                if (match12) {
+                    hours = parseInt(match12[1], 10);
+                    minutes = parseInt(match12[2], 10);
+                    const ampm = match12[3];
+                    if (ampm === 'PM' && hours < 12) hours += 12;
+                    if (ampm === 'AM' && hours === 12) hours = 0;
+                } else {
+                    const match24 = timeStr.match(/^(\d{1,2}):(\d{2})$/);
+                    if (match24) {
+                        hours = parseInt(match24[1], 10);
+                        minutes = parseInt(match24[2], 10);
+                    }
+                }
+                dt.setHours(hours, minutes, 0, 0);
+            }
+            return dt;
+        }
+
+        function calculateEffectivePickupTime(state) {
+            state = state || BookingStore.getState();
+            let dateStr = '';
+            let timeStr = '';
+            let extraMins = 0;
+            let scenario = '';
+
+            const pType = (state.pickupType || '').toLowerCase();
+            const pLoc = (state.pickup || '').toLowerCase();
+
+            const isAirport = pType === 'airport' || pLoc.includes('airport') || pLoc.includes('terminal');
+            const isSeaport = pType === 'seaport' || pLoc.includes('seaport') || pLoc.includes('port') || pLoc.includes('cruise');
+
+            if (isAirport) {
+                // 1. Airport: Flight arrival date & landing time + After pickup landing time
+                scenario = 'Airport (Scenario 1)';
+                dateStr = state.flightArrivalDate || state.date || state.normalJourneyDate || '';
+                timeStr = state.landingTime || state.flightLandingTime || state.time || state.normalJourneyTime || '';
+                extraMins = parseInt(state.pickAfterTime || state.pickupAfter || 0, 10) || 0;
+            } else if (isSeaport) {
+                // 2. Seaport: Cruise docking date & docking time + After docking time
+                scenario = 'Seaport (Scenario 2)';
+                dateStr = state.cruiseDockingDate || state.seaportDate || state.date || state.normalJourneyDate || '';
+                timeStr = state.dockingTime || state.cruiseDockingTime || state.time || state.normalJourneyTime || '';
+                extraMins = parseInt(state.pickAfterTime || state.dockingAfterMins || state.pickupAfter || 0, 10) || 0;
+            } else {
+                // 3. Otherwise: Only pickup time (pickup date & time)
+                scenario = 'Standard Pickup (Scenario 3)';
+                dateStr = state.date || state.normalJourneyDate || '';
+                timeStr = state.time || state.normalJourneyTime || '';
+                extraMins = 0;
+            }
+
+            if (!dateStr) {
+                console.warn('[PickupTimeCheck] No date string found in state:', state);
+                return null;
+            }
+
+            let dt = parseDateTimeToJSDate(dateStr, timeStr);
+            if (!dt || isNaN(dt.getTime())) {
+                console.warn('[PickupTimeCheck] Failed to parse date/time:', { dateStr, timeStr });
+                return null;
+            }
+
+            if (extraMins > 0) {
+                dt = new Date(dt.getTime() + extraMins * 60 * 1000);
+            }
+
+            console.log(`[PickupTimeCheck] Scenario: %c${scenario}`, 'color: #3b82f6; font-weight: bold;', {
+                baseDate: dateStr,
+                baseTime: timeStr,
+                afterTimeMins: extraMins,
+                calculatedEffectiveTime: dt.toLocaleString('en-GB')
+            });
+
+            return dt;
+        }
+
+        function getUKCurrentTime() {
+            try {
+                const ukTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/London" });
+                return new Date(ukTimeStr);
+            } catch(e) {
+                return new Date();
+            }
+        }
+
+        function triggerBookingExpiredState(effectiveTime) {
+            if (driversListener) {
+                driversListener();
+                driversListener = null;
+            }
+            if (bookingExpirationTimer) {
+                clearInterval(bookingExpirationTimer);
+                bookingExpirationTimer = null;
+            }
+
+            BookingStore.setState({ isBookingExpired: true });
+
+            $('#findingDriversLoader').hide();
+            $('#moreDriversLoader').hide();
+            $('#driverList').hide();
+            $('#step6CancelBtnWrapper').hide();
+
+            if (effectiveTime) {
+                try {
+                    const formattedStr = effectiveTime.toLocaleString('en-GB', {
+                        day: 'numeric', month: 'short', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit', hour12: true
+                    });
+                    $('#expiredPickupTimeDetails').html('<i class="fa-solid fa-calendar-xmark me-1"></i> Scheduled Time: ' + formattedStr);
+                } catch(e){}
+            }
+
+            $('#bookingExpiredCard').slideDown(400);
+        }
+
+        function checkBookingExpiration() {
+            const state = BookingStore.getState();
+            if (state.currentStep !== 6 && state.currentStep !== 3) {
+                return false;
+            }
+
+            effectivePickupDateTime = calculateEffectivePickupTime(state);
+            if (!effectivePickupDateTime) return false;
+
+            // Current live time in UK (Europe/London) timezone
+            const nowUK = getUKCurrentTime();
+            const isExpired = nowUK.getTime() > effectivePickupDateTime.getTime();
+
+            console.log('%c[PickupTimeCheck] Expiration Assessment:', 'color: #f59e0b; font-weight: bold;', {
+                currentUKTime: nowUK.toLocaleString('en-GB'),
+                effectivePickupTime: effectivePickupDateTime.toLocaleString('en-GB'),
+                isExpired: isExpired
+            });
+
+            if (isExpired) {
+                console.log('%c[PickupTimeCheck] ❌ Pickup time has EXPIRED! Triggering Expired UI & stopping Firebase.', 'color: #ef4444; font-weight: bold;');
+                triggerBookingExpiredState(effectivePickupDateTime);
+                return true;
+            } else {
+                console.log('%c[PickupTimeCheck] ✅ Booking active - pickup time is in future.', 'color: #10b981;');
+            }
+            return false;
+        }
+
+        function resetToNewBooking() {
+            try {
+                sessionStorage.clear();
+                sessionStorage.removeItem('gorideBookingState_v2');
+            } catch(e) {}
+            window.location.href = '/';
+        }
+
         function startDynamicDriverSearch(firebaseConfig, firebaseCustomToken) {
+            $('#bookingExpiredCard').hide();
+            $('#findingDriversLoader').show();
+            $('#step6CancelBtnWrapper').show();
+
+            // Check if pickup time is expired FIRST
+            if (checkBookingExpiration()) {
+                console.log("Pickup time has expired. Stopping Firebase listening.");
+                return;
+            }
+
+            if (bookingExpirationTimer) {
+                clearInterval(bookingExpirationTimer);
+                bookingExpirationTimer = null;
+            }
+            bookingExpirationTimer = setInterval(checkBookingExpiration, 5000);
+
             const grid = $('#driverList');
             grid.html(''); // Clear previous drivers
             existingRenderedDrivers.clear(); // Reset tracked drivers
@@ -11683,10 +11888,9 @@
                                 }
                                 return;
                             }
-                            if (data.bids_details) {
-                                renderRealtimeDrivers(data.bids_details);
-                            }
+                            renderRealtimeDrivers(data.bids_details || {});
                         } else {
+                            renderRealtimeDrivers({});
                             if (BookingStore.getState().currentStep < 5) {
                                 showToast('Booking already cancelled or no more', 'error');
                                 setTimeout(() => { window.location.reload(); }, 2000);
@@ -11767,10 +11971,24 @@
         }
 
         function renderRealtimeDrivers(bidsDetails) {
+            bidsDetails = bidsDetails || {};
             const grid = $('#driverList');
-            const keys = Object.keys(bidsDetails);
+            const incomingKeys = new Set(Object.keys(bidsDetails));
 
-            keys.forEach(key => {
+            // Remove drivers whose bids were deleted/removed from Firebase
+            existingRenderedDrivers.forEach(key => {
+                if (!incomingKeys.has(key)) {
+                    existingRenderedDrivers.delete(key);
+                    const driverElem = $(`#driver-bid-${key}`);
+                    if (driverElem.length) {
+                        driverElem.slideUp(300, function () {
+                            $(this).remove();
+                        });
+                    }
+                }
+            });
+
+            incomingKeys.forEach(key => {
                 if (!existingRenderedDrivers.has(key)) {
                     existingRenderedDrivers.add(key);
                     const bid = bidsDetails[key];
@@ -13985,6 +14203,10 @@
                 <div class="track-map-wrapper" id="trackMapWrapper" style="display: none;">
                     <div id="liveTrackingMap"></div>
                 </div>
+
+                <div class="track-status-placeholder" id="trackStatusPlaceholder" style="display: none;">
+                    <!-- Rendered by JS -->
+                </div>
             </div>
         </div>
     </div>
@@ -14456,6 +14678,123 @@
             position: relative;
             background: #f9fafb;
             border: 1px solid #eee;
+        }
+
+        .track-status-placeholder {
+            flex: 1;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            min-height: 300px;
+        }
+
+        .status-placeholder-card {
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status-icon-wrapper {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .status-icon-wrapper.yellow-pulse {
+            background: rgba(245, 158, 11, 0.12);
+            color: #d97706;
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            animation: pulse-yellow-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.blue-pulse {
+            background: rgba(37, 99, 235, 0.12);
+            color: #2563eb;
+            box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            animation: pulse-blue-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.green-pulse {
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse-green-glow 2s infinite;
+        }
+
+        .status-icon-wrapper.red-pulse {
+            background: rgba(239, 68, 68, 0.12);
+            color: #dc2626;
+        }
+
+        @keyframes pulse-yellow-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+        }
+
+        @keyframes pulse-blue-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+
+        @keyframes pulse-green-glow {
+            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .status-placeholder-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .status-placeholder-desc {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .status-info-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .status-pill-item {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .status-pill-item.green-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border-color: rgba(16, 185, 129, 0.25);
         }
 
         #liveTrackingMap {
@@ -15013,7 +15352,7 @@
 
             const btn = document.getElementById('btnTrackSubmit');
             const originalHtml = btn.innerHTML;
-            btn.innerHTML = '<div class="track-spinner" style="display:block"></div>';
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin me-2"></i> Tracking...';
             btn.disabled = true;
 
             try {
@@ -15189,18 +15528,110 @@
                 });
             }
 
-            // Handle Live Tracking Map
+            // Handle Live Tracking Map / Status Placeholder
             const mapWrap = document.getElementById('trackMapWrapper');
+            const placeholderWrap = document.getElementById('trackStatusPlaceholder');
             const hintElem = document.querySelector('.mobile-timeline-hint');
-            if (data.tracking.live_tracking === 'yes' && data.tracking.socket_url) {
-                mapWrap.style.display = 'block';
+
+            if (data.tracking && data.tracking.live_tracking === 'yes' && data.tracking.socket_url) {
+                if (mapWrap) mapWrap.style.display = 'block';
+                if (placeholderWrap) placeholderWrap.style.display = 'none';
                 if (hintElem) hintElem.classList.add('has-map');
                 initLiveTrackingMap();
                 connectLiveTrackingSocket(data.tracking.socket_url, data.tracking.tracking_id);
             } else {
-                mapWrap.style.display = 'none';
+                if (mapWrap) mapWrap.style.display = 'none';
+                if (placeholderWrap) {
+                    placeholderWrap.style.display = 'flex';
+                    renderStatusPlaceholder(data);
+                }
                 if (hintElem) hintElem.classList.remove('has-map');
             }
+        }
+
+        function renderStatusPlaceholder(data) {
+            const placeholderWrap = document.getElementById('trackStatusPlaceholder');
+            if (!placeholderWrap) return;
+
+            const tl = (data && data.timeline) ? data.timeline : {};
+            let currentStatus = 'confirmed';
+
+            if (tl.cancelled) {
+                currentStatus = 'cancelled';
+            } else if (tl.completed) {
+                currentStatus = 'completed';
+            } else if (tl.onboard) {
+                currentStatus = 'onboard';
+            } else if (tl.dispatch) {
+                currentStatus = 'dispatch';
+            } else if (tl.confirmed) {
+                currentStatus = 'confirmed';
+            } else if (tl.created) {
+                currentStatus = 'created';
+            }
+
+            let html = '';
+            if (currentStatus === 'completed') {
+                html = `
+                    <div class="status-placeholder-card status-completed">
+                        <div class="status-icon-wrapper green-pulse">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Trip Completed Successfully!</h4>
+                        <p class="status-placeholder-desc">
+                            Thank you for riding with GoRide. We hope you enjoyed your journey!
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item green-badge"><i class="fas fa-flag-checkered me-1"></i> Destination Reached</span>
+                        </div>
+                    </div>
+                `;
+            } else if (currentStatus === 'cancelled') {
+                html = `
+                    <div class="status-placeholder-card status-cancelled">
+                        <div class="status-icon-wrapper red-pulse">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Booking Cancelled</h4>
+                        <p class="status-placeholder-desc">
+                            This booking was cancelled. If you need assistance or wish to rebook, please contact support.
+                        </p>
+                    </div>
+                `;
+            } else if (currentStatus === 'dispatch' || currentStatus === 'onboard') {
+                html = `
+                    <div class="status-placeholder-card status-ontheway">
+                        <div class="status-icon-wrapper blue-pulse">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Driver En Route</h4>
+                        <p class="status-placeholder-desc">
+                            Your trip is in progress! Your driver is on the way to your destination.
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item"><i class="fas fa-shield-alt me-1"></i> Driver Assigned</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div class="status-placeholder-card status-preparing">
+                        <div class="status-icon-wrapper yellow-pulse">
+                            <i class="fas fa-car-side"></i>
+                        </div>
+                        <h4 class="status-placeholder-title">Driver Preparing for Departure</h4>
+                        <p class="status-placeholder-desc">
+                            Your booking is confirmed! Your assigned driver is currently preparing for your trip. Live map tracking will be activated once the driver starts heading to your location.
+                        </p>
+                        <div class="status-info-pills">
+                            <span class="status-pill-item"><i class="fas fa-clock me-1"></i> Pickup Scheduled</span>
+                            <span class="status-pill-item"><i class="fas fa-check-circle me-1"></i> Booking Confirmed</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            placeholderWrap.innerHTML = html;
         }
 
         function scrollToTimelineStatus() {

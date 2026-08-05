@@ -1909,7 +1909,27 @@
                         </div>
                     </div>
                     <div id="driverList" style="display:none;"></div>
-                    <div class="btn-group-uber step-bottom-btns" style="margin-top: auto;">
+
+                    <!-- BOOKING EXPIRED UI CARD -->
+                    <div id="bookingExpiredCard" class="booking-expired-card text-center p-4 rounded-4" style="display: none; background: #ffffff; border: 1px solid #fee2e2; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.08); margin: 20px 0;">
+                        <div class="expired-icon-wrapper mb-3" style="width: 70px; height: 70px; background: rgba(239, 68, 68, 0.1); color: #dc2626; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto;">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Booking Expired</h4>
+                        <p class="text-secondary mb-3" style="font-size: 14px; max-width: 420px; margin: 0 auto 15px; line-height: 1.5;">
+                            Your scheduled pickup time has passed. Drivers can no longer bid on this ride request.
+                        </p>
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light text-danger fw-semibold mb-4" style="font-size: 13px; border: 1px solid #fecaca;" id="expiredPickupTimeDetails">
+                            <i class="fa-solid fa-calendar-xmark"></i> Exceeded Pickup Time
+                        </div>
+                        <div class="mt-2 d-flex justify-content-center">
+                            <button type="button" class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm" onclick="resetToNewBooking()" style="max-width: 320px; font-size: 15px; background: #000; color: #fff; border: none; cursor: pointer;">
+                                <i class="fa-solid fa-plus me-2"></i> New Booking
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="btn-group-uber step-bottom-btns" id="step6CancelBtnWrapper" style="margin-top: auto;">
                         <button class="btn-search-uber" style="width: 100%;" onclick="showCancelJobModal()">
                             <i class="fas fa-times"></i> Cancel Job
                         </button>

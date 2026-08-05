@@ -345,7 +345,7 @@
         }
 
         .fare-breakdown-collapse.show {
-            max-height: 500px;
+            max-height: 1000px;
             opacity: 1;
             margin-top: 10px;
         }
@@ -1422,8 +1422,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span class="text-uppercase text-secondary fw-bold"
                                     style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
-                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
-                                    title="View Fare Breakdown">
+                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown" onclick="toggleFareBreakdown()" title="View Fare Breakdown">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </div>
@@ -1848,7 +1847,7 @@
                     <div class="col-md-3 col-6">
                         <div class="info-item-box">
                             <div class="info-label"><i class="fa-solid fa-clock"></i> Docking Arrival Time</div>
-                            <div class="info-value">{{ $user_details['c_seaport_arrival_time'] }}</div>
+                            <div class="info-value">{{ $user_details['c_seaport_arrival_time'] }} </div>
                         </div>
                     </div>
                     @endif
@@ -1857,7 +1856,7 @@
                     <div class="col-md-3 col-6">
                         <div class="info-item-box">
                             <div class="info-label"><i class="fa-solid fa-user-clock"></i> Pickup After Docking</div>
-                            <div class="info-value">{{ $user_details['c_seaport_pick_after_time'] }}</div>
+                            <div class="info-value">{{ $user_details['c_seaport_pick_after_time'] }} mins</div>
                         </div>
                     </div>
                     @endif
@@ -2063,19 +2062,63 @@
     }
     </script>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
+    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function ensureSocketIoLoaded(callback) {
+            if (typeof io !== 'undefined') {
+                if (callback) callback();
+                return;
+            }
+            let s = document.getElementById('socketIoScript');
+            if (s) {
+                let attempts = 0;
+                const interval = setInterval(() => {
+                    attempts++;
+                    if (typeof io !== 'undefined') {
+                        clearInterval(interval);
+                        if (callback) callback();
+                    } else if (attempts > 30) {
+                        clearInterval(interval);
+                        console.warn("Socket.io load timeout, continuing...");
+                    }
+                }, 100);
+                return;
+            }
+            s = document.createElement('script');
+            s.id = 'socketIoScript';
+            s.setAttribute('data-cfasync', 'false');
+            s.src = '/js/socket.io.min.js';
+            s.onload = function() {
+                if (callback) callback();
+            };
+            s.onerror = function() {
+                console.warn("Local socket.io.min.js failed, trying CDN fallback...");
+                const cdnS = document.createElement('script');
+                cdnS.setAttribute('data-cfasync', 'false');
+                cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
+                cdnS.onload = function() { if (callback) callback(); };
+                document.head.appendChild(cdnS);
+            };
+            document.head.appendChild(s);
+        }
+
+        function toggleFareBreakdown() {
             const btnToggle = document.getElementById('btnToggleFareBreakdown');
             const collapseEl = document.getElementById('fareBreakdownCollapse');
-
             if (btnToggle && collapseEl) {
-                btnToggle.addEventListener('click', function () {
-                    btnToggle.classList.toggle('active');
-                    collapseEl.classList.toggle('show');
-                });
+                btnToggle.classList.toggle('active');
+                collapseEl.classList.toggle('show');
             }
-        });
+        }
+
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const btnToggle = document.getElementById('btnToggleFareBreakdown');
+        //     const collapseEl = document.getElementById('fareBreakdownCollapse');
+
+        //     if (btnToggle && collapseEl) {
+        //         btnToggle.addEventListener('click', toggleFareBreakdown);
+        //     }
+        // });
 
         function shareBooking() {
             let shareData = {
@@ -2452,26 +2495,27 @@
         }
 
         function connectLiveTrackingSocket(url, trackingId) {
-            try {
-                if (typeof io === 'undefined') {
-                    console.error("Socket.io is not loaded.");
-                    return;
-                }
-
-                liveTrackingSocket = io(url, {
-                    transports: ['websocket'],
-                    auth: {
-                        token: {!! json_encode($auth_token ?? $token ?? null) !!},
-                        user_type: "customer",
-                        user_id: {!! json_encode($user_details['id'] ?? $user_details['user_id'] ?? $user_id ?? null) !!},
-                        platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+            ensureSocketIoLoaded(() => {
+                try {
+                    if (typeof io === 'undefined') {
+                        console.error("Socket.io is not loaded.");
+                        return;
                     }
-                });
 
-                liveTrackingSocket.on("connect", () => {
-                    console.log('Customer connected to tracking socket');
-                    liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
-                });
+                    liveTrackingSocket = io(url, {
+                        transports: ['websocket'],
+                        auth: {
+                            token: {!! json_encode($auth_token ?? $token ?? null) !!},
+                            user_type: "customer",
+                            user_id: {!! json_encode($user_details['id'] ?? $user_details['user_id'] ?? $user_id ?? null) !!},
+                            platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                        }
+                    });
+
+                    liveTrackingSocket.on("connect", () => {
+                        console.log('Customer connected to tracking socket');
+                        liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
+                    });
 
                 let lastPos = null;
 
@@ -2515,6 +2559,7 @@
             } catch (e) {
                 console.error("WebSocket connection failed", e);
             }
+            });
         }
 
         function updateLiveTrackingTimeline(activeKey) {

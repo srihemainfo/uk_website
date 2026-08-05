@@ -15293,11 +15293,49 @@
         }
     </style>
 
-    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" defer></script>
+    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
     <script>
         let liveTrackingSocket = null;
         let driverMarker = null;
         let trackingMap = null;
+
+        function ensureSocketIoLoaded(callback) {
+            if (typeof io !== 'undefined') {
+                if (callback) callback();
+                return;
+            }
+            let s = document.getElementById('socketIoScript');
+            if (s) {
+                let attempts = 0;
+                const interval = setInterval(() => {
+                    attempts++;
+                    if (typeof io !== 'undefined') {
+                        clearInterval(interval);
+                        if (callback) callback();
+                    } else if (attempts > 30) {
+                        clearInterval(interval);
+                        console.warn("Socket.io load timeout, continuing...");
+                    }
+                }, 100);
+                return;
+            }
+            s = document.createElement('script');
+            s.id = 'socketIoScript';
+            s.setAttribute('data-cfasync', 'false');
+            s.src = '/js/socket.io.min.js';
+            s.onload = function() {
+                if (callback) callback();
+            };
+            s.onerror = function() {
+                console.warn("Local socket.io.min.js failed, trying CDN fallback...");
+                const cdnS = document.createElement('script');
+                cdnS.setAttribute('data-cfasync', 'false');
+                cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
+                cdnS.onload = function() { if (callback) callback(); };
+                document.head.appendChild(cdnS);
+            };
+            document.head.appendChild(s);
+        }
 
         function toggleTrackRideOverlay(e) {
             if (e) e.preventDefault();
@@ -15713,34 +15751,35 @@
         }
 
         function connectLiveTrackingSocket(url, trackingId) {
-            try {
-                if (typeof io === 'undefined') {
-                    console.error("Socket.io is not loaded.");
-                    return;
-                }
-
-                // 1. Connect Customer to Socket Server
-                let token = '';
-                if (typeof getCookieValue === 'function') {
-                    token = getCookieValue('auth_token') || 'CUSTOMER_BEARER_TOKEN';
-                } else {
-                    token = 'CUSTOMER_BEARER_TOKEN';
-                }
-
-                liveTrackingSocket = io(url, {
-                    transports: ['websocket'],
-                    auth: {
-                        token: token,
-                        user_type: "customer",
-                        platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+            ensureSocketIoLoaded(() => {
+                try {
+                    if (typeof io === 'undefined') {
+                        console.error("Socket.io is not loaded.");
+                        return;
                     }
-                });
 
-                // 2. Join the specific trip room after connecting
-                liveTrackingSocket.on("connect", () => {
-                    console.log('Customer connected to socket');
-                    liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
-                });
+                    // 1. Connect Customer to Socket Server
+                    let token = '';
+                    if (typeof getCookieValue === 'function') {
+                        token = getCookieValue('auth_token') || 'CUSTOMER_BEARER_TOKEN';
+                    } else {
+                        token = 'CUSTOMER_BEARER_TOKEN';
+                    }
+
+                    liveTrackingSocket = io(url, {
+                        transports: ['websocket'],
+                        auth: {
+                            token: token,
+                            user_type: "customer",
+                            platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                        }
+                    });
+
+                    // 2. Join the specific trip room after connecting
+                    liveTrackingSocket.on("connect", () => {
+                        console.log('Customer connected to socket');
+                        liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
+                    });
 
                 let lastPos = null;
 
@@ -15797,6 +15836,7 @@
             } catch (e) {
                 console.error("WebSocket connection failed", e);
             }
+            });
         }
 
         function updateLiveTrackingTimeline(activeKey) {

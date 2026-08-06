@@ -690,8 +690,8 @@
         }
 
         .driver-img {
-            width: 48px;
-            height: 48px;
+            width:65px;
+            height: 65px;
             border-radius: 50%;
             object-fit: cover;
         }
@@ -973,6 +973,10 @@
         }
 
         @media (max-width: 768px) {
+            .driver-img{
+              width: 60px;
+              top: ; height: 60px;
+            }
             .car-image-container {
                 flex-direction: column;
             }
@@ -1646,9 +1650,6 @@
                                         <div class="driver-card">
                                             <div class="driver-img-wrapper">
                                                 <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
-                                                <div class="driver-rating-badge">
-                                                    <i class="fas fa-star text-warning me-1"></i> ${trip.driver.rating ?? 4.2}
-                                                </div>
                                             </div>
                                             <div class="driver-info">
                                                 <div class="driver-name">${trip.driver.name}</div>

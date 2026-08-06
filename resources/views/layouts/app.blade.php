@@ -10843,8 +10843,10 @@
 
         async function _startBookingOtpVerification(rawPhone, name, email) {
             let mobileNumber = rawPhone;
+            let dialCode = '91';
             if (window.passengerPhoneIti) {
-                const dialCode = window.passengerPhoneIti.getSelectedCountryData().dialCode;
+                const countryData = window.passengerPhoneIti.getSelectedCountryData();
+                dialCode = countryData && countryData.dialCode ? String(countryData.dialCode) : '91';
                 const rawVal = rawPhone.replace(/\D/g, '');
                 mobileNumber = '+' + dialCode + rawVal;
             }
@@ -10857,6 +10859,10 @@
                 btn.disabled = true;
                 btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking...`;
             }
+
+            _currentMobile = mobileNumber;
+            _isIndiaFlow = (dialCode === '91' || mobileNumber.startsWith('+91'));
+            _indiaOtpEnc = null;
 
             try {
                 // Check if number is valid/used
@@ -10874,24 +10880,47 @@
                 }
 
                 _isNewUser = !result.exists;
-                if (!_firebaseAuthObj && result.firebase) {
-                    firebase.initializeApp(result.firebase);
-                    _firebaseAuthObj = firebase.auth();
+
+                if (_isIndiaFlow) {
+                    if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP...`;
+
+                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: mobileNumber,
+                            dialCode: dialCode
+                        }),
+                    });
+
+                    const sendOtpResult = await sendOtpResponse.json();
+
+                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
+                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
+                    } else {
+                        showToast(sendOtpResult.message || 'Failed to send OTP.', 'error');
+                        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+                        return;
+                    }
+                } else {
+                    if (!_firebaseAuthObj && result.firebase) {
+                        firebase.initializeApp(result.firebase);
+                        _firebaseAuthObj = firebase.auth();
+                    }
+
+                    if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP...`;
+
+                    // Recaptcha
+                    const recapContainer = document.createElement('div');
+                    recapContainer.id = 'booking-recaptcha-container';
+                    document.body.appendChild(recapContainer);
+
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('booking-recaptcha-container', {
+                        'size': 'invisible'
+                    });
+
+                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
                 }
-
-                if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP...`;
-
-                // Recaptcha
-                const recapContainer = document.createElement('div');
-                recapContainer.id = 'booking-recaptcha-container';
-                document.body.appendChild(recapContainer);
-
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('booking-recaptcha-container', {
-                    'size': 'invisible'
-                });
-
-                _currentMobile = mobileNumber; // global variable used by handleVerifyOtp
-                _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
 
                 // Setup callback for after OTP is successful
                 _pendingAfterAuth = function () {
@@ -13944,13 +13973,15 @@
         let _confirmationResult = null;
         let _isNewUser = false;
         let _currentMobile = '';
+        let _isIndiaFlow = false;
+        let _indiaOtpEnc = null;
 
         async function handleAuthContinue() {
             if (!_itiInstance) return;
 
             const inputEl = document.getElementById('authContactInput');
             const countryData = _itiInstance.getSelectedCountryData();
-            const dialCode = countryData && countryData.dialCode ? countryData.dialCode : '';
+            const dialCode = countryData && countryData.dialCode ? String(countryData.dialCode) : '';
             const countryName = countryData && countryData.name ? countryData.name.split(' (')[0] : 'selected country';
             const rawVal = inputEl.value.replace(/\D/g, '');
 
@@ -13976,6 +14007,9 @@
             }
             _currentMobile = mobileNumber;
 
+            _isIndiaFlow = (dialCode === '91' || mobileNumber.startsWith('+91'));
+            _indiaOtpEnc = null;
+
             const btn = document.getElementById('authContinueBtn');
             btn.disabled = true;
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
@@ -13998,25 +14032,49 @@
 
                 _isNewUser = !result.exists;
 
-                // 2. Initialize Firebase if not done
-                if (!_firebaseAuthObj && result.firebase) {
-                    firebase.initializeApp(result.firebase);
-                    _firebaseAuthObj = firebase.auth();
+                if (_isIndiaFlow) {
+                    // India Flow: Call POST /send-otp
+                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: mobileNumber,
+                            dialCode: dialCode || '91'
+                        }),
+                    });
+
+                    const sendOtpResult = await sendOtpResponse.json();
+
+                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
+                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
+                        _showOtpUI();
+                    } else {
+                        _showAuthError(sendOtpResult.message || 'Failed to send OTP.');
+                        _resetContinueBtn();
+                        return;
+                    }
+                } else {
+                    // Non-India Flow: Initialize Firebase and send SMS OTP
+                    if (!_firebaseAuthObj && result.firebase) {
+                        firebase.initializeApp(result.firebase);
+                        _firebaseAuthObj = firebase.auth();
+                    }
+
+                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    // Clear old recaptcha
+                    document.getElementById('recaptcha-container').innerHTML = '';
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                        'size': 'invisible'
+                    });
+
+                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
+
+                    // Show OTP UI
+                    _showOtpUI();
                 }
-
-                // 3. Send OTP
-                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-
-                // Clear old recaptcha
-                document.getElementById('recaptcha-container').innerHTML = '';
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                    'size': 'invisible'
-                });
-
-                _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
-
-                // 4. Show OTP UI
-                _showOtpUI();
 
             } catch (err) {
                 console.error('Check user / OTP Error:', err);
@@ -14070,8 +14128,8 @@
 
         async function handleVerifyOtp() {
             const otp = document.getElementById('authOtpInput').value.trim();
-            if (!otp || otp.length < 6) {
-                _showAuthError('Please enter a valid 6-digit OTP.');
+            if (!otp) {
+                _showAuthError('Please enter a valid OTP.');
                 return;
             }
 
@@ -14103,20 +14161,31 @@
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Verifying…`;
 
             try {
-                // Verify OTP with Firebase
-                const result = await _confirmationResult.confirm(otp);
-                const idToken = await result.user.getIdToken();
+                const verifyPayload = {
+                    mobile: _currentMobile,
+                    name: name,
+                    email: email,
+                    otp: otp
+                };
 
-                // Send token to backend
+                if (_isIndiaFlow) {
+                    // India Flow: Bypass Firebase confirmation, include enc & otp in payload
+                    verifyPayload.enc = _indiaOtpEnc;
+                } else {
+                    // Non-India Flow: Verify OTP with Firebase
+                    if (!_confirmationResult) {
+                        throw new Error('Firebase confirmation result missing.');
+                    }
+                    const result = await _confirmationResult.confirm(otp);
+                    const idToken = await result.user.getIdToken();
+                    verifyPayload.firebase_token = idToken;
+                }
+
+                // Send token/enc to backend
                 const response = await fetch(API_BASE_URL + '/auth/verify-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({
-                        mobile: _currentMobile,
-                        firebase_token: idToken,
-                        name: name,
-                        email: email
-                    }),
+                    body: JSON.stringify(verifyPayload),
                 });
 
                 const verifyRes = await response.json();

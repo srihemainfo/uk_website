@@ -1088,21 +1088,73 @@
             font-size: 15px;
             font-weight: 500;
             color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .time-dropdown-item:last-child {
-            border-bottom: none;
+        .night-moon-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #1f2937;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            margin-left: 8px;
+            flex-shrink: 0;
         }
 
-        .time-dropdown-item:hover {
-            background: #f5f5f5;
-            padding-left: 20px;
+        .night-charge-notice-card {
+            background: #fff8e7;
+            border: 1px solid #ffd54f;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.08);
+            transition: all 0.3s ease;
         }
 
-        .time-dropdown-item.selected {
-            background: #f0f0f0;
-            color: #000;
+        .night-charge-icon-wrap {
+               width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background: #f9bf0078;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+        }
+
+        .night-charge-moon-icon {
+            font-size: 16px;
+            color: #624b00;
+        }
+
+        .night-charge-text-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: left;
+        }
+
+        .night-charge-title {
+            font-size: 14px;
             font-weight: 700;
+            color: #78350f;
+            line-height: 1.3;
+        }
+
+        .night-charge-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: #92400e;
+            line-height: 1.3;
         }
 
         .time-dropdown-icon {
@@ -6603,10 +6655,14 @@
                 display: none;
             }
 
+            .night-charge-notice-card{
+                padding:5px;
+                    margin-top:0px;
+            }
             .hero-form-section {
                 width: 100%;
                 max-width: 100%;
-                min-height: fit-content;
+                /* min-height: fit-content; */
                 padding: 16px 12px;
                 display: block;
             }
@@ -8973,6 +9029,10 @@
             $('#mcsDateValue').text(d);
             $('#mcsTimeValue').text(t);
 
+            if (state.time && typeof checkNightChargeNotice === 'function') {
+                checkNightChargeNotice(state.time);
+            }
+
             // Sync the actual date picker input
             if (state.date) {
                 const dateElement = document.getElementById('date');
@@ -9535,7 +9595,34 @@
         function selectLanguage(lang) {
             toggleDropdown('language');
         }
-        // ===== CUSTOM TIME DROPDOWN =====
+        // ===== CUSTOM TIME DROPDOWN & NIGHT CHARGE LOGIC =====
+        function isNightChargeTime(timeStr) {
+            if (!timeStr) return false;
+            const match = timeStr.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+            if (!match) return false;
+
+            let hour = parseInt(match[1], 10);
+            const minute = parseInt(match[2], 10);
+            const ampm = match[3].toUpperCase();
+
+            if (ampm === 'PM' && hour < 12) hour += 12;
+            if (ampm === 'AM' && hour === 12) hour = 0;
+
+            // Night charges apply from 11:00 PM (23:00) to 5:00 AM (05:00) inclusive
+            return (hour === 23 || (hour >= 0 && hour < 5) || (hour === 5 && minute === 0));
+        }
+
+        function checkNightChargeNotice(timeStr) {
+            const noticeCard = document.getElementById('nightChargeNoticeCard');
+            if (!noticeCard) return;
+
+            if (isNightChargeTime(timeStr)) {
+                $(noticeCard).slideDown(200);
+            } else {
+                $(noticeCard).slideUp(200);
+            }
+        }
+
         function generateTimeOptions(dateStr) {
             const timeDropdownList = document.getElementById('timeDropdownList');
             if (!timeDropdownList) return;
@@ -9589,10 +9676,18 @@
                         foundCurrentTime = true;
                     }
 
+                    const isNightSlot = (hour === 23 || (hour >= 0 && hour < 5) || (hour === 5 && minute === 0));
+
                     const item = document.createElement('div');
                     item.className = 'time-dropdown-item' + (isCurrentSelected ? ' selected' : '');
+                    item.setAttribute('data-time', timeValue);
                     item.onclick = function () { selectTime(timeValue); };
-                    item.textContent = timeDisplay;
+
+                    if (isNightSlot) {
+                        item.innerHTML = `<span>${timeDisplay}</span><span class="night-moon-icon"><i class="fas fa-moon"></i></span>`;
+                    } else {
+                        item.textContent = timeDisplay;
+                    }
                     timeDropdownList.appendChild(item);
                 }
             }
@@ -9652,6 +9747,7 @@
                 }
             }
         }
+
         function selectTime(time) {
             // Store time in the store (triggers subscribers)
             BookingStore.setState({ time: time });
@@ -9660,10 +9756,13 @@
             $('#timeDropdownBtn').removeClass('active');
             $('#timeDropdownList .time-dropdown-item').each(function () {
                 $(this).removeClass('selected');
-                if ($(this).text() === time) {
+                const itemDataTime = $(this).attr('data-time');
+                const itemText = $(this).text().trim().replace(/[\s🌙]+$/, '');
+                if (itemDataTime === time || itemText === time || itemText.replace(/^0/, '') === time.replace(/^0/, '')) {
                     $(this).addClass('selected');
                 }
             });
+            checkNightChargeNotice(time);
         }
         let selectedFlightHour = '11';
         let selectedFlightMinute = '00';

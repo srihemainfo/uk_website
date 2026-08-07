@@ -653,6 +653,16 @@
                             </div>
                         </div> <!-- Close Time Column -->
                     </div> <!-- Close Grid -->
+                    <!-- NIGHT CHARGE NOTICE CARD -->
+                    <div id="nightChargeNoticeCard" class="night-charge-notice-card" style="display: none;">
+                        <div class="night-charge-icon-wrap">
+                            <i class="fas fa-moon night-charge-moon-icon"></i>
+                        </div>
+                        <div class="night-charge-text-content">
+                            <div class="night-charge-title">Night charges apply from 11:00 PM to 5:00 AM</div>
+                            <div class="night-charge-subtitle">A small additional fee will be included in your fare.</div>
+                        </div>
+                    </div>
                     <div id="airportLandingFields" style="display: none;">
                         <div class="form-group-uber">
                             <label><i class="fas fa-hourglass-end"></i> Pickup After Landing</label>

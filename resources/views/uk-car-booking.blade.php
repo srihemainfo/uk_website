@@ -3008,7 +3008,7 @@
                     <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                 </button>
                 <div class="faq-answer">Enter your pickup and dropoff locations, select your preferred time, choose a
-                    vehicle type, and confirm your booking. It's that simple!</div>
+                    vehicle type, and confirm your booking. It's that simple to book!</div>
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">

@@ -742,7 +742,7 @@
                     <i class="fa-solid {{ $statusIcon }}"></i> {{ $job_status ?? 'Booking Confirmed' }}
                 </div>
                 <div class="hero-meta-item">
-                    <i class="fa-solid fa-hashtag"></i> Booking ID : <strong>GRC-260730-00125</strong>
+                    <i class="fa-solid fa-hashtag"></i> Booking No : <strong>GRC-260730-00125</strong>
                 </div>
             </div>
             <div class="brand-actions">

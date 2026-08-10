@@ -1317,11 +1317,319 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group-uber">
-                        <label><i class="fas fa-credit-card"></i> Payment Method *</label>
-                        <select id="paymentMethod" required>
+                    <style>
+                        .payment-selection-wrapper {
+                            margin-top: 20px;
+                            margin-bottom: 25px;
+                        }
+                        .payment-group-label {
+                            font-weight: 700;
+                            font-size: 15px;
+                            color: #1e293b;
+                            margin-bottom: 12px;
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        }
+                        .payment-methods-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                            gap: 14px;
+                            margin-bottom: 15px;
+                        }
+                        .payment-method-card {
+                            background: #ffffff;
+                            border: 2px solid #e2e8f0;
+                            border-radius: 12px;
+                            padding: 16px;
+                            display: flex;
+                            align-items: center;
+                            gap: 14px;
+                            cursor: pointer;
+                            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                            position: relative;
+                            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+                        }
+                        .payment-method-card:hover {
+                            border-color: #cbd5e1;
+                            transform: translateY(-2px);
+                            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+                        }
+                        .payment-method-card.active {
+                            border-color: #f39c12;
+                            background: #fffdf5;
+                            box-shadow: 0 4px 14px rgba(243, 156, 18, 0.18);
+                        }
+                        .pm-card-icon {
+                            width: 44px;
+                            height: 44px;
+                            border-radius: 10px;
+                            background: #f8fafc;
+                            color: #475569;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 20px;
+                            flex-shrink: 0;
+                            transition: all 0.25s ease;
+                        }
+                        .payment-method-card.active .pm-card-icon {
+                            background: #f39c12;
+                            color: #ffffff;
+                        }
+                        .pm-card-info {
+                            flex-grow: 1;
+                        }
+                        .pm-card-title {
+                            font-weight: 700;
+                            font-size: 14px;
+                            color: #0f172a;
+                        }
+                        .pm-card-desc {
+                            font-size: 12px;
+                            color: #64748b;
+                            margin-top: 2px;
+                        }
+                        .pm-card-badge {
+                            width: 22px;
+                            height: 22px;
+                            border-radius: 50%;
+                            border: 2px solid #cbd5e1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 11px;
+                            color: transparent;
+                            transition: all 0.2s ease;
+                        }
+                        .payment-method-card.active .pm-card-badge {
+                            background: #f39c12;
+                            border-color: #f39c12;
+                            color: #ffffff;
+                        }
+                        .stripe-payment-box {
+                            background: #0f172a;
+                            color: #f8fafc;
+                            border-radius: 14px;
+                            padding: 22px;
+                            margin-top: 15px;
+                            border: 1px solid #1e293b;
+                            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+                            animation: fadeInStripe 0.3s ease-out;
+                        }
+                        @keyframes fadeInStripe {
+                            from { opacity: 0; transform: translateY(-8px); }
+                            to { opacity: 1; transform: translateY(0); }
+                        }
+                        .stripe-box-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 18px;
+                            padding-bottom: 12px;
+                            border-bottom: 1px solid #1e293b;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        }
+                        .stripe-box-title {
+                            font-weight: 700;
+                            font-size: 14px;
+                            color: #f8fafc;
+                            display: flex;
+                            align-items: center;
+                            gap: 8px;
+                        }
+                        .stripe-accepted-icons {
+                            display: flex;
+                            gap: 10px;
+                            font-size: 22px;
+                            color: #94a3b8;
+                        }
+                        .stripe-loading-state {
+                            padding: 20px;
+                            text-align: center;
+                            color: #94a3b8;
+                            font-size: 14px;
+                        }
+                        .stripe-payment-alert {
+                            background: #450a0a;
+                            border: 1px solid #991b1b;
+                            color: #fca5a5;
+                            padding: 12px 16px;
+                            border-radius: 8px;
+                            font-size: 13px;
+                            margin-top: 15px;
+                        }
+                        .stripe-security-footer {
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: center;
+                            margin-top: 18px;
+                            padding-top: 14px;
+                            border-top: 1px solid #1e293b;
+                            font-size: 11px;
+                            color: #64748b;
+                            flex-wrap: wrap;
+                            gap: 10px;
+                        }
+                        .stripe-type-container {
+                            margin-top: 15px;
+                            margin-bottom: 15px;
+                            animation: fadeInStripe 0.25s ease-out;
+                        }
+                        .payment-subgroup-label {
+                            font-weight: 600;
+                            font-size: 13px;
+                            color: #475569;
+                            margin-bottom: 8px;
+                            display: flex;
+                            align-items: center;
+                            gap: 6px;
+                        }
+                        .stripe-type-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 12px;
+                        }
+                        .stripe-type-card {
+                            background: #ffffff;
+                            border: 2px solid #e2e8f0;
+                            border-radius: 10px;
+                            padding: 14px;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+                        }
+                        .stripe-type-card:hover {
+                            border-color: #cbd5e1;
+                            transform: translateY(-1px);
+                        }
+                        .stripe-type-card.active {
+                            border-color: #f39c12;
+                            background: #fffdf5;
+                            box-shadow: 0 3px 10px rgba(243, 156, 18, 0.15);
+                        }
+                        .st-card-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                        .st-card-title {
+                            font-weight: 700;
+                            font-size: 13px;
+                            color: #0f172a;
+                        }
+                        .st-card-badge {
+                            width: 18px;
+                            height: 18px;
+                            border-radius: 50%;
+                            border: 1.5px solid #cbd5e1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 9px;
+                            color: transparent;
+                        }
+                        .stripe-type-card.active .st-card-badge {
+                            background: #f39c12;
+                            border-color: #f39c12;
+                            color: #ffffff;
+                        }
+                        .st-card-amount {
+                            font-weight: 800;
+                            font-size: 17px;
+                            color: #f39c12;
+                            margin-top: 5px;
+                        }
+                        .st-card-desc {
+                            font-size: 11px;
+                            color: #64748b;
+                            margin-top: 2px;
+                        }
+                    </style>
+
+                    <div class="form-group-uber payment-selection-wrapper">
+                        <label class="payment-group-label"><i class="fas fa-credit-card"></i> Payment Method *</label>
+                        
+                        <!-- Hidden select element for backwards compatibility -->
+                        <select id="paymentMethod" required style="display:none;">
                             <option value="cash" selected>Pay Cash to the Driver</option>
+                            <option value="stripe">Pay via Credit / Debit Card (Stripe)</option>
                         </select>
+
+                        <!-- Executive Payment Option Cards -->
+                        <div class="payment-methods-grid">
+                            <div class="payment-method-card active" id="payMethodCardCash" onclick="selectPaymentMethod('cash')">
+                                <div class="pm-card-icon"><i class="fas fa-money-bill-wave"></i></div>
+                                <div class="pm-card-info">
+                                    <div class="pm-card-title">Pay Cash to Driver</div>
+                                    <div class="pm-card-desc">Pay directly upon arrival/completion</div>
+                                </div>
+                                <div class="pm-card-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                            <div class="payment-method-card" id="payMethodCardStripe" onclick="selectPaymentMethod('stripe')">
+                                <div class="pm-card-icon stripe-icon"><i class="fas fa-credit-card"></i></div>
+                                <div class="pm-card-info">
+                                    <div class="pm-card-title">Card / Apple Pay / Google Pay</div>
+                                    <div class="pm-card-desc">Instant 256-bit encrypted checkout</div>
+                                </div>
+                                <div class="pm-card-badge"><i class="fas fa-check"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- Stripe Payment Type Sub-Tabs (Full Payment vs Part Payment) -->
+                        <div id="stripePaymentTypeWrapper" class="stripe-type-container" style="display: none;">
+                            <label class="payment-subgroup-label"><i class="fas fa-coins"></i> Select Payment Type *</label>
+                            <div class="stripe-type-grid">
+                                <div class="stripe-type-card active" id="stripeTypeFull" onclick="selectStripePaymentType('full')">
+                                    <div class="st-card-header">
+                                        <span class="st-card-title">Full Payment</span>
+                                        <span class="st-card-badge"><i class="fas fa-check"></i></span>
+                                    </div>
+                                    <div class="st-card-amount" id="stripeFullAmount">£0.00</div>
+                                    <div class="st-card-desc">Pay 100% total fare upfront</div>
+                                </div>
+                                <div class="stripe-type-card" id="stripeTypePart" onclick="selectStripePaymentType('part')">
+                                    <div class="st-card-header">
+                                        <span class="st-card-title">Part Payment</span>
+                                        <span class="st-card-badge"><i class="fas fa-check"></i></span>
+                                    </div>
+                                    <div class="st-card-amount" id="stripePartAmount">£0.00</div>
+                                    <div class="st-card-desc">Pay deposit now, rest to driver</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stripe Payment Element Mount Container -->
+                        <div id="stripePaymentContainer" class="stripe-payment-box" style="display: none;">
+                            <div class="stripe-box-header">
+                                <div class="stripe-box-title">
+                                    <i class="fas fa-shield-alt" style="color: #10b981;"></i> Secure Card Checkout
+                                </div>
+                                <div class="stripe-accepted-icons">
+                                    <i class="fab fa-cc-visa" title="Visa"></i>
+                                    <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                                    <i class="fab fa-cc-amex" title="American Express"></i>
+                                    <i class="fab fa-apple-pay" title="Apple Pay"></i>
+                                    <i class="fab fa-google-pay" title="Google Pay"></i>
+                                </div>
+                            </div>
+
+                            <div id="stripe-element-loading" class="stripe-loading-state">
+                                <i class="fas fa-spinner fa-spin"></i> Initializing secure payment session...
+                            </div>
+                            
+                            <!-- Stripe Elements mounts here -->
+                            <div id="payment-element"></div>
+                            
+                            <div id="payment-message" class="stripe-payment-alert" style="display: none;"></div>
+                            
+                            <div class="stripe-security-footer">
+                                <span><i class="fas fa-lock"></i> 256-Bit SSL Encrypted</span>
+                                <span><i class="fas fa-check-circle"></i> PCI-DSS Compliant</span>
+                                <span><i class="fab fa-stripe"></i> Powered by Stripe</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Modern Premium Tab View for Inclusions & Exclusions -->
@@ -2133,7 +2441,7 @@
                             style="background: #f8f9fa; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px;">
                             <small
                                 style="color: #666; font-size: 12px; font-weight: 600; text-transform: uppercase;">Booking
-                                ID</small>
+                                No</small>
                             <div class="id-value" id="confirmNum"
                                 style="font-size: 20px; font-weight: 700; color: #000; margin-top: 5px;">GR-2026-14851
                             </div>
@@ -2182,14 +2490,11 @@
                             Your booking has been successfully confirmed.
                         </p>
                     </div>
-                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-                        <!-- <button class="btn-modal-primary" onclick="completeBooking()">
-                            <i class="fas fa-check"></i> Done
-                        </button> -->
-                        <a href="#" id="viewBookingPreviewBtn" target="_blank" class="btn-modal-primary">
-                            <i class="fas fa-file-invoice"></i> View Booking Preview
+                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 12px; margin-top: auto; padding-top: 15px;">
+                        <a href="#" id="viewBookingPreviewBtn" onclick="openBookingPreviewFromConfirmation(event)" target="_blank" class="btn-search-uber text-decoration-none" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
+                            <i class="fas fa-file-invoice"></i> Booking Preview
                         </a>
-                        <button class="btn-modal-primary" onclick="openTrackRideWithCurrentBooking()">
+                        <button type="button" class="btn-search-uber" onclick="openTrackRideWithCurrentBooking()" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
                             <i class="fas fa-map-marker-alt"></i> Track Driver
                         </button>
                     </div>

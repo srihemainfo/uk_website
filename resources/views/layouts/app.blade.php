@@ -11068,27 +11068,15 @@
         // ===== STRIPE PAYMENT INTEGRATION =====
         window.selectedStripePaymentType = 'full';
 
-        window.selectPaymentMethod = function (method) {
-            $('#paymentMethod').val(method).trigger('change');
+        window.selectPaymentMethod = function (method = 'stripe') {
+            $('#paymentMethod').val('stripe').trigger('change');
+            $('#payMethodCardStripe').addClass('active');
+            $('#stripePaymentTypeWrapper').slideDown(250);
+            updateStripeTypeAmounts();
 
-            if (method === 'cash') {
-                $('#payMethodCardCash').addClass('active');
-                $('#payMethodCardStripe').removeClass('active');
-                $('#stripePaymentTypeWrapper').slideUp(200);
-                $('#stripePaymentContainer').slideUp(200);
-                
-                const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
-                if (btn) btn.innerHTML = '<i class="fas fa-credit-card"></i> Make Payment';
-            } else if (method === 'stripe') {
-                $('#payMethodCardStripe').addClass('active');
-                $('#payMethodCardCash').removeClass('active');
-                $('#stripePaymentTypeWrapper').slideDown(250);
-                updateStripeTypeAmounts();
-
-                const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
-                if (btn && !window.stripeElements) {
-                    btn.innerHTML = '<i class="fas fa-arrow-right"></i> Proceed to Card Payment';
-                }
+            const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
+            if (btn && !window.stripeElements) {
+                btn.innerHTML = '<i class="fas fa-arrow-right"></i> Proceed to Card Payment';
             }
         };
 
@@ -11166,7 +11154,8 @@
                         currency: 'gbp',
                         email: email,
                         name: name,
-                        phone: phone
+                        phone: phone,
+                        payment_method_types: ['card']
                     })
                 });
 
@@ -11213,7 +11202,9 @@
                         }
                     });
 
-                    const paymentElement = window.stripeElements.create('payment');
+                    const paymentElement = window.stripeElements.create('payment', {
+                        layout: 'tabs'
+                    });
 
                     paymentElement.on('ready', function () {
                         if (loadingEl) loadingEl.style.display = 'none';
@@ -11284,13 +11275,9 @@
         };
 
         function proceedToConfirmation() {
-            // Ensure payment is selected before triggering API
-            const paymentMethod = $('#paymentMethod').val();
-            if (!paymentMethod) {
-                showToast('Please select payment method', 'error');
-                return;
-            }
-            bookingData.paymentMethod = paymentMethod;
+            // Stripe is the default and only active payment method
+            bookingData.paymentMethod = 'stripe';
+            $('#paymentMethod').val('stripe');
 
             const state = BookingStore.getState();
             let email = document.getElementById('passengerEmail').value.trim();
@@ -11346,193 +11333,29 @@
             const originalBtnContent = btn.innerHTML;
 
             // STRIPE PAYMENT FLOW
-            if (paymentMethod === 'stripe') {
-                // If PaymentIntent was already terminal (succeeded), directly call /stripe/payment-confirm
-                if (window.isPaymentAlreadyTerminal) {
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
-                    btn.disabled = true;
-
-                    const pId = parseInt(window.paymentId || state.paymentId || 0);
-                    fetch(API_BASE_URL + '/stripe/payment-confirm', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                        },
-                        body: JSON.stringify({
-                            payment_id: pId,
-                            payment_type: window.selectedStripePaymentType || 'full'
-                        })
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.status || data.success) {
-                            const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
-                            $('#confirmNum').text(confirmedJobNo);
-                            const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
-                            if (previewHash) {
-                                window.currentBookingPreviewHash = previewHash;
-                                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
-                            } else {
-                                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
-                            }
-                            $('#confirmPickup').text(bookingData.pickup || '—');
-                            $('#confirmDropoff').text(bookingData.dropoff || '—');
-                            if (bookingData.date && bookingData.time) {
-                                $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
-                                $('#confirmDateTime').parent().show();
-                            }
-                            $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
-                            showStep(8);
-                        } else {
-                            showToast(data.message || 'Confirmation failed', 'error');
-                        }
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        showToast('Server connection error', 'error');
-                    })
-                    .finally(() => {
-                        btn.innerHTML = originalBtnContent;
-                        btn.disabled = false;
-                    });
-                    return;
-                }
-
-                // Phase 1: If Stripe Elements is NOT initialized yet, trigger payment-intent and show card UI
-                if (!window.stripeElements) {
-                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Secure Session...';
-                    btn.disabled = true;
-
-                    initStripePaymentElement().then(success => {
-                        if (!success) {
-                            btn.innerHTML = originalBtnContent;
-                            btn.disabled = false;
-                        } else {
-                            btn.disabled = false;
-                        }
-                    });
-                    return;
-                }
-
-                // Phase 2: If Stripe Elements IS ALREADY initialized and visible, process card payment confirmation
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+            // If PaymentIntent was already terminal (succeeded), directly call /stripe/payment-confirm
+            if (window.isPaymentAlreadyTerminal) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
                 btn.disabled = true;
 
-                window.stripeInstance.confirmPayment({
-                    elements: window.stripeElements,
-                    redirect: 'if_required'
-                }).then(async function (result) {
-                    if (result.error) {
-                        showToast(result.error.message || 'Payment processing failed.', 'error');
-                        const msgBox = document.getElementById('payment-message');
-                        if (msgBox) {
-                            msgBox.textContent = result.error.message;
-                            msgBox.style.display = 'block';
-                        }
-                        btn.innerHTML = originalBtnContent;
-                        btn.disabled = false;
-                    } else if (result.paymentIntent && (result.paymentIntent.status === 'succeeded' || result.paymentIntent.status === 'processing')) {
-                        try {
-                            const pId = parseInt(window.paymentId || state.paymentId || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
-
-                            const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json',
-                                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                                },
-                                body: JSON.stringify({
-                                    payment_id: pId,
-                                    payment_intent_id: result.paymentIntent.id,
-                                    job_id: bookingData.jobId || bookingData.bookingId,
-                                    pay_no: bookingData.bookingId || bookingData.jobId,
-                                    job_no: bookingData.bookingId || bookingData.jobId,
-                                    status: result.paymentIntent.status,
-                                    credit_pay: (result.paymentIntent.amount / 100).toFixed(2),
-                                    payment_type: window.selectedStripePaymentType || 'full'
-                                })
-                            });
-                            const data = await confirmResp.json();
-                            if (data.status || data.success) {
-                                const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
-                                $('#confirmNum').text(confirmedJobNo);
-
-                                const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
-                                if (previewHash) {
-                                    window.currentBookingPreviewHash = previewHash;
-                                    $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
-                                } else {
-                                    $('#viewBookingPreviewBtn').css('display', 'inline-flex');
-                                }
-
-                                $('#confirmPickup').text(bookingData.pickup || '—');
-                                $('#confirmDropoff').text(bookingData.dropoff || '—');
-                                if (bookingData.date && bookingData.time) {
-                                    $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
-                                    $('#confirmDateTime').parent().show();
-                                } else {
-                                    $('#confirmDateTime').parent().hide();
-                                }
-                                $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
-                                let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
-                                if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
-                                    finalDistance = formatTripDistance(finalDistance);
-                                }
-                                const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
-                                $('#confirmDistance').text(finalDistance);
-                                $('#confirmDuration').text(finalDuration);
-                                showStep(8);
-                            } else {
-                                showToast('Payment Confirmation Error: ' + (data.message || 'Unknown error'), 'error');
-                            }
-                        } catch (err) {
-                            console.error('Payment confirm error:', err);
-                            showToast('Server connection error during payment confirmation.', 'error');
-                        } finally {
-                            btn.innerHTML = originalBtnContent;
-                            btn.disabled = false;
-                        }
-                    }
-                }).catch(function (err) {
-                    console.error('Stripe error:', err);
-                    showToast('An unexpected error occurred with Stripe.', 'error');
-                    btn.innerHTML = originalBtnContent;
-                    btn.disabled = false;
-                });
-                return;
-            }
-
-
-
-            // CASH PAYMENT FLOW
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            btn.disabled = true;
-
-            const payload = {
-                pay_no: bookingData.job_no || bookingData.bookingId || bookingData.jobId,
-                job_id: bookingData.jobId || bookingData.job_id,
-                job_no: bookingData.job_no || bookingData.bookingId,
-                credit_pay: null
-            };
-
-            fetch(API_BASE_URL + '/w-cash-payment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(response => response.json())
+                const pId = parseInt(window.paymentId || state.paymentId || 0);
+                fetch(API_BASE_URL + '/stripe/payment-confirm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                    },
+                    body: JSON.stringify({
+                        payment_id: pId,
+                        payment_type: window.selectedStripePaymentType || 'full'
+                    })
+                })
+                .then(res => res.json())
                 .then(data => {
-                    if (data.status) {
+                    if (data.status || data.success) {
                         const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
                         $('#confirmNum').text(confirmedJobNo);
-
                         const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
                         if (previewHash) {
                             window.currentBookingPreviewHash = previewHash;
@@ -11540,7 +11363,6 @@
                         } else {
                             $('#viewBookingPreviewBtn').css('display', 'inline-flex');
                         }
-
                         $('#confirmPickup').text(bookingData.pickup || '—');
                         $('#confirmDropoff').text(bookingData.dropoff || '—');
                         if (bookingData.date && bookingData.time) {
@@ -11559,17 +11381,122 @@
                         $('#confirmDuration').text(finalDuration);
                         showStep(8);
                     } else {
-                        showToast('Booking Error: ' + (data.message || 'Unknown error'), 'error');
+                        showToast(data.message || 'Confirmation failed', 'error');
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showToast('There was a problem connecting to the server. Please try again.', 'error');
+                .catch(err => {
+                    console.error(err);
+                    showToast('Server connection error', 'error');
                 })
                 .finally(() => {
                     btn.innerHTML = originalBtnContent;
                     btn.disabled = false;
                 });
+                return;
+            }
+
+            // Phase 1: If Stripe Elements is NOT initialized yet, trigger payment-intent and show card UI
+            if (!window.stripeElements) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Secure Session...';
+                btn.disabled = true;
+
+                initStripePaymentElement().then(success => {
+                    if (!success) {
+                        btn.innerHTML = originalBtnContent;
+                        btn.disabled = false;
+                    } else {
+                        btn.disabled = false;
+                    }
+                });
+                return;
+            }
+
+            // Phase 2: If Stripe Elements IS ALREADY initialized and visible, process card payment confirmation
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+            btn.disabled = true;
+
+            window.stripeInstance.confirmPayment({
+                elements: window.stripeElements,
+                redirect: 'if_required'
+            }).then(async function (result) {
+                if (result.error) {
+                    showToast(result.error.message || 'Payment processing failed.', 'error');
+                    const msgBox = document.getElementById('payment-message');
+                    if (msgBox) {
+                        msgBox.textContent = result.error.message;
+                        msgBox.style.display = 'block';
+                    }
+                    btn.innerHTML = originalBtnContent;
+                    btn.disabled = false;
+                } else if (result.paymentIntent && (result.paymentIntent.status === 'succeeded' || result.paymentIntent.status === 'processing')) {
+                    try {
+                        const pId = parseInt(window.paymentId || state.paymentId || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+
+                        const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'Authorization': 'Bearer ' + getCookieValue('auth_token')
+                            },
+                            body: JSON.stringify({
+                                payment_id: pId,
+                                payment_intent_id: result.paymentIntent.id,
+                                job_id: bookingData.jobId || bookingData.bookingId,
+                                pay_no: bookingData.bookingId || bookingData.jobId,
+                                job_no: bookingData.bookingId || bookingData.jobId,
+                                status: result.paymentIntent.status,
+                                credit_pay: (result.paymentIntent.amount / 100).toFixed(2),
+                                payment_type: window.selectedStripePaymentType || 'full'
+                            })
+                        });
+                        const data = await confirmResp.json();
+                        if (data.status || data.success) {
+                            const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
+                            $('#confirmNum').text(confirmedJobNo);
+
+                            const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
+                            if (previewHash) {
+                                window.currentBookingPreviewHash = previewHash;
+                                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
+                            } else {
+                                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
+                            }
+
+                            $('#confirmPickup').text(bookingData.pickup || '—');
+                            $('#confirmDropoff').text(bookingData.dropoff || '—');
+                            if (bookingData.date && bookingData.time) {
+                                $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
+                                $('#confirmDateTime').parent().show();
+                            } else {
+                                $('#confirmDateTime').parent().hide();
+                            }
+                            $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
+                            let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
+                            if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
+                                finalDistance = formatTripDistance(finalDistance);
+                            }
+                            const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
+                            $('#confirmDistance').text(finalDistance);
+                            $('#confirmDuration').text(finalDuration);
+                            showStep(8);
+                        } else {
+                            showToast('Payment Confirmation Error: ' + (data.message || 'Unknown error'), 'error');
+                        }
+                    } catch (err) {
+                        console.error('Payment confirm error:', err);
+                        showToast('Server connection error during payment confirmation.', 'error');
+                    } finally {
+                        btn.innerHTML = originalBtnContent;
+                        btn.disabled = false;
+                    }
+                }
+            }).catch(function (err) {
+                console.error('Stripe error:', err);
+                showToast('An unexpected error occurred with Stripe.', 'error');
+                btn.innerHTML = originalBtnContent;
+                btn.disabled = false;
+            });
         }
 
 

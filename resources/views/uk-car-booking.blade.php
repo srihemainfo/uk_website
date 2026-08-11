@@ -1553,32 +1553,23 @@
                         
                         <!-- Hidden select element for backwards compatibility -->
                         <select id="paymentMethod" required style="display:none;">
-                            <option value="cash" selected>Pay Cash to the Driver</option>
-                            <option value="stripe">Pay via Credit / Debit Card (Stripe)</option>
+                            <option value="stripe" selected>Pay via Credit / Debit Card (Stripe)</option>
                         </select>
 
                         <!-- Executive Payment Option Cards -->
                         <div class="payment-methods-grid">
-                            <div class="payment-method-card active" id="payMethodCardCash" onclick="selectPaymentMethod('cash')">
-                                <div class="pm-card-icon"><i class="fas fa-money-bill-wave"></i></div>
-                                <div class="pm-card-info">
-                                    <div class="pm-card-title">Pay Cash to Driver</div>
-                                    <div class="pm-card-desc">Pay directly upon arrival/completion</div>
-                                </div>
-                                <div class="pm-card-badge"><i class="fas fa-check"></i></div>
-                            </div>
-                            <div class="payment-method-card" id="payMethodCardStripe" onclick="selectPaymentMethod('stripe')">
+                            <div class="payment-method-card active" id="payMethodCardStripe" onclick="selectPaymentMethod('stripe')">
                                 <div class="pm-card-icon stripe-icon"><i class="fas fa-credit-card"></i></div>
                                 <div class="pm-card-info">
                                     <div class="pm-card-title">Card / Apple Pay / Google Pay</div>
-                                    <div class="pm-card-desc">Instant 256-bit encrypted checkout</div>
+                                    <div class="pm-card-desc">Instant 256-bit encrypted checkout via Stripe</div>
                                 </div>
                                 <div class="pm-card-badge"><i class="fas fa-check"></i></div>
                             </div>
                         </div>
 
                         <!-- Stripe Payment Type Sub-Tabs (Full Payment vs Part Payment) -->
-                        <div id="stripePaymentTypeWrapper" class="stripe-type-container" style="display: none;">
+                        <div id="stripePaymentTypeWrapper" class="stripe-type-container" style="display: block;">
                             <label class="payment-subgroup-label"><i class="fas fa-coins"></i> Select Payment Type *</label>
                             <div class="stripe-type-grid">
                                 <div class="stripe-type-card active" id="stripeTypeFull" onclick="selectStripePaymentType('full')">
@@ -3015,8 +3006,7 @@
                     What payment methods do you accept?
                     <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                 </button>
-                <div class="faq-answer">We accept credit/debit cards, UPI, digital wallets, and cash payments. Choose
-                    the method that's most convenient for you.</div>
+                <div class="faq-answer">We accept all major credit/debit cards (Visa, MasterCard, American Express), Apple Pay, and Google Pay securely processed via Stripe. Choose full payment or part payment at checkout.</div>
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">

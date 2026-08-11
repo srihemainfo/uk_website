@@ -7,45 +7,45 @@ Route::get('/', function () {
     return view('uk-car-booking');
 })->name('home');
 
-Route::get('/uk-dashboard', function () {
+Route::get('/dashboard', function () {
     return view('uk-dashboard');
-})->name('uk-dashboard');
+})->name('dashboard');
 
-Route::get('/uk-profile', function () {
-    return view('uk-profile');
-})->name('uk-profile');
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
 
-Route::get('/uk-about', function () {
-    return view('uk-about');
-})->name('uk-about');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
- Route::get('/uk-terms', function () {
-    return view('uk-terms');
-})->name('uk-terms');
+Route::get('/terms', function () {
+    return view('terms');
+})->name('terms');
 
-  Route::get('/uk-privacy', function () {
-    return view('uk-privacy');
-})->name('uk-privacy');
+Route::get('/privacy', function () {
+    return view('privacy');
+})->name('privacy');
 
-  Route::get('/uk-contact', function () {
-    return view('uk-contact');
-})->name('uk-contact');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
 
- Route::get('/uk-global', function () {
-    return view('uk-global');
-})->name('uk-global');
+Route::get('/global', function () {
+    return view('global');
+})->name('global');
 
- Route::get('/uk-preview', function () {
-    return view('uk-preview');
-})->name('uk-preview');
+Route::get('/preview', function () {
+    return view('preview');
+})->name('preview');
 
- Route::get('/uk-invoice', function () {
-    return view('uk-invoice');
-})->name('uk-invoice');
+Route::get('/invoice', function () {
+    return view('invoice');
+})->name('invoice');
 
- Route::get('/operator-signup', function () {
-    return view('uk-operator');
-})->name('uk-operator');
+Route::get('/operator-signup', function () {
+    return view('operator');
+})->name('operator');
 
 // Fare calculation route (requires Sanctum token via Authorization header)
 Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll']);

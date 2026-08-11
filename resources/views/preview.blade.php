@@ -1115,7 +1115,7 @@
                 Best Regards, GoRide Team
             </div>
             <div>
-                <a href="/uk-terms" class="fw-bold text-dark text-decoration-underline" style="font-size: 13px;">Terms &
+                <a href="/terms" class="fw-bold text-dark text-decoration-underline" style="font-size: 13px;">Terms &
                     Conditions</a>
             </div>
         </div>

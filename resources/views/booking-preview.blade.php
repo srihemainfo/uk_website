@@ -595,8 +595,13 @@
             border-radius: 6px;
         }
 
-        .gallery-prev { left: 20px; }
-        .gallery-next { right: 20px; }
+        .gallery-prev {
+            left: 20px;
+        }
+
+        .gallery-next {
+            right: 20px;
+        }
 
         @media (max-width: 768px) {
 
@@ -749,7 +754,13 @@
                 font-size: 22px !important;
             }
 
-            h1, h2, h3, h4, h5, h6, .card-heading {
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            .card-heading {
                 page-break-after: avoid;
                 break-after: avoid;
             }
@@ -1074,21 +1085,54 @@
         }
 
         @keyframes pulse-yellow-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
         }
 
         @keyframes pulse-blue-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
         }
 
         @keyframes pulse-green-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
         }
 
         .status-placeholder-title {
@@ -1266,7 +1310,8 @@
 
         <!-- Live Tracking Overlay Modal -->
         <div class="track-ride-overlay" id="trackRideOverlay">
-            <button class="track-close-btn" onclick="toggleTrackRideOverlay(event)"><i class="fa-solid fa-xmark"></i></button>
+            <button class="track-close-btn" onclick="toggleTrackRideOverlay(event)"><i
+                    class="fa-solid fa-xmark"></i></button>
 
             <!-- Search Container -->
             <div class="track-ride-container" id="trackSearchContainer">
@@ -1274,7 +1319,8 @@
                 <p>Live status & real-time driver tracking</p>
                 <div class="track-input-wrapper">
                     <i class="fa-solid fa-hashtag"></i>
-                    <input type="text" id="trackBookingNumber" placeholder="e.g. GRC-12345" value="{{ $job_no ?? '' }}" />
+                    <input type="text" id="trackBookingNumber" placeholder="e.g. GRC-12345"
+                        value="{{ $job_no ?? '' }}" />
                 </div>
                 <button class="btn-track-submit" id="btnTrackSubmit" onclick="submitTrackRide()">
                     Track Now <i class="fa-solid fa-arrow-right ms-2"></i>
@@ -1310,8 +1356,8 @@
         <!-- Top Brand Bar -->
         <div class="top-brand-bar">
             <a href="#" class="brand-logo text-decoration-none">
-                <img src="{{ asset('goride/img/logo-dark.png') }}" alt="GoRide Logo"
-                    style="height: 36px; width: auto;" onerror="this.src='{{ asset('goride/img/logo-darkk.png') }}'">
+                <img src="{{ asset('goride/img/logo-dark.png') }}" alt="GoRide Logo" style="height: 36px; width: auto;"
+                    onerror="this.src='{{ asset('goride/img/logo-darkk.png') }}'">
             </a>
 
             <div class="top-brand-meta">
@@ -1397,7 +1443,8 @@
                                     </div>
                                     <div>
                                         <div class="hero-sec-label">Ride OTP</div>
-                                        <div class="hero-sec-otp">{{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}</div>
+                                        <div class="hero-sec-otp">
+                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1410,7 +1457,8 @@
                                         <div class="hero-sec-label">
                                             <span class="pulse-dot-sm"></span> Live Tracking
                                         </div>
-                                        <a href="javascript:void(0)" onclick="openLiveTrackingModal(event)" class="hero-btn-track" title="Track Ride Live">
+                                        <a href="javascript:void(0)" onclick="openLiveTrackingModal(event)"
+                                            class="hero-btn-track" title="Track Ride Live">
                                             <i class="fa-solid fa-location-dot"></i> Track
                                         </a>
                                     </div>
@@ -1422,7 +1470,8 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span class="text-uppercase text-secondary fw-bold"
                                     style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
-                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown" onclick="toggleFareBreakdown()" title="View Fare Breakdown">
+                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
+                                    onclick="toggleFareBreakdown()" title="View Fare Breakdown">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </div>
@@ -1440,8 +1489,10 @@
                                     @if(isset($isDiscount) && $isDiscount == 'yes')
                                         <span>
                                             <strong>£{{ $base_fare ?? 0 }}</strong>
-                                            <span style="text-decoration: line-through; color: #9ca3af; font-size: 11px; margin-left: 4px;">£{{ $actual_base ?? 0 }}</span>
-                                            <span style="display: block; font-size: 11px; color: #059669;">Saved £{{ $credit_bonus ?? 0 }} (GoRide Bonus)</span>
+                                            <span
+                                                style="text-decoration: line-through; color: #9ca3af; font-size: 11px; margin-left: 4px;">£{{ $actual_base ?? 0 }}</span>
+                                            <span style="display: block; font-size: 11px; color: #059669;">Saved
+                                                £{{ $credit_bonus ?? 0 }} (GoRide Bonus)</span>
                                         </span>
                                     @else
                                         <strong>£{{ $base_fare ?? 0 }}</strong>
@@ -1452,16 +1503,16 @@
                                     <strong>£{{ $tax ?? 0 }}</strong>
                                 </div>
                                 @if(isset($meet_amt) && $meet_amt > 0)
-                                <div class="fare-line-item">
-                                    <span>Meet &amp; Greet</span>
-                                    <strong>£{{ $meet_amt }}</strong>
-                                </div>
+                                    <div class="fare-line-item">
+                                        <span>Meet &amp; Greet</span>
+                                        <strong>£{{ $meet_amt }}</strong>
+                                    </div>
                                 @endif
                                 @if(isset($govt_levy) && $govt_levy > 0)
-                                <div class="fare-line-item">
-                                    <span>Toll (Govt. Levy / Extra)</span>
-                                    <strong>£{{ $govt_levy }}</strong>
-                                </div>
+                                    <div class="fare-line-item">
+                                        <span>Toll (Govt. Levy / Extra)</span>
+                                        <strong>£{{ $govt_levy }}</strong>
+                                    </div>
                                 @endif
                                 <div class="fare-total-line">
                                     <span>Total Fare</span>
@@ -1473,16 +1524,16 @@
                                         <i class="fa-solid fa-wallet"></i> Payment Details
                                     </div>
                                     @if(isset($deductAmt) && $deductAmt == 0)
-                                    <div class="fare-line-item">
-                                        <span>Paid via Online (UPI / Card)</span>
-                                        <strong style="color:#059669;">£{{ $paid_amt ?? 0 }}</strong>
-                                    </div>
+                                        <div class="fare-line-item">
+                                            <span>Paid via Online (UPI / Card)</span>
+                                            <strong style="color:#059669;">£{{ $paid_amt ?? 0 }}</strong>
+                                        </div>
                                     @endif
                                     @if(isset($deductAmt) && $deductAmt == 0 && (isset($wallet_amt) && ($wallet_amt != 0 && $wallet_amt != null)))
-                                    <div class="fare-line-item">
-                                        <span>Paid via Wallet</span>
-                                        <strong style="color:#4338ca;">£{{ $wallet_amt ?? 0 }}</strong>
-                                    </div>
+                                        <div class="fare-line-item">
+                                            <span>Paid via Wallet</span>
+                                            <strong style="color:#4338ca;">£{{ $wallet_amt ?? 0 }}</strong>
+                                        </div>
                                     @endif
                                     <div class="fare-line-item">
                                         <span>{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
@@ -1511,10 +1562,10 @@
                             <strong>{{ $name ?? '' }}</strong>
                         </div>
                         @if(!empty($user_details['c_booked_for']) || !empty($booked_for))
-                        <div class="person-info-item">
-                            <span>Booked For</span>
-                            <strong>{{ $user_details['c_booked_for'] ?? $booked_for ?? '' }}</strong>
-                        </div>
+                            <div class="person-info-item">
+                                <span>Booked For</span>
+                                <strong>{{ $user_details['c_booked_for'] ?? $booked_for ?? '' }}</strong>
+                            </div>
                         @endif
                         <div class="person-info-item">
                             <span>Mobile Number</span>
@@ -1523,10 +1574,10 @@
                             </strong>
                         </div>
                         @if(!empty($email))
-                        <div class="person-info-item">
-                            <span>Email</span>
-                            <strong>{{ $email }}</strong>
-                        </div>
+                            <div class="person-info-item">
+                                <span>Email</span>
+                                <strong>{{ $email }}</strong>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -1538,47 +1589,48 @@
                             <i class="fa-solid fa-id-card"></i> Driver Details
                         </div>
                         @if(!empty($driver_name) && isset($job_status) && in_array(strtolower($job_status), ['confirmed', 'assign', 'assigned', 'accept', 'started', 'completed', 'onboarded', 'dispatched']))
-                        <div class="person-info-item">
-                            <span>Driver Name</span>
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="{{ !empty($driver_image) ? $driver_image : asset('goride/img/driver-dummy.png') }}"
-                                    style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
-                                    onerror="this.src='{{ asset('goride/img/driver-dummy.png') }}'">
-                                <strong>{{ $driver_name }}</strong>
+                            <div class="person-info-item">
+                                <span>Driver Name</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="{{ !empty($driver_image) ? $driver_image : asset('goride/img/driver-dummy.png') }}"
+                                        style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
+                                        onerror="this.src='{{ asset('goride/img/driver-dummy.png') }}'">
+                                    <strong>{{ $driver_name }}</strong>
+                                </div>
                             </div>
-                        </div>
-                        @if(!empty($cab_type) || !empty($vehicle_model))
-                        <div class="person-info-item">
-                            <span>Vehicle Model</span>
-                            <strong>{{ $cab_type ?? $vehicle_model ?? '' }}</strong>
-                        </div>
-                        @endif
-                        @if(!empty($vehicle_number))
-                        <div class="person-info-item">
-                            <span>Vehicle Number</span>
-                            <strong><span class="reg-badge">{{ $vehicle_number }}</span></strong>
-                        </div>
-                        @endif
-                        <div class="person-info-item">
-                            <span>Contact</span>
-                            <div class="d-flex align-items-center gap-2">
-                                <a class="btn-call-driver" href="tel:{{ $driver_mobile ?? '' }}">
-                                    {{ $driver_mobile ?? '' }}
-                                </a>
+                            @if(!empty($cab_type) || !empty($vehicle_model))
+                                <div class="person-info-item">
+                                    <span>Vehicle Model</span>
+                                    <strong>{{ $cab_type ?? $vehicle_model ?? '' }}</strong>
+                                </div>
+                            @endif
+                            @if(!empty($vehicle_number))
+                                <div class="person-info-item">
+                                    <span>Vehicle Number</span>
+                                    <strong><span class="reg-badge">{{ $vehicle_number }}</span></strong>
+                                </div>
+                            @endif
+                            <div class="person-info-item">
+                                <span>Contact</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a class="btn-call-driver" href="tel:{{ $driver_mobile ?? '' }}">
+                                        {{ $driver_mobile ?? '' }}
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                        @if(isset($vehicle_images) && is_array($vehicle_images) && count($vehicle_images) > 0)
-                        <div class="person-info-item">
-                            <span>Vehicle Photos</span>
-                            <button class="btn btn-sm btn-primary py-0 px-2" style="font-size:11px;" onclick="openVehicleGallery()">
-                                View Images
-                            </button>
-                        </div>
-                        @endif
+                            @if(isset($vehicle_images) && is_array($vehicle_images) && count($vehicle_images) > 0)
+                                <div class="person-info-item">
+                                    <span>Vehicle Photos</span>
+                                    <button class="btn btn-sm btn-primary py-0 px-2" style="font-size:11px;"
+                                        onclick="openVehicleGallery()">
+                                        View Images
+                                    </button>
+                                </div>
+                            @endif
                         @else
-                        <div class="text-secondary py-2" style="font-size: 13px;">
-                            Driver details will be assigned prior to your pickup time.
-                        </div>
+                            <div class="text-secondary py-2" style="font-size: 13px;">
+                                Driver details will be assigned prior to your pickup time.
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -1593,87 +1645,88 @@
             </div>
             <div class="row g-2">
                 @if(isset($pickup_date))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-calendar-days text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Pickup Time</div>
-                            <div class="info-value" style="font-size: 12px;">{{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-calendar-days text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Pickup Time</div>
+                                <div class="info-value" style="font-size: 12px;">
+                                    {{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(!empty($distance))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-location-arrow text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Distance</div>
-                            <div class="info-value">{{ $distance }} Miles</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-location-arrow text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Distance</div>
+                                <div class="info-value">{{ $distance }} Miles</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(!empty($cab_type))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-car text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Vehicle</div>
-                            <div class="info-value">{{ $cab_type }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-car text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Vehicle</div>
+                                <div class="info-value">{{ $cab_type }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(!empty($user_details['c_meet_and_greet']) || (isset($meet_amt) && $meet_amt > 0))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-handshake text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Meet & Greet</div>
-                            <div class="info-value">Included</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-handshake text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Meet & Greet</div>
+                                <div class="info-value">Included</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(isset($pass_count) && $pass_count !== '')
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-users text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Passengers</div>
-                            <div class="info-value">{{ $pass_count }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-users text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Passengers</div>
+                                <div class="info-value">{{ $pass_count }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(isset($lugg_count) && $lugg_count !== '')
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-suitcase text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Luggage</div>
-                            <div class="info-value">{{ $lugg_count }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-suitcase text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Luggage</div>
+                                <div class="info-value">{{ $lugg_count }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if(!empty($hand_lugg_count) || !empty($user_details['c_hand_lagguage']))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-briefcase text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Hand Luggage</div>
-                            <div class="info-value">{{ $hand_lugg_count ?? $user_details['c_hand_lagguage'] }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-briefcase text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Hand Luggage</div>
+                                <div class="info-value">{{ $hand_lugg_count ?? $user_details['c_hand_lagguage'] }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 <!-- @if(!empty($child_seat) || !empty($user_details['c_child_count']))
@@ -1690,7 +1743,7 @@
 
                 @php
                     $childCount = $child_seat ?? $user_details['c_child_count'] ?? 0;
-                    
+
                     // Format "toddler,booster" to "Toddler, Booster"
                     $childTypes = (!empty($user_details['c_child_type']) && strtolower($user_details['c_child_type']) !== 'none')
                         ? ucwords(str_replace(',', ', ', $user_details['c_child_type']))
@@ -1712,30 +1765,30 @@
                             </div>
                         </div>
                     </div>
-                @endif                
+                @endif
 
                 @if(!empty($wheelchair) || !empty($user_details['c_wheelchair']))
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-wheelchair text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Wheelchair</div>
-                            <div class="info-value">{{ $wheelchair ?? $user_details['c_wheelchair'] }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-wheelchair text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Wheelchair</div>
+                                <div class="info-value">{{ $wheelchair ?? $user_details['c_wheelchair'] }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                @endif                
+                @endif
 
                 @if(isset($day) && $day)
-                <div class="col-lg-3 col-md-4 col-6">
-                    <div class="info-item-box d-flex align-items-center gap-2">
-                        <i class="fa-solid fa-clock text-dark fs-5"></i>
-                        <div>
-                            <div class="info-label mb-0">Duration</div>
-                            <div class="info-value">{{ $day }}</div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="info-item-box d-flex align-items-center gap-2">
+                            <i class="fa-solid fa-clock text-dark fs-5"></i>
+                            <div>
+                                <div class="info-label mb-0">Duration</div>
+                                <div class="info-value">{{ $day }}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>
@@ -1765,178 +1818,178 @@
         @endphp
 
         @if($hasValidDetails)
-        <div class="preview-card">
-            <div class="card-heading">
-                <i class="fa-solid fa-plane-arrival"></i> Pickup & Journey Information
+            <div class="preview-card">
+                <div class="card-heading">
+                    <i class="fa-solid fa-plane-arrival"></i> Pickup & Journey Information
+                </div>
+
+                <div class="row g-2">
+
+                    {{-- ================= FLIGHT DETAILS ================= --}}
+                    @if(!empty($user_details['c_flight_number']) && strtolower($user_details['c_flight_number']) !== 'none')
+                        @if(!empty($user_details['c_flight_number']))
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-plane"></i> Flight Number</div>
+                                    <div class="info-value">{{ $user_details['c_flight_number'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_flight_arriving_time']))
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-clock"></i> Flight Arrival Time</div>
+                                    <div class="info-value">{{ $user_details['c_flight_arriving_time'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_pick_after_time']))
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-user-clock"></i> Pickup After Landing</div>
+                                    <div class="info-value">{{ $user_details['c_pick_after_time'] }} mins</div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_coming_from']) && strtolower($user_details['c_coming_from']) !== 'none')
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-earth-asia"></i> Coming From</div>
+                                    <div class="info-value">{{ $user_details['c_coming_from'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
+                    {{-- ================= PICKUP & DROP ADDRESSES ================= --}}
+                    @if(!empty($user_details['c_pick_address']) && strtolower($user_details['c_pick_address']) !== 'none')
+                        <div class="col-md-6 col-12">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Address</div>
+                                <div class="info-value">{{ $user_details['c_pick_address'] }}</div>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(!empty($user_details['c_drop_address']) && strtolower($user_details['c_drop_address']) !== 'none')
+                        <div class="col-md-6 col-12">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-location-pin"></i> Dropoff Address</div>
+                                <div class="info-value">{{ $user_details['c_drop_address'] }}</div>
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- ================= SEAPORT / CRUISE DETAILS ================= --}}
+                    @php
+                        $cruiseName = $user_details['c_cruise_name'] ?? $user_details['c_ferry_name'] ?? null;
+                    @endphp
+
+                    @if(!empty($cruiseName) && strtolower($cruiseName) !== 'none')
+                        <div class="col-md-3 col-6">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-ship"></i> Cruise / Ferry Name</div>
+                                <div class="info-value">{{ $cruiseName }}</div>
+                            </div>
+                        </div>
+
+                        @if(!empty($user_details['c_seaport_arrival_time']))
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-clock"></i> Docking Arrival Time</div>
+                                    <div class="info-value">{{ $user_details['c_seaport_arrival_time'] }} </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_seaport_pick_after_time']))
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-user-clock"></i> Pickup After Docking</div>
+                                    <div class="info-value">{{ $user_details['c_seaport_pick_after_time'] }} mins</div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_coming_from_port']) && strtolower($user_details['c_coming_from_port']) !== 'none')
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-anchor"></i> Departure Port</div>
+                                    <div class="info-value">{{ $user_details['c_coming_from_port'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
+                    {{-- ================= OTHER PASSENGER DETAILS ================= --}}
+                    @if(!empty($user_details['c_is_other']) && $user_details['c_is_other'])
+                        @if(!empty($user_details['c_pass_name']))
+                            <div class="col-md-6 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-user"></i> Passenger Name</div>
+                                    <div class="info-value">{{ $user_details['c_pass_name'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(!empty($user_details['c_pass_mobile']))
+                            <div class="col-md-6 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-phone"></i> Passenger Mobile</div>
+                                    <div class="info-value">{{ $user_details['c_pass_mobile'] }}</div>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+
+                    {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
+                    <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
+                    <div class="col-md-3 col-6">
+                        <div class="info-item-box">
+                            <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                            <div class="info-value">Meet & Greet Included</div>
+                        </div>
+                    </div>
+                    @endif
+
+                    @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                    <div class="col-md-3 col-6">
+                        <div class="info-item-box">
+                            <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                            <div class="info-value">Wheelchair Required</div>
+                        </div>
+                    </div>
+                    @endif -->
+
+                    @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
+                        <div class="col-md-6 col-12">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-note-sticky"></i> Special Instructions</div>
+                                <div class="info-value">{{ $user_details['c_special_require'] }}</div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
             </div>
-            
-            <div class="row g-2">
-                
-                {{-- ================= FLIGHT DETAILS ================= --}}
-                @if(!empty($user_details['c_flight_number']) && strtolower($user_details['c_flight_number']) !== 'none')
-                    @if(!empty($user_details['c_flight_number']))
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-plane"></i> Flight Number</div>
-                            <div class="info-value">{{ $user_details['c_flight_number'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_flight_arriving_time']))
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-clock"></i> Flight Arrival Time</div>
-                            <div class="info-value">{{ $user_details['c_flight_arriving_time'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_pick_after_time']))
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-user-clock"></i> Pickup After Landing</div>
-                            <div class="info-value">{{ $user_details['c_pick_after_time'] }} mins</div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_coming_from']) && strtolower($user_details['c_coming_from']) !== 'none')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-earth-asia"></i> Coming From</div>
-                            <div class="info-value">{{ $user_details['c_coming_from'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
-                
-                {{-- ================= PICKUP & DROP ADDRESSES ================= --}}
-                @if(!empty($user_details['c_pick_address']) && strtolower($user_details['c_pick_address']) !== 'none')
-                <div class="col-md-6 col-12">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Address</div>
-                        <div class="info-value">{{ $user_details['c_pick_address'] }}</div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($user_details['c_drop_address']) && strtolower($user_details['c_drop_address']) !== 'none')
-                <div class="col-md-6 col-12">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-location-pin"></i> Dropoff Address</div>
-                        <div class="info-value">{{ $user_details['c_drop_address'] }}</div>
-                    </div>
-                </div>
-                @endif 
-                
-                {{-- ================= SEAPORT / CRUISE DETAILS ================= --}}
-                @php
-                    $cruiseName = $user_details['c_cruise_name'] ?? $user_details['c_ferry_name'] ?? null;
-                @endphp
-
-                @if(!empty($cruiseName) && strtolower($cruiseName) !== 'none')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-ship"></i> Cruise / Ferry Name</div>
-                            <div class="info-value">{{ $cruiseName }}</div>
-                        </div>
-                    </div>
-
-                    @if(!empty($user_details['c_seaport_arrival_time']))
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-clock"></i> Docking Arrival Time</div>
-                            <div class="info-value">{{ $user_details['c_seaport_arrival_time'] }} </div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_seaport_pick_after_time']))
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-user-clock"></i> Pickup After Docking</div>
-                            <div class="info-value">{{ $user_details['c_seaport_pick_after_time'] }} mins</div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_coming_from_port']) && strtolower($user_details['c_coming_from_port']) !== 'none')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-anchor"></i> Departure Port</div>
-                            <div class="info-value">{{ $user_details['c_coming_from_port'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
-
-                {{-- ================= OTHER PASSENGER DETAILS ================= --}}
-                @if(!empty($user_details['c_is_other']) && $user_details['c_is_other'])
-                    @if(!empty($user_details['c_pass_name']))
-                    <div class="col-md-6 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-user"></i> Passenger Name</div>
-                            <div class="info-value">{{ $user_details['c_pass_name'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-
-                    @if(!empty($user_details['c_pass_mobile']))
-                    <div class="col-md-6 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-phone"></i> Passenger Mobile</div>
-                            <div class="info-value">{{ $user_details['c_pass_mobile'] }}</div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
-
-                {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
-                <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                <div class="col-md-3 col-6">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                        <div class="info-value">Meet & Greet Included</div>
-                    </div>
-                </div>
-                @endif
-
-                @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                <div class="col-md-3 col-6">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                        <div class="info-value">Wheelchair Required</div>
-                    </div>
-                </div>
-                @endif -->
-
-                @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
-                <div class="col-md-6 col-12">
-                    <div class="info-item-box">
-                        <div class="info-label"><i class="fa-solid fa-note-sticky"></i> Special Instructions</div>
-                        <div class="info-value">{{ $user_details['c_special_require'] }}</div>
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
         @endif
 
-        
+
 
         <!-- Special Requirements Card -->
         @if(!empty($user_details['c_special_require']) || !empty($special_require))
-        <div class="preview-card d-none">
-            <div class="card-heading">
-                <i class="fa-solid fa-clipboard-list"></i> Special Requirements
+            <div class="preview-card d-none">
+                <div class="card-heading">
+                    <i class="fa-solid fa-clipboard-list"></i> Special Requirements
+                </div>
+                <div class="note-alert-banner">
+                    <ul class="policy-list">
+                        <li>{{ $user_details['c_special_require'] ?? $special_require }}</li>
+                    </ul>
+                </div>
             </div>
-            <div class="note-alert-banner">
-                <ul class="policy-list">
-                    <li>{{ $user_details['c_special_require'] ?? $special_require }}</li>
-                </ul>
-            </div>
-        </div>
         @endif
 
         <!-- Terms and Conditions Card -->
@@ -1963,8 +2016,10 @@
                 <div class="col-md-6">
                     <strong class="text-dark d-block mb-1" style="font-size: 13px;">Included</strong>
                     <ul class="policy-list">
-                        <li>{{ $distance ?? '360' }} miles included in the fare. Additional mileage: £{{ $perKm ?? '1.50' }} per mile.</li>
-                        <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per minute applies.</li>
+                        <li>{{ $distance ?? '360' }} miles included in the fare. Additional mileage:
+                            £{{ $perKm ?? '1.50' }} per mile.</li>
+                        <li>Complimentary waiting time of 30 minutes for pickup. Thereafter, £0.50 per minute applies.
+                        </li>
                         <li>VAT included (where applicable).</li>
                         <li>Fuel charges included.</li>
                     </ul>
@@ -2013,8 +2068,8 @@
             <p class="text-secondary mb-2" style="font-size: 13px; line-height: 1.5;">
                 If you experience any difficulty in finding a driver or require assistance during your trip, please feel
                 free to contact us via Call at <a href="tel:+{{ env('SUPPORT_NO_I') }}"
-                    class="fw-bold text-dark text-decoration-underline">+{{ env('SUPPORT_NO_I') }}</a>, or email us at <a
-                    href="mailto:{{ env('SUPPORT_EMAIL') }}"
+                    class="fw-bold text-dark text-decoration-underline">+{{ env('SUPPORT_NO_I') }}</a>, or email us at
+                <a href="mailto:{{ env('SUPPORT_EMAIL') }}"
                     class="fw-bold text-dark text-decoration-underline">{{ env('SUPPORT_EMAIL') }}</a>.
             </p>
             <p class="text-secondary mb-2" style="font-size: 13px; line-height: 1.5;">
@@ -2025,7 +2080,8 @@
                 Best Regards, GoRide Team
             </div>
             <div>
-                <a href="/uk-terms" target="_blank" class="fw-bold text-dark text-decoration-underline" style="font-size: 13px;">Terms &
+                <a href="/terms" target="_blank" class="fw-bold text-dark text-decoration-underline"
+                    style="font-size: 13px;">Terms &
                     Conditions</a>
             </div>
         </div>
@@ -2088,15 +2144,15 @@
             s.id = 'socketIoScript';
             s.setAttribute('data-cfasync', 'false');
             s.src = '/js/socket.io.min.js';
-            s.onload = function() {
+            s.onload = function () {
                 if (callback) callback();
             };
-            s.onerror = function() {
+            s.onerror = function () {
                 console.warn("Local socket.io.min.js failed, trying CDN fallback...");
                 const cdnS = document.createElement('script');
                 cdnS.setAttribute('data-cfasync', 'false');
                 cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-                cdnS.onload = function() { if (callback) callback(); };
+                cdnS.onload = function () { if (callback) callback(); };
                 document.head.appendChild(cdnS);
             };
             document.head.appendChild(s);
@@ -2517,48 +2573,48 @@
                         liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
                     });
 
-                let lastPos = null;
+                    let lastPos = null;
 
-                liveTrackingSocket.on("driver_location", (locationData) => {
-                    try {
-                        if (locationData && locationData.lat && locationData.lng) {
-                            const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
+                    liveTrackingSocket.on("driver_location", (locationData) => {
+                        try {
+                            if (locationData && locationData.lat && locationData.lng) {
+                                const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
 
-                            if (!lastPos) {
-                                trackingMap.setCenter(newPos);
-                                driverMarker.setPosition(newPos);
-                                if (locationData.heading !== undefined) {
-                                    driverMarker.setIcon(getLiveTrackingCarIcon(locationData.heading));
+                                if (!lastPos) {
+                                    trackingMap.setCenter(newPos);
+                                    driverMarker.setPosition(newPos);
+                                    if (locationData.heading !== undefined) {
+                                        driverMarker.setIcon(getLiveTrackingCarIcon(locationData.heading));
+                                    }
+                                } else {
+                                    animateMarker(driverMarker, lastPos, newPos);
+                                    let calculatedHeading = 0;
+                                    if (locationData.heading !== undefined) {
+                                        calculatedHeading = locationData.heading;
+                                    } else if (google.maps.geometry && google.maps.geometry.spherical) {
+                                        calculatedHeading = google.maps.geometry.spherical.computeHeading(lastPos, newPos);
+                                    }
+                                    driverMarker.setIcon(getLiveTrackingCarIcon(calculatedHeading));
+                                    trackingMap.panTo(newPos);
                                 }
-                            } else {
-                                animateMarker(driverMarker, lastPos, newPos);
-                                let calculatedHeading = 0;
-                                if (locationData.heading !== undefined) {
-                                    calculatedHeading = locationData.heading;
-                                } else if (google.maps.geometry && google.maps.geometry.spherical) {
-                                    calculatedHeading = google.maps.geometry.spherical.computeHeading(lastPos, newPos);
-                                }
-                                driverMarker.setIcon(getLiveTrackingCarIcon(calculatedHeading));
-                                trackingMap.panTo(newPos);
+                                lastPos = newPos;
                             }
-                            lastPos = newPos;
-                        }
-                    } catch (e) { console.error('Socket message error', e); }
-                });
+                        } catch (e) { console.error('Socket message error', e); }
+                    });
 
-                liveTrackingSocket.on("driver_arrived", () => {
-                    updateLiveTrackingTimeline('onboard');
-                });
+                    liveTrackingSocket.on("driver_arrived", () => {
+                        updateLiveTrackingTimeline('onboard');
+                    });
 
-                liveTrackingSocket.on("trip_completed", () => {
-                    updateLiveTrackingTimeline('completed');
-                    liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
-                    setTimeout(() => toggleTrackRideOverlay(), 3000);
-                });
+                    liveTrackingSocket.on("trip_completed", () => {
+                        updateLiveTrackingTimeline('completed');
+                        liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
+                        setTimeout(() => toggleTrackRideOverlay(), 3000);
+                    });
 
-            } catch (e) {
-                console.error("WebSocket connection failed", e);
-            }
+                } catch (e) {
+                    console.error("WebSocket connection failed", e);
+                }
             });
         }
 

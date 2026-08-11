@@ -939,8 +939,8 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Company</div>
                         <div class="footer-links-list">
-                            <a href="uk-about">About Us</a>
-                            <a href="uk-contact">Contact</a>
+                            <a href="about">About Us</a>
+                            <a href="contact">Contact</a>
                             <a href="#">Blogs</a>
                         </div>
                     </div>
@@ -951,8 +951,8 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Legal</div>
                         <div class="footer-links-list">
-                            <a href="uk-privacy">Privacy Policy</a>
-                            <a href="uk-terms">Terms & Conditions</a>
+                            <a href="privacy">Privacy Policy</a>
+                            <a href="terms">Terms & Conditions</a>
                         </div>
                     </div>
                 </div>

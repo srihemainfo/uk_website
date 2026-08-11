@@ -4414,7 +4414,7 @@
                 </div>
             </div>
             <div class="account-menu">
-                <a href="/uk-profile"><i class="fas fa-user"></i><span>My Profile</span></a>
+                <a href="/profile"><i class="fas fa-user"></i><span>My Profile</span></a>
                 <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>
                 <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
@@ -4447,7 +4447,7 @@
                 </div>
             </div>
             <div class="mobile-menu-links">
-                <a href="/uk-profile"><i class="fas fa-user"></i>My Profile</a>
+                <a href="/profile"><i class="fas fa-user"></i>My Profile</a>
                 <a href="#"><i class="fas fa-car"></i>My Rides</a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
                 <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
@@ -5543,8 +5543,8 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Company</div>
                         <div class="footer-links-list">
-                            <a href="uk-about">About Us</a>
-                            <a href="uk-contact">Contact</a>
+                            <a href="about">About Us</a>
+                            <a href="contact">Contact</a>
 
                         </div>
                     </div>
@@ -5555,8 +5555,8 @@
                         <div class="footer-section-title">Legal</div>
                         <div class="footer-links-list">
                             <!--<a href="#">Security Policy</a>-->
-                            <a href="uk-privacy">Privacy Policy</a>
-                            <a href="uk-terms">Terms & Conditions</a>
+                            <a href="privacy">Privacy Policy</a>
+                            <a href="terms">Terms & Conditions</a>
                         </div>
                     </div>
                 </div>

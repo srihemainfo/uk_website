@@ -22,12 +22,12 @@
             <div id="navbarUserDropdown" class="navbar-user-dropdown">
                 <ul class="navbar-user-menu">
                     <li>
-                        <a href="{{ route('uk-profile') }}" class="navbar-user-menu-btn">
+                        <a href="{{ route('profile') }}" class="navbar-user-menu-btn">
                             <i class="far fa-user me-2"></i> Profile
                         </a>
                     </li>
                     <li id="desktopNavDashboardLink">
-                        <a href="{{ route('uk-dashboard') }}" class="navbar-user-menu-btn">
+                        <a href="{{ route('dashboard') }}" class="navbar-user-menu-btn">
                             <i class="fas fa-chart-line me-2"></i> Dashboard
                         </a>
                     </li>
@@ -60,8 +60,8 @@
             </div>
         </div>
         <div class="account-menu">
-            <a href="{{ route('uk-profile') }}"><i class="fas fa-user"></i><span>Profile</span></a>
-            <a href="{{ route('uk-dashboard') }}"><i class="fas fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="{{ route('profile') }}"><i class="fas fa-user"></i><span>Profile</span></a>
+            <a href="{{ route('dashboard') }}"><i class="fas fa-table-columns"></i><span>Dashboard</span></a>
             <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i><span>Track
                     Ride</span></a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i
@@ -96,12 +96,15 @@
             </div>
         </div>
         <div class="mobile-menu-links">
-            <a href="{{ route('uk-profile') }}" class="mobile-auth-only" style="display: none !important;"><i class="fas fa-user"></i>Profile</a>
-            <a href="{{ route('uk-dashboard') }}" class="mobile-auth-only" style="display: none !important;"><i class="fas fa-table-columns"></i>Dashboard</a>
+            <a href="{{ route('profile') }}" class="mobile-auth-only" style="display: none !important;"><i
+                    class="fas fa-user"></i>Profile</a>
+            <a href="{{ route('dashboard') }}" class="mobile-auth-only" style="display: none !important;"><i
+                    class="fas fa-table-columns"></i>Dashboard</a>
             <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i>Track Ride</a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i
                     class="fas fa-circle-question"></i>Help</a>
-            <a href="javascript:void(0)" class="mobile-auth-only" onclick="handleLogout()" style="display: none !important;"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <a href="javascript:void(0)" class="mobile-auth-only" onclick="handleLogout()"
+                style="display: none !important;"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </div>
     </div>
 </nav>

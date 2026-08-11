@@ -888,16 +888,16 @@
 
             <div class="mobile-menu-links">
                 <a href="/uk-car-booking"><i class="fas fa-home"></i>Home</a>
-                <a href="/uk-about"><i class="fas fa-info-circle"></i>About Us</a>
-                <a href="/uk-operator-registration"><i class="fas fa-briefcase"></i>Operator Registration</a>
+                <a href="/about"><i class="fas fa-info-circle"></i>About Us</a>
+                <a href="/operator-registration"><i class="fas fa-briefcase"></i>Operator Registration</a>
                 <a href="#"><i class="fas fa-user"></i>My Profile</a>
                 <a href="#"><i class="fas fa-car"></i>My Rides</a>
                 <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
                 <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
                 <a href="#"><i class="fas fa-tag"></i>Offers</a>
                 <a href="#"><i class="fas fa-language"></i>Language</a>
-                <a href="/uk-terms"><i class="fas fa-file-contract"></i>Terms</a>
-                <a href="/uk-privacy"><i class="fas fa-shield-alt"></i>Privacy</a>
+                <a href="/terms"><i class="fas fa-file-contract"></i>Terms</a>
+                <a href="/privacy"><i class="fas fa-shield-alt"></i>Privacy</a>
                 <a href="#"><i class="fas fa-gear"></i>Settings</a>
             </div>
 
@@ -1329,8 +1329,8 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Company</div>
                         <div class="footer-links-list">
-                            <a href="/uk-about">About Us</a>
-                            <a href="/uk-contact">Contact</a>
+                            <a href="/about">About Us</a>
+                            <a href="/contact">Contact</a>
                             <a href="#">Blogs</a>
                         </div>
                     </div>
@@ -1340,8 +1340,8 @@
                     <div class="footer-section">
                         <div class="footer-section-title">Legal</div>
                         <div class="footer-links-list">
-                            <a href="/uk-privacy">Privacy Policy</a>
-                            <a href="/uk-terms">Terms & Conditions</a>
+                            <a href="/privacy">Privacy Policy</a>
+                            <a href="/terms">Terms & Conditions</a>
                         </div>
                     </div>
                 </div>

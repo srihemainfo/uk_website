@@ -1123,14 +1123,14 @@
         }
 
         .night-charge-icon-wrap {
-               width: 33px;
-    height: 33px;
-    border-radius: 50%;
-    background: #f9bf0078;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+            width: 33px;
+            height: 33px;
+            border-radius: 50%;
+            background: #f9bf0078;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .night-charge-moon-icon {
@@ -3233,8 +3233,8 @@
         }
 
         /* Full width for any input box that sits alone in its row (desktop & mobile) */
-        .booking-form-grid > .booking-form-group:only-child,
-        .booking-form-grid > .booking-form-group:only-of-type {
+        .booking-form-grid>.booking-form-group:only-child,
+        .booking-form-grid>.booking-form-group:only-of-type {
             grid-column: 1 / -1;
         }
 
@@ -3662,7 +3662,7 @@
             font-weight: 500;
             color: #000;
             background: #fff;
-               padding: 4px 15px;
+            padding: 4px 15px;
             border-radius: 6px;
             border: 1px solid #000;
             text-decoration: none;
@@ -3750,20 +3750,19 @@
 
         .driver-review-link {
             display: inline-block;
-    font-size: 12px;
-    font-weight: 500;
-    color: black;
-    text-decoration: none;
-    background: white;
-    padding: 5px 15x;
-    border-radius: 6px;
-    transition: background 0.2s ease;
-    border: 1px solid black;
+            font-size: 12px;
+            font-weight: 500;
+            color: black;
+            text-decoration: none;
+            background: white;
+            padding: 5px 15x;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+            border: 1px solid black;
         }
 
         .driver-review-link:hover {
-            background: linear-gradient(135deg, #000 0%, #000 100%)
-            color: #fff;
+            background: linear-gradient(135deg, #000 0%, #000 100%) color: #fff;
             text-decoration: none;
         }
 
@@ -4553,9 +4552,9 @@
         /* Responsive */
         @media (max-width: 767px) {
 
-            .accordion-content{
-                padding:12px !important;
-                margin-top:0px !important;
+            .accordion-content {
+                padding: 12px !important;
+                margin-top: 0px !important;
             }
 
             .rc-driver-top-flex {
@@ -5673,6 +5672,7 @@
             .track-status-header h4 {
                 font-size: 20px !important;
             }
+
             .booking-stepper-wrapper {
                 margin-bottom: 8px;
                 padding: 2px 0;
@@ -5807,12 +5807,15 @@
 
         /* Mobile only */
         @media (max-width:768px) {
-            .time-panel-title{
-                font-size:18px;
+            .time-panel-title {
+                font-size: 18px;
             }
-            .time-panel-title,.time-panel-subtitle {
-                    margin-bottom: 7px;
+
+            .time-panel-title,
+            .time-panel-subtitle {
+                margin-bottom: 7px;
             }
+
             .stat-header-label {
                 font-size: 12px;
             }
@@ -6275,12 +6278,13 @@
                 padding-top: 8px;
 
             }
-            .summary-car-info span{
-                display:inline-flex;
+
+            .summary-car-info span {
+                display: inline-flex;
             }
 
             .passenger-details-left {
-      
+
                 min-width: 0;
             }
 
@@ -6657,10 +6661,11 @@
                 display: none;
             }
 
-            .night-charge-notice-card{
-                padding:5px;
-                    margin-top:0px;
+            .night-charge-notice-card {
+                padding: 5px;
+                margin-top: 0px;
             }
+
             .hero-form-section {
                 width: 100%;
                 max-width: 100%;
@@ -7392,7 +7397,7 @@
 
             .vehicle-item {
                 flex-direction: row;
-                gap:2px;
+                gap: 2px;
                 padding: 10px;
                 align-items: flex-start;
                 margin-bottom: 0px;
@@ -7547,7 +7552,7 @@
             .vehicle-item.selected .btn-v-select {
                 background: #101828;
             }
-          
+
             .mob-trust-badges {
                 display: flex;
                 justify-content: space-around;
@@ -9664,7 +9669,7 @@
                     const timeDisplay = `${displayHour}:${displayMinute} ${ampm}`;
 
                     const isCurrentSelected = currentSelectedTime && (
-                        currentSelectedTime === timeValue || 
+                        currentSelectedTime === timeValue ||
                         currentSelectedTime === timeValueNoZero ||
                         currentSelectedTime.replace(/^0/, '') === timeValueNoZero
                     );
@@ -11105,7 +11110,7 @@
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
             const totalFare = parseFloat(window.paymentTotalFare || state.total_fare || (state.vehicle ? state.vehicle.price || state.vehicle.fare || 0 : 0));
             const partFare = parseFloat(window.paymentPartPayFare || state.part_pay_fare || (totalFare * 0.20));
-            
+
             const fullAmtStr = '£' + totalFare.toFixed(2);
             const partAmtStr = '£' + partFare.toFixed(2);
 
@@ -11351,47 +11356,47 @@
                         payment_type: window.selectedStripePaymentType || 'full'
                     })
                 })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status || data.success) {
-                        const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
-                        $('#confirmNum').text(confirmedJobNo);
-                        const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
-                        if (previewHash) {
-                            window.currentBookingPreviewHash = previewHash;
-                            $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status || data.success) {
+                            const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
+                            $('#confirmNum').text(confirmedJobNo);
+                            const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
+                            if (previewHash) {
+                                window.currentBookingPreviewHash = previewHash;
+                                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
+                            } else {
+                                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
+                            }
+                            $('#confirmPickup').text(bookingData.pickup || '—');
+                            $('#confirmDropoff').text(bookingData.dropoff || '—');
+                            if (bookingData.date && bookingData.time) {
+                                $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
+                                $('#confirmDateTime').parent().show();
+                            } else {
+                                $('#confirmDateTime').parent().hide();
+                            }
+                            $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
+                            let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
+                            if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
+                                finalDistance = formatTripDistance(finalDistance);
+                            }
+                            const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
+                            $('#confirmDistance').text(finalDistance);
+                            $('#confirmDuration').text(finalDuration);
+                            showStep(8);
                         } else {
-                            $('#viewBookingPreviewBtn').css('display', 'inline-flex');
+                            showToast(data.message || 'Confirmation failed', 'error');
                         }
-                        $('#confirmPickup').text(bookingData.pickup || '—');
-                        $('#confirmDropoff').text(bookingData.dropoff || '—');
-                        if (bookingData.date && bookingData.time) {
-                            $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
-                            $('#confirmDateTime').parent().show();
-                        } else {
-                            $('#confirmDateTime').parent().hide();
-                        }
-                        $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
-                        let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
-                        if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
-                            finalDistance = formatTripDistance(finalDistance);
-                        }
-                        const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
-                        $('#confirmDistance').text(finalDistance);
-                        $('#confirmDuration').text(finalDuration);
-                        showStep(8);
-                    } else {
-                        showToast(data.message || 'Confirmation failed', 'error');
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
-                    showToast('Server connection error', 'error');
-                })
-                .finally(() => {
-                    btn.innerHTML = originalBtnContent;
-                    btn.disabled = false;
-                });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showToast('Server connection error', 'error');
+                    })
+                    .finally(() => {
+                        btn.innerHTML = originalBtnContent;
+                        btn.disabled = false;
+                    });
                 return;
             }
 
@@ -12126,7 +12131,7 @@
             try {
                 const ukTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/London" });
                 return new Date(ukTimeStr);
-            } catch(e) {
+            } catch (e) {
                 return new Date();
             }
         }
@@ -12155,7 +12160,7 @@
                         hour: '2-digit', minute: '2-digit', hour12: true
                     });
                     $('#expiredPickupTimeDetails').html('<i class="fa-solid fa-calendar-xmark me-1"></i> Scheduled Time: ' + formattedStr);
-                } catch(e){}
+                } catch (e) { }
             }
 
             $('#bookingExpiredCard').slideDown(400);
@@ -12194,7 +12199,7 @@
             try {
                 sessionStorage.clear();
                 sessionStorage.removeItem('gorideBookingState_v2');
-            } catch(e) {}
+            } catch (e) { }
             window.location.href = '/';
         }
 
@@ -12494,7 +12499,7 @@
                     }
 
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
-                    
+
                     const fare = bookingData.vehicle?.fareBreakdown || {};
                     const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
                         fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
@@ -12506,7 +12511,7 @@
                         fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
                         `<li>Any government or local authority charges, if applicable.</li>
                          <li>Additional mileage and waiting charges beyond the included limits.</li>`;
-                         
+
                     const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper">
                 <div class="tax-ribbon-fold"></div>
@@ -12700,7 +12705,7 @@
 
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
-                
+
                 const taxHtml = d.isTax ? `
         <div class="tax-ribbon-wrapper">
             <div class="tax-ribbon-fold"></div>
@@ -13659,7 +13664,7 @@
                     `;
                     break;
                 case 'MPV 7':
-                     recommendedHtml = `
+                    recommendedHtml = `
                        <ul class="vehicle-recommended-list">
     <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes V-Class or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 7 passengers</li>
@@ -13986,8 +13991,8 @@
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our
-                <a href="/uk-terms" target="_blank">Terms of Service</a> &amp;
-                <a href="/uk-privacy" target="_blank">Privacy Policy</a>.
+                <a href="/terms" target="_blank">Terms of Service</a> &amp;
+                <a href="/privacy" target="_blank">Privacy Policy</a>.
             </p>
         </div>
     </div>
@@ -14673,7 +14678,8 @@
     <div class="track-ride-overlay" id="trackRideOverlay">
         <!-- Search Container -->
         <div class="track-ride-container" id="trackSearchContainer">
-            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i class="fas fa-times"></i></button>
+            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i
+                    class="fas fa-times"></i></button>
             <h3>Track Your Ride</h3>
             <p>Enter your booking number to get live status</p>
             <div class="track-input-wrapper">
@@ -14687,11 +14693,13 @@
 
         <!-- Result Container -->
         <div class="track-result-container" id="trackResultContainer" style="display: none;">
-            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i class="fas fa-times"></i></button>
+            <button class="track-inner-close-btn" onclick="toggleTrackRideOverlay(event)" aria-label="Close modal"><i
+                    class="fas fa-times"></i></button>
             <div class="track-status-header">
                 <div class="track-header-badges">
                     <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
-                    <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span id="displayOtpValue">--</span></div>
+                    <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span
+                            id="displayOtpValue">--</span></div>
                 </div>
                 <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                 <div id="trackingBookingDetails" style="display: none;"></div>
@@ -14985,7 +14993,7 @@
             padding: 6px 12px;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
             max-width: 220px;
         }
 
@@ -15000,8 +15008,9 @@
             letter-spacing: 0.5px;
             margin-bottom: 2px;
         }
-        .track-pickup-corner .pickup-label i{
-            color:#f9c106;
+
+        .track-pickup-corner .pickup-label i {
+            color: #f9c106;
         }
 
         .track-pickup-corner .pickup-value {
@@ -15088,10 +15097,11 @@
         }
 
         @media (max-width: 768px) {
-            .track-header-badges{
-                 flex-direction: column;
-                 align-items: start;
+            .track-header-badges {
+                flex-direction: column;
+                align-items: start;
             }
+
             .mobile-only {
                 display: flex !important;
             }
@@ -15151,7 +15161,7 @@
                 display: flex !important;
                 align-items: center;
                 gap: 6px;
-                margin-top: 10px;     
+                margin-top: 10px;
             }
 
             .mobile-pickup-time-bar .pickup-label {
@@ -15162,9 +15172,9 @@
             }
 
             .mobile-pickup-time-bar .pickup-value {
-                       font-size: 13px;
-        font-weight: 500;
-        color: #111827;
+                font-size: 13px;
+                font-weight: 500;
+                color: #111827;
             }
         }
 
@@ -15251,21 +15261,54 @@
         }
 
         @keyframes pulse-yellow-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(245, 158, 11, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+            }
         }
 
         @keyframes pulse-blue-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+            }
         }
 
         @keyframes pulse-green-glow {
-            0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { transform: scale(1); box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
-            100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                transform: scale(0.98);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
         }
 
         .status-placeholder-title {
@@ -15384,9 +15427,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(249, 193, 6, 0.6);
             }
+
             70% {
                 box-shadow: 0 0 0 10px rgba(249, 193, 6, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(249, 193, 6, 0);
             }
@@ -15427,13 +15472,15 @@
         }
 
         @media (max-width: 768px) {
-            .track-status-header{
-                margin-bottom:0px;
-                border-bottom:none;
+            .track-status-header {
+                margin-bottom: 0px;
+                border-bottom: none;
             }
+
             .mobile-timeline-hint {
                 display: none !important;
             }
+
             .mobile-timeline-hint.has-map {
                 display: flex !important;
                 align-items: center;
@@ -15462,12 +15509,19 @@
             }
 
             @keyframes bounceDown {
-                0%, 20%, 50%, 80%, 100% {
+
+                0%,
+                20%,
+                50%,
+                80%,
+                100% {
                     transform: translateY(0);
                 }
+
                 40% {
                     transform: translateY(4px);
                 }
+
                 60% {
                     transform: translateY(2px);
                 }
@@ -15515,7 +15569,7 @@
         }
 
         .accordion-toggle {
-     
+
             border: none;
             color: black;
             font-weight: 600;
@@ -15630,7 +15684,7 @@
             padding: 0;
         }
 
-        :not(.vehicle-accordion) > .premium-tab-container .accordion-content,
+        :not(.vehicle-accordion)>.premium-tab-container .accordion-content,
         #step5 .premium-tab-container .accordion-content {
             display: block;
         }
@@ -15713,6 +15767,7 @@
         }
 
         @media (max-width: 576px) {
+
             .tab-pane.inclusions-pane .tab-points-list,
             .inclusions-list {
                 grid-template-columns: 1fr !important;
@@ -15783,17 +15838,21 @@
             .premium-tab-container {
                 margin-bottom: 20px;
             }
+
             .premium-tab-container .accordion-tabs {
-                padding:0px;
+                padding: 0px;
                 gap: 10px;
             }
+
             .premium-tab-container .tab-btn {
                 font-size: 13px;
                 padding: 8px 4px;
             }
+
             .tab-pane {
                 padding: 14px 16px;
             }
+
             .tab-point-item {
                 font-size: 13px;
                 gap: 8px;
@@ -15831,15 +15890,15 @@
             s.id = 'socketIoScript';
             s.setAttribute('data-cfasync', 'false');
             s.src = '/js/socket.io.min.js';
-            s.onload = function() {
+            s.onload = function () {
                 if (callback) callback();
             };
-            s.onerror = function() {
+            s.onerror = function () {
                 console.warn("Local socket.io.min.js failed, trying CDN fallback...");
                 const cdnS = document.createElement('script');
                 cdnS.setAttribute('data-cfasync', 'false');
                 cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-                cdnS.onload = function() { if (callback) callback(); };
+                cdnS.onload = function () { if (callback) callback(); };
                 document.head.appendChild(cdnS);
             };
             document.head.appendChild(s);
@@ -16301,61 +16360,61 @@
                         liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
                     });
 
-                let lastPos = null;
+                    let lastPos = null;
 
-                // 3. Listen for driver location updates
-                liveTrackingSocket.on("driver_location", (locationData) => {
-                    try {
-                        console.log("New Driver Location Received:", locationData);
-                        if (locationData && locationData.lat && locationData.lng) {
-                            const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
+                    // 3. Listen for driver location updates
+                    liveTrackingSocket.on("driver_location", (locationData) => {
+                        try {
+                            console.log("New Driver Location Received:", locationData);
+                            if (locationData && locationData.lat && locationData.lng) {
+                                const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
 
-                            if (!lastPos) {
-                                trackingMap.setCenter(newPos);
-                                driverMarker.setPosition(newPos);
-                                if (locationData.heading !== undefined) {
-                                    driverMarker.setIcon(getLiveTrackingCarIcon(locationData.heading));
+                                if (!lastPos) {
+                                    trackingMap.setCenter(newPos);
+                                    driverMarker.setPosition(newPos);
+                                    if (locationData.heading !== undefined) {
+                                        driverMarker.setIcon(getLiveTrackingCarIcon(locationData.heading));
+                                    }
+                                } else {
+                                    animateMarker(driverMarker, lastPos, newPos);
+                                    let calculatedHeading = 0;
+                                    if (locationData.heading !== undefined) {
+                                        calculatedHeading = locationData.heading;
+                                    } else if (google.maps.geometry && google.maps.geometry.spherical) {
+                                        calculatedHeading = google.maps.geometry.spherical.computeHeading(lastPos, newPos);
+                                    }
+                                    driverMarker.setIcon(getLiveTrackingCarIcon(calculatedHeading));
+                                    trackingMap.panTo(newPos);
                                 }
-                            } else {
-                                animateMarker(driverMarker, lastPos, newPos);
-                                let calculatedHeading = 0;
-                                if (locationData.heading !== undefined) {
-                                    calculatedHeading = locationData.heading;
-                                } else if (google.maps.geometry && google.maps.geometry.spherical) {
-                                    calculatedHeading = google.maps.geometry.spherical.computeHeading(lastPos, newPos);
-                                }
-                                driverMarker.setIcon(getLiveTrackingCarIcon(calculatedHeading));
-                                trackingMap.panTo(newPos);
+                                lastPos = newPos;
                             }
-                            lastPos = newPos;
-                        }
-                    } catch (e) { console.error('Socket message parse error', e); }
-                });
+                        } catch (e) { console.error('Socket message parse error', e); }
+                    });
 
-                // 4. Listen for other trip status events
-                // liveTrackingSocket.on("driver_arrived", () => {
-                //     showGlobalToast("Driver has arrived at your pickup location!", true);
-                //     const msgEl = document.getElementById('displayTrackingMessage');
-                //     if (msgEl) msgEl.innerText = "Driver has arrived.";
-                // });
+                    // 4. Listen for other trip status events
+                    // liveTrackingSocket.on("driver_arrived", () => {
+                    //     showGlobalToast("Driver has arrived at your pickup location!", true);
+                    //     const msgEl = document.getElementById('displayTrackingMessage');
+                    //     if (msgEl) msgEl.innerText = "Driver has arrived.";
+                    // });
 
-                liveTrackingSocket.on("driver_arrived", () => {
-                    showGlobalToast("Your trip has started.", true);
-                    updateLiveTrackingTimeline('onboard');
-                });
+                    liveTrackingSocket.on("driver_arrived", () => {
+                        showGlobalToast("Your trip has started.", true);
+                        updateLiveTrackingTimeline('onboard');
+                    });
 
-                liveTrackingSocket.on("trip_completed", () => {
-                    showGlobalToast("Trip finished successfully.", true);
-                    updateLiveTrackingTimeline('completed');
-                    liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
-                    setTimeout(() => toggleTrackRideOverlay(), 3000); // auto-close after 3s
-                });
+                    liveTrackingSocket.on("trip_completed", () => {
+                        showGlobalToast("Trip finished successfully.", true);
+                        updateLiveTrackingTimeline('completed');
+                        liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
+                        setTimeout(() => toggleTrackRideOverlay(), 3000); // auto-close after 3s
+                    });
 
-                liveTrackingSocket.on("connect_error", (e) => console.error('Socket Error', e));
+                    liveTrackingSocket.on("connect_error", (e) => console.error('Socket Error', e));
 
-            } catch (e) {
-                console.error("WebSocket connection failed", e);
-            }
+                } catch (e) {
+                    console.error("WebSocket connection failed", e);
+                }
             });
         }
 

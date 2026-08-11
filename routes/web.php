@@ -4,7 +4,7 @@ use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\BlogController;
 
 Route::get('/', function () {
-    return view('uk-car-booking');
+    return view('car-booking');
 })->name('home');
 
 Route::get('/dashboard', function () {

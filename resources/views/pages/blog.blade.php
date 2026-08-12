@@ -606,7 +606,7 @@ background: #f9bf00;
    position: relative;
     display: inline-block;
        padding: 14px 30px;
-    font-size: 21px;Manage Smarter
+    font-size: 21px;
     font-weight: bold;
     color: #000;
     background: #f9bf00;
@@ -615,8 +615,7 @@ background: #f9bf00;
     text-decoration: none;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(249, 191, 0, 0.5), 0 0 40px rgba(249, 191, 0, 0.3) inset;
-    transition: all 0.3s 
-ease;
+    transition: all 0.3s ease;
     animation: bounce 2s infinite;
     font-weight:600;
 }
@@ -704,111 +703,68 @@ ease;
 }
 /* From Uiverse.io by augustin_4687 */ 
 .agency-button1 {
-  --stone-50: #fafaf9;
-  --stone-800: #292524;
-  --yellow-400: #facc15;
-
-  font-size: 25px;
-  cursor: pointer;
-  position: relative;
-  font-family: "Rubik", sans-serif;
-  font-weight: bold;
-  line-height: 1;
-  padding: 1px;
- 
-  transform: translate(-4px, -4px);
-  outline: 2px solid transparent;
-  outline-offset: 5px;
-
-  background-color: var(--stone-800);
-  color: var(--stone-800);
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-  text-align: center;
-  box-shadow:
-    0.5px 0.5px 0 0 var(--stone-800),
-    1px 1px 0 0 var(--stone-800),
-    1.5px 1.5px 0 0 var(--stone-800),
-    2px 2px 0 0 var(--stone-800),
-    2.5px 2.5px 0 0 var(--stone-800),
-    3px 3px 0 0 var(--stone-800),
-    0 0 0 2px var(--stone-50),
-    0.5px 0.5px 0 2px var(--stone-50),
-    1px 1px 0 2px var(--stone-50),
-    1.5px 1.5px 0 2px var(--stone-50),
-    2px 2px 0 2px var(--stone-50),
-    2.5px 2.5px 0 2px var(--stone-50),
-    3px 3px 0 2px var(--stone-50),
-    3.5px 3.5px 0 2px var(--stone-50),
-    4px 4px 0 2px var(--stone-50);
-
-  &:hover {
+    --stone-50: #fafaf9;
+    --stone-800: #292524;
+    --yellow-400: #facc15;
+    font-size: 25px;
+    cursor: pointer;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
+    line-height: 1;
+    padding: 1px;
+    transform: translate(-4px, -4px);
+    outline: 2px solid transparent;
+    outline-offset: 5px;
+    background-color: var(--stone-800);
+    color: var(--stone-800);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    text-align: center;
+    box-shadow: 0.5px 0.5px 0 0 var(--stone-800), 1px 1px 0 0 var(--stone-800), 1.5px 1.5px 0 0 var(--stone-800), 2px 2px 0 0 var(--stone-800), 2.5px 2.5px 0 0 var(--stone-800), 3px 3px 0 0 var(--stone-800), 0 0 0 2px var(--stone-50), 0.5px 0.5px 0 2px var(--stone-50), 1px 1px 0 2px var(--stone-50), 1.5px 1.5px 0 2px var(--stone-50), 2px 2px 0 2px var(--stone-50), 2.5px 2.5px 0 2px var(--stone-50), 3px 3px 0 2px var(--stone-50), 3.5px 3.5px 0 2px var(--stone-50), 4px 4px 0 2px var(--stone-50);
+}
+.agency-button1:hover {
     transform: translate(0, 0);
     box-shadow: 0 0 0 2px var(--stone-50);
-  }
-
-
-  &:active,
-  &:focus-visible {
-    outline-color: var(--yellow-400);
-  }
-
-  &:focus-visible {
-    outline-style: dashed;
-  }
-  &:hover {
-  transform: translate(0, 0);
-  box-shadow: 0 0 0 2px var(--stone-50);
-
-  color: black; // fallback
-
-  & > div > span {
     color: black;
-  }
 }
-
-
-  & > div {
+.agency-button1:active,
+.agency-button1:focus-visible {
+    outline-color: var(--yellow-400);
+}
+.agency-button1:focus-visible {
+    outline-style: dashed;
+}
+.agency-button1:hover > div > span {
+    color: black;
+}
+.agency-button1 > div {
     position: relative;
     pointer-events: none;
     background-color: var(--yellow-400);
     border: 2px solid rgba(255, 255, 255, 0.3);
-  
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      
-      opacity: 0.5;
-      background-image: radial-gradient(
-          rgb(255 255 255 / 80%) 20%,
-          transparent 20%
-        ),
-        radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
-      background-position:
-        0 0,
-        4px 4px;
-      background-size: 8px 8px;
-      mix-blend-mode: hard-light;
-      animation: dots 0.5s infinite linear;
-    }
-
-    & > span {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 21px 12px 0px;
-      gap: 0.25rem;
-      filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25));
-
-      &:active {
-        transform: translateY(2px);
-      }
-    }
-  }
+}
+.agency-button1 > div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background-image: radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%), radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
+    background-position: 0 0, 4px 4px;
+    background-size: 8px 8px;
+    mix-blend-mode: hard-light;
+    animation: dots 0.5s infinite linear;
+}
+.agency-button1 > div > span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 21px 12px 0px;
+    gap: 0.25rem;
+    filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25));
+}
+.agency-button1 > div > span:active {
+    transform: translateY(2px);
 }
 
 @keyframes dots {
@@ -1850,7 +1806,25 @@ ease;
     .badge {
         background: #f9bf00;
         color: black;
-        #f2f2f2
+    }
+
+    .cs_btn.cs_style_2 {
+        background: #f9bf00;
+        color: #000;
+        font-weight: 600;
+        padding: 10px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .cs_btn.cs_style_2:hover {
+        background: #e0a800;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 191, 0, 0.4);
     }
 
     .phone-mockup {
@@ -2005,9 +1979,6 @@ ease;
         padding: 4px 10px;
         font-size: 10px;
     }
-        /*.slider-fade .item {*/
-        /*    background-position: right;*/
-        /*}*/
 
         .feature-img-wrap img {
             width: 50px;
@@ -2093,8 +2064,8 @@ ease;
     @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
         .i_phone {
             margin-top: -100px !important;
-
         }
+    }
 </style>
 
     
@@ -2300,18 +2271,11 @@ triggerCalendly = () => {
             </div>
         </div>
     </div> --}}
-@endsection
-
-@section('script')
-
 <script>
-    $(document).ready(function(){       
-    //   notifyJobs()
-    }); 
-    $(document).ready(function() {
+$(document).ready(function() {
     let searchTimeout;
 
-    $('#blogSearchInput').on('keyup', function() {
+    $('#blogSearchInput').on('keyup input', function() {
         clearTimeout(searchTimeout);
         let query = $(this).val().trim();
         let resultsContainer = $('#blogSearchResults');
@@ -2323,18 +2287,13 @@ triggerCalendly = () => {
 
         searchTimeout = setTimeout(function() {
             $.ajax({
-                url: "{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/blog/search",
+                url: "{{ route('blog.search') }}",
                 type: "GET",
                 data: { q: query },
-                global: false,
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: false
-                },
                 success: function(response) {
                     resultsContainer.empty();
                     
-                    if (response.length > 0) {
+                    if (response && response.length > 0) {
                         let html = '<ul>';
                         $.each(response, function(index, blog) {
                             let link = `{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}${blog.cat_url}/${blog.slug}`;
@@ -2374,59 +2333,51 @@ triggerCalendly = () => {
         }
     });
 });
-    document.addEventListener('DOMContentLoaded', function() {
-  // Initialize carousel with auto rotation on mobile
+
+document.addEventListener('DOMContentLoaded', function() {
   if (window.innerWidth < 768) {
     const myCarousel = document.getElementById('stepsCarousel');
     if (myCarousel) {
       const carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 4000, // Rotate every 4 seconds
+        interval: 4000,
         wrap: true,
         touch: true
       });
     }
   }
 });
-    function convertDateFormat(txt, type = 'full') {
-        let dateString = txt;
-    
-        // Create Date object (replace space with T so it's ISO compatible)
-        let dateObj = new Date(dateString.replace(" ", "T"));
-    
-        // Extract day and month
-        let day = String(dateObj.getDate()).padStart(2, '0');
-        let month = dateObj.toLocaleString('en-US', { month: 'short' });
-    
-        if (type === 'date') {
-            // Return only date format (e.g., "05 Sep")
-            return `${day} ${month}`;
-        }
-    
-        // Extract time components
-        let hours = dateObj.getHours();
-        let minutes = String(dateObj.getMinutes()).padStart(2, '0');
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12; // Convert 24h to 12h format
-    
-        // Return full format (e.g., "05 Sep 02:15 PM")
-        let formattedDate = `${day} ${month} ${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
-        return formattedDate;
+
+function convertDateFormat(txt, type = 'full') {
+    let dateString = txt;
+    let dateObj = new Date(dateString.replace(" ", "T"));
+    let day = String(dateObj.getDate()).padStart(2, '0');
+    let month = dateObj.toLocaleString('en-US', { month: 'short' });
+
+    if (type === 'date') {
+        return `${day} ${month}`;
     }
 
-    
-    $('.agency-carousel').owlCarousel({
-        items: 1,
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        autoplayTimeout: 4000,
-        smartSpeed: 700,
-        touchDrag: true,
-        mouseDrag: true
-    });
- 
+    let hours = dateObj.getHours();
+    let minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    let formattedDate = `${day} ${month} ${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
+    return formattedDate;
+}
+
+$('.agency-carousel').owlCarousel({
+    items: 1,
+    loop: true,
+    margin: 10,
+    nav: false,
+    dots: false,
+    autoplay: true,
+    autoplayTimeout: 4000,
+    smartSpeed: 700,
+    touchDrag: true,
+    mouseDrag: true
+});
 </script>
 
 @endsection

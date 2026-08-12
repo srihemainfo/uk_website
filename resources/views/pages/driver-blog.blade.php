@@ -2056,8 +2056,8 @@ ease;
     @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
         .i_phone {
             margin-top: -100px !important;
-
         }
+    }
 </style>
 
     
@@ -2260,7 +2260,7 @@ triggerCalendly = () => {
 $(document).ready(function() {
     let searchTimeout;
 
-    $('#blogSearchInput').on('keyup', function() {
+    $('#blogSearchInput').on('keyup input', function() {
         clearTimeout(searchTimeout);
         let query = $(this).val().trim();
         let resultsContainer = $('#blogSearchResults');
@@ -2275,15 +2275,10 @@ $(document).ready(function() {
                 url: "{{ route('blog.search') }}",
                 type: "GET",
                 data: { q: query },
-                global: false,
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: false
-                },
                 success: function(response) {
                     resultsContainer.empty();
                     
-                    if (response.length > 0) {
+                    if (response && response.length > 0) {
                         let html = '<ul>';
                         $.each(response, function(index, blog) {
                             let link = `{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}${blog.cat_url}/${blog.slug}`;

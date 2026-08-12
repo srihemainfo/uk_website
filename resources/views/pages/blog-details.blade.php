@@ -20,6 +20,157 @@
 @endphp
 
 <style>
+/* Blog Search Bar Styles */
+.blog-search-wrapper {
+    max-width: 700px;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+.search-input-box {
+    display: flex;
+    align-items: center;
+    background: #000000; 
+    border: 1px solid #f9bf00; 
+    border-radius: 30px;
+    padding: 0 18px;
+    height: 44px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(249, 191, 0, 0.15);
+}
+
+.search-input-box:focus-within {
+    box-shadow: 0 0 15px rgba(249, 191, 0, 0.3);
+}
+
+.search-input-box input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    outline: none;
+    font-size: 14px; 
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 44px;
+}
+
+.search-input-box input::placeholder {
+    color: #777;
+    line-height: normal;
+}
+
+.search-input-box .right-icon {
+    color: #999; 
+    font-size: 16px;
+    margin-left: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: color 0.2s ease;
+}
+
+.search-input-box .right-icon:hover {
+    color: #f9bf00;
+}
+
+.search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin-top: 6px;
+    overflow: hidden;
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+}
+
+.search-results-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-results-dropdown li {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.search-results-dropdown li:last-child {
+    border-bottom: none;
+}
+
+.search-results-dropdown a {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.search-results-dropdown a i {
+    color: #f9bf00;
+    margin-right: 12px;
+    font-size: 14px;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.search-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+.search-text-wrapper .search-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #111;
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+
+.search-text-wrapper .search-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.search-results-dropdown a:hover {
+    background: #fff9e6;
+    color: #000;
+}
+
+.search-no-results {
+    padding: 12px 16px;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    font-size: 14px;
+}
+
+.blog-section-banner {
+    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/main-banner.webp') }}'), #141c28;
+    background-color: #141c28;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 70px 0;
+    width: 100%;
+}
+
 .blog-detail-page {
     margin-top: 60px;
     font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -1388,6 +1539,24 @@ input#exampleInputEmail1 {
 }
 </style>
 
+<section class="blog-section-banner">
+    <div class="container position-relative">
+        <div class="section-title mt-5 text-center text-white h2 fw-bold">
+            GoRide <span style="color: #f9bf00;">Blog</span>
+        </div>
+        
+        <div class="blog-search-wrapper mt-4 mx-auto">
+            <div class="search-input-box">
+                <input type="text" id="blogSearchInput" placeholder="Search for blogs..." autocomplete="off">
+                <i class="fa fa-search right-icon"></i>
+            </div>
+            
+            <div id="blogSearchResults" class="search-results-dropdown" style="display:none;">
+            </div>
+        </div>
+    </div>
+</section>
+
 <section class="blog-detail-page py-5">
     <div class="container">
         <h1 class="blog-detail-title">
@@ -1577,13 +1746,68 @@ triggerCalendly = () => {
 }
 </script>
 
-@endsection
-
-@section('script')
 <script>
-$(document).ready(function(){        
-    // notifyJobs();
-}); 
+$(document).ready(function() {
+    let searchTimeout;
+
+    $('#blogSearchInput').on('keyup input', function() {
+        clearTimeout(searchTimeout);
+        let query = $(this).val().trim();
+        let resultsContainer = $('#blogSearchResults');
+
+        if (query.length < 2) {
+            resultsContainer.hide().empty();
+            return;
+        }
+
+        searchTimeout = setTimeout(function() {
+            $.ajax({
+                url: "{{ route('blog.search') }}",
+                type: "GET",
+                data: { q: query },
+                success: function(response) {
+                    resultsContainer.empty();
+                    
+                    if (response && response.length > 0) {
+                        let html = '<ul>';
+                        $.each(response, function(index, blog) {
+                            let link = `{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}${blog.cat_url}/${blog.slug}`;
+                            
+                            let shortDesc = "";
+                            if (blog.description) {
+                                let plainTextDesc = $('<div>').html(blog.description).text();
+                                shortDesc = plainTextDesc.length > 70 ? plainTextDesc.substring(0, 70) + '...' : plainTextDesc;
+                            }
+                            
+                            html += `<li>
+                                        <a href="${link}">
+                                            <i class="fa fa-search"></i>
+                                            <div class="search-text-wrapper">
+                                                <div class="search-title">${blog.blog_title}</div>
+                                                ${shortDesc ? `<div class="search-desc">${shortDesc}</div>` : ''}
+                                            </div>
+                                        </a>
+                                     </li>`;
+                        });
+                        html += '</ul>';
+                        resultsContainer.html(html).slideDown(200);
+                    } else {
+                        resultsContainer.html('<div class="search-no-results">No blogs found for "'+query+'"</div>').slideDown(200);
+                    }
+                },
+                error: function() {
+                    console.error("Error fetching search results.");
+                }
+            });
+        }, 300);
+    });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.blog-search-wrapper').length) {
+            $('#blogSearchResults').slideUp(200);
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 768) {
@@ -1709,19 +1933,21 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('.whatsapp.share-btn').href = "https://api.whatsapp.com/send?text=" + currentTitle + " - " + currentUrl;
 
     var instaBtn = document.querySelector('.native-share');
-    instaBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (navigator.share) {
-            navigator.share({
-                title: rawTitle,
-                url: rawUrl
-            }).catch(function(error) {
-                console.log('Error sharing:', error);
-            });
-        } else {
-            alert("Direct sharing to Instagram is only supported on mobile devices. Please copy the URL manually to share.");
-        }
-    });
+    if (instaBtn) {
+        instaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (navigator.share) {
+                navigator.share({
+                    title: rawTitle,
+                    url: rawUrl
+                }).catch(function(error) {
+                    console.log('Error sharing:', error);
+                });
+            } else {
+                alert("Direct sharing to Instagram is only supported on mobile devices. Please copy the URL manually to share.");
+            }
+        });
+    }
 });
 </script>
 @endsection

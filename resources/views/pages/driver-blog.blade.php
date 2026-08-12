@@ -481,17 +481,12 @@ background: #ffffff;
     border-radius: 10px;
 }
 
-/* FIX BLUE LINKS AND CARD TEXT COLORS */
-.blog-grid a,
-.blog-card a,
-#blog-data-wrapper a {
+.blog-grid a {
     text-decoration: none !important;
     color: inherit !important;
     display: block;
 }
-
-.blog-section .blog-content h3,
-.blog-card .blog-content h3 {
+.blog-section .blog-content h3 {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px;
@@ -499,14 +494,10 @@ background: #ffffff;
     line-height: 1.4;
     transition: color 0.2s ease;
 }
-
-.blog-grid a:hover .blog-content h3,
-#blog-data-wrapper a:hover .blog-content h3 {
+.blog-grid a:hover .blog-content h3 {
     color: #f9bf00 !important;
 }
-
-.blog-section .blog-content p,
-.blog-card .blog-content p {
+.blog-section .blog-content p {
     font-size: 14px;
     color: #555 !important;
     line-height: 1.6;
@@ -2104,10 +2095,6 @@ ease;
         </div>
 
         <div class="my-3">
-            <div class="blog-category cap-text">
-                {{ $categoryData->cat_name }}
-            </div>
-
             <div class="row align-items-start">
                 
                 <div class="col-lg-8">
@@ -2266,6 +2253,7 @@ triggerCalendly = () => {
                 <p>Get in touch with us for any inquiries or support.</p>
             </div>
         </div>
+    </div> --}}
 
 
 <script>

@@ -528,38 +528,24 @@ background: #f9bf00;
     border-radius: 10px;
 }
 
-/* FIX BLUE LINKS AND CARD TEXT COLORS */
-.blog-grid a,
-.blog-card a {
-    text-decoration: none !important;
-    color: inherit !important;
-    display: block;
+/* Title */
+.blog-section .blog-content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111;
 }
 
-.blog-section .blog-content h3,
-.blog-card .blog-content h3 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #111 !important;
-    line-height: 1.4;
-    transition: color 0.2s ease;
-}
-
-.blog-grid a:hover .blog-content h3,
-.blog-card:hover .blog-content h3 {
-    color: #f9bf00 !important;
-}
-
-.blog-section .blog-content p,
-.blog-card .blog-content p {
-    font-size: 14px;
-    color: #555 !important;
+/* Description */
+.blog-section .blog-content p {
+     font-size: 14px;
+    /* color: #666; */
     line-height: 1.6;
     margin-bottom: 15px;
     font-weight: 400;
 }
 
+/* Meta */
 .blog-section .blog-meta {
   display: flex;
   justify-content: space-between;
@@ -584,28 +570,22 @@ background: #f9bf00;
 }
 
 /* Load More Button */
-.load-more-btn {
-    display: inline-block;
-    padding: 12px 32px;
-    background: #f9bf00;
-    color: #000 !important;
-    font-weight: 700;
-    font-size: 15px;
-    border-radius: 30px;
-    border: 2px solid #f9bf00;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(249, 191, 0, 0.3);
-    text-decoration: none !important;
-    outline: none;
+.blog-section .load-more-btn {
+  display: block;
+  margin: 40px auto 0;
+  padding: 12px 30px;
+  border: 2px solid #1e73ff;
+  background: transparent;
+  color: #1e73ff;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.load-more-btn:hover {
-    background: #000;
-    color: #f9bf00 !important;
-    border-color: #000;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+.blog-section .load-more-btn:hover {
+  background: #1e73ff;
+  color: #fff;
 }
 
 /* Responsive */

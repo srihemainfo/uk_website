@@ -194,7 +194,8 @@ display:flex;
     text-decoration:none;
 }
 .blog-section-banner{
-        background: linear-gradient(rgba(20, 28, 40, 0.55),  rgba(20, 28, 40, 0.55)), url('{{ asset('goride/img/blog-banner.webp') }}');
+    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/main-banner.webp') }}'), #141c28;
+    background-color: #141c28;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -328,9 +329,24 @@ display:flex;
   }
 }
 .blog-breadcrumb {
- font-size: 17px;
-    color: #000000;
+    font-size: 15px;
+    color: #333;
     font-weight: 500;
+    font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.blog-breadcrumb a {
+    color: #111;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 600;
+}
+.blog-breadcrumb a:hover {
+    color: #f9bf00;
+    text-decoration: underline;
+}
+.blog-breadcrumb span {
+    color: #888;
+    margin: 0 6px;
 }
 .blog-subscribe-section.subscribe-box {
     background: #fdeeba;

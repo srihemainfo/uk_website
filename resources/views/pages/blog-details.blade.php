@@ -22,20 +22,43 @@
 <style>
 .blog-detail-page {
     margin-top: 60px;
+    font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .blog-detail-title {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    color: #111;
+    line-height: 1.3;
+    font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .blog-detail-title span {
     color: #f9bf00;
 }
 .blog-breadcrumb {
-    font-size: 17px;
-    color: #000000;
+    font-size: 15px;
+    color: #333;
     font-weight: 500;
     text-transform: capitalize;
+    font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.blog-breadcrumb a {
+    color: #111;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 600;
+}
+.blog-breadcrumb a:hover {
+    color: #f9bf00;
+    text-decoration: underline;
+}
+.blog-breadcrumb span {
+    color: #888;
+    margin: 0 6px;
+}
+.blog-breadcrumb strong {
+    color: #333;
+    font-weight: 600;
 }
 .blog-image-wrapper {
     width: 100%;

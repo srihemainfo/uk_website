@@ -1724,90 +1724,125 @@ input#exampleInputEmail1 {
 </div>
 
 <script>
-let countryC = getCookie('countryCode') || 'IN';
+function safeGetCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+let countryC = (typeof getCookie === 'function' ? getCookie('countryCode') : safeGetCookie('countryCode')) || 'IN';
 let isMobile = window.innerWidth <= 768;
-if (countryC !== 'IN') {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
-    document.querySelector('#india-content').style.display = "none";
-    document.querySelector('#india-content2').style.display = "none";
-} else {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
-    document.querySelector('#india-content').style.display = "block";
-    document.querySelector('#india-content2').style.display = "block";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+
+try {
+    const sliderItem = document.querySelector('#slider-image .item');
+    const mobileMockup = document.querySelector('#mobile_mockup');
+    const indiaContent = document.querySelector('#india-content');
+    const indiaContent2 = document.querySelector('#india-content2');
+
+    if (countryC !== 'IN') {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
+        if (indiaContent) indiaContent.style.display = "none";
+        if (indiaContent2) indiaContent2.style.display = "none";
+    } else {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
+        if (indiaContent) indiaContent.style.display = "block";
+        if (indiaContent2) indiaContent2.style.display = "block";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+    }
+
+    if (isMobile && sliderItem) {
+        sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
+    }
+} catch (e) {
+    console.warn("DOM elements initialization warning:", e);
 }
-if (isMobile) {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
-}
+
 triggerCalendly = () => {
     sessionStorage.setItem('triggerCalendlyClick', 'true');
     window.location.href = '/dashboard';
 }
-</script>
 
-<script>
-$(document).ready(function() {
-    let searchTimeout;
+(function() {
+    function initBlogSearch() {
+        const searchInput = document.getElementById('blogSearchInput');
+        const resultsContainer = document.getElementById('blogSearchResults');
+        if (!searchInput || !resultsContainer) return;
 
-    $('#blogSearchInput').on('keyup input', function() {
-        clearTimeout(searchTimeout);
-        let query = $(this).val().trim();
-        let resultsContainer = $('#blogSearchResults');
+        let searchTimeout = null;
 
-        if (query.length < 2) {
-            resultsContainer.hide().empty();
-            return;
-        }
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = searchInput.value.trim();
 
-        searchTimeout = setTimeout(function() {
-            $.ajax({
-                url: "{{ route('blog.search') }}",
-                type: "GET",
-                data: { q: query },
-                success: function(response) {
-                    resultsContainer.empty();
-                    
+            if (query.length < 2) {
+                resultsContainer.style.display = 'none';
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            searchTimeout = setTimeout(function() {
+                const searchUrl = "{{ route('blog.search') }}?q=" + encodeURIComponent(query);
+                fetch(searchUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(function(res) { return res.json(); })
+                .then(function(response) {
+                    resultsContainer.innerHTML = '';
                     if (response && response.length > 0) {
                         let html = '<ul>';
-                        $.each(response, function(index, blog) {
-                            let link = `{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}${blog.cat_url}/${blog.slug}`;
+                        response.forEach(function(blog) {
+                            const baseUrl = "{{ env('WEB_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}";
+                            const link = baseUrl + blog.cat_url + '/' + blog.slug;
                             
                             let shortDesc = "";
                             if (blog.description) {
-                                let plainTextDesc = $('<div>').html(blog.description).text();
-                                shortDesc = plainTextDesc.length > 70 ? plainTextDesc.substring(0, 70) + '...' : plainTextDesc;
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = blog.description;
+                                const plainText = tempDiv.textContent || tempDiv.innerText || "";
+                                shortDesc = plainText.length > 70 ? plainText.substring(0, 70) + '...' : plainText;
                             }
-                            
-                            html += `<li>
-                                        <a href="${link}">
-                                            <i class="fa fa-search"></i>
-                                            <div class="search-text-wrapper">
-                                                <div class="search-title">${blog.blog_title}</div>
-                                                ${shortDesc ? `<div class="search-desc">${shortDesc}</div>` : ''}
-                                            </div>
-                                        </a>
-                                     </li>`;
+
+                            html += '<li>' +
+                                        '<a href="' + link + '">' +
+                                            '<i class="fa fa-search"></i>' +
+                                            '<div class="search-text-wrapper">' +
+                                                '<div class="search-title">' + blog.blog_title + '</div>' +
+                                                (shortDesc ? '<div class="search-desc">' + shortDesc + '</div>' : '') +
+                                            '</div>' +
+                                        '</a>' +
+                                    '</li>';
                         });
                         html += '</ul>';
-                        resultsContainer.html(html).slideDown(200);
+                        resultsContainer.innerHTML = html;
+                        resultsContainer.style.display = 'block';
                     } else {
-                        resultsContainer.html('<div class="search-no-results">No blogs found for "'+query+'"</div>').slideDown(200);
+                        resultsContainer.innerHTML = '<div class="search-no-results">No blogs found for "' + query + '"</div>';
+                        resultsContainer.style.display = 'block';
                     }
-                },
-                error: function() {
-                    console.error("Error fetching search results.");
-                }
-            });
-        }, 300);
-    });
+                })
+                .catch(function(err) {
+                    console.error("Error fetching search results:", err);
+                });
+            }, 300);
+        });
 
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.blog-search-wrapper').length) {
-            $('#blogSearchResults').slideUp(200);
-        }
-    });
-});
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.blog-search-wrapper')) {
+                resultsContainer.style.display = 'none';
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBlogSearch);
+    } else {
+        initBlogSearch();
+    }
+})();
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 768) {

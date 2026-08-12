@@ -1539,24 +1539,6 @@ input#exampleInputEmail1 {
 }
 </style>
 
-<section class="blog-section-banner">
-    <div class="container position-relative">
-        <div class="section-title mt-5 text-center text-white h2 fw-bold">
-            GoRide <span style="color: #f9bf00;">Blog</span>
-        </div>
-        
-        <div class="blog-search-wrapper mt-4 mx-auto">
-            <div class="search-input-box">
-                <input type="text" id="blogSearchInput" placeholder="Search for blogs..." autocomplete="off">
-                <i class="fa fa-search right-icon"></i>
-            </div>
-            
-            <div id="blogSearchResults" class="search-results-dropdown" style="display:none;">
-            </div>
-        </div>
-    </div>
-</section>
-
 <section class="blog-detail-page py-5">
     <div class="container">
         <h1 class="blog-detail-title">
@@ -1761,92 +1743,6 @@ triggerCalendly = () => {
     sessionStorage.setItem('triggerCalendlyClick', 'true');
     window.location.href = '/dashboard';
 }
-
-(function() {
-    function initBlogSearch() {
-        const searchInput = document.getElementById('blogSearchInput');
-        const resultsContainer = document.getElementById('blogSearchResults');
-        if (!searchInput || !resultsContainer) return;
-
-        let searchTimeout = null;
-
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            const query = searchInput.value.trim();
-
-            if (query.length < 2) {
-                resultsContainer.style.display = 'none';
-                resultsContainer.innerHTML = '';
-                return;
-            }
-
-            searchTimeout = setTimeout(function() {
-                const webAppUrl = "{{ env('WEB_APP_URL') }}".replace(/\/$/, '');
-                const countrySlug = "{{ env('COUNTRY_SLUG_II') ?: env('COUNTRY_SLUG') }}";
-                const baseUrl = (webAppUrl || window.location.origin) + (countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '');
-                const searchUrl = baseUrl + "/blog/search?q=" + encodeURIComponent(query);
-
-                fetch(searchUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(function(res) { return res.json(); })
-                .then(function(response) {
-                    resultsContainer.innerHTML = '';
-                    if (response && response.length > 0) {
-                        let html = '<ul>';
-                        response.forEach(function(blog) {
-                            const catPath = blog.cat_url ? (blog.cat_url.startsWith('/') ? blog.cat_url : '/' + blog.cat_url) : '';
-                            const link = baseUrl + catPath + '/' + blog.slug;
-                            
-                            let shortDesc = "";
-                            if (blog.description) {
-                                const tempDiv = document.createElement('div');
-                                tempDiv.innerHTML = blog.description;
-                                const plainText = tempDiv.textContent || tempDiv.innerText || "";
-                                shortDesc = plainText.length > 70 ? plainText.substring(0, 70) + '...' : plainText;
-                            }
-
-                            html += '<li>' +
-                                        '<a href="' + link + '">' +
-                                            '<i class="fa fa-search"></i>' +
-                                            '<div class="search-text-wrapper">' +
-                                                '<div class="search-title">' + blog.blog_title + '</div>' +
-                                                (shortDesc ? '<div class="search-desc">' + shortDesc + '</div>' : '') +
-                                            '</div>' +
-                                        '</a>' +
-                                    '</li>';
-                        });
-                        html += '</ul>';
-                        resultsContainer.innerHTML = html;
-                        resultsContainer.style.display = 'block';
-                    } else {
-                        resultsContainer.innerHTML = '<div class="search-no-results">No blogs found for "' + query + '"</div>';
-                        resultsContainer.style.display = 'block';
-                    }
-                })
-                .catch(function(err) {
-                    console.error("Error fetching search results:", err);
-                });
-            }, 300);
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.blog-search-wrapper')) {
-                resultsContainer.style.display = 'none';
-            }
-        });
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBlogSearch);
-    } else {
-        initBlogSearch();
-    }
-})();
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 768) {

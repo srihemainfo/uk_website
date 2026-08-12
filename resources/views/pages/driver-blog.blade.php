@@ -1,4 +1,4 @@
-@extends('layouts.app-web')
+@extends('layouts.app')
 @section('title', $categoryData->seo_title ? $categoryData->seo_title : $categoryData->cat_name)
 @section('meta_description', $categoryData->seo_description ?? 'Default Goride blog description')
 @section('meta_keywords', $categoryData->meta_keywords ?? 'Goride, transport, blog, travel')

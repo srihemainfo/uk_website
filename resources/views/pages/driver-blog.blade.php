@@ -481,18 +481,34 @@ background: #ffffff;
     border-radius: 10px;
 }
 
-/* Title */
-.blog-section .blog-content h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #111;
+/* FIX BLUE LINKS AND CARD TEXT COLORS */
+.blog-grid a,
+.blog-card a,
+#blog-data-wrapper a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
 }
 
-/* Description */
-.blog-section .blog-content p {
-     font-size: 14px;
-    /* color: #666; */
+.blog-section .blog-content h3,
+.blog-card .blog-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111 !important;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.blog-grid a:hover .blog-content h3,
+#blog-data-wrapper a:hover .blog-content h3 {
+    color: #f9bf00 !important;
+}
+
+.blog-section .blog-content p,
+.blog-card .blog-content p {
+    font-size: 14px;
+    color: #555 !important;
     line-height: 1.6;
     margin-bottom: 15px;
     font-weight: 400;
@@ -2250,10 +2266,7 @@ triggerCalendly = () => {
                 <p>Get in touch with us for any inquiries or support.</p>
             </div>
         </div>
-    </div> --}}
-@endsection
 
-@section('script')
 
 <script>
 $(document).ready(function() {
@@ -2271,7 +2284,7 @@ $(document).ready(function() {
 
         searchTimeout = setTimeout(function() {
             $.ajax({
-                url: "{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/blog/search",
+                url: "{{ route('blog.search') }}",
                 type: "GET",
                 data: { q: query },
                 global: false,

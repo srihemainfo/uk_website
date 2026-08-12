@@ -8,7 +8,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/dashboard', function () {
-    return view('uk-dashboard');
+    return view('dashboard');
 })->name('dashboard');
 
 Route::get('/profile', function () {
@@ -46,6 +46,10 @@ Route::get('/invoice', function () {
 Route::get('/operator-signup', function () {
     return view('operator');
 })->name('operator');
+
+Route::get('/stripe/success', function () {
+    return view('onboard-success');
+})->name('onboard-success');
 
 // Fare calculation route (requires Sanctum token via Authorization header)
 Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll']);

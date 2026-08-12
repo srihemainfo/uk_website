@@ -2296,7 +2296,11 @@ triggerCalendly = () => {
             }
 
             searchTimeout = setTimeout(function() {
-                const searchUrl = "{{ route('blog.search') }}?q=" + encodeURIComponent(query);
+                const webAppUrl = "{{ env('WEB_APP_URL') }}".replace(/\/$/, '');
+                const countrySlug = "{{ env('COUNTRY_SLUG_II') ?: env('COUNTRY_SLUG') }}";
+                const baseUrl = (webAppUrl || window.location.origin) + (countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '');
+                const searchUrl = baseUrl + "/blog/search?q=" + encodeURIComponent(query);
+
                 fetch(searchUrl, {
                     method: 'GET',
                     headers: {
@@ -2310,8 +2314,8 @@ triggerCalendly = () => {
                     if (response && response.length > 0) {
                         let html = '<ul>';
                         response.forEach(function(blog) {
-                            const baseUrl = "{{ env('WEB_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}";
-                            const link = baseUrl + blog.cat_url + '/' + blog.slug;
+                            const catPath = blog.cat_url ? (blog.cat_url.startsWith('/') ? blog.cat_url : '/' + blog.cat_url) : '';
+                            const link = baseUrl + catPath + '/' + blog.slug;
                             
                             let shortDesc = "";
                             if (blog.description) {

@@ -51,6 +51,14 @@ Route::get('/stripe/success', function () {
     return view('onboard-success');
 })->name('onboard-success');
 
+Route::get('/operator/stripe/success', function () {
+    return view('onboard-success');
+})->name('onboard-success');
+
+Route::get('/stripe/onboard-status', function () {
+    return view('onboard-expiry');
+})->name('onboard-expiry');
+
 // Fare calculation route (requires Sanctum token via Authorization header)
 Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll']);
 

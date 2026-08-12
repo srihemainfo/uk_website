@@ -481,18 +481,25 @@ background: #ffffff;
     border-radius: 10px;
 }
 
-/* Title */
-.blog-section .blog-content h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #111;
+.blog-grid a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
 }
-
-/* Description */
+.blog-section .blog-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111 !important;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+.blog-grid a:hover .blog-content h3 {
+    color: #f9bf00 !important;
+}
 .blog-section .blog-content p {
-     font-size: 14px;
-    /* color: #666; */
+    font-size: 14px;
+    color: #555 !important;
     line-height: 1.6;
     margin-bottom: 15px;
     font-weight: 400;
@@ -2088,10 +2095,6 @@ ease;
         </div>
 
         <div class="my-3">
-            <div class="blog-category cap-text">
-                {{ $categoryData->cat_name }}
-            </div>
-
             <div class="row align-items-start">
                 
                 <div class="col-lg-8">
@@ -2251,9 +2254,7 @@ triggerCalendly = () => {
             </div>
         </div>
     </div> --}}
-@endsection
 
-@section('script')
 
 <script>
 $(document).ready(function() {
@@ -2271,7 +2272,7 @@ $(document).ready(function() {
 
         searchTimeout = setTimeout(function() {
             $.ajax({
-                url: "{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/blog/search",
+                url: "{{ route('blog.search') }}",
                 type: "GET",
                 data: { q: query },
                 global: false,

@@ -528,24 +528,29 @@ background: #f9bf00;
     border-radius: 10px;
 }
 
-/* Title */
-.blog-section .blog-content h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #111;
+.blog-grid a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
 }
-
-/* Description */
+.blog-section .blog-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111 !important;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+.blog-grid a:hover .blog-content h3 {
+    color: #f9bf00 !important;
+}
 .blog-section .blog-content p {
-     font-size: 14px;
-    /* color: #666; */
+    font-size: 14px;
+    color: #555 !important;
     line-height: 1.6;
     margin-bottom: 15px;
     font-weight: 400;
 }
-
-/* Meta */
 .blog-section .blog-meta {
   display: flex;
   justify-content: space-between;
@@ -570,22 +575,28 @@ background: #f9bf00;
 }
 
 /* Load More Button */
-.blog-section .load-more-btn {
-  display: block;
-  margin: 40px auto 0;
-  padding: 12px 30px;
-  border: 2px solid #1e73ff;
-  background: transparent;
-  color: #1e73ff;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.3s;
+.load-more-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    background: #f9bf00;
+    color: #000 !important;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 30px;
+    border: 2px solid #f9bf00;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(249, 191, 0, 0.3);
+    text-decoration: none !important;
+    outline: none;
 }
 
-.blog-section .load-more-btn:hover {
-  background: #1e73ff;
-  color: #fff;
+.load-more-btn:hover {
+    background: #000;
+    color: #f9bf00 !important;
+    border-color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 /* Responsive */
@@ -2162,7 +2173,7 @@ ease;
             </div>
 
             <div class="text-center mt-4 mb-5">
-              <button class="cs_btn cs_style_2 py-1"
+              <button class="load-more-btn"
                 onclick="window.location.href='{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}{{ $categoryBlogs[0]->cat_url }}'">
                 Load More Articles
               </button>
@@ -2300,9 +2311,7 @@ triggerCalendly = () => {
             </div>
         </div>
     </div> --}}
-@endsection
 
-@section('script')
 
 <script>
     $(document).ready(function(){       
@@ -2323,7 +2332,7 @@ triggerCalendly = () => {
 
         searchTimeout = setTimeout(function() {
             $.ajax({
-                url: "{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/blog/search",
+                url: "{{ route('blog.search') }}",
                 type: "GET",
                 data: { q: query },
                 global: false,

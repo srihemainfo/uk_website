@@ -8168,6 +8168,43 @@
 </head>
 
 <body>
+    @if(request()->has('payment_intent') && request()->has('redirect_status'))
+    <div id="paymentRedirectOverlay" style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
+        <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
+        <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
+            <!-- Brand Logo -->
+            <div style="margin-bottom: 32px;">
+                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+            </div>
+            
+            <!-- Glowing Animated Spinner -->
+            <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
+                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
+                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;"></div>
+                <div style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;"></div>
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+                </div>
+            </div>
+
+            <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">Finalizing Your Booking...</h3>
+            <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
+                We're securely confirming your payment with Stripe. Please do not close or refresh this page.
+            </p>
+
+            <!-- Progress Indicator -->
+            <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;"></div>
+                <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing payment settlement...</span>
+            </div>
+        </div>
+    </div>
+    <style>
+    @keyframes overlaySpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes overlaySpinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+    @keyframes overlayPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+    </style>
+    @endif
     @include('partials.header')
     @yield('content')
     @include('partials.footer')
@@ -9083,14 +9120,16 @@
                 return;
             }
             const v = state.vehicle;
-            const priceText = v.priceMax ? `\u00a3${v.price} \u2013 \u00a3${v.priceMax}` : `\u00a3${v.price}`;
+            const carPrice = v.price || v.fare || 0;
+            const priceText = v.priceMax ? `\u00a3${carPrice} \u2013 \u00a3${v.priceMax}` : `\u00a3${carPrice}`;
+            const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : 'goride/img/fleet1.png');
 
             // Sidebar selected vehicle summary (Step 2 side panel)
-            $('#summaryCarImage').attr('src', v.image);
-            $('#summaryCarName').text(v.name);
-            $('#summaryCarCapacity').text(v.capacity);
-            $('#summaryCarLuggage').text(v.luggage);
-            $('#summaryCarHandLuggage').text(v.handLuggage || v.capacity);
+            $('#summaryCarImage').attr('src', carImg);
+            $('#summaryCarName').text(v.name || 'Standard');
+            $('#summaryCarCapacity').text(v.capacity || 4);
+            $('#summaryCarLuggage').text(v.luggage || 2);
+            $('#summaryCarHandLuggage').text(v.handLuggage || v.capacity || 4);
             if (v.child && v.child > 0) {
                 $('#summaryCarChild').text(v.child);
                 $('#summaryCarChildContainer').show();
@@ -9101,10 +9140,10 @@
             $('#selectedCarSummary').show();
 
             // Mobile compact summary car details
-            $('#mcsCarName').text(v.name);
-            $('#mcsCarCapacity').text(v.capacity);
-            $('#mcsCarLuggage').text(v.luggage);
-            $('#mcsCarHandLuggage').text(v.handLuggage || v.capacity);
+            $('#mcsCarName').text(v.name || 'Standard');
+            $('#mcsCarCapacity').text(v.capacity || 4);
+            $('#mcsCarLuggage').text(v.luggage || 2);
+            $('#mcsCarHandLuggage').text(v.handLuggage || v.capacity || 4);
             if (v.child && v.child > 0) {
                 $('#mcsCarChild').text(v.child);
                 $('#mcsCarChildContainer').show();
@@ -9343,6 +9382,23 @@
             // ---- Restore persisted booking state ----
             BookingStore.restore();
             const _restoredState = BookingStore.getState();
+
+            // Check if returning from Stripe Redirect Payment (e.g. PayPal, Revolut Pay, Klarna, 3DS)
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirectStatus = urlParams.get('redirect_status');
+            const paymentIntentId = urlParams.get('payment_intent');
+
+            if (paymentIntentId && redirectStatus) {
+                if (redirectStatus === 'succeeded' || redirectStatus === 'processing') {
+                    if (typeof handleStripeRedirectReturn === 'function') {
+                        handleStripeRedirectReturn(paymentIntentId, redirectStatus);
+                        return;
+                    }
+                } else if (redirectStatus === 'failed') {
+                    showToast('Payment was cancelled or failed. Please try again.', 'error');
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
 
             // If there are saved locations, restore them into the form inputs
             if (_restoredState.pickup) { $('#pickupInput').val(_restoredState.pickup); }
@@ -11175,6 +11231,14 @@
 
                 if (data.payment_id || data.id || data.data?.payment_id || data.data?.id) {
                     window.paymentId = parseInt(data.payment_id || data.id || data.data?.payment_id || data.data?.id);
+                    if (typeof BookingStore !== 'undefined') {
+                        BookingStore.setState({
+                            paymentId: window.paymentId,
+                            selectedStripePaymentType: payType,
+                            jobId: jobId,
+                            bookingId: jobId
+                        });
+                    }
                 }
 
                 const clientSecret = data.client_secret || data.clientSecret || data.data?.client_secret;
@@ -11416,12 +11480,17 @@
                 return;
             }
 
-            // Phase 2: If Stripe Elements IS ALREADY initialized and visible, process card payment confirmation
+            // Phase 2: If Stripe Elements IS ALREADY initialized and visible, process card/redirect payment confirmation
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
             btn.disabled = true;
 
+            const returnUrl = window.location.origin + window.location.pathname;
+
             window.stripeInstance.confirmPayment({
                 elements: window.stripeElements,
+                confirmParams: {
+                    return_url: returnUrl
+                },
                 redirect: 'if_required'
             }).then(async function (result) {
                 if (result.error) {
@@ -11502,6 +11571,166 @@
                 btn.innerHTML = originalBtnContent;
                 btn.disabled = false;
             });
+        }
+
+        function showPaymentRedirectOverlay() {
+            if ($('#paymentRedirectOverlay').length) {
+                $('#paymentRedirectOverlay').show();
+                return;
+            }
+            const overlayHtml = `
+            <div id="paymentRedirectOverlay" style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
+                <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
+                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
+                    <div style="margin-bottom: 32px;">
+                        <img src="/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                    </div>
+                    <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
+                        <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
+                        <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;"></div>
+                        <div style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;"></div>
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+                        </div>
+                    </div>
+                    <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">Finalizing Your Booking...</h3>
+                    <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
+                        We're securely confirming your payment with Stripe. Please do not close or refresh this page.
+                    </p>
+                    <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;"></div>
+                        <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing payment settlement...</span>
+                    </div>
+                </div>
+            </div>
+            `;
+            $('body').append(overlayHtml);
+        }
+
+        async function handleStripeRedirectReturn(paymentIntentId, redirectStatus) {
+            if (typeof showPaymentRedirectOverlay === 'function') {
+                showPaymentRedirectOverlay();
+            }
+
+            if (typeof BookingStore !== 'undefined') {
+                BookingStore.restore();
+            }
+            const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
+            const pId = parseInt(state.paymentId || window.paymentId || 0);
+            const jobId = state.jobId || state.bookingId || (typeof bookingData !== 'undefined' ? bookingData.jobId || bookingData.bookingId : '');
+
+            // Clean up the URL query params without reloading the page
+            window.history.replaceState({}, document.title, window.location.pathname);
+
+            // Populate and synchronize the full left sidebar UI immediately from restored state
+            if (typeof _updateLocationUI === 'function') _updateLocationUI(state);
+            if (typeof _updateDateTimeUI === 'function') _updateDateTimeUI(state);
+            if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(state);
+            if (typeof _updatePassengerSummaryUI === 'function') _updatePassengerSummaryUI(state);
+            if (typeof _updateJourneySummaryUI === 'function') _updateJourneySummaryUI(state);
+
+            let finalDistance = state.apiDistance || state.vehicle?.fareBreakdown?.distance || '—';
+            if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
+                finalDistance = formatTripDistance(finalDistance);
+            }
+            const finalDuration = state.apiDuration || state.vehicle?.fareBreakdown?.duration || '—';
+            if (finalDistance !== '—' || finalDuration !== '—') {
+                $('#leftTripDistance').text(finalDistance);
+                $('#leftTripDuration').text(finalDuration);
+                $('#tripRouteMetaContainer').show();
+            }
+
+            if (typeof updateBookingSummary === 'function') {
+                updateBookingSummary();
+            }
+
+            showToast('Confirming your payment and booking...', 'info');
+
+            try {
+                const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
+                    },
+                    body: JSON.stringify({
+                        payment_id: pId,
+                        payment_intent_id: paymentIntentId,
+                        job_id: jobId,
+                        pay_no: jobId,
+                        job_no: jobId,
+                        status: redirectStatus,
+                        payment_type: state.selectedStripePaymentType || window.selectedStripePaymentType || 'full'
+                    })
+                });
+
+                const data = await confirmResp.json();
+                if (data.status || data.success) {
+                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobId;
+                    $('#confirmNum').text(confirmedJobNo);
+
+                    const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || state.job_no || state.bookingId;
+                    if (previewHash) {
+                        window.currentBookingPreviewHash = previewHash;
+                        $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
+                    } else {
+                        $('#viewBookingPreviewBtn').css('display', 'inline-flex');
+                    }
+
+                    $('#confirmPickup').text(state.pickup || '—');
+                    $('#confirmDropoff').text(state.dropoff || '—');
+                    if (state.date && state.time) {
+                        $('#confirmDateTime').text(`${state.date} | ${state.time}`);
+                        $('#confirmDateTime').parent().show();
+                    } else {
+                        $('#confirmDateTime').parent().hide();
+                    }
+                    $('#confirmVehicle').text(state.vehicle?.name || '—');
+                    $('#confirmDistance').text(finalDistance);
+                    $('#confirmDuration').text(finalDuration);
+
+                    // Re-run all UI updaters to ensure every card and sidebar is completely populated
+                    if (typeof _updateLocationUI === 'function') _updateLocationUI(state);
+                    if (typeof _updateDateTimeUI === 'function') _updateDateTimeUI(state);
+                    if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(state);
+                    if (typeof _updatePassengerSummaryUI === 'function') _updatePassengerSummaryUI(state);
+                    if (typeof _updateJourneySummaryUI === 'function') _updateJourneySummaryUI(state);
+                    if (typeof updateBookingSummary === 'function') updateBookingSummary();
+
+                    // Switch directly to Step 8 (Booking Confirmed)
+                    showStep(8);
+
+                    // Remove/Fade out the black loading overlay
+                    const $overlay = $('#paymentRedirectOverlay');
+                    if ($overlay.length) {
+                        $overlay.fadeOut(400, function () {
+                            $(this).remove();
+                        });
+                    }
+
+                    showToast('Payment successful! Your booking is confirmed.', 'success');
+                } else {
+                    const $overlay = $('#paymentRedirectOverlay');
+                    if ($overlay.length) {
+                        $overlay.fadeOut(400, function () {
+                            $(this).remove();
+                        });
+                    }
+                    showStep(8);
+                    showToast('Payment Confirmation: ' + (data.message || 'Processing in background'), 'info');
+                }
+            } catch (err) {
+                console.error('Error confirming redirected payment:', err);
+                const $overlay = $('#paymentRedirectOverlay');
+                if ($overlay.length) {
+                    $overlay.fadeOut(400, function () {
+                        $(this).remove();
+                    });
+                }
+                showStep(8);
+                showToast('Payment received! Finalizing booking details.', 'success');
+            }
         }
 
 

@@ -20,6 +20,157 @@
 @endphp
 
 <style>
+/* Blog Search Bar Styles */
+.blog-search-wrapper {
+    max-width: 700px;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+.search-input-box {
+    display: flex;
+    align-items: center;
+    background: #000000; 
+    border: 1px solid #f9bf00; 
+    border-radius: 30px;
+    padding: 0 18px;
+    height: 44px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(249, 191, 0, 0.15);
+}
+
+.search-input-box:focus-within {
+    box-shadow: 0 0 15px rgba(249, 191, 0, 0.3);
+}
+
+.search-input-box input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    outline: none;
+    font-size: 14px; 
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 44px;
+}
+
+.search-input-box input::placeholder {
+    color: #777;
+    line-height: normal;
+}
+
+.search-input-box .right-icon {
+    color: #999; 
+    font-size: 16px;
+    margin-left: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: color 0.2s ease;
+}
+
+.search-input-box .right-icon:hover {
+    color: #f9bf00;
+}
+
+.search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin-top: 6px;
+    overflow: hidden;
+    max-height: 280px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+}
+
+.search-results-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.search-results-dropdown li {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.search-results-dropdown li:last-child {
+    border-bottom: none;
+}
+
+.search-results-dropdown a {
+    display: flex;
+    align-items: flex-start;
+    padding: 10px 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.search-results-dropdown a i {
+    color: #f9bf00;
+    margin-right: 12px;
+    font-size: 14px;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.search-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+.search-text-wrapper .search-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #111;
+    margin-bottom: 3px;
+    line-height: 1.3;
+}
+
+.search-text-wrapper .search-desc {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+.search-results-dropdown a:hover {
+    background: #fff9e6;
+    color: #000;
+}
+
+.search-no-results {
+    padding: 12px 16px;
+    color: #777;
+    font-style: italic;
+    text-align: center;
+    font-size: 14px;
+}
+
+.blog-section-banner {
+    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/main-banner.webp') }}'), #141c28;
+    background-color: #141c28;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 70px 0;
+    width: 100%;
+}
+
 .blog-detail-page {
     margin-top: 60px;
     font-family: "Inter", "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -1555,26 +1706,44 @@ input#exampleInputEmail1 {
 </div>
 
 <script>
-let countryC = getCookie('countryCode') || 'IN';
+function safeGetCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+}
+
+let countryC = (typeof getCookie === 'function' ? getCookie('countryCode') : safeGetCookie('countryCode')) || 'IN';
 let isMobile = window.innerWidth <= 768;
-if (countryC !== 'IN') {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
-    document.querySelector('#india-content').style.display = "none";
-    document.querySelector('#india-content2').style.display = "none";
-} else {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
-    document.querySelector('#india-content').style.display = "block";
-    document.querySelector('#india-content2').style.display = "block";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+
+try {
+    const sliderItem = document.querySelector('#slider-image .item');
+    const mobileMockup = document.querySelector('#mobile_mockup');
+    const indiaContent = document.querySelector('#india-content');
+    const indiaContent2 = document.querySelector('#india-content2');
+
+    if (countryC !== 'IN') {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
+        if (indiaContent) indiaContent.style.display = "none";
+        if (indiaContent2) indiaContent2.style.display = "none";
+    } else {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
+        if (indiaContent) indiaContent.style.display = "block";
+        if (indiaContent2) indiaContent2.style.display = "block";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+    }
+
+    if (isMobile && sliderItem) {
+        sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
+    }
+} catch (e) {
+    console.warn("DOM elements initialization warning:", e);
 }
-if (isMobile) {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
-}
+
 triggerCalendly = () => {
     sessionStorage.setItem('triggerCalendlyClick', 'true');
     window.location.href = '/dashboard';
 }
+<<<<<<< HEAD
 </script>
 
 
@@ -1582,6 +1751,8 @@ triggerCalendly = () => {
 $(document).ready(function(){        
     // notifyJobs();
 }); 
+=======
+>>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 768) {
@@ -1707,19 +1878,21 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector('.whatsapp.share-btn').href = "https://api.whatsapp.com/send?text=" + currentTitle + " - " + currentUrl;
 
     var instaBtn = document.querySelector('.native-share');
-    instaBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (navigator.share) {
-            navigator.share({
-                title: rawTitle,
-                url: rawUrl
-            }).catch(function(error) {
-                console.log('Error sharing:', error);
-            });
-        } else {
-            alert("Direct sharing to Instagram is only supported on mobile devices. Please copy the URL manually to share.");
-        }
-    });
+    if (instaBtn) {
+        instaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (navigator.share) {
+                navigator.share({
+                    title: rawTitle,
+                    url: rawUrl
+                }).catch(function(error) {
+                    console.log('Error sharing:', error);
+                });
+            } else {
+                alert("Direct sharing to Instagram is only supported on mobile devices. Please copy the URL manually to share.");
+            }
+        });
+    }
 });
 </script>
 @endsection

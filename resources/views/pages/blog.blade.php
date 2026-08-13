@@ -194,7 +194,7 @@ display:flex;
     text-decoration:none;
 }
 .blog-section-banner{
-    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/main-banner.webp') }}'), #141c28;
+    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/blog-main-banner.webp') }}'), #141c28;
     background-color: #141c28;
     background-size: cover;
     background-position: center;
@@ -509,6 +509,12 @@ background: #f9bf00;
   display: block;
 }
 
+.blog-card-link {
+    color: inherit !important;
+    text-decoration: none !important;
+    display: block;
+}
+
 /* Content */
 .blog-section .blog-content {
   padding: 20px;
@@ -519,12 +525,12 @@ background: #f9bf00;
     display: inline-block;
     font-size: 13px;
     font-weight: 700;
-    /* color: #f9bf00; */
+    color: #111111 !important;
     text-transform: uppercase;
     margin-bottom: 6px;
     background: #f9bf0045;
     max-width: fit-content;
-    padding: 0px 12px;
+    padding: 2px 12px;
     border-radius: 10px;
 }
 
@@ -534,6 +540,7 @@ background: #f9bf00;
     display: block;
 }
 .blog-section .blog-content h3 {
+<<<<<<< HEAD
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px;
@@ -543,10 +550,26 @@ background: #f9bf00;
 }
 .blog-grid a:hover .blog-content h3 {
     color: #f9bf00 !important;
+=======
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #111111 !important;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.blog-card-link:hover .blog-content h3 {
+  color: #f9bf00 !important;
+>>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
 }
 .blog-section .blog-content p {
     font-size: 14px;
+<<<<<<< HEAD
     color: #555 !important;
+=======
+    color: #555555 !important;
+>>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
     line-height: 1.6;
     margin-bottom: 15px;
     font-weight: 400;
@@ -560,12 +583,12 @@ background: #f9bf00;
 }
 
 .blog-section .blog-time{
-    color:#1b1b1b;
-        font-weight: 500;
+    color: #1b1b1b !important;
+    font-weight: 500;
 }
 
 .blog-section .blog-meta a {
-    color: #f3ba00;
+    color: #f3ba00 !important;
     font-weight: 600;
     text-decoration: none;
 }
@@ -617,7 +640,7 @@ background: #f9bf00;
    position: relative;
     display: inline-block;
        padding: 14px 30px;
-    font-size: 21px;Manage Smarter
+    font-size: 21px;
     font-weight: bold;
     color: #000;
     background: #f9bf00;
@@ -626,8 +649,7 @@ background: #f9bf00;
     text-decoration: none;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(249, 191, 0, 0.5), 0 0 40px rgba(249, 191, 0, 0.3) inset;
-    transition: all 0.3s 
-ease;
+    transition: all 0.3s ease;
     animation: bounce 2s infinite;
     font-weight:600;
 }
@@ -715,111 +737,68 @@ ease;
 }
 /* From Uiverse.io by augustin_4687 */ 
 .agency-button1 {
-  --stone-50: #fafaf9;
-  --stone-800: #292524;
-  --yellow-400: #facc15;
-
-  font-size: 25px;
-  cursor: pointer;
-  position: relative;
-  font-family: "Rubik", sans-serif;
-  font-weight: bold;
-  line-height: 1;
-  padding: 1px;
- 
-  transform: translate(-4px, -4px);
-  outline: 2px solid transparent;
-  outline-offset: 5px;
-
-  background-color: var(--stone-800);
-  color: var(--stone-800);
-  transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
-  text-align: center;
-  box-shadow:
-    0.5px 0.5px 0 0 var(--stone-800),
-    1px 1px 0 0 var(--stone-800),
-    1.5px 1.5px 0 0 var(--stone-800),
-    2px 2px 0 0 var(--stone-800),
-    2.5px 2.5px 0 0 var(--stone-800),
-    3px 3px 0 0 var(--stone-800),
-    0 0 0 2px var(--stone-50),
-    0.5px 0.5px 0 2px var(--stone-50),
-    1px 1px 0 2px var(--stone-50),
-    1.5px 1.5px 0 2px var(--stone-50),
-    2px 2px 0 2px var(--stone-50),
-    2.5px 2.5px 0 2px var(--stone-50),
-    3px 3px 0 2px var(--stone-50),
-    3.5px 3.5px 0 2px var(--stone-50),
-    4px 4px 0 2px var(--stone-50);
-
-  &:hover {
+    --stone-50: #fafaf9;
+    --stone-800: #292524;
+    --yellow-400: #facc15;
+    font-size: 25px;
+    cursor: pointer;
+    position: relative;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
+    line-height: 1;
+    padding: 1px;
+    transform: translate(-4px, -4px);
+    outline: 2px solid transparent;
+    outline-offset: 5px;
+    background-color: var(--stone-800);
+    color: var(--stone-800);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    text-align: center;
+    box-shadow: 0.5px 0.5px 0 0 var(--stone-800), 1px 1px 0 0 var(--stone-800), 1.5px 1.5px 0 0 var(--stone-800), 2px 2px 0 0 var(--stone-800), 2.5px 2.5px 0 0 var(--stone-800), 3px 3px 0 0 var(--stone-800), 0 0 0 2px var(--stone-50), 0.5px 0.5px 0 2px var(--stone-50), 1px 1px 0 2px var(--stone-50), 1.5px 1.5px 0 2px var(--stone-50), 2px 2px 0 2px var(--stone-50), 2.5px 2.5px 0 2px var(--stone-50), 3px 3px 0 2px var(--stone-50), 3.5px 3.5px 0 2px var(--stone-50), 4px 4px 0 2px var(--stone-50);
+}
+.agency-button1:hover {
     transform: translate(0, 0);
     box-shadow: 0 0 0 2px var(--stone-50);
-  }
-
-
-  &:active,
-  &:focus-visible {
-    outline-color: var(--yellow-400);
-  }
-
-  &:focus-visible {
-    outline-style: dashed;
-  }
-  &:hover {
-  transform: translate(0, 0);
-  box-shadow: 0 0 0 2px var(--stone-50);
-
-  color: black; // fallback
-
-  & > div > span {
     color: black;
-  }
 }
-
-
-  & > div {
+.agency-button1:active,
+.agency-button1:focus-visible {
+    outline-color: var(--yellow-400);
+}
+.agency-button1:focus-visible {
+    outline-style: dashed;
+}
+.agency-button1:hover > div > span {
+    color: black;
+}
+.agency-button1 > div {
     position: relative;
     pointer-events: none;
     background-color: var(--yellow-400);
     border: 2px solid rgba(255, 255, 255, 0.3);
-  
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      
-      opacity: 0.5;
-      background-image: radial-gradient(
-          rgb(255 255 255 / 80%) 20%,
-          transparent 20%
-        ),
-        radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
-      background-position:
-        0 0,
-        4px 4px;
-      background-size: 8px 8px;
-      mix-blend-mode: hard-light;
-      animation: dots 0.5s infinite linear;
-    }
-
-    & > span {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 21px 12px 0px;
-      gap: 0.25rem;
-      filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25));
-
-      &:active {
-        transform: translateY(2px);
-      }
-    }
-  }
+}
+.agency-button1 > div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background-image: radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%), radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%);
+    background-position: 0 0, 4px 4px;
+    background-size: 8px 8px;
+    mix-blend-mode: hard-light;
+    animation: dots 0.5s infinite linear;
+}
+.agency-button1 > div > span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 21px 12px 0px;
+    gap: 0.25rem;
+    filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25));
+}
+.agency-button1 > div > span:active {
+    transform: translateY(2px);
 }
 
 @keyframes dots {
@@ -1861,7 +1840,25 @@ ease;
     .badge {
         background: #f9bf00;
         color: black;
-        #f2f2f2
+    }
+
+    .cs_btn.cs_style_2 {
+        background: #f9bf00;
+        color: #000;
+        font-weight: 600;
+        padding: 10px 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .cs_btn.cs_style_2:hover {
+        background: #e0a800;
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(249, 191, 0, 0.4);
     }
 
     .phone-mockup {
@@ -2016,9 +2013,6 @@ ease;
         padding: 4px 10px;
         font-size: 10px;
     }
-        /*.slider-fade .item {*/
-        /*    background-position: right;*/
-        /*}*/
 
         .feature-img-wrap img {
             width: 50px;
@@ -2104,8 +2098,8 @@ ease;
     @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
         .i_phone {
             margin-top: -100px !important;
-
         }
+    }
 </style>
 
     
@@ -2267,23 +2261,37 @@ ease;
 
 <script>
 
-let countryC = getCookie('countryCode') || 'IN';
-let isMobile = window.innerWidth <= 768;
-
-if (countryC !== 'IN') {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
-    document.querySelector('#india-content').style.display = "none";
-    document.querySelector('#india-content2').style.display = "none";
-} else {
-    document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
-    document.querySelector('#india-content').style.display = "block";
-    document.querySelector('#india-content2').style.display = "block";
-    document.querySelector('#mobile_mockup').src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+function safeGetCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
 }
 
-if (isMobile) {
-document.querySelector('#slider-image .item').style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
+let countryC = (typeof getCookie === 'function' ? getCookie('countryCode') : safeGetCookie('countryCode')) || 'IN';
+let isMobile = window.innerWidth <= 768;
+
+try {
+    const sliderItem = document.querySelector('#slider-image .item');
+    const mobileMockup = document.querySelector('#mobile_mockup');
+    const indiaContent = document.querySelector('#india-content');
+    const indiaContent2 = document.querySelector('#india-content2');
+
+    if (countryC !== 'IN') {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/goride_main_banner.webp') }}')";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/slider/mobile_mockup_two.webp') }}';
+        if (indiaContent) indiaContent.style.display = "none";
+        if (indiaContent2) indiaContent2.style.display = "none";
+    } else {
+        if (sliderItem) sliderItem.style.backgroundImage = "url('{{ asset('goride/img/blogs.webp') }}')";
+        if (indiaContent) indiaContent.style.display = "block";
+        if (indiaContent2) indiaContent2.style.display = "block";
+        if (mobileMockup) mobileMockup.src = '{{ asset('goride/img/banner-1-mob.webp') }}';
+    }
+
+    if (isMobile && sliderItem) {
+        sliderItem.style.backgroundImage = "url('{{ asset('goride/img/slider/go_ride_background.png') }}')";
+    }
+} catch (e) {
+    console.warn("DOM elements initialization warning:", e);
 }
 
 triggerCalendly = () => {
@@ -2291,15 +2299,15 @@ triggerCalendly = () => {
     window.location.href = '/dashboard';
 }
 
-//     $(document).ready(function(){       
-//   $('#myModal').modal('show');
-//     }); 
-</script>
+(function() {
+    function initBlogSearch() {
+        const searchInput = document.getElementById('blogSearchInput');
+        const resultsContainer = document.getElementById('blogSearchResults');
+        if (!searchInput || !resultsContainer) return;
 
-    {{-- <div class="container">
-        <h1>Welcome to Our Website</h1>
-        <p>This is the home page of our Laravel application. Here you can add content that is specific to the home page.</p>
+        let searchTimeout = null;
 
+<<<<<<< HEAD
         <div class="row">
             <div class="col-md-6">
                 <h2>About Us</h2>
@@ -2312,14 +2320,25 @@ triggerCalendly = () => {
         </div>
     </div> --}}
 
+=======
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            const query = searchInput.value.trim();
 
-<script>
-    $(document).ready(function(){       
-    //   notifyJobs()
-    }); 
-    $(document).ready(function() {
-    let searchTimeout;
+            if (query.length < 2) {
+                resultsContainer.style.display = 'none';
+                resultsContainer.innerHTML = '';
+                return;
+            }
+>>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
 
+            searchTimeout = setTimeout(function() {
+                const webAppUrl = "{{ env('WEB_APP_URL') }}".replace(/\/$/, '');
+                const countrySlug = "{{ env('COUNTRY_SLUG_II') ?: env('COUNTRY_SLUG') }}";
+                const baseUrl = (webAppUrl || window.location.origin) + (countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '');
+                const searchUrl = baseUrl + "/blog/search?q=" + encodeURIComponent(query);
+
+<<<<<<< HEAD
     $('#blogSearchInput').on('keyup', function() {
         clearTimeout(searchTimeout);
         let query = $(this).val().trim();
@@ -2344,85 +2363,103 @@ triggerCalendly = () => {
                     resultsContainer.empty();
                     
                     if (response.length > 0) {
+=======
+                fetch(searchUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(function(res) { return res.json(); })
+                .then(function(response) {
+                    resultsContainer.innerHTML = '';
+                    if (response && response.length > 0) {
+>>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
                         let html = '<ul>';
-                        $.each(response, function(index, blog) {
-                            let link = `{{env('WEB_APP_URL')}}{{env('COUNTRY_SLUG_II')}}${blog.cat_url}/${blog.slug}`;
+                        response.forEach(function(blog) {
+                            const catPath = blog.cat_url ? (blog.cat_url.startsWith('/') ? blog.cat_url : '/' + blog.cat_url) : '';
+                            const link = baseUrl + catPath + '/' + blog.slug;
                             
                             let shortDesc = "";
                             if (blog.description) {
-                                let plainTextDesc = $('<div>').html(blog.description).text();
-                                shortDesc = plainTextDesc.length > 70 ? plainTextDesc.substring(0, 70) + '...' : plainTextDesc;
+                                const tempDiv = document.createElement('div');
+                                tempDiv.innerHTML = blog.description;
+                                const plainText = tempDiv.textContent || tempDiv.innerText || "";
+                                shortDesc = plainText.length > 70 ? plainText.substring(0, 70) + '...' : plainText;
                             }
-                            
-                            html += `<li>
-                                        <a href="${link}">
-                                            <i class="fa fa-search"></i>
-                                            <div class="search-text-wrapper">
-                                                <div class="search-title">${blog.blog_title}</div>
-                                                ${shortDesc ? `<div class="search-desc">${shortDesc}</div>` : ''}
-                                            </div>
-                                        </a>
-                                     </li>`;
+
+                            html += '<li>' +
+                                        '<a href="' + link + '">' +
+                                            '<i class="fa fa-search"></i>' +
+                                            '<div class="search-text-wrapper">' +
+                                                '<div class="search-title">' + blog.blog_title + '</div>' +
+                                                (shortDesc ? '<div class="search-desc">' + shortDesc + '</div>' : '') +
+                                            '</div>' +
+                                        '</a>' +
+                                    '</li>';
                         });
                         html += '</ul>';
-                        resultsContainer.html(html).slideDown(200);
+                        resultsContainer.innerHTML = html;
+                        resultsContainer.style.display = 'block';
                     } else {
-                        resultsContainer.html('<div class="search-no-results">No blogs found for "'+query+'"</div>').slideDown(200);
+                        resultsContainer.innerHTML = '<div class="search-no-results">No blogs found for "' + query + '"</div>';
+                        resultsContainer.style.display = 'block';
                     }
-                },
-                error: function() {
-                    console.error("Error fetching search results.");
-                }
-            });
-        }, 300);
-    });
+                })
+                .catch(function(err) {
+                    console.error("Error fetching search results:", err);
+                });
+            }, 300);
+        });
 
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.blog-search-wrapper').length) {
-            $('#blogSearchResults').slideUp(200);
-        }
-    });
-});
-    document.addEventListener('DOMContentLoaded', function() {
-  // Initialize carousel with auto rotation on mobile
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.blog-search-wrapper')) {
+                resultsContainer.style.display = 'none';
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBlogSearch);
+    } else {
+        initBlogSearch();
+    }
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
   if (window.innerWidth < 768) {
     const myCarousel = document.getElementById('stepsCarousel');
     if (myCarousel) {
       const carousel = new bootstrap.Carousel(myCarousel, {
-        interval: 4000, // Rotate every 4 seconds
+        interval: 4000,
         wrap: true,
         touch: true
       });
     }
   }
 });
-    function convertDateFormat(txt, type = 'full') {
-        let dateString = txt;
-    
-        // Create Date object (replace space with T so it's ISO compatible)
-        let dateObj = new Date(dateString.replace(" ", "T"));
-    
-        // Extract day and month
-        let day = String(dateObj.getDate()).padStart(2, '0');
-        let month = dateObj.toLocaleString('en-US', { month: 'short' });
-    
-        if (type === 'date') {
-            // Return only date format (e.g., "05 Sep")
-            return `${day} ${month}`;
-        }
-    
-        // Extract time components
-        let hours = dateObj.getHours();
-        let minutes = String(dateObj.getMinutes()).padStart(2, '0');
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12 || 12; // Convert 24h to 12h format
-    
-        // Return full format (e.g., "05 Sep 02:15 PM")
-        let formattedDate = `${day} ${month} ${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
-        return formattedDate;
+
+function convertDateFormat(txt, type = 'full') {
+    let dateString = txt;
+    let dateObj = new Date(dateString.replace(" ", "T"));
+    let day = String(dateObj.getDate()).padStart(2, '0');
+    let month = dateObj.toLocaleString('en-US', { month: 'short' });
+
+    if (type === 'date') {
+        return `${day} ${month}`;
     }
 
-    
+    let hours = dateObj.getHours();
+    let minutes = String(dateObj.getMinutes()).padStart(2, '0');
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+
+    let formattedDate = `${day} ${month} ${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
+    return formattedDate;
+}
+
+if (typeof $ !== 'undefined' && $.fn && $.fn.owlCarousel) {
     $('.agency-carousel').owlCarousel({
         items: 1,
         loop: true,
@@ -2435,7 +2472,7 @@ triggerCalendly = () => {
         touchDrag: true,
         mouseDrag: true
     });
- 
+}
 </script>
 
 @endsection

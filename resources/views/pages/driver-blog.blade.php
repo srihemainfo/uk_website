@@ -2265,11 +2265,10 @@ triggerCalendly = () => {
             }
 
             searchTimeout = setTimeout(function() {
-                const webAppUrl = "{{ env('WEB_APP_URL') }}".replace(/\/$/, '');
                 const countrySlug = "{{ env('COUNTRY_SLUG_II') ?: env('COUNTRY_SLUG') }}";
-                const baseUrl = (webAppUrl || window.location.origin) + (countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '');
-                const routeUrl = "{{ route('blog.search') }}";
-                const searchUrl = (routeUrl && routeUrl.includes('/blog/search') ? routeUrl : baseUrl + "/blog/search") + "?q=" + encodeURIComponent(query);
+                const normalizedSlug = countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '';
+                const baseUrl = window.location.origin + normalizedSlug;
+                const searchUrl = baseUrl + "/blog/search?q=" + encodeURIComponent(query);
 
                 fetch(searchUrl, {
                     method: 'GET',

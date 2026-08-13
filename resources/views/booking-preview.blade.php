@@ -941,6 +941,15 @@
             border-bottom: 1px solid #eee;
         }
 
+        .track-header-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 45px;
+        }
+
         .booking-id-badge {
             display: inline-block;
             background: #f3f4f6;
@@ -949,7 +958,64 @@
             font-weight: 700;
             font-size: 14px;
             color: #374151;
-            margin-bottom: 8px;
+            margin-bottom: 0;
+        }
+
+        .track-header-right-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .track-refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            color: #111827;
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            user-select: none;
+            line-height: 1.2;
+        }
+
+        .track-refresh-btn:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .track-refresh-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .track-refresh-btn.is-refreshing {
+            pointer-events: none;
+            opacity: 0.85;
+            background: #f9fafb;
+        }
+
+        .track-refresh-btn.is-refreshing i {
+            animation: spin-refresh 0.75s linear infinite;
+        }
+
+        @keyframes spin-refresh {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .track-status-header h4 {
@@ -1330,7 +1396,15 @@
             <!-- Result Container -->
             <div class="track-result-container" id="trackResultContainer" style="display: none;">
                 <div class="track-status-header">
-                    <div class="booking-id-badge" id="displayBookingNo">{{ $job_no ?? '' }}</div>
+                    <div class="track-header-badges">
+                        <div class="booking-id-badge" id="displayBookingNo">{{ $job_no ?? '' }}</div>
+                        <div class="track-header-right-actions">
+                            <button type="button" class="track-refresh-btn" id="trackRefreshBtn" onclick="refreshTrackingData(event)" title="Refresh tracking status" aria-label="Refresh tracking">
+                                <i class="fa-solid fa-rotate-right"></i>
+                                <span class="refresh-text">Refresh</span>
+                            </button>
+                        </div>
+                    </div>
                     <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                     <div id="trackingBookingDetails" style="display: none;"></div>
                 </div>
@@ -2233,6 +2307,8 @@
 
         /* ================= LIVE TRACKING FUNCTIONS ================= */
         let liveTrackingSocket = null;
+        let currentLiveTrackingId = null;
+        let currentTrackedBookingNo = '';
         let driverMarker = null;
         let trackingMap = null;
 
@@ -2245,7 +2321,11 @@
                 setTimeout(() => {
                     document.getElementById('trackSearchContainer').style.display = 'block';
                     document.getElementById('trackResultContainer').style.display = 'none';
-                    if (liveTrackingSocket) liveTrackingSocket.close();
+                    currentTrackedBookingNo = '';
+                    currentLiveTrackingId = null;
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) {}
+                    }
                 }, 400);
             } else {
                 overlay.classList.add('show');
@@ -2295,6 +2375,7 @@
                 const res = await response.json();
 
                 if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
                     renderTrackingResult(num, res.data);
                 } else {
                     alert(res.message || 'Booking not found');
@@ -2306,6 +2387,56 @@
                 if (btn) {
                     btn.innerHTML = originalHtml;
                     btn.disabled = false;
+                }
+            }
+        }
+
+        async function refreshTrackingData(e) {
+            if (e) e.preventDefault();
+            const num = currentTrackedBookingNo ||
+                (document.getElementById('displayBookingNo') ? document.getElementById('displayBookingNo').innerText.trim() : '') ||
+                (document.getElementById('trackBookingNumber') ? document.getElementById('trackBookingNumber').value.trim() : '');
+
+            if (!num) {
+                alert('No active booking to refresh');
+                return;
+            }
+
+            const refreshBtn = document.getElementById('trackRefreshBtn');
+            let originalHtml = '';
+            if (refreshBtn) {
+                originalHtml = refreshBtn.innerHTML;
+                refreshBtn.disabled = true;
+                refreshBtn.classList.add('is-refreshing');
+                refreshBtn.innerHTML = '<i class="fa-solid fa-rotate-right fa-spin"></i> <span class="refresh-text">Refreshing...</span>';
+            }
+
+            try {
+                let apiUrl = '{{ env("API_URL") }}';
+                if (!apiUrl || apiUrl.includes('env(')) apiUrl = window.location.origin + '/api';
+
+                const response = await fetch(apiUrl + '/tracking/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ job_no: num })
+                });
+
+                const res = await response.json();
+
+                if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
+                    renderTrackingResult(num, res.data);
+                } else {
+                    alert(res.message || 'Failed to refresh tracking data');
+                }
+            } catch (error) {
+                console.error('Refresh Tracking Error:', error);
+                alert('Failed to refresh tracking. Please try again.');
+            } finally {
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.classList.remove('is-refreshing');
+                    refreshBtn.innerHTML = originalHtml;
                 }
             }
         }
@@ -2518,6 +2649,15 @@
         }
 
         function setupMap() {
+            if (trackingMap) {
+                if (google.maps.event && google.maps.event.trigger) {
+                    google.maps.event.trigger(trackingMap, 'resize');
+                }
+                return;
+            }
+            const mapEl = document.getElementById('liveTrackingMap');
+            if (!mapEl) return;
+
             const mapOptions = {
                 zoom: 15,
                 center: { lat: 51.5074, lng: -0.1278 },
@@ -2542,7 +2682,7 @@
                     { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
                 ]
             };
-            trackingMap = new google.maps.Map(document.getElementById('liveTrackingMap'), mapOptions);
+            trackingMap = new google.maps.Map(mapEl, mapOptions);
 
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
@@ -2557,6 +2697,15 @@
                         console.error("Socket.io is not loaded.");
                         return;
                     }
+
+                    if (liveTrackingSocket && currentLiveTrackingId === trackingId && liveTrackingSocket.connected) {
+                        return;
+                    }
+
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
+                    currentLiveTrackingId = trackingId;
 
                     liveTrackingSocket = io(url, {
                         transports: ['websocket'],

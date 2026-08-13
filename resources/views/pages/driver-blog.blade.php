@@ -2254,21 +2254,7 @@ triggerCalendly = () => {
 
         let searchTimeout = null;
 
-<<<<<<< HEAD
-        <div class="row">
-            <div class="col-md-6">
-                <h2>About Us</h2>
-                <p>Learn more about our mission, values, and team.</p>
-            </div>
-            <div class="col-md-6">
-                <h2>Contact Us</h2>
-                <p>Get in touch with us for any inquiries or support.</p>
-            </div>
-        </div>
-    </div> --}}
-
-=======
-        searchInput.addEventListener('input', function() {
+        function performSearch() {
             clearTimeout(searchTimeout);
             const query = searchInput.value.trim();
 
@@ -2277,40 +2263,14 @@ triggerCalendly = () => {
                 resultsContainer.innerHTML = '';
                 return;
             }
->>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
 
             searchTimeout = setTimeout(function() {
                 const webAppUrl = "{{ env('WEB_APP_URL') }}".replace(/\/$/, '');
                 const countrySlug = "{{ env('COUNTRY_SLUG_II') ?: env('COUNTRY_SLUG') }}";
                 const baseUrl = (webAppUrl || window.location.origin) + (countrySlug ? (countrySlug.startsWith('/') ? countrySlug : '/' + countrySlug) : '');
-                const searchUrl = baseUrl + "/blog/search?q=" + encodeURIComponent(query);
+                const routeUrl = "{{ route('blog.search') }}";
+                const searchUrl = (routeUrl && routeUrl.includes('/blog/search') ? routeUrl : baseUrl + "/blog/search") + "?q=" + encodeURIComponent(query);
 
-<<<<<<< HEAD
-    $('#blogSearchInput').on('keyup', function() {
-        clearTimeout(searchTimeout);
-        let query = $(this).val().trim();
-        let resultsContainer = $('#blogSearchResults');
-
-        if (query.length < 2) {
-            resultsContainer.hide().empty();
-            return;
-        }
-
-        searchTimeout = setTimeout(function() {
-            $.ajax({
-                url: "{{ route('blog.search') }}",
-                type: "GET",
-                data: { q: query },
-                global: false,
-                crossDomain: true,
-                xhrFields: {
-                    withCredentials: false
-                },
-                success: function(response) {
-                    resultsContainer.empty();
-                    
-                    if (response.length > 0) {
-=======
                 fetch(searchUrl, {
                     method: 'GET',
                     headers: {
@@ -2322,7 +2282,6 @@ triggerCalendly = () => {
                 .then(function(response) {
                     resultsContainer.innerHTML = '';
                     if (response && response.length > 0) {
->>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
                         let html = '<ul>';
                         response.forEach(function(blog) {
                             const catPath = blog.cat_url ? (blog.cat_url.startsWith('/') ? blog.cat_url : '/' + blog.cat_url) : '';
@@ -2358,7 +2317,19 @@ triggerCalendly = () => {
                     console.error("Error fetching search results:", err);
                 });
             }, 300);
+        }
+
+        searchInput.addEventListener('input', performSearch);
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
         });
+
+        const searchIcon = document.querySelector('.search-input-box .right-icon');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', performSearch);
+        }
 
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.blog-search-wrapper')) {

@@ -8794,10 +8794,22 @@
             paymentMethod: '',
             meetAndGreet: false,
             wheelchairOption: false,
+            paymentBreakdown: null,
+            total_fare: null,
+            part_pay_fare: null,
+            base_fare: null,
+            tax: null,
+            firstAmt: null,
+            id: null,
+            payment_id: null,
+            paymentId: null,
+            transaction_id: '',
 
             // Driver (Steps 6/7)
             bookingId: null,
+            job_no: null,
             jobId: null,
+            job_id: null,
             selectedDriver: null,
             tempDriver: null,
             firebaseConfig: null,
@@ -9389,14 +9401,9 @@
             const paymentIntentId = urlParams.get('payment_intent');
 
             if (paymentIntentId && redirectStatus) {
-                if (redirectStatus === 'succeeded' || redirectStatus === 'processing') {
-                    if (typeof handleStripeRedirectReturn === 'function') {
-                        handleStripeRedirectReturn(paymentIntentId, redirectStatus);
-                        return;
-                    }
-                } else if (redirectStatus === 'failed') {
-                    showToast('Payment was cancelled or failed. Please try again.', 'error');
-                    window.history.replaceState({}, document.title, window.location.pathname);
+                if (typeof handleStripeRedirectReturn === 'function') {
+                    handleStripeRedirectReturn(paymentIntentId, redirectStatus);
+                    return;
                 }
             }
 
@@ -9587,12 +9594,24 @@
                 if (_restoredState.currentStep === 8) {
                     BookingStore.clear();
                     showStep(1);
-                } else if (_restoredState.currentStep === 5 || _restoredState.currentStep === 6 || _restoredState.currentStep === 7) {
+                } else if (_restoredState.currentStep === 5) {
+                    showStep(5);
+                    if (typeof renderPaymentBreakdownUI === 'function') {
+                        renderPaymentBreakdownUI(_restoredState.paymentBreakdown);
+                    }
+                    if (typeof selectPaymentMethod === 'function') {
+                        selectPaymentMethod('stripe');
+                    }
+                    $('#stripePaymentContainer').show();
+                    if (typeof initStripePaymentElement === 'function') {
+                        initStripePaymentElement();
+                    }
+                } else if (_restoredState.currentStep === 6 || _restoredState.currentStep === 7) {
                     showStep(6);
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
                     }
-                    if (_restoredState.bookingId) {
+                    if (_restoredState.bookingId || _restoredState.job_no) {
                         if (typeof startDynamicDriverSearch === 'function') {
                             startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
                         }
@@ -11194,8 +11213,9 @@
             const email = document.getElementById('passengerEmail')?.value.trim() || bookingData.passengerEmail || '';
             const name = document.getElementById('passengerFirstName')?.value.trim() || bookingData.passengerFirstName || '';
             const phone = document.getElementById('passengerPhone')?.value.trim() || bookingData.passengerPhone || '';
-            const jobId = bookingData.jobId || bookingData.bookingId || bookingData.pay_no || '';
-            const currentPaymentId = parseInt(window.paymentId || state.paymentId || 0);
+            const jobId = bookingData.jobId || bookingData.job_id || '';
+            const jobNo = bookingData.job_no || bookingData.bookingId || '';
+            const currentPaymentId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
 
             try {
                 const response = await fetch(API_BASE_URL + '/stripe/payment-intent', {
@@ -11206,10 +11226,11 @@
                         'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
                     },
                     body: JSON.stringify({
-                        job_id: jobId,
-                        pay_no: jobId,
-                        job_no: jobId,
+                        id: currentPaymentId,
                         payment_id: currentPaymentId,
+                        job_id: jobId,
+                        job_no: jobNo,
+                        pay_no: jobNo,
                         payment_type: payType,
                         amount: payAmount,
                         currency: 'gbp',
@@ -11229,16 +11250,24 @@
                     return false;
                 }
 
-                if (data.payment_id || data.id || data.data?.payment_id || data.data?.id) {
-                    window.paymentId = parseInt(data.payment_id || data.id || data.data?.payment_id || data.data?.id);
-                    if (typeof BookingStore !== 'undefined') {
-                        BookingStore.setState({
-                            paymentId: window.paymentId,
-                            selectedStripePaymentType: payType,
-                            jobId: jobId,
-                            bookingId: jobId
-                        });
-                    }
+                const resolvedPaymentId = parseInt(data.payment_id || data.id || data.data?.payment_id || data.data?.id || 0);
+                const resolvedTxnId = data.transaction_id || data.data?.transaction_id || '';
+
+                if (resolvedPaymentId) {
+                    window.paymentId = resolvedPaymentId;
+                }
+                if (resolvedTxnId) {
+                    window.transactionId = resolvedTxnId;
+                }
+
+                if (typeof BookingStore !== 'undefined') {
+                    BookingStore.setState({
+                        id: resolvedPaymentId || window.paymentId,
+                        payment_id: resolvedPaymentId || window.paymentId,
+                        paymentId: resolvedPaymentId || window.paymentId,
+                        transaction_id: resolvedTxnId || window.transactionId || '',
+                        selectedStripePaymentType: payType
+                    });
                 }
 
                 const clientSecret = data.client_secret || data.clientSecret || data.data?.client_secret;
@@ -11407,7 +11436,11 @@
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
                 btn.disabled = true;
 
-                const pId = parseInt(window.paymentId || state.paymentId || 0);
+                const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
+                const txnId = window.transactionId || state.transaction_id || '';
+                const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
+                const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
+
                 fetch(API_BASE_URL + '/stripe/payment-confirm', {
                     method: 'POST',
                     headers: {
@@ -11416,7 +11449,12 @@
                         'Authorization': 'Bearer ' + getCookieValue('auth_token')
                     },
                     body: JSON.stringify({
+                        id: pId,
                         payment_id: pId,
+                        transaction_id: txnId,
+                        job_id: cleanJobId,
+                        job_no: cleanJobNo,
+                        pay_no: cleanJobNo,
                         payment_type: window.selectedStripePaymentType || 'full'
                     })
                 })
@@ -11504,7 +11542,10 @@
                     btn.disabled = false;
                 } else if (result.paymentIntent && (result.paymentIntent.status === 'succeeded' || result.paymentIntent.status === 'processing')) {
                     try {
-                        const pId = parseInt(window.paymentId || state.paymentId || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+                        const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+                        const txnId = window.transactionId || state.transaction_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.transaction_id : '') || '';
+                        const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
+                        const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
 
                         const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
                             method: 'POST',
@@ -11514,11 +11555,13 @@
                                 'Authorization': 'Bearer ' + getCookieValue('auth_token')
                             },
                             body: JSON.stringify({
+                                id: pId,
                                 payment_id: pId,
+                                transaction_id: txnId,
                                 payment_intent_id: result.paymentIntent.id,
-                                job_id: bookingData.jobId || bookingData.bookingId,
-                                pay_no: bookingData.bookingId || bookingData.jobId,
-                                job_no: bookingData.bookingId || bookingData.jobId,
+                                job_id: cleanJobId,
+                                job_no: cleanJobNo,
+                                pay_no: cleanJobNo,
                                 status: result.paymentIntent.status,
                                 credit_pay: (result.paymentIntent.amount / 100).toFixed(2),
                                 payment_type: window.selectedStripePaymentType || 'full'
@@ -11616,8 +11659,10 @@
                 BookingStore.restore();
             }
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
-            const pId = parseInt(state.paymentId || window.paymentId || 0);
-            const jobId = state.jobId || state.bookingId || (typeof bookingData !== 'undefined' ? bookingData.jobId || bookingData.bookingId : '');
+            const pId = parseInt(state.id || state.payment_id || state.paymentId || window.paymentId || 0);
+            const txnId = state.transaction_id || window.transactionId || '';
+            const cleanJobId = state.jobId || state.job_id || (typeof bookingData !== 'undefined' ? bookingData.jobId || bookingData.job_id : '');
+            const cleanJobNo = state.job_no || state.bookingId || (typeof bookingData !== 'undefined' ? bookingData.job_no || bookingData.bookingId : '') || '';
 
             // Clean up the URL query params without reloading the page
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -11655,19 +11700,21 @@
                         'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
                     },
                     body: JSON.stringify({
+                        id: pId,
                         payment_id: pId,
+                        transaction_id: txnId,
                         payment_intent_id: paymentIntentId,
-                        job_id: jobId,
-                        pay_no: jobId,
-                        job_no: jobId,
+                        job_id: cleanJobId,
+                        job_no: cleanJobNo,
+                        pay_no: cleanJobNo,
                         status: redirectStatus,
                         payment_type: state.selectedStripePaymentType || window.selectedStripePaymentType || 'full'
                     })
                 });
 
                 const data = await confirmResp.json();
-                if (data.status || data.success) {
-                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobId;
+                if (data.status === true || data.success === true) {
+                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobNo;
                     $('#confirmNum').text(confirmedJobNo);
 
                     const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || state.job_no || state.bookingId;
@@ -11704,32 +11751,70 @@
                     // Remove/Fade out the black loading overlay
                     const $overlay = $('#paymentRedirectOverlay');
                     if ($overlay.length) {
-                        $overlay.fadeOut(400, function () {
+                        $overlay.fadeOut(300, function () {
                             $(this).remove();
                         });
                     }
 
                     showToast('Payment successful! Your booking is confirmed.', 'success');
                 } else {
+                    // Payment failed or was canceled - redirect back to Payment step (Step 5)
                     const $overlay = $('#paymentRedirectOverlay');
                     if ($overlay.length) {
-                        $overlay.fadeOut(400, function () {
+                        $overlay.fadeOut(300, function () {
                             $(this).remove();
                         });
                     }
-                    showStep(8);
-                    showToast('Payment Confirmation: ' + (data.message || 'Processing in background'), 'info');
+
+                    // Bring user to Payment step
+                    showStep(5);
+                    if (typeof selectPaymentMethod === 'function') {
+                        selectPaymentMethod('stripe');
+                    }
+                    if (typeof renderPaymentBreakdownUI === 'function') {
+                        renderPaymentBreakdownUI(state.paymentBreakdown);
+                    }
+                    $('#stripePaymentContainer').show();
+                    if (typeof initStripePaymentElement === 'function') {
+                        initStripePaymentElement();
+                    }
+
+                    const failMessage = data.message || (typeof data.data === 'string' ? data.data : 'Payment failed. Please try again or choose another payment method.');
+                    const msgBox = document.getElementById('payment-message');
+                    if (msgBox) {
+                        msgBox.textContent = failMessage;
+                        msgBox.style.display = 'block';
+                    }
+
+                    showToast(failMessage, 'error');
                 }
             } catch (err) {
                 console.error('Error confirming redirected payment:', err);
                 const $overlay = $('#paymentRedirectOverlay');
                 if ($overlay.length) {
-                    $overlay.fadeOut(400, function () {
+                    $overlay.fadeOut(300, function () {
                         $(this).remove();
                     });
                 }
-                showStep(8);
-                showToast('Payment received! Finalizing booking details.', 'success');
+                showStep(5);
+                if (typeof selectPaymentMethod === 'function') {
+                    selectPaymentMethod('stripe');
+                }
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI(state.paymentBreakdown);
+                }
+                $('#stripePaymentContainer').show();
+                if (typeof initStripePaymentElement === 'function') {
+                    initStripePaymentElement();
+                }
+
+                const errMsg = 'Payment verification failed. Please try again.';
+                const msgBox = document.getElementById('payment-message');
+                if (msgBox) {
+                    msgBox.textContent = errMsg;
+                    msgBox.style.display = 'block';
+                }
+                showToast(errMsg, 'error');
             }
         }
 
@@ -12011,7 +12096,7 @@
                     flightArrivingTime: BookingStore.getState().time || $('#flightArrivingTime').val(),
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
-                    pickAfterTime: $('#pickupAfterLanding').val(),
+                    pickAfterTime: $('#pickupAfterLandingSelect').val() || $('#pickupAfterLanding').val() || BookingStore.getState().pickAfterTime || '45',
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
                 };
@@ -12023,7 +12108,7 @@
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
-                    pickAfterTime: $('#pickupAfterDockingSelect').val(),
+                    pickAfterTime: $('#pickupAfterDockingSelect').val() || BookingStore.getState().pickAfterTime || '45',
                 };
             } else {
                 journeyFields = {
@@ -12114,7 +12199,9 @@
             // --- Journey specific validation ---
             if (bookingData.pickupType === 'airport') {
                 if (!bookingData.flightNumber) { showToast('Flight Number is required.', 'error'); return; }
-                if (!bookingData.pickAfterTime) { showToast('Pick Up Time After Landing is required.', 'error'); return; }
+                if (!bookingData.pickAfterTime) {
+                    BookingStore.setState({ pickAfterTime: $('#pickupAfterLandingSelect').val() || $('#pickupAfterLanding').val() || '45' });
+                }
                 if (!bookingData.comingFrom) { showToast('Coming From is required.', 'error'); return; }
                 // Dropoff Address validation removed as requested
             } else if (bookingData.pickupType !== 'seaport') {
@@ -12218,14 +12305,17 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === true) {
-                        const jobNo = data.job_no || data.booking_no || data.data?.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : (data.jobNo || data.data));
-                        const jobId = data.jd || data.job_id || data.id || data.data?.job_id || (typeof data.data === 'number' || /^\d+$/.test(data.data) ? data.data : null);
+                        const jobNo = data.job_no || data.booking_no || data.data?.job_no || data.data?.booking_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : '') || (typeof data.jobNo === 'string' ? data.jobNo : '');
+                        const jobId = data.jd || data.job_id || data.id || data.data?.job_id || data.data?.jd || (typeof data.data === 'number' || /^\d+$/.test(data.data) ? data.data : '') || '';
+
+                        const cleanJobNo = String(jobNo || '').trim();
+                        const cleanJobId = jobId || '';
 
                         BookingStore.setState({
-                            bookingId: jobNo || data.data, // job_no
-                            jobId: jobId || data.jd, // DB ID
-                            job_no: jobNo,
-                            job_id: jobId,
+                            bookingId: cleanJobNo || (cleanJobId ? String(cleanJobId) : ''),
+                            job_no: cleanJobNo,
+                            jobId: cleanJobId,     // DB numeric ID
+                            job_id: cleanJobId,
                             firebaseConfig: data.firebase || null,
                             firebaseCustomToken: data.firebase_custom_token || null
                         });
@@ -12437,6 +12527,10 @@
             $('#findingDriversLoader').show();
             $('#step6CancelBtnWrapper').show();
 
+            const state = BookingStore.getState();
+            firebaseConfig = firebaseConfig || state.firebaseConfig || window.firebaseConfig;
+            firebaseCustomToken = firebaseCustomToken || state.firebaseCustomToken || window.firebaseCustomToken;
+
             // Check if pickup time is expired FIRST
             if (checkBookingExpiration()) {
                 console.log("Pickup time has expired. Stopping Firebase listening.");
@@ -12554,8 +12648,9 @@
 
             // Helper: attach the Firestore listener once authenticated
             function attachFirestoreListener() {
-                if (!bookingData.bookingId) {
-                    console.error("No booking ID found to listen for bids.");
+                const targetJobNo = String(bookingData.job_no || bookingData.bookingId || bookingData.jobId || bookingData.job_id || BookingStore.getState().job_no || BookingStore.getState().bookingId || '').trim();
+                if (!targetJobNo) {
+                    console.error("No valid booking job_no found to listen for bids.");
                     return;
                 }
 
@@ -12565,10 +12660,32 @@
                     driversListener(); // Unsubscribe previous snapshot
                 }
 
-                driversListener = db.collection('{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}').doc(bookingData.bookingId)
+                const collectionName = '{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}';
+                console.log(`[Firebase] Attaching listener to collection: "${collectionName}", doc: "${targetJobNo}"`);
+
+                driversListener = db.collection(collectionName).doc(targetJobNo)
                     .onSnapshot((doc) => {
+                        console.log(`[Firebase] Snapshot received for doc: "${doc.id}", exists: ${doc.exists}`);
                         if (doc.exists) {
-                            const data = doc.data();
+                            const data = doc.data() || {};
+                            console.log('[Firebase] Document data:', data);
+
+                            const realJobNo = data.job_no || data.booking_no || doc.id || bookingData.job_no;
+                            const realJobId = data.job_id || data.jd || bookingData.jobId;
+
+                            if (realJobNo && typeof realJobNo === 'string') {
+                                BookingStore.setState({
+                                    job_no: realJobNo,
+                                    bookingId: realJobNo
+                                });
+                            }
+                            if (realJobId) {
+                                BookingStore.setState({
+                                    jobId: realJobId,
+                                    job_id: realJobId
+                                });
+                            }
+
                             if (data.status === 'cancel' || data.status === 'cancelled') {
                                 if (BookingStore.getState().currentStep < 5) {
                                     showToast('Booking already cancelled or no more', 'error');
@@ -12578,6 +12695,7 @@
                             }
                             renderRealtimeDrivers(data.bids_details || {});
                         } else {
+                            console.warn(`[Firebase] Document "${targetJobNo}" does not exist in collection "${collectionName}".`);
                             renderRealtimeDrivers({});
                             if (BookingStore.getState().currentStep < 5) {
                                 showToast('Booking already cancelled or no more', 'error');
@@ -12585,7 +12703,7 @@
                             }
                         }
                     }, (error) => {
-                        console.error("Error listening to bids: ", error);
+                        console.error("[Firebase] Error listening to bids: ", error);
                     });
             }
 
@@ -13188,6 +13306,42 @@
             showStep(7);
             startRcCarCarousel();
         }
+        window.renderPaymentBreakdownUI = function (breakdownData) {
+            const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
+            const bd = breakdownData || state.paymentBreakdown || {};
+
+            const baseFare = parseFloat(bd.base_fare !== undefined && bd.base_fare !== null ? bd.base_fare : (state.base_fare !== undefined && state.base_fare !== null ? state.base_fare : (state.vehicle ? state.vehicle.price || state.vehicle.fare || 0 : 0)));
+            const tax = parseFloat(bd.tax !== undefined && bd.tax !== null ? bd.tax : (state.tax !== undefined && state.tax !== null ? state.tax : 0));
+            const firstAmt = parseFloat(bd.firstAmt !== undefined && bd.firstAmt !== null ? bd.firstAmt : (state.firstAmt !== undefined && state.firstAmt !== null ? state.firstAmt : 0));
+            const totalFare = parseFloat(bd.total_fare !== undefined && bd.total_fare !== null ? bd.total_fare : (bd.actual_total_fare !== undefined && bd.actual_total_fare !== null ? bd.actual_total_fare : (state.total_fare !== undefined && state.total_fare !== null ? state.total_fare : (baseFare + tax - firstAmt))));
+            const partFare = parseFloat(bd.part_pay_fare !== undefined && bd.part_pay_fare !== null ? bd.part_pay_fare : (state.part_pay_fare !== undefined && state.part_pay_fare !== null ? state.part_pay_fare : (totalFare * 0.20)));
+
+            if (totalFare > 0) window.paymentTotalFare = totalFare;
+            if (partFare > 0) window.paymentPartPayFare = partFare;
+
+            $('#pbBaseFare').text('£' + baseFare.toFixed(2));
+            $('#pbTax').text('£' + tax.toFixed(2));
+
+            // Meet & greet is removed from the fare breakdown UI per updated logic
+            $('#pbMeetGreetRow').hide();
+
+            if (firstAmt > 0) {
+                $('#pbFirstDiscount').text('-£' + firstAmt.toFixed(2));
+                $('#pbFirstDiscountRow').show();
+            } else {
+                $('#pbFirstDiscountRow').hide();
+            }
+
+            $('#pbTotalFare').text('£' + totalFare.toFixed(2));
+            $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || state.apiDistance || 360} miles`);
+
+            if (typeof updateStripeTypeAmounts === 'function') {
+                updateStripeTypeAmounts();
+            }
+
+            $('#dynamicPaymentSummary').show();
+        };
+
         async function proceedToPaymentWithDriver(driver, btnElement) {
             bookingData.selectedDriver = driver;
 
@@ -13201,8 +13355,8 @@
             }
 
             const payload = {
-                job_id: bookingData.jobId || '',
-                job_no: bookingData.bookingId || '',
+                job_id: bookingData.jobId || bookingData.job_id || '',
+                job_no: bookingData.job_no || bookingData.bookingId || '',
                 user_id: driver.id || '',
                 date: bookingData.date || '',
                 isCredit: 'no',
@@ -13229,34 +13383,20 @@
                     if (pId) window.paymentId = parseInt(pId);
 
                     BookingStore.setState({
+                        paymentBreakdown: data.data,
+                        base_fare: data.data.base_fare,
+                        tax: data.data.tax,
+                        firstAmt: data.data.firstAmt,
                         total_fare: data.data.total_fare,
                         part_pay_fare: data.data.part_pay_fare,
+                        id: window.paymentId,
+                        payment_id: window.paymentId,
                         paymentId: window.paymentId,
                         job_no: data.data.job_no || data.job_no || bookingData.job_no || bookingData.bookingId,
                         job_id: data.data.job_id || data.job_id || bookingData.jobId
                     });
 
-                    if (typeof updateStripeTypeAmounts === 'function') updateStripeTypeAmounts();
-
-                    $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
-                    $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
-
-                    // Meet & greet is removed from the fare breakdown UI per updated logic
-                    $('#pbMeetGreetRow').hide();
-
-                    if (data.data.firstAmt && data.data.firstAmt !== "0" && parseFloat(data.data.firstAmt) > 0) {
-                        $('#pbFirstDiscount').text('-£' + parseFloat(data.data.firstAmt).toFixed(2));
-                        $('#pbFirstDiscountRow').show();
-                    } else {
-                        $('#pbFirstDiscountRow').hide();
-                    }
-
-                    $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || data.data.actual_total_fare || 0).toFixed(2));
-
-                    $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || 360} miles`);
-
-                    $('#dynamicPaymentSummary').show();
-
+                    renderPaymentBreakdownUI(data.data);
                     showStep(5);
                 } else {
                     showToast(data.message || 'Failed to fetch payment breakdown.', 'error');
@@ -13684,9 +13824,28 @@
                     $(`#step${stepNumber}`).css('padding-top', '80px');
                 }
             }
+
+            if (stepNumber === 6) {
+                if (typeof startDynamicDriverSearch === 'function') {
+                    startDynamicDriverSearch();
+                }
+            } else if (stepNumber === 5) {
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI();
+                }
+            }
         }
         function goBack(step) {
             showStep(step);
+            if (step === 6) {
+                if (typeof startDynamicDriverSearch === 'function') {
+                    startDynamicDriverSearch();
+                }
+            } else if (step === 5) {
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI();
+                }
+            }
         }
         function closeModal(id) {
             $(`#${id}`).removeClass('show');
@@ -14927,8 +15086,14 @@
             <div class="track-status-header">
                 <div class="track-header-badges">
                     <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
-                    <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span
-                            id="displayOtpValue">--</span></div>
+                    <div class="track-header-right-actions">
+                        <button type="button" class="track-refresh-btn" id="trackRefreshBtn" onclick="refreshTrackingData(event)" title="Refresh tracking status" aria-label="Refresh tracking">
+                            <i class="fas fa-rotate-right"></i>
+                            <span class="refresh-text">Refresh</span>
+                        </button>
+                        <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span
+                                id="displayOtpValue">--</span></div>
+                    </div>
                 </div>
                 <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                 <div id="trackingBookingDetails" style="display: none;"></div>
@@ -15176,6 +15341,63 @@
             margin-bottom: 0;
         }
 
+        .track-header-right-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .track-refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            color: #111827;
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            user-select: none;
+            line-height: 1.2;
+        }
+
+        .track-refresh-btn:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .track-refresh-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .track-refresh-btn.is-refreshing {
+            pointer-events: none;
+            opacity: 0.85;
+            background: #f9fafb;
+        }
+
+        .track-refresh-btn.is-refreshing i {
+            animation: spin-refresh 0.75s linear infinite;
+        }
+
+        @keyframes spin-refresh {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .track-otp-badge {
             display: inline-flex;
             align-items: center;
@@ -15329,6 +15551,14 @@
             .track-header-badges {
                 flex-direction: column;
                 align-items: start;
+                gap: 8px;
+            }
+
+            .track-header-right-actions {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 8px;
+                flex-wrap: wrap;
             }
 
             .mobile-only {
@@ -16092,6 +16322,8 @@
     <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
     <script>
         let liveTrackingSocket = null;
+        let currentLiveTrackingId = null;
+        let currentTrackedBookingNo = '';
         let driverMarker = null;
         let trackingMap = null;
 
@@ -16145,7 +16377,11 @@
                     document.getElementById('trackSearchContainer').style.display = 'block';
                     document.getElementById('trackResultContainer').style.display = 'none';
                     document.getElementById('trackBookingNumber').value = '';
-                    if (liveTrackingSocket) liveTrackingSocket.close();
+                    currentTrackedBookingNo = '';
+                    currentLiveTrackingId = null;
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) {}
+                    }
                 }, 400);
 
             } else {
@@ -16217,6 +16453,7 @@
                 const res = await response.json();
 
                 if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
                     renderTrackingResult(num, res.data);
                 } else {
                     showGlobalToast(res.message || 'Booking not found', false);
@@ -16227,6 +16464,57 @@
             } finally {
                 btn.innerHTML = originalHtml;
                 btn.disabled = false;
+            }
+        }
+
+        async function refreshTrackingData(e) {
+            if (e) e.preventDefault();
+            const num = currentTrackedBookingNo ||
+                (document.getElementById('displayBookingNo') ? document.getElementById('displayBookingNo').innerText.trim() : '') ||
+                (document.getElementById('trackBookingNumber') ? document.getElementById('trackBookingNumber').value.trim() : '');
+
+            if (!num) {
+                showGlobalToast('No active booking to refresh', false);
+                return;
+            }
+
+            const refreshBtn = document.getElementById('trackRefreshBtn');
+            let originalHtml = '';
+            if (refreshBtn) {
+                originalHtml = refreshBtn.innerHTML;
+                refreshBtn.disabled = true;
+                refreshBtn.classList.add('is-refreshing');
+                refreshBtn.innerHTML = '<i class="fas fa-rotate-right fa-spin"></i> <span class="refresh-text">Refreshing...</span>';
+            }
+
+            try {
+                let apiUrl = '{{ env("API_URL") }}';
+                if (!apiUrl || apiUrl.includes('env(')) apiUrl = window.location.origin + '/api';
+
+                const response = await fetch(apiUrl + '/tracking/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ job_no: num })
+                });
+
+                const res = await response.json();
+
+                if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
+                    renderTrackingResult(num, res.data);
+                    showGlobalToast('Tracking status refreshed', true);
+                } else {
+                    showGlobalToast(res.message || 'Failed to refresh tracking data', false);
+                }
+            } catch (error) {
+                console.error('Refresh Tracking Error:', error);
+                showGlobalToast('Failed to refresh tracking. Please try again.', false);
+            } finally {
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.classList.remove('is-refreshing');
+                    refreshBtn.innerHTML = originalHtml;
+                }
             }
         }
 
@@ -16526,6 +16814,15 @@
         }
 
         function setupMap() {
+            if (trackingMap) {
+                if (google.maps.event && google.maps.event.trigger) {
+                    google.maps.event.trigger(trackingMap, 'resize');
+                }
+                return;
+            }
+            const mapEl = document.getElementById('liveTrackingMap');
+            if (!mapEl) return;
+
             const mapOptions = {
                 zoom: 15,
                 center: { lat: 51.5074, lng: -0.1278 }, // Default to London initially
@@ -16550,7 +16847,7 @@
                     { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
                 ]
             };
-            trackingMap = new google.maps.Map(document.getElementById('liveTrackingMap'), mapOptions);
+            trackingMap = new google.maps.Map(mapEl, mapOptions);
 
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
@@ -16565,6 +16862,15 @@
                         console.error("Socket.io is not loaded.");
                         return;
                     }
+
+                    if (liveTrackingSocket && currentLiveTrackingId === trackingId && liveTrackingSocket.connected) {
+                        return;
+                    }
+
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
+                    currentLiveTrackingId = trackingId;
 
                     // 1. Connect Customer to Socket Server
                     let token = '';

@@ -1743,16 +1743,7 @@ triggerCalendly = () => {
     sessionStorage.setItem('triggerCalendlyClick', 'true');
     window.location.href = '/dashboard';
 }
-<<<<<<< HEAD
-</script>
-
-
-<script>
-$(document).ready(function(){        
-    // notifyJobs();
-}); 
-=======
->>>>>>> 3a768fb42bbd48d52c79dbe1bbf53e3bfd36b2f7
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     if (window.innerWidth < 768) {

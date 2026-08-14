@@ -3293,7 +3293,7 @@
                 
                 <div class="driver-app-media">
                     <div class="driver-app-circle-bg"></div>
-                    <img src="{{ asset('goride/img/mobile-app.webp') }}" alt="GoRide Driver App" class="driver-app-img">
+                    <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/mobile-app.webp" alt="GoRide Driver App" class="driver-app-img">
                 </div>
             </div>
         </div>

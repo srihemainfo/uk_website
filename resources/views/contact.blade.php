@@ -1452,15 +1452,12 @@
                 return;
             }
 
-            if (phone.length !== 10) {
-                showToast('Mobile number must be exactly 10 digits.', 'error');
-                return;
-            }
+            // if (phone.length !== 10) {
+            //     showToast('Mobile number must be exactly 10 digits.', 'error');
+            //     return;
+            // }
 
             const fullPhoneNumber = countryCode + phone;
-            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
-            const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
-
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';

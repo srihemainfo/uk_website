@@ -292,7 +292,7 @@ class UtilityController extends Controller
         $validator = Validator::make($request->all(), [
             'fullName' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|regex:/^\+?[0-9]+$/',
             'subject' => 'required|string|max:255',
             'message' => 'required|string'
         ]);

@@ -1430,8 +1430,8 @@
         <!-- Top Brand Bar -->
         <div class="top-brand-bar">
             <a href="#" class="brand-logo text-decoration-none">
-                <img src="{{ asset('goride/img/logo-dark.png') }}" alt="GoRide Logo" style="height: 36px; width: auto;"
-                    onerror="this.src='{{ asset('goride/img/logo-darkk.png') }}'">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-dark.png" alt="GoRide Logo" style="height: 36px; width: auto;"
+                    onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png'">
             </a>
 
             <div class="top-brand-meta">
@@ -1672,9 +1672,9 @@
                             <div class="person-info-item">
                                 <span>Driver Name</span>
                                 <div class="d-flex align-items-center gap-2">
-                                    <img src="{{ !empty($driver_image) ? $driver_image : asset('goride/img/driver-dummy.png') }}"
+                                    <img src="{{ !empty($driver_image) ? $driver_image : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/driver-dummy.png' }}"
                                         style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
-                                        onerror="this.src='{{ asset('goride/img/driver-dummy.png') }}'">
+                                        onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/driver-dummy.png'">
                                     <strong>{{ $driver_name }}</strong>
                                 </div>
                             </div>

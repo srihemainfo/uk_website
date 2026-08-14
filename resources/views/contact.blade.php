@@ -400,7 +400,7 @@
 
         .page-header {
             position: relative;
-            background: url('{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}/goride/img/main-banner.webp') center center/cover no-repeat;
+            background: url('{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/main-banner.webp') center center/cover no-repeat;
             padding: 120px 0;
             text-align: center;
             color: #fff;

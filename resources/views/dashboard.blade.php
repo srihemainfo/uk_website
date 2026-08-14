@@ -973,9 +973,9 @@
         }
 
         @media (max-width: 768px) {
-            .driver-img{
-              width: 60px;
-              top: ; height: 60px;
+            .driver-img {
+                width: 60px;
+                height: 60px;
             }
             .car-image-container {
                 flex-direction: column;
@@ -1041,9 +1041,127 @@
                 justify-content: space-between;
             }
         }
+
+        /* Unauthorized State Styles */
+        .unauth-container {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .unauth-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 45px 35px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: unauthFadeIn 0.35s ease-out;
+        }
+
+        @keyframes unauthFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .unauth-icon-box {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .unauth-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .unauth-desc {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .unauth-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-unauth-primary {
+            background: #111;
+            color: #fff !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .btn-unauth-primary:hover {
+            background: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .btn-unauth-secondary {
+            background: #f3f4f6;
+            color: #111 !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-unauth-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
     </style>
     <!-- Dashboard Content -->
-    <div class="container">
+    <div class="container" id="dashboardMainContent">
 
         <div class="dashboard-header-flex">
             <div class="welcome-section">
@@ -1307,6 +1425,26 @@
         </div>
 
     </div>
+
+    <!-- Unauthorized State UI -->
+    <div class="unauth-container" id="dashboardUnauthorizedState" style="display: none;">
+        <div class="unauth-card">
+            <div class="unauth-icon-box">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h2 class="unauth-title">Authorization Required</h2>
+            <p class="unauth-desc">
+                You must be logged in to view your dashboard, manage active rides, and check your trip history.
+            </p>
+            <div class="unauth-actions">
+                <a href="{{ url('/') }}" class="btn-unauth-primary">
+                    <i class="fas fa-home"></i> Go to Home Page
+                </a>
+                <button type="button" class="btn-unauth-secondary" onclick="openAuthModal()">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Sign In
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Cancel Trip Modal -->
@@ -1439,9 +1577,28 @@
     </div>
 
     <script>
+        const WEBSITE_APP_URL = "{{ env('WEBSITE_APP_URL') }}";
+        const COUNTRY_SLUG_II = "{{ env('COUNTRY_SLUG_II') }}";
+        const GORIDE_IMG_PREFIX = `${WEBSITE_APP_URL}${COUNTRY_SLUG_II}/goride/img/`;
 
         function getToken() {
             return typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '';
+        }
+
+        function checkDashboardAuth() {
+            const token = getToken();
+            const mainContent = document.getElementById('dashboardMainContent');
+            const unauthView = document.getElementById('dashboardUnauthorizedState');
+
+            if (!token || token === 'null' || token === 'undefined' || token.trim() === '') {
+                if (mainContent) mainContent.style.display = 'none';
+                if (unauthView) unauthView.style.display = 'flex';
+                return false;
+            } else {
+                if (mainContent) mainContent.style.display = 'block';
+                if (unauthView) unauthView.style.display = 'none';
+                return true;
+            }
         }
 
         function switchTab(tabId) {
@@ -1562,7 +1719,7 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <div class="car-image-container">
-                                            <img src="/goride/img/${trip.vehicle.image.toLowerCase()}.webp" alt="${trip.vehicle.name}" onerror="this.src='/goride/img/saloon.png'">
+                                            <img src="${GORIDE_IMG_PREFIX}${trip.vehicle.image.toLowerCase()}.webp" alt="${trip.vehicle.name}" onerror="this.src='${GORIDE_IMG_PREFIX}saloon.png'">
                                             <div class="car-details mb-2">
                                                 <div>
                                                     <div class="car-name">${trip.vehicle.name}</div>
@@ -1700,7 +1857,7 @@
                             <div class="col-md-6">
                                 <div class="compact-trip-card">
                                     <div class="compact-car-img-wrapper">
-                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img" onerror="this.src='/goride/img/saloon.png'">
+                                        <img src="${GORIDE_IMG_PREFIX}${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img" onerror="this.src='${GORIDE_IMG_PREFIX}saloon.png'">
                                     </div>
                                     <div class="compact-trip-details">
                                         <div class="compact-trip-title">${trip.drop}</div>
@@ -1751,7 +1908,7 @@
                             <div class="col-md-6">
                                 <div class="compact-trip-card">
                                     <div class="compact-car-img-wrapper">
-                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img img-grayscale" onerror="this.src='/goride/img/saloon.png'">
+                                        <img src="${GORIDE_IMG_PREFIX}${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img img-grayscale" onerror="this.src='${GORIDE_IMG_PREFIX}saloon.png'">
                                     </div>
                                     <div class="compact-trip-details">
                                         <div class="compact-trip-title">${trip.drop}</div>
@@ -1855,6 +2012,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            if (!checkDashboardAuth()) {
+                return;
+            }
             fetchDashboardSummary();
             fetchCurrentRides();
             fetchCompletedRides(1);

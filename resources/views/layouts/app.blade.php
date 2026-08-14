@@ -8239,7 +8239,7 @@
         <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
             <!-- Brand Logo -->
             <div style="margin-bottom: 32px;">
-                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
             </div>
             
             <!-- Glowing Animated Spinner -->
@@ -8431,7 +8431,7 @@
                 <!-- Carousel -->
                 <div
                     style="position: relative; width: 100%; height: 300px; margin-bottom: 20px; overflow: hidden; border-radius: 8px;">
-                    <img id="carCarouselImage" src="goride/img/fleet1.png"
+                    <img id="carCarouselImage" src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/fleet1.png"
                         style="width: 100%; height: 100%; object-fit: contain;" alt="Car view">
                     <button onclick="prevCarImage()"
                         style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -8895,6 +8895,10 @@
         // ---- Create the store ----
         const BookingStore = createBookingStore(_bookingInitialState);
 
+        const WEBSITE_APP_URL = "{{ env('WEBSITE_APP_URL') }}";
+        const COUNTRY_SLUG_II = "{{ env('COUNTRY_SLUG_II') }}";
+        const GORIDE_IMG_PREFIX = `${WEBSITE_APP_URL}${COUNTRY_SLUG_II}/goride/img/`;
+
         // ---- Backward-compatible Proxy shim ----
         // All existing code that reads/writes bookingData.xyz continues working.
         // Reads always reflect current store state; writes call setState automatically.
@@ -8909,7 +8913,7 @@
             luggage: 2,
             price: 45,
             priceMax: 65,
-            image: "/goride/img/saloon.png",
+            image: `${GORIDE_IMG_PREFIX}saloon.png`,
             details: "Toyota Prius or Similar",
             fuel: "Hybrid",
             transmission: "Automatic",
@@ -8939,7 +8943,7 @@
             luggage: 4,
             price: 55,
             priceMax: 80,
-            image: "/goride/img/estate.png",
+            image: `${GORIDE_IMG_PREFIX}estate.png`,
             details: "Skoda Octavia Estate",
             fuel: "Diesel",
             transmission: "Automatic",
@@ -8968,7 +8972,7 @@
             luggage: 3,
             price: 75,
             priceMax: 110,
-            image: "/goride/img/executive.png",
+            image: `${GORIDE_IMG_PREFIX}executive.png`,
             details: "Mercedes E-Class",
             fuel: "Hybrid",
             transmission: "Automatic",
@@ -8997,7 +9001,7 @@
             luggage: 6,
             price: 85,
             priceMax: 125,
-            image: "/goride/img/mpv.png",
+            image: `${GORIDE_IMG_PREFIX}mpv.png`,
             details: "VW Sharan or Similar",
             fuel: "Diesel",
             transmission: "Automatic",
@@ -9203,7 +9207,7 @@
             const v = state.vehicle;
             const carPrice = v.price || v.fare || 0;
             const priceText = v.priceMax ? `\u00a3${carPrice} \u2013 \u00a3${v.priceMax}` : `\u00a3${carPrice}`;
-            const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : 'goride/img/fleet1.png');
+            const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : `${GORIDE_IMG_PREFIX}fleet1.png`);
 
             // Sidebar selected vehicle summary (Step 2 side panel)
             $('#summaryCarImage').attr('src', carImg);
@@ -10637,7 +10641,7 @@
                 }
                 // If fare doesn't have a name, default to capitalizing the key
                 const vehicleName = fare.name || (vKey.charAt(0).toUpperCase() + vKey.slice(1));
-                const vehicleImage = `/goride/img/${vKey}.webp`;
+                const vehicleImage = `${GORIDE_IMG_PREFIX}${vKey}.webp`;
 
                 // Try to find if we have static data for amenities/inclusions
                 const staticV = vehicles.find(v => v.name.toLowerCase().trim() === vKey) || {};
@@ -11717,7 +11721,7 @@
                 <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
                 <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
                     <div style="margin-bottom: 32px;">
-                        <img src="/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
                     </div>
                     <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
                         <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
@@ -12911,7 +12915,7 @@
                     let vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
                     const vehicleCapacity = bid.b_seater || bookingData.vehicle?.capacity || 4;
                     const vehicleLuggage = bid.b_luggage || bookingData.vehicle?.luggage || 2;
-                    let vehicleImg = bookingData.vehicle?.image || '/goride/img/saloon.png';
+                    let vehicleImg = bookingData.vehicle?.image || `${GORIDE_IMG_PREFIX}saloon.png`;
 
                     if (bid.b_cab) {
                         const vKey = bid.b_cab.toLowerCase().replace(/\s+/g, '');
@@ -12933,7 +12937,7 @@
                         } else {
                             vehicleName = bid.b_cab.charAt(0).toUpperCase() + bid.b_cab.slice(1);
                         }
-                        vehicleImg = `/goride/img/${vKey}.webp`;
+                        vehicleImg = `${GORIDE_IMG_PREFIX}${vKey}.webp`;
                     }
 
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
@@ -13122,7 +13126,7 @@
             const grid = $('#driverList');
             grid.html('');
             const vehicle = bookingData.vehicle;
-            const vehicleImg = vehicle?.image || '/goride/img/saloon.png';
+            const vehicleImg = vehicle?.image || `${GORIDE_IMG_PREFIX}saloon.png`;
             const vehicleName = vehicle?.name || 'Standard';
             const vehicleCapacity = vehicle?.capacity || 4;
             const vehicleLuggage = vehicle?.luggage || 2;
@@ -13233,7 +13237,7 @@
         function openDriverReview(driver) {
             bookingData.selectedDriver = driver;
             const vehicle = bookingData.vehicle;
-            const vehicleImg = bookingData.vehicle?.image || 'goride/img/fleet1.png';
+            const vehicleImg = bookingData.vehicle?.image || `${GORIDE_IMG_PREFIX}fleet1.png`;
             let vehicleName = driver.carName || bookingData.vehicle?.name || '-';
             if (driver.carName) {
                 const vKey = driver.carName.toLowerCase().replace(/\s+/g, '');
@@ -13510,7 +13514,7 @@
             if (dynamicCarImages && dynamicCarImages.length > 0) {
                 return dynamicCarImages[index - 1];
             }
-            return `goride/img/fleet${index}.png`;
+            return `${GORIDE_IMG_PREFIX}fleet${index}.png`;
         }
 
         function showCarDetailsModal(driver) {
@@ -14361,7 +14365,7 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>

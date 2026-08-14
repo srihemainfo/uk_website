@@ -2434,7 +2434,7 @@
         }
 
         .footer-logo-section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .footer-logo {
@@ -2453,6 +2453,7 @@
         .footer-tagline {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0px;
         }
 
         .footer-section {
@@ -2488,6 +2489,59 @@
             font-size: 16px;
             transition: color 0.3s;
         }
+         .footer-app-downloads {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 25px;
+                    margin-top: 10px;
+                }
+
+                .footer-store-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    background: white;
+                    color: #ffffff !important;
+                    padding: 8px 14px;
+                    border-radius: 10px;
+                    width: 185px;
+                    text-decoration: none !important;
+                    transition: transform 0.2s ease, background-color 0.2s ease;
+                }
+
+                .footer-store-btn:hover {
+                    color: #ffffff !important;
+                    transform: translateY(-2px);
+                }
+
+                .footer-store-btn i {
+                    font-size: 22px;
+                    color: black;
+                }
+
+                .footer-store-btn-text {
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 1.1;
+                }
+
+                .footer-store-btn-sub {
+                    font-size: 10px;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    color: black;
+                    opacity: 0.9;
+                    margin-bottom: 2px;
+                }
+
+                .footer-store-btn-title {
+                    font-size: 15px;
+                    font-weight: 700;
+                    color: black;
+                }
 
         .footer-links-list a:hover {
             color: #fff;
@@ -4552,6 +4606,17 @@
         /* Responsive */
         @media (max-width: 767px) {
 
+            .footer-app-downloads {
+                flex-direction: row;
+                gap: 10px;
+                margin-top: 15px;
+                justify-content: space-around;
+            }
+
+            .footer-store-btn i {
+                font-size: 18px;
+            }
+
             .accordion-content {
                 padding: 12px !important;
                 margin-top: 0px !important;
@@ -4649,7 +4714,7 @@
 
         .operator-register-section {
             position: relative;
-            padding: 50px 0;
+            padding: 35px 0;
             background: white;
             overflow: hidden;
         }

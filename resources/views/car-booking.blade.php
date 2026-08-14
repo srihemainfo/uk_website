@@ -319,6 +319,239 @@
         .tax-ribbon-body.not-included {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
         }
+
+        /* Driver App / Mobile App Promo Section */
+        .driver-app-section {
+            padding: 0px 0 20px 0;
+        }
+
+        .driver-app-card {
+            background: #f7f8fa;
+            border-radius: 24px;
+            padding: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #eef0f4;
+        }
+
+        .driver-app-content {
+            flex: 1 1 55%;
+            max-width: 620px;
+            z-index: 2;
+        }
+
+        .driver-app-badge {
+            display: inline-block;
+               background: black;
+    color: white;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .driver-app-title {
+           font-size: 32px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
+        }
+
+        .driver-app-subtitle {
+     
+            line-height: 1.5;
+
+            margin-bottom: 32px;
+        }
+
+        .driver-app-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 24px;
+            margin-bottom: 36px;
+        }
+
+        .driver-app-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .driver-app-feature-icon {
+               width: 36px;
+    height: 36px;
+    /* min-width: 44px; */
+    border-radius: 50%;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+        }
+
+        .driver-app-feature-text h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 2px 0;
+            line-height: 1.2;
+        }
+
+        .driver-app-feature-text p {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .driver-app-store-btns {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #000000;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .store-btn:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .store-btn i {
+            font-size: 26px;
+        }
+
+        .store-btn-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .store-btn-sub {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .store-btn-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .driver-app-media {
+            flex: 1 1 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .driver-app-circle-bg {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: #fde047;
+            border-radius: 50%;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        .driver-app-img {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 991px) {
+            .driver-app-card {
+                flex-direction: column;
+                padding: 32px 24px;
+                gap: 32px;
+            }
+
+            .driver-app-content {
+                max-width: 100%;
+            }
+
+            .driver-app-title {
+                font-size: 26px;
+            }
+
+            .driver-app-circle-bg {
+                width: 260px;
+                height: 260px;
+            }
+
+            .driver-app-img {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .driver-app-card {
+                padding: 24px 16px;
+                border-radius: 16px;
+            }
+
+            .driver-app-title {
+                font-size: 22px;
+            }
+
+            .driver-app-subtitle {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .driver-app-features {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+
+            .driver-app-store-btns {
+                flex-wrap:nowrap;
+            }
+
+            .store-btn {
+                justify-content: center;
+                padding: 10px 10px;
+            }
+
+            .driver-app-circle-bg {
+                width: 220px;
+                height: 220px;
+            }
+
+            .driver-app-img {
+                max-height: 250px;
+            }
+        }
     </style>
     <div id="mobileActionBar">
         <a href="tel:+447950323242" class="mob-action-btn">
@@ -2987,6 +3220,81 @@
                     <i class="fas fa-arrow-right"></i>
                     Become an Operator
                 </a>
+            </div>
+        </div>
+    </section>
+    <section class="driver-app-section">
+        <div class="container">
+            <div class="driver-app-card">
+                <div class="driver-app-content">
+                    <span class="driver-app-badge">DRIVER APP</span>
+                    <h2 class="driver-app-title">Take Every Ride Further.<br>Download the GoRide Driver App</h2>
+                    <p class="driver-app-subtitle">Manage rides, track earnings, navigate smoothly and grow your business — all from your phone.</p>
+                    
+                    <div class="driver-app-features">
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>More Earnings</h3>
+                                <p>Get more rides &amp; increase income</p>
+                            </div>
+                        </div>
+                        
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-location-arrow"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Smart Navigation</h3>
+                                <p>Real-time routes &amp; updates</p>
+                            </div>
+                        </div>
+                        
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Performance Stats</h3>
+                                <p>Track your trips &amp; earnings</p>
+                            </div>
+                        </div>
+                        
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Safe &amp; Secure</h3>
+                                <p>Your safety is our priority</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="driver-app-store-btns">
+                        <a href="https://play.google.com/store/apps/details?id=com.goride.ukpartner" class="store-btn google-play">
+                            <i class="fab fa-google-play"></i>
+                            <div class="store-btn-text">
+                                <span class="store-btn-sub">GET IT ON</span>
+                                <span class="store-btn-title">Google Play</span>
+                            </div>
+                        </a>
+                        <a href="https://apps.apple.com/gb/app/goride-partner/id6791834578" class="store-btn app-store">
+                            <i class="fab fa-apple"></i>
+                            <div class="store-btn-text">
+                                <span class="store-btn-sub">Download on the</span>
+                                <span class="store-btn-title">App Store</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="driver-app-media">
+                    <div class="driver-app-circle-bg"></div>
+                    <img src="{{ asset('goride/img/mobile-app.webp') }}" alt="GoRide Driver App" class="driver-app-img">
+                </div>
             </div>
         </div>
     </section>

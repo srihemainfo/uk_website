@@ -30,7 +30,7 @@
                         </a>
                     </div>
                 </div>
-            </div>
+            </div>        
             <!-- Company Links -->
             <div class="col-6 col-md-2">
                 <div class="footer-section">
@@ -39,20 +39,13 @@
                         <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}about">About Us</a>
                         <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}contact">Contact</a>
                         <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}blog">Blogs</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Legal Links -->
-            <div class="col-6 col-md-2">
-                <div class="footer-section">
-                    <div class="footer-section-title">Legal</div>
-                    <div class="footer-links-list">
-                        <!--<a href="#">Security Policy</a>-->
                         <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}privacy">Privacy Policy</a>
                         <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}terms">Terms & Conditions</a>
                     </div>
                 </div>
             </div>
+
+            <!-- Contact Column -->
             <div class="col-12 col-md-4">
                 <div class="footer-section">
                     <div class="footer-section-title">Contact</div>
@@ -80,6 +73,29 @@
                                 United Kingdom
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GoRide Driver App Column -->
+            <div class="col-12 col-md-3">
+                <div class="footer-section">
+                    <div class="footer-section-title">GoRide Driver App</div>
+                    <div class="footer-app-downloads">
+                        <a href="https://play.google.com/store/apps/details?id=com.goride.ukpartner" target="_blank" class="footer-store-btn" title="GET IT ON Google Play">
+                            <i class="fab fa-google-play"></i>
+                            <div class="footer-store-btn-text">
+                                <span class="footer-store-btn-sub">GET IT ON</span>
+                                <span class="footer-store-btn-title">Google Play</span>
+                            </div>
+                        </a>
+                        <a href="https://apps.apple.com/gb/app/goride-partner/id6791834578" target="_blank" class="footer-store-btn" title="DOWNLOAD ON THE App Store">
+                            <i class="fab fa-apple"></i>
+                            <div class="footer-store-btn-text">
+                                <span class="footer-store-btn-sub">DOWNLOAD ON THE</span>
+                                <span class="footer-store-btn-title">App Store</span>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

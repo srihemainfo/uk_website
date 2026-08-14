@@ -80,7 +80,7 @@
             <!-- GoRide Driver App Column -->
             <div class="col-12 col-md-3">
                 <div class="footer-section">
-                    <div class="footer-section-title">GoRide Driver App</div>
+                    <div class="footer-section-title">GoRide Partner App</div>
                     <div class="footer-app-downloads">
                         <a href="https://play.google.com/store/apps/details?id=com.goride.ukpartner" target="_blank" class="footer-store-btn" title="GET IT ON Google Play">
                             <i class="fab fa-google-play"></i>

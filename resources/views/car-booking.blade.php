@@ -3227,8 +3227,8 @@
         <div class="container">
             <div class="driver-app-card">
                 <div class="driver-app-content">
-                    <span class="driver-app-badge">DRIVER APP</span>
-                    <h2 class="driver-app-title">Take Every Ride Further.<br>Download the GoRide Driver App</h2>
+                    <span class="driver-app-badge">PARTNER APP</span>
+                    <h2 class="driver-app-title">Take Every Ride Further.<br>Download the GoRide Partner App</h2>
                     <p class="driver-app-subtitle">Manage rides, track earnings, navigate smoothly and grow your business — all from your phone.</p>
                     
                     <div class="driver-app-features">

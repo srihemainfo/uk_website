@@ -8626,14 +8626,18 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
+                    const authToken = getCookieValue('auth_token');
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    };
+                    if (authToken && authToken !== 'null' && authToken !== 'undefined' && authToken.trim() !== '') {
+                        headers['Authorization'] = 'Bearer ' + authToken;
+                    }
                     const response = await fetch(API_BASE_URL + '/web-get-location?search=' + encodeURIComponent(query), {
                         method: 'GET',
                         signal: signal,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                        }
+                        headers: headers
                     });
                     const result = await response.json();
                     if (wrapper) wrapper.classList.remove('is-loading');

@@ -164,9 +164,12 @@ class UtilityController extends Controller
             $token = $request->bearerToken();
             $apiUrl = env('API_URL') . '/web-get-location';
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $request->all());
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $request->all());
 
             return response()->json($response->json(), $response->status());
 

@@ -1465,9 +1465,6 @@
                 <button onclick="shareBooking()" class="btn-action-icon d-none" title="Share Booking">
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>
-                <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
-                    <i class="fa-solid fa-print"></i>
-                </button>
                 <a href="tel:+{{ env('SUPPORT_NO_I') }}" class="btn-action-icon" title="Call Support">
                     <i class="fa-solid fa-headset"></i>
                 </a>
@@ -1549,7 +1546,7 @@
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </div>
-                            <div class="fare-amount">£{{ $total_fare ?? 0 }}</div>
+                            <div class="fare-amount">£{{ number_format((float)($total_fare ?? 0), 2) }}</div>
                         </div>
 
                         <!-- Collapsible Fare Breakdown -->
@@ -1588,9 +1585,18 @@
                                         <strong>£{{ $govt_levy }}</strong>
                                     </div>
                                 @endif
+                                @if((isset($firstAmt) && (float)$firstAmt != 0) || (isset($user_details['firstAmt']) && (float)$user_details['firstAmt'] != 0))
+                                    @php
+                                        $firstDiscount = $firstAmt ?? $user_details['firstAmt'];
+                                    @endphp
+                                    <div class="fare-line-item">
+                                        <span>First Booking Discount</span>
+                                        <strong style="color: #059669;">-£{{ number_format((float)$firstDiscount, 2) }}</strong>
+                                    </div>
+                                @endif
                                 <div class="fare-total-line">
                                     <span>Total Fare</span>
-                                    <strong>£{{ $total_fare ?? 0 }}</strong>
+                                    <strong>£{{ number_format((float)($total_fare ?? 0), 2) }}</strong>
                                 </div>
 
                                 @if(isset($isPayment) && $isPayment)

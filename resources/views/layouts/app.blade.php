@@ -11153,17 +11153,38 @@
                         return;
                     }
                 } else {
-                    if (!_firebaseAuthObj && result.firebase) {
-                        firebase.initializeApp(result.firebase);
+                    if (result.firebase) {
+                        if (!firebase.apps || !firebase.apps.length) {
+                            firebase.initializeApp(result.firebase);
+                        }
+                        _firebaseAuthObj = firebase.auth();
+                    } else if (firebase.apps && firebase.apps.length) {
                         _firebaseAuthObj = firebase.auth();
                     }
+
+                    if (!_firebaseAuthObj) {
+                        throw new Error('Firebase configuration missing.');
+                    }
+                    _firebaseAuthObj.languageCode = 'en';
 
                     if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP...`;
 
                     // Recaptcha
-                    const recapContainer = document.createElement('div');
-                    recapContainer.id = 'booking-recaptcha-container';
-                    document.body.appendChild(recapContainer);
+                    if (window.recaptchaVerifier) {
+                        try {
+                            window.recaptchaVerifier.clear();
+                        } catch (e) {}
+                        window.recaptchaVerifier = null;
+                    }
+
+                    let recapContainer = document.getElementById('booking-recaptcha-container');
+                    if (!recapContainer) {
+                        recapContainer = document.createElement('div');
+                        recapContainer.id = 'booking-recaptcha-container';
+                        document.body.appendChild(recapContainer);
+                    } else {
+                        recapContainer.innerHTML = '';
+                    }
 
                     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('booking-recaptcha-container', {
                         'size': 'invisible'
@@ -11185,6 +11206,7 @@
                 document.getElementById('authStep1').style.display = 'none';
                 document.getElementById('authOtpSection').style.display = 'block';
                 document.getElementById('authOtpTarget').textContent = _currentMobile;
+                _startResendTimer(30);
 
                 const changeBtn = document.getElementById('authChangeNumberBtn');
                 if (changeBtn) changeBtn.style.display = 'none';
@@ -14440,7 +14462,11 @@
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-
+                <div style="display: flex; align-items: center; justify-content: center; margin-top: 14px; font-size: 13px; color: #666; gap: 6px;">
+                    <span>Didn't receive the code?</span>
+                    <button type="button" id="authResendOtpBtn" onclick="handleResendOtp()" style="background: none; border: none; padding: 0; color: #111; font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13px;">Resend OTP</button>
+                    <span id="authResendTimer" style="font-size: 12px; color: #888; display: none;"></span>
+                </div>
             </div>
 
             <!-- Firebase Recaptcha Container -->
@@ -14448,8 +14474,8 @@
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our
-                <a href="/terms" target="_blank">Terms of Service</a> &amp;
-                <a href="/privacy" target="_blank">Privacy Policy</a>.
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}terms" target="_blank">Terms of Service</a> &amp;
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}privacy" target="_blank">Privacy Policy</a>.
             </p>
         </div>
     </div>
@@ -14508,6 +14534,23 @@
                 inputEl.value = inputEl.value.replace(/\D/g, '');
                 setTimeout(updateAuthInputMaxLength, 100);
             });
+
+            inputEl.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAuthContinue();
+                }
+            });
+
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleVerifyOtp();
+                    }
+                });
+            }
 
             setTimeout(updateAuthInputMaxLength, 600);
         })();
@@ -14874,11 +14917,166 @@
         let _confirmationResult = null;
         let _isNewUser = false;
         let _currentMobile = '';
+        let _currentDialCode = '';
         let _isIndiaFlow = false;
         let _indiaOtpEnc = null;
+        let _isSendingAuthOtp = false;
+        let _isVerifyingOtp = false;
+        let _resendTimerInterval = null;
+        let _resendCountdown = 0;
+
+        function _startResendTimer(seconds = 30) {
+            _resendCountdown = seconds;
+            const btn = document.getElementById('authResendOtpBtn');
+            const timerEl = document.getElementById('authResendTimer');
+            if (!btn) return;
+
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            btn.style.textDecoration = 'none';
+
+            if (timerEl) {
+                timerEl.style.display = 'inline';
+                timerEl.textContent = `(${_resendCountdown}s)`;
+            }
+
+            if (_resendTimerInterval) clearInterval(_resendTimerInterval);
+            _resendTimerInterval = setInterval(() => {
+                _resendCountdown--;
+                if (_resendCountdown <= 0) {
+                    clearInterval(_resendTimerInterval);
+                    _resendTimerInterval = null;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.style.textDecoration = 'underline';
+                    if (timerEl) timerEl.style.display = 'none';
+                } else {
+                    if (timerEl) timerEl.textContent = `(${_resendCountdown}s)`;
+                }
+            }, 1000);
+        }
+
+        async function _sendOtpProcess(isResend = false) {
+            if (_isSendingAuthOtp) return;
+            _isSendingAuthOtp = true;
+
+            const continueBtn = document.getElementById('authContinueBtn');
+            const resendBtn = document.getElementById('authResendOtpBtn');
+
+            if (isResend) {
+                if (resendBtn) {
+                    resendBtn.disabled = true;
+                    resendBtn.textContent = 'Sending...';
+                }
+            } else {
+                if (continueBtn) {
+                    continueBtn.disabled = true;
+                    continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
+                }
+            }
+
+            try {
+                // 1. Check User
+                const response = await fetch(API_BASE_URL + '/auth/check-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ login: 'mobile', value: _currentMobile }),
+                });
+
+                const result = await response.json();
+
+                if (result.status === false) {
+                    _showAuthError(result.message || 'Failed to verify number.');
+                    if (!isResend) _resetContinueBtn();
+                    return;
+                }
+
+                _isNewUser = !result.exists;
+
+                if (_isIndiaFlow) {
+                    // India Flow: Call POST /send-otp
+                    if (!isResend && continueBtn) continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: _currentMobile,
+                            dialCode: _currentDialCode || '91'
+                        }),
+                    });
+
+                    const sendOtpResult = await sendOtpResponse.json();
+
+                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
+                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
+                        _showOtpUI();
+                        _startResendTimer(30);
+                    } else {
+                        _showAuthError(sendOtpResult.message || 'Failed to send OTP.');
+                        if (!isResend) _resetContinueBtn();
+                        return;
+                    }
+                } else {
+                    // Non-India Flow: Initialize Firebase and send SMS OTP
+                    if (result.firebase) {
+                        if (!firebase.apps || !firebase.apps.length) {
+                            firebase.initializeApp(result.firebase);
+                        }
+                        _firebaseAuthObj = firebase.auth();
+                    } else if (firebase.apps && firebase.apps.length) {
+                        _firebaseAuthObj = firebase.auth();
+                    }
+
+                    if (!_firebaseAuthObj) {
+                        throw new Error('Firebase configuration missing.');
+                    }
+                    _firebaseAuthObj.languageCode = 'en';
+
+                    if (!isResend && continueBtn) continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    // Safely clear old recaptchaVerifier
+                    if (window.recaptchaVerifier) {
+                        try {
+                            window.recaptchaVerifier.clear();
+                        } catch (e) {
+                            console.warn('Recaptcha clear warning:', e);
+                        }
+                        window.recaptchaVerifier = null;
+                    }
+
+                    const recapContainer = document.getElementById('recaptcha-container');
+                    if (recapContainer) {
+                        recapContainer.innerHTML = '';
+                    }
+
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                        'size': 'invisible'
+                    });
+
+                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(_currentMobile, window.recaptchaVerifier);
+
+                    // Show OTP UI & start countdown
+                    _showOtpUI();
+                    _startResendTimer(30);
+                }
+
+            } catch (err) {
+                console.error('Check user / OTP Error:', err);
+                _showAuthError(err.message || 'Failed to send OTP. Please try again.');
+                if (!isResend) _resetContinueBtn();
+            } finally {
+                _isSendingAuthOtp = false;
+                if (isResend && resendBtn) {
+                    resendBtn.textContent = 'Resend OTP';
+                }
+            }
+        }
 
         async function handleAuthContinue() {
-            if (!_itiInstance) return;
+            if (!_itiInstance || _isSendingAuthOtp) return;
 
             const inputEl = document.getElementById('authContactInput');
             const countryData = _itiInstance.getSelectedCountryData();
@@ -14907,80 +15105,23 @@
                 mobileNumber = '+' + dialCode + rawVal;
             }
             _currentMobile = mobileNumber;
-
+            _currentDialCode = dialCode;
             _isIndiaFlow = (dialCode === '91' || mobileNumber.startsWith('+91'));
             _indiaOtpEnc = null;
 
-            const btn = document.getElementById('authContinueBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
+            await _sendOtpProcess(false);
+        }
 
-            try {
-                // 1. Check User
-                const response = await fetch(API_BASE_URL + '/auth/check-user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ login: 'mobile', value: mobileNumber }),
-                });
-
-                const result = await response.json();
-
-                if (result.status === false) {
-                    _showAuthError(result.message || 'Failed to verify number.');
-                    _resetContinueBtn();
-                    return;
-                }
-
-                _isNewUser = !result.exists;
-
-                if (_isIndiaFlow) {
-                    // India Flow: Call POST /send-otp
-                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-
-                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                        body: JSON.stringify({
-                            mobile: mobileNumber,
-                            dialCode: dialCode || '91'
-                        }),
-                    });
-
-                    const sendOtpResult = await sendOtpResponse.json();
-
-                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
-                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
-                        _showOtpUI();
-                    } else {
-                        _showAuthError(sendOtpResult.message || 'Failed to send OTP.');
-                        _resetContinueBtn();
-                        return;
-                    }
-                } else {
-                    // Non-India Flow: Initialize Firebase and send SMS OTP
-                    if (!_firebaseAuthObj && result.firebase) {
-                        firebase.initializeApp(result.firebase);
-                        _firebaseAuthObj = firebase.auth();
-                    }
-
-                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-
-                    // Clear old recaptcha
-                    document.getElementById('recaptcha-container').innerHTML = '';
-                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                        'size': 'invisible'
-                    });
-
-                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
-
-                    // Show OTP UI
-                    _showOtpUI();
-                }
-
-            } catch (err) {
-                console.error('Check user / OTP Error:', err);
-                _showAuthError('Failed to send OTP. Please try again.');
-                _resetContinueBtn();
+        async function handleResendOtp() {
+            if (_resendCountdown > 0 || _isSendingAuthOtp || !_currentMobile) return;
+            await _sendOtpProcess(true);
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.value = '';
+                otpInput.focus();
+            }
+            if (typeof showToast === 'function') {
+                showToast('A new 6-digit OTP has been sent.', 'success');
             }
         }
 
@@ -15015,6 +15156,12 @@
             } else {
                 document.getElementById('authNewUserFields').style.display = 'none';
             }
+
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.value = '';
+                setTimeout(() => otpInput.focus(), 150);
+            }
         }
 
         function _showPhoneUI() {
@@ -15024,13 +15171,22 @@
             // Hide OTP section
             document.getElementById('authOtpSection').style.display = 'none';
             document.getElementById('authOtpInput').value = '';
+            if (_resendTimerInterval) {
+                clearInterval(_resendTimerInterval);
+                _resendTimerInterval = null;
+            }
+            _resendCountdown = 0;
             _resetContinueBtn();
         }
 
         async function handleVerifyOtp() {
-            const otp = document.getElementById('authOtpInput').value.trim();
-            if (!otp) {
-                _showAuthError('Please enter a valid OTP.');
+            if (_isVerifyingOtp) return;
+
+            const otpInput = document.getElementById('authOtpInput');
+            let otp = otpInput ? otpInput.value.trim().replace(/\D/g, '') : '';
+            if (!otp || otp.length < 4) {
+                _showAuthError('Please enter a valid 6-digit OTP.');
+                if (otpInput) otpInput.focus();
                 return;
             }
 
@@ -15060,6 +15216,7 @@
             const oldHtml = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Verifying…`;
+            _isVerifyingOtp = true;
 
             try {
                 const verifyPayload = {
@@ -15075,7 +15232,7 @@
                 } else {
                     // Non-India Flow: Verify OTP with Firebase
                     if (!_confirmationResult) {
-                        throw new Error('Firebase confirmation result missing.');
+                        throw new Error('SESSION_EXPIRED');
                     }
                     const result = await _confirmationResult.confirm(otp);
                     const idToken = await result.user.getIdToken();
@@ -15113,9 +15270,41 @@
 
             } catch (error) {
                 console.error('OTP Verify Error:', error);
-                _showAuthError('Invalid OTP. Please check and try again.');
+                let errorMsg = 'Invalid OTP. Please check and try again.';
+
+                const errCode = (error && error.code) ? String(error.code).toLowerCase() : '';
+                const errMsg = (error && error.message) ? String(error.message) : '';
+
+                if (errCode === 'auth/session-expired' || errCode === 'auth/code-expired' || errMsg.includes('SESSION_EXPIRED') || errMsg.includes('session-expired') || errMsg.includes('code-expired')) {
+                    errorMsg = 'OTP session has expired. Please click "Resend OTP" to receive a new code.';
+                    // Immediately enable Resend OTP button
+                    if (_resendTimerInterval) {
+                        clearInterval(_resendTimerInterval);
+                        _resendTimerInterval = null;
+                    }
+                    _resendCountdown = 0;
+                    const resendBtn = document.getElementById('authResendOtpBtn');
+                    const timerEl = document.getElementById('authResendTimer');
+                    if (resendBtn) {
+                        resendBtn.disabled = false;
+                        resendBtn.style.opacity = '1';
+                        resendBtn.style.cursor = 'pointer';
+                        resendBtn.style.textDecoration = 'underline';
+                    }
+                    if (timerEl) timerEl.style.display = 'none';
+                } else if (errCode === 'auth/invalid-verification-code' || errMsg.includes('invalid-verification-code')) {
+                    errorMsg = 'The 6-digit OTP you entered is incorrect. Please check and try again.';
+                } else if (errCode === 'auth/too-many-requests') {
+                    errorMsg = 'Too many attempts. Please wait a moment before trying again.';
+                } else if (errMsg && errMsg !== 'SESSION_EXPIRED') {
+                    errorMsg = errMsg;
+                }
+
+                _showAuthError(errorMsg);
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
+            } finally {
+                _isVerifyingOtp = false;
             }
         }
 

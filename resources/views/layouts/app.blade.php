@@ -10358,12 +10358,6 @@
                 $('#dropoffInput').focus();
                 return;
             }
-            // ---- AUTH GATE ----
-            if (!isAuthenticated()) {
-                _pendingAfterAuth = _doTripDetails;
-                openAuthModal();
-                return;
-            }
             _doTripDetails();
         }
         function _doTripDetails() {
@@ -10399,7 +10393,6 @@
         // ===== FETCH FARES FROM API =====
         async function fetchFaresFromAPI() {
             const token = getCookieValue('auth_token');
-            if (!token) return null;
 
             // Build pickup datetime string (Y-m-d H:i:s)
             let pickupDate = bookingData.date;
@@ -10439,13 +10432,17 @@
                 way_type: bookingData.returnTrip ? 'roundtrip' : 'oneway',
             });
 
+            const headers = {
+                'Accept': 'application/json'
+            };
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+
             try {
                 const response = await fetch(API_BASE_URL + '/w-get-fares?' + params.toString(), {
                     method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    }
+                    headers: headers
                 });
 
                 if (!response.ok) {
@@ -10984,21 +10981,76 @@
             $(el).find('.btn-v-select').html('<i class="fas fa-check"></i> Selected');
             console.log('Vehicle selected:', vehicle.name, '- Price: £' + vehicle.price);
         }
+        function _autoFillPassengerDetailsFromAuth() {
+            const userStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+            if (!userStr) return;
+            try {
+                const user = JSON.parse(decodeURIComponent(userStr));
+                if (!user) return;
+
+                let nameParts = (user.name || '').trim().split(' ');
+                let fname = nameParts[0] || '';
+                let lname = nameParts.slice(1).join(' ') || '';
+                let email = user.email || '';
+                let phone = user.mobile || user.mobile_number || user.phone || '';
+
+                const updates = {};
+                if (fname && !$('#passengerFirstName').val()) {
+                    $('#passengerFirstName').val(fname);
+                    updates.passengerFirstName = fname;
+                }
+                if (lname && !$('#passengerLastName').val()) {
+                    $('#passengerLastName').val(lname);
+                    updates.passengerLastName = lname;
+                }
+                if (email && !$('#passengerEmail').val()) {
+                    $('#passengerEmail').val(email);
+                    updates.passengerEmail = email;
+                }
+                if (phone && !$('#passengerPhone').val()) {
+                    if (window.passengerPhoneIti) {
+                        window.passengerPhoneIti.setNumber(phone);
+                    } else {
+                        $('#passengerPhone').val(phone);
+                    }
+                    updates.passengerPhone = phone;
+                }
+
+                if (Object.keys(updates).length > 0) {
+                    BookingStore.setState(updates);
+                }
+            } catch (e) {
+                console.error('Error autofilling passenger data from auth', e);
+            }
+        }
+
         function proceedToPassengerDetails() {
             const vehicle = BookingStore.getState().vehicle;
             if (!vehicle) {
                 showToast('Please select a vehicle first', 'error');
                 return;
             }
-            // _updateVehicleSummaryUI subscriber already keeps sidebar in sync;
-            // call it explicitly here just to be sure summary is visible
+
+            // ---- AUTH GATE ON CONTINUE BUTTON (AFTER CAR LIST SELECTION) ----
+            if (!isAuthenticated()) {
+                _pendingAfterAuth = _doProceedToPassengerDetails;
+                openAuthModal();
+                return;
+            }
+
+            _doProceedToPassengerDetails();
+        }
+
+        function _doProceedToPassengerDetails() {
+            _autoFillPassengerDetailsFromAuth();
             _updateVehicleSummaryUI(BookingStore.getState());
-            // Step 3: Move to next screen (Booking Details)
             updatePassengerForm();
             updateBookingSummary();
             showStep(4);
-            // Optional: Log for debugging
-            console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
+            const vehicle = BookingStore.getState().vehicle;
+            if (vehicle) {
+                console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
+            }
         }
         function adjustBookingFormGrids() {
             $('.booking-form-grid').each(function () {

@@ -265,6 +265,7 @@
                 opacity: 0;
                 transform: translateY(12px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -596,34 +597,34 @@
                                 if (newImage) {
                                     document.getElementById('profileImagePreview').src = newImage;
                                 }
-                                
+
                                 // Update cookie and navbar UI
                                 try {
                                     const storedStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
                                     let storedUser = storedStr ? JSON.parse(storedStr) : {};
-                                    
+
                                     // Map the updated name
                                     const newName = user.c_name || user.name || user.first_name;
                                     if (newName) {
                                         storedUser.first_name = newName;
                                         storedUser.last_name = ''; // GoRide primarily uses first_name or combines them
                                     }
-                                    
+
                                     // Map the updated image
                                     if (newImage) {
                                         storedUser.profile_image = newImage;
                                     }
-                                    
+
                                     // Save back to cookie
                                     const expires = new Date();
                                     expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000);
                                     document.cookie = 'auth_user=' + encodeURIComponent(JSON.stringify(storedUser)) + '; expires=' + expires.toUTCString() + '; path=/; SameSite=Lax';
-                                    
+
                                     // Update navbar globally
                                     if (typeof _updateNavbarAfterLogin === 'function') {
                                         _updateNavbarAfterLogin(storedUser);
                                     }
-                                } catch(e) {
+                                } catch (e) {
                                     console.error('Failed to update navbar:', e);
                                 }
 

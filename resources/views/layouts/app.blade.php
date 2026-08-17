@@ -9198,6 +9198,70 @@
             }
         }
 
+        function extractExtraCharges(faresResult, fareDataObj) {
+            let raw = null;
+            if (faresResult) {
+                if (faresResult.extra_charge !== undefined) raw = faresResult.extra_charge;
+                else if (faresResult.extra_charges !== undefined) raw = faresResult.extra_charges;
+                else if (faresResult.extraCharge !== undefined) raw = faresResult.extraCharge;
+                else if (faresResult.extraCharges !== undefined) raw = faresResult.extraCharges;
+                else if (faresResult.data && faresResult.data.extra_charge !== undefined) raw = faresResult.data.extra_charge;
+                else if (faresResult.data && faresResult.data.extra_charges !== undefined) raw = faresResult.data.extra_charges;
+            }
+            if (!raw && fareDataObj && typeof fareDataObj === 'object') {
+                const first = Object.values(fareDataObj)[0];
+                if (first) {
+                    if (first.extra_charge !== undefined) raw = first.extra_charge;
+                    else if (first.extra_charges !== undefined) raw = first.extra_charges;
+                }
+            }
+
+            let childSeatRate = 0;
+            let meetAndGreetRate = 0;
+
+            if (raw) {
+                if (typeof raw === 'string') {
+                    try { raw = JSON.parse(raw); } catch (e) { }
+                }
+                if (typeof raw === 'number') {
+                    childSeatRate = parseFloat(raw) || 0;
+                    meetAndGreetRate = parseFloat(raw) || 0;
+                } else if (Array.isArray(raw)) {
+                    raw.forEach(item => {
+                        if (item && typeof item === 'object') {
+                            const name = (item.name || item.type || item.title || item.key || '').toLowerCase();
+                            const val = parseFloat(item.charge || item.price || item.amount || item.value || item.cost || 0) || 0;
+                            if (name.includes('child') || name.includes('baby') || name.includes('seat')) {
+                                childSeatRate = val;
+                            } else if (name.includes('meet') || name.includes('greet')) {
+                                meetAndGreetRate = val;
+                            }
+                        }
+                    });
+                } else if (typeof raw === 'object' && raw !== null) {
+                    // Check possible keys for child seat
+                    if (raw.child_seat !== undefined) childSeatRate = parseFloat(raw.child_seat) || 0;
+                    else if (raw.baby_seat !== undefined) childSeatRate = parseFloat(raw.baby_seat) || 0;
+                    else if (raw.child !== undefined) childSeatRate = parseFloat(raw.child) || 0;
+                    else if (raw.child_seat_charge !== undefined) childSeatRate = parseFloat(raw.child_seat_charge) || 0;
+                    else if (raw.childSeat !== undefined) childSeatRate = parseFloat(raw.childSeat) || 0;
+
+                    // Check possible keys for meet and greet
+                    if (raw.meet_and_greet !== undefined) meetAndGreetRate = parseFloat(raw.meet_and_greet) || 0;
+                    else if (raw.meet_greet !== undefined) meetAndGreetRate = parseFloat(raw.meet_greet) || 0;
+                    else if (raw.meetAndGreet !== undefined) meetAndGreetRate = parseFloat(raw.meetAndGreet) || 0;
+                    else if (raw.meet_and_greet_charge !== undefined) meetAndGreetRate = parseFloat(raw.meet_and_greet_charge) || 0;
+                    else if (raw.meet !== undefined) meetAndGreetRate = parseFloat(raw.meet) || 0;
+                }
+            }
+
+            return {
+                raw: raw,
+                child_seat: childSeatRate,
+                meet_and_greet: meetAndGreetRate
+            };
+        }
+
         function _updateVehicleSummaryUI(state) {
             if (!state.vehicle) {
                 $('#selectedCarSummary').hide();
@@ -9205,8 +9269,36 @@
                 return;
             }
             const v = state.vehicle;
-            const carPrice = v.price || v.fare || 0;
-            const priceText = v.priceMax ? `\u00a3${carPrice} \u2013 \u00a3${v.priceMax}` : `\u00a3${carPrice}`;
+            const basePriceFrom = parseFloat(v.price || v.fare || 0);
+            const basePriceTo = (v.priceMax !== undefined && v.priceMax !== null && v.priceMax !== '') ? parseFloat(v.priceMax) : null;
+
+            // Extract rates from stored extra_charge or vehicle breakdown
+            const extraChargeObj = (v && v.fareBreakdown && (v.fareBreakdown.extra_charge || v.fareBreakdown.extra_charges))
+                ? extractExtraCharges(null, { v: v.fareBreakdown })
+                : (state.extraCharge || bookingData.extra_charge || {});
+
+            const childSeatUnitRate = parseFloat(extraChargeObj.child_seat || extraChargeObj.baby_seat || 0) || 0;
+            const meetGreetRate = parseFloat(extraChargeObj.meet_and_greet || extraChargeObj.meet_greet || extraChargeObj.meet || 0) || 0;
+
+            const isBabySeat = state.isBabySeat || $('#carSeatCheckbox').is(':checked');
+            const childSeatCount = isBabySeat ? (parseInt(state.childSeatCount !== undefined ? state.childSeatCount : $('#childSeatCount').val()) || 0) : 0;
+            const isMeetGreet = state.meetAndGreet === '1' || state.meetAndGreet === true || $('#meetAndGreet').is(':checked') || $('#meetAndGreetSeaport').is(':checked') || $('.meet-and-greet-cb').is(':checked');
+
+            const childSeatTotalExtra = childSeatUnitRate * childSeatCount;
+            const meetGreetTotalExtra = isMeetGreet ? meetGreetRate : 0;
+            const totalExtra = childSeatTotalExtra + meetGreetTotalExtra;
+
+            // Add the extra charge to the "to" value (upper bound) of the price range
+            let priceText = '';
+            if (basePriceTo !== null && basePriceTo > 0) {
+                const updatedPriceTo = basePriceTo + totalExtra;
+                priceText = `\u00a3${basePriceFrom} \u2013 \u00a3${updatedPriceTo}`;
+            } else if (totalExtra > 0) {
+                const updatedPriceTo = basePriceFrom + totalExtra;
+                priceText = `\u00a3${basePriceFrom} \u2013 \u00a3${updatedPriceTo}`;
+            } else {
+                priceText = `\u00a3${basePriceFrom}`;
+            }
             const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : `${GORIDE_IMG_PREFIX}fleet1.png`);
 
             // Sidebar selected vehicle summary (Step 2 side panel)
@@ -10579,6 +10671,11 @@
                 ? faresResult.data : null;
 
             if (fareDataObj && Object.keys(fareDataObj).length > 0) {
+                // Extract and update extra charges whenever carlist API is called
+                const extraChargeData = extractExtraCharges(faresResult, fareDataObj);
+                bookingData.extra_charge = extraChargeData;
+                BookingStore.setState({ extraCharge: extraChargeData });
+
                 // Store trip meta + polyline from first vehicle fare
                 const firstFare = Object.values(fareDataObj)[0];
                 bookingData.apiDistance = firstFare.distance || null;
@@ -10619,6 +10716,23 @@
                     </div>
                 `);
             }
+        }
+
+        function getInclusionIcon(text) {
+            const t = (text || '').toLowerCase();
+            if (t.includes('park')) return 'fa-parking';
+            if (t.includes('congestion') || t.includes('toll') || t.includes('road')) return 'fa-road';
+            if (t.includes('night')) return 'fa-moon';
+            if (t.includes('special') || t.includes('day') || t.includes('holiday') || t.includes('event')) return 'fa-calendar-day';
+            if (t.includes('wait') || t.includes('delay') || t.includes('time')) return 'fa-clock';
+            if (t.includes('child') || t.includes('baby') || t.includes('seat')) return 'fa-baby-carriage';
+            if (t.includes('meet') || t.includes('greet')) return 'fa-user-check';
+            if (t.includes('fuel') || t.includes('gas') || t.includes('petrol')) return 'fa-gas-pump';
+            if (t.includes('flight') || t.includes('airport')) return 'fa-plane-arrival';
+            if (t.includes('wifi') || t.includes('wi-fi') || t.includes('internet')) return 'fa-wifi';
+            if (t.includes('air') || t.includes('ac') || t.includes('climate')) return 'fa-snowflake';
+            if (t.includes('charge') || t.includes('tax') || t.includes('vat') || t.includes('fee')) return 'fa-file-invoice-dollar';
+            return 'fa-check-circle';
         }
 
         function renderVehicles(fareData) {
@@ -10703,23 +10817,36 @@
                 // Distance/duration badge if available
                 const tripInfoHtml = '';
 
-                const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                    fare.inclusions.map((inc, i) => {
-                        const icons = ['fa-parking', 'fa-road', 'fa-moon', 'fa-calendar-day', 'fa-clock', 'fa-file-invoice-dollar', 'fa-user-check', 'fa-gas-pump'];
-                        const icon = icons[i % icons.length];
-                        return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${inc}</div></li>`;
+                const rawInclusions = fare.included_list || fare.inclusions || fare.included || staticV.inclusions || [];
+                const inclusionsList = Array.isArray(rawInclusions)
+                    ? rawInclusions
+                    : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
+
+                const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                    inclusionsList.map((inc) => {
+                        const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                        const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                        return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
                     }).join('') :
                     `<li class="tab-point-item"><i class="fas fa-parking point-icon point-icon-check"></i><div>Parking Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-road point-icon point-icon-check"></i><div>Congestion Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-moon point-icon point-icon-check"></i><div>Night Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-calendar-day point-icon point-icon-check"></i><div>Special Day Charges</div></li>
                      <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li> 
-                     <li class="tab-point-item"><i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i><div>Child Seat is Included</div></li>
+                     <li class="tab-point-item"><i class="fas fa-baby-carriage point-icon point-icon-check"></i><div>Child Seat is Included</div></li>
                      <li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet</div></li>
                      <li class="tab-point-item"><i class="fas fa-gas-pump point-icon point-icon-check"></i><div>Fuel charges included.</div></li>`;
 
-                const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                    fare.exclusions.map(exc => `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${exc}</div></li>`).join('') :
+                const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || staticV.exclusions || [];
+                const exclusionsList = Array.isArray(rawExclusions)
+                    ? rawExclusions
+                    : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawExclusions]; } })() : []);
+
+                const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                    exclusionsList.map((exc) => {
+                        const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                        return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                    }).join('') :
                     `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
                      <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
 
@@ -11916,6 +12043,7 @@
 
         function updateBookingSummary() {
             const bData = BookingStore.getState();
+            if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(bData);
             if (typeof updateStripeTypeAmounts === 'function') updateStripeTypeAmounts();
 
             // 1. Passenger Name
@@ -12943,16 +13071,33 @@
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
 
                     const fare = bookingData.vehicle?.fareBreakdown || {};
-                    const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                        fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
-                        `<li>Meet & Greet included</li>
-                         <li>Free waiting time (up to 45 mins at airports)</li>
-                         <li>Flight tracking included</li>`;
+                    const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
+                    const inclusionsList = Array.isArray(rawInclusions)
+                        ? rawInclusions
+                        : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
 
-                    const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                        fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
-                        `<li>Any government or local authority charges, if applicable.</li>
-                         <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+                    const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                        inclusionsList.map(inc => {
+                            const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                            const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                            return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
+                        }).join('') :
+                        `<li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet included</div></li>
+                         <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Free waiting time (up to 45 mins at airports)</div></li>
+                         <li class="tab-point-item"><i class="fas fa-plane-arrival point-icon point-icon-check"></i><div>Flight tracking included</div></li>`;
+
+                    const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
+                    const exclusionsList = Array.isArray(rawExclusions)
+                        ? rawExclusions
+                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawExclusions]; } })() : []);
+
+                    const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                        exclusionsList.map(exc => {
+                            const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                            return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                        }).join('') :
+                        `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
+                         <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
 
                     const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper">
@@ -13134,16 +13279,33 @@
             const vehiclePriceMax = vehicle?.priceMax || '';
             const priceDisplay = vehiclePriceMax ? `£${vehiclePrice} – £${vehiclePriceMax}` : `£${vehiclePrice}`;
             const fare = bookingData.vehicle?.fareBreakdown || {};
-            const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
-                `<li>Meet & Greet included</li>
-                 <li>Free waiting time (up to 45 mins at airports)</li>
-                 <li>Flight tracking included</li>`;
+            const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
+            const inclusionsList = Array.isArray(rawInclusions)
+                ? rawInclusions
+                : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
 
-            const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
-                `<li>Any government or local authority charges, if applicable.</li>
-                 <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+            const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                inclusionsList.map(inc => {
+                    const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                    const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                    return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
+                }).join('') :
+                `<li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet included</div></li>
+                 <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Free waiting time (up to 45 mins at airports)</div></li>
+                 <li class="tab-point-item"><i class="fas fa-plane-arrival point-icon point-icon-check"></i><div>Flight tracking included</div></li>`;
+
+            const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
+            const exclusionsList = Array.isArray(rawExclusions)
+                ? rawExclusions
+                : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawInclusions]; } })() : []);
+
+            const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                exclusionsList.map(exc => {
+                    const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                    return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                }).join('') :
+                `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
+                 <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
 
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
@@ -13432,6 +13594,32 @@
 
             if (typeof updateStripeTypeAmounts === 'function') {
                 updateStripeTypeAmounts();
+            }
+
+            // Dynamically render Inclusions & Exclusions from fare breakdown response
+            try {
+                const rawInclusions = bd.inclusion || bd.inclusions || bd.included_list || bd.included || [];
+                const inclusionsList = Array.isArray(rawInclusions) ? rawInclusions : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
+                if (inclusionsList && inclusionsList.length > 0 && typeof getInclusionIcon === 'function') {
+                    const incHtml = inclusionsList.map(inc => {
+                        const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                        const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                        return `<div class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></div>`;
+                    }).join('');
+                    $('#paymentInclusionsList, #step6 .inclusions-pane .tab-points-list').html(incHtml);
+                }
+
+                const rawExclusions = bd.exclusion || bd.exclusions || bd.excluded_list || bd.excluded || [];
+                const exclusionsList = Array.isArray(rawExclusions) ? rawExclusions : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
+                if (exclusionsList && exclusionsList.length > 0) {
+                    const excHtml = exclusionsList.map(exc => {
+                        const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                        return `<div class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></div>`;
+                    }).join('');
+                    $('#paymentExclusionsList, #step6 .exclusions-pane .tab-points-list').html(excHtml);
+                }
+            } catch (err) {
+                console.error('Error rendering payment breakdown inclusions:', err);
             }
 
             $('#dynamicPaymentSummary').show();
@@ -14066,6 +14254,9 @@
             const options = $('#childSeatOptions');
             if (!checkbox.length || !options.length) return;
             if (checkbox.is(':checked')) {
+                if (typeof showToast === 'function') {
+                    showToast('Child seat may have additional payments', 'info');
+                }
                 options.show();
                 let count = parseInt($('#childSeatCount').val()) || 0;
                 if (count === 0) count = 1;
@@ -14077,6 +14268,12 @@
                 $('#childSeatCount').val(0);
                 $('#childSeatCountDisplay').text(0);
                 $('#carSeatDropdownsContainer').html('');
+            }
+            if (typeof gatherAllBookingData === 'function') {
+                gatherAllBookingData();
+            }
+            if (typeof updateBookingSummary === 'function') {
+                updateBookingSummary();
             }
         }
         let currentModalVehicleData = null;
@@ -14254,6 +14451,12 @@
             input.val(val);
             display.text(val);
             renderCarSeatDropdowns(val);
+            if (typeof gatherAllBookingData === 'function') {
+                gatherAllBookingData();
+            }
+            if (typeof updateBookingSummary === 'function') {
+                updateBookingSummary();
+            }
         }
         // ===== RENDER CAR SEAT DROPDOWNS DYNAMICALLY =====
         function renderCarSeatDropdowns(count) {
@@ -14690,6 +14893,13 @@
 
                     // Close the modal
                     closeAuthModal();
+
+                    // If on dashboard or profile page, reload the page to load user data
+                    const currentPath = window.location.pathname.toLowerCase();
+                    if (currentPath.includes('/dashboard') || currentPath.includes('/profile') || currentPath.endsWith('dashboard') || currentPath.endsWith('profile')) {
+                        window.location.reload();
+                        return;
+                    }
 
                     // Resume any pending action (e.g., "See prices")
                     if (typeof _pendingAfterAuth === 'function') {
@@ -15260,6 +15470,13 @@
                     }
                     _updateNavbarAfterLogin(verifyRes.user);
                     closeAuthModal();
+
+                    // If on dashboard or profile page, reload the page to load user data
+                    const currentPath = window.location.pathname.toLowerCase();
+                    if (currentPath.includes('/dashboard') || currentPath.includes('/profile') || currentPath.endsWith('dashboard') || currentPath.endsWith('profile')) {
+                        window.location.reload();
+                        return;
+                    }
 
                     if (typeof _pendingAfterAuth === 'function') {
                         const fn = _pendingAfterAuth;

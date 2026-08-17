@@ -1868,7 +1868,7 @@
                                 </button>
                             </div>
                             <div class="tab-pane inclusions-pane active">
-                                <div class="tab-points-list mt-2">
+                                <div class="tab-points-list mt-2" id="paymentInclusionsList">
                                     <div class="tab-point-item">
                                         <i class="fas fa-parking point-icon point-icon-check"></i>
                                         <div>Parking Charges</div>
@@ -1904,7 +1904,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane exclusions-pane" style="display: none;">
-                                <div class="tab-points-list">
+                                <div class="tab-points-list" id="paymentExclusionsList">
                                     <div class="tab-point-item">
                                         <i class="fas fa-times point-icon point-icon-cross"></i>
                                         <div>Any government or local authority charges, if applicable.</div>
@@ -2042,10 +2042,14 @@
                             </div>
                             <!-- Car Seat -->
                             <div class="car-seat-toggle" id="carSeatToggleContainer">
-                                <label class="car-seat-label">
+                                <label class="car-seat-label" style="display: inline-flex; align-items: center; gap: 8px;">
                                     <input type="checkbox" id="carSeatCheckbox" class="booking-checkbox"
                                         onchange="toggleChildSeatOptions()">
-                                    Baby Seat Required?
+                                    <span>Baby Seat Required?</span>
+                                    <div class="meet-greet-tooltip">
+                                        <i class="fas fa-info-circle text-dark" style="cursor: pointer; font-size: 15px;"></i>
+                                        <span class="tooltip-text">Child seat may have additional payments</span>
+                                    </div>
                                 </label>
                             </div>
                             <!-- Child Seat Options -->

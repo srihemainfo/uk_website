@@ -552,6 +552,40 @@
                 max-height: 250px;
             }
         }
+
+        /* Offer Banner below See Prices */
+        .offer-banner-wrapper {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .offer-banner-img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            object-fit: cover;
+        }
+
+        .offer-banner-img:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 576px) {
+            .offer-banner-wrapper {
+                margin-top: 16px;
+            }
+            .offer-banner-img {
+                border-radius: 12px;
+            }
+        }
     </style>
     <div id="mobileActionBar">
         <a href="tel:+447950323242" class="mob-action-btn">
@@ -1005,6 +1039,11 @@
                         <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 20px;">
                             <i class="fas fa-arrow-right me-2"></i> See prices
                         </button>
+                    </div>
+
+                    <!-- OFFER BANNER IMAGE -->
+                    <div class="offer-banner-wrapper">
+                        <img src="{{ asset('goride/img/offer-image.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->

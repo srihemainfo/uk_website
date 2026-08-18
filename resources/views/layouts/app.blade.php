@@ -10565,6 +10565,13 @@
             }
         }
         function goBackToLocations() {
+            if (window._routeMapTimer) {
+                clearTimeout(window._routeMapTimer);
+                window._routeMapTimer = null;
+            }
+            $('#bookingMap').hide();
+            $('#mapRouteBadge').hide();
+            $('#bookingImage').show();
             $('#vehicleGrid').removeClass('single-col');
             $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
@@ -10572,7 +10579,6 @@
                 }
             });
             $('footer').removeClass('sections-hidden');
-            $('#mapRouteBadge').hide();
             showStep(1);
         }
         function hidePickupTimePanel() {
@@ -10767,7 +10773,13 @@
                 renderVehicles(fareDataObj);
                 // Draw route on map from the fare polyline
                 if (typeof initRouteMapFromFare === 'function') {
-                    setTimeout(initRouteMapFromFare, 300);
+                    if (window._routeMapTimer) clearTimeout(window._routeMapTimer);
+                    window._routeMapTimer = setTimeout(function () {
+                        const stepNow = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? (BookingStore.getState().currentStep || 1) : 1;
+                        if (stepNow >= 3) {
+                            initRouteMapFromFare();
+                        }
+                    }, 300);
                 }
             } else {
                 // No fares — show unavailable message
@@ -14103,6 +14115,12 @@
         }
 
         function showStep(stepNumber) {
+            // Cancel any pending map initialization timer immediately
+            if (window._routeMapTimer) {
+                clearTimeout(window._routeMapTimer);
+                window._routeMapTimer = null;
+            }
+
             const currentStep = BookingStore.getState().currentStep || 1;
 
             // Close mobile summary if it is open (so it doesn't block the screen)
@@ -14134,18 +14152,17 @@
                     $('#mapRouteBadge').show();
                 }
                 $('#vehicleGrid').addClass('single-col');
-                setTimeout(function () {
-                    if (typeof initSingleRouteMap === 'function') {
+                window._routeMapTimer = setTimeout(function () {
+                    const stepNow = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? (BookingStore.getState().currentStep || 1) : 1;
+                    if (stepNow >= 3 && typeof initSingleRouteMap === 'function') {
                         initSingleRouteMap();
                     }
                 }, 300);
             } else {
                 sections.removeClass('active side-by-side');
                 $(`#step${stepNumber}`).addClass('active');
-                if (window.innerWidth > 768 && stepNumber < 3) {
+                if (stepNumber < 3) {
                     const formSection = $('.hero-form-section');
-
-
                     const mapSection = $('.hero-map-section');
                     formSection.removeClass('col-md-8 three-column-mode').addClass('col-md-5');
                     mapSection.removeClass('col-md-4').addClass('col-md-7');

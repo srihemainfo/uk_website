@@ -1575,7 +1575,7 @@
                                     @endif
                                 </div>
                                 <div class="fare-line-item">
-                                    <span>Tax and Other Charges</span>
+                                    <span> {{ $isTax ? 'Tax with Other Charges' : 'Other Charges' }}</span>
                                     <strong>£{{ $tax ?? 0 }}</strong>
                                 </div>
                                 @if(isset($meet_amt) && $meet_amt > 0)

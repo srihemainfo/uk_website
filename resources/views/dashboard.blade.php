@@ -1700,6 +1700,7 @@
                 });
                 const res = await response.json();
                 const container = document.getElementById('currentRidesContainer');
+                var prefixUrl = "{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}";
                 if (res.status && res.data && res.data.length > 0) {
                     let html = '';
                     res.data.forEach(trip => {
@@ -1711,7 +1712,7 @@
                                             Trip #${trip.job_no}
                                         </div>
                                         <div class="trip-actions">
-                                            ${trip.buttons && trip.buttons.preview ? `<button class="btn-action-sm" onclick="window.open('${typeof trip.buttons.preview === 'string' ? trip.buttons.preview : '/booking-preview/' + (trip.preview_hash || trip.booking_key || trip.job_no)}', '_blank')"><i class="fas fa-file-alt"></i> Booking Preview</button>` : ''}
+                                            ${trip.buttons && trip.buttons.preview ? `<button class="btn-action-sm" onclick="window.open('${typeof trip.buttons.preview === 'string' ? trip.buttons.preview : prefixUrl + '/booking-preview/' + (trip.preview_hash || trip.booking_key || trip.job_no)}', '_blank')"><i class="fas fa-file-alt"></i> Booking Preview</button>` : ''}
                                             ${trip.buttons && trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
                                             ${trip.buttons && trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
                                         </div>

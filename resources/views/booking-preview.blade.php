@@ -1546,7 +1546,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span class="text-uppercase text-secondary fw-bold"
                                     style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
-                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
+                                <button type="button" class="btn-fare-info active" id="btnToggleFareBreakdown"
                                     onclick="toggleFareBreakdown()" title="View Fare Breakdown">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
@@ -1555,7 +1555,7 @@
                         </div>
 
                         <!-- Collapsible Fare Breakdown -->
-                        <div class="fare-breakdown-collapse" id="fareBreakdownCollapse">
+                        <div class="fare-breakdown-collapse show" id="fareBreakdownCollapse">
                             <div class="fare-breakdown-inner">
                                 <div class="fare-breakdown-header">
                                     <i class="fa-solid fa-receipt"></i> Fare Breakdown
@@ -1621,9 +1621,9 @@
                                             <strong style="color:#4338ca;">£{{ $wallet_amt ?? 0 }}</strong>
                                         </div>
                                     @endif
-                                    <div class="fare-line-item">
-                                        <span>{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
-                                        <strong style="color:#c2410c;">£{{ $balance_amt ?? 0 }}</strong>
+                                    <div class="fare-line-item fare-balance-item" style="font-size: 13.5px; padding-top: 5px; margin-top: 3px; border-top: 1px dashed #e5e7eb;">
+                                        <span style="font-weight: 700; color: #111827;">{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
+                                        <strong style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ $balance_amt ?? 0 }}</strong>
                                     </div>
                                 @endif
                             </div>
@@ -1674,7 +1674,12 @@
                         <div class="card-heading border-0 pb-0 mb-2">
                             <i class="fa-solid fa-id-card"></i> Driver Details
                         </div>
-                        @if(!empty($driver_name) && isset($job_status) && in_array(strtolower($job_status), ['confirmed', 'assign', 'assigned', 'accept', 'started', 'completed', 'onboarded', 'dispatched']))
+                        @php
+                            $currentStatus = strtolower(trim($job_status ?? ''));
+                            $isCompletedOrCancelled = in_array($currentStatus, ['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled']);
+                            $canShowDriver = !empty($driver_name) && !$isCompletedOrCancelled && in_array($currentStatus, ['confirmed', 'assign', 'assigned', 'accept', 'accepted', 'started', 'onboarded', 'dispatched']);
+                        @endphp
+                        @if($canShowDriver)
                             <div class="person-info-item">
                                 <span>Driver Name</span>
                                 <div class="d-flex align-items-center gap-2">
@@ -1715,7 +1720,11 @@
                             @endif
                         @else
                             <div class="text-secondary py-2" style="font-size: 13px;">
-                                Driver details will be assigned prior to your pickup time.
+                                @if($isCompletedOrCancelled)
+                                    Driver details are not available for {{ strtolower($job_status ?? 'this') }} bookings.
+                                @else
+                                    Driver details will be assigned prior to your pickup time.
+                                @endif
                             </div>
                         @endif
                     </div>

@@ -1768,6 +1768,36 @@
             border-color: #999;
         }
 
+        .btn-cancel-job-small {
+            padding: 11px 22px;
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.2px;
+        }
+
+        .btn-cancel-job-small:hover {
+            background: #222222;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+        }
+
+        .btn-cancel-job-small:active {
+            transform: translateY(0);
+        }
+
         .passenger-form-uber {
             background: #f9f9f9;
             padding: 12px;

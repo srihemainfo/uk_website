@@ -22,12 +22,12 @@
             <div id="navbarUserDropdown" class="navbar-user-dropdown">
                 <ul class="navbar-user-menu">
                     <li>
-                        <a href="{{ route('profile') }}" class="navbar-user-menu-btn">
+                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/profile" class="navbar-user-menu-btn">
                             <i class="far fa-user me-2"></i> Profile
                         </a>
                     </li>
                     <li id="desktopNavDashboardLink">
-                        <a href="{{ route('dashboard') }}" class="navbar-user-menu-btn">
+                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/dashboard" class="navbar-user-menu-btn">
                             <i class="fas fa-chart-line me-2"></i> Dashboard
                         </a>
                     </li>

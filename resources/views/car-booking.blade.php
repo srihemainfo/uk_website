@@ -2475,8 +2475,8 @@
                         </div>
                     </div>
 
-                    <div class="btn-group-uber step-bottom-btns" id="step6CancelBtnWrapper" style="margin-top: auto;">
-                        <button class="btn-search-uber" style="width: 100%;" onclick="showCancelJobModal()">
+                    <div class="btn-group-uber step-bottom-btns" id="step6CancelBtnWrapper" style="margin-top: auto; justify-content: flex-start;">
+                        <button type="button" class="btn-cancel-job-small" onclick="showCancelJobModal()">
                             <i class="fas fa-times"></i> Cancel Job
                         </button>
                     </div>

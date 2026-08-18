@@ -518,9 +518,9 @@
             padding: 28px 20px;
         }
 
-        .help-icon {
-            width: 70px;
-            height: 70px;
+       .help-icon {
+            width: 63px;
+            height: 63px;
             margin: 0 auto 18px;
             border-radius: 50%;
             background: #f8be00;
@@ -530,7 +530,41 @@
             justify-content: center;
             font-size: 28px;
         }
+        .contact-details {
+            width: 100%;
+        }
 
+        .contact-item {
+            width: 100%;
+            max-width: 260px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding: 4px 0;
+        }
+
+        .contact-item a {
+            color: #222;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .contact-item i {
+            flex-shrink: 0;
+        }
+
+        .phone-item {
+            white-space: nowrap;
+        }
+
+        .phone-separator {
+            margin: 0 4px;
+            color: #555;
+            font-size: 14px;
+        }
         .help-modal a {
             color: #111;
             text-decoration: none;
@@ -798,10 +832,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body text-center">
+              <div class="modal-body text-center">
 
                     <div class="help-icon">
-                        <i class="fas fa-headset"></i>
+                     <i class="fab fa-whatsapp"></i>
                     </div>
 
                     <h6>Need Assistance?</h6>
@@ -809,16 +843,23 @@
                     <p class="mb-3 text-muted">
                         Our support team is here to help.
                     </p>
+                    <div class="contact-details">
 
-                    <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"></i>
-                        <a href="tel:+442083373777">+44 208 337 3777</a>
-                    </p>
+                        <p class="mb-2 contact-item phone-item">
+                            <i class="fas fa-phone-alt me-2 text-warning"
+                            style="transform: rotate(90deg);"></i>
 
-                    <p class="mb-0">
-                        <i class="fas fa-envelope me-2 text-warning"></i>
-                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                    </p>
+                            <a href="tel:+442083373777">+44 208 337 3777</a>
+                            <span class="phone-separator"> / </span>
+                            <a href="tel:+447950323242">+44 7950 323242</a>
+                        </p>
+
+                        <p class="mb-0 contact-item">
+                            <i class="fas fa-envelope me-2 text-warning"></i>
+                            <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                        </p>
+
+                    </div>
 
                 </div>
 

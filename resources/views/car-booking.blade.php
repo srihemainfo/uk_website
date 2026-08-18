@@ -513,7 +513,7 @@
             }
         }
 
-        @media (max-width: 576px) {
+        @media (max-width: 768px) {
             .driver-app-card {
                 padding: 24px 16px;
                 border-radius: 16px;

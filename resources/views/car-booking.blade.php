@@ -517,6 +517,7 @@
             .driver-app-card {
                 padding: 24px 16px;
                 border-radius: 16px;
+                z-index: 0;
             }
 
             .driver-app-title {

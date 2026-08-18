@@ -553,8 +553,8 @@
             height: 63px;
             margin: 0 auto 18px;
             border-radius: 50%;
-            background: #f8be00;
-            color: #000;
+            background: #2aca19;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;

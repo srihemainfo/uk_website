@@ -4425,8 +4425,8 @@
             height: 63px;
             margin: 0 auto 18px;
             border-radius: 50%;
-            background: #f8be00;
-            color: #000;
+            background: #2aca19;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -8666,7 +8666,7 @@
                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
             </div>
             <div class="form-group-uber">
-                <label>Mobile Number(Optional)</label>
+                <label>Mobile Number</label>
                 <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12"
                     oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
             </div>

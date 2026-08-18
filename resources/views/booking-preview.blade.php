@@ -1510,6 +1510,12 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="hero-security-fare-card">
 
+                        @php
+                            $statusClean = strtolower(trim($job_status ?? ''));
+                            $isJobCompletedOrCancelled = in_array($statusClean, ['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled']);
+                        @endphp
+
+                        @if(!$isJobCompletedOrCancelled)
                         <div class="row g-2 align-items-center pb-2 mb-2 border-bottom">
                             <div class="col-6">
                                 <div class="hero-sec-item-compact">
@@ -1541,6 +1547,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <div class="d-flex align-items-center justify-content-between pt-1">
                             <div class="d-flex align-items-center gap-2">
@@ -2488,10 +2495,11 @@
                             <span class="detail-label">Pickup Time</span>
                             <span class="detail-value">${data.booking.pickup_date || '-'}</span>
                         </div>
+                        ${(['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled'].includes((data.booking.status || data.status || '{{ strtolower($job_status ?? "") }}').toLowerCase())) ? '' : `
                         <div class="booking-detail-item">
                             <span class="detail-label">OTP</span>
                             <span class="detail-value otp-value">${data.booking.otp || '-'}</span>
-                        </div>
+                        </div>`}
                     </div>
                 `;
             } else {

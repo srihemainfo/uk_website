@@ -9612,6 +9612,39 @@
             }
         }
 
+        function _updateDistanceDurationUI(state) {
+            if (!state) state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            let dist = state.apiDistance || state.vehicle?.fareBreakdown?.distance || (state.fareDataObj && Object.values(state.fareDataObj)[0]?.distance) || (typeof bookingData !== 'undefined' ? bookingData.apiDistance : null);
+            let dur = state.apiDuration || state.vehicle?.fareBreakdown?.duration || (state.fareDataObj && Object.values(state.fareDataObj)[0]?.duration) || (typeof bookingData !== 'undefined' ? bookingData.apiDuration : null);
+
+            if (typeof bookingData !== 'undefined') {
+                if (dist && !bookingData.apiDistance) bookingData.apiDistance = dist;
+                if (dur && !bookingData.apiDuration) bookingData.apiDuration = dur;
+            }
+
+            if (typeof updateDistanceDurationUI === 'function') {
+                updateDistanceDurationUI(dist, dur);
+            } else {
+                const formattedDist = typeof formatTripDistance === 'function' ? formatTripDistance(dist) : (dist || '');
+                const formattedDur = typeof formatTripDuration === 'function' ? formatTripDuration(dur) : (dur || '');
+                const dText = formattedDist || '--';
+                const tText = formattedDur || '--';
+
+                $('#leftTripDistance').text(dText);
+                $('#leftTripDuration').text(tText);
+                $('#mcsDistanceValue').text(dText);
+                $('#mcsDurationValue').text(tText);
+                $('#mapRouteDistance').text(dText);
+                $('#mapRouteDuration').text(tText);
+
+                if (formattedDist || formattedDur) {
+                    $('#tripRouteMetaContainer').attr('style', 'display: flex !important;');
+                } else {
+                    $('#tripRouteMetaContainer').attr('style', 'display: none !important;');
+                }
+            }
+        }
+
         function swapLocations() {
             const state = BookingStore.getState();
             if (!state.pickup && !state.dropoff) return; // Nothing to swap
@@ -9700,6 +9733,7 @@
             BookingStore.subscribe(_updateVehicleSummaryUI);
             BookingStore.subscribe(_updatePassengerSummaryUI);
             BookingStore.subscribe(_updateJourneySummaryUI);
+            BookingStore.subscribe(_updateDistanceDurationUI);
 
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
@@ -9769,6 +9803,7 @@
                 updateTimePanel();
             }
             _updateVehicleSummaryUI(_restoredState);
+            _updateDistanceDurationUI(_restoredState);
 
             // Invalidate location selections if user manually types/edits inputs
             $('#pickupInput').on('input keyup change', function () {
@@ -10766,6 +10801,14 @@
                 bookingData.apiDistanceMiles = firstFare.distance ? (typeof formatTripDistance === 'function' ? formatTripDistance(firstFare.distance) : firstFare.distance) : null;
                 bookingData.fareDataObj = fareDataObj;  // keep full object for map markers
                 bookingData.nearby_drivers = faresResult.nearby_drivers || [];
+
+                BookingStore.setState({
+                    apiDistance: firstFare.distance || null,
+                    apiDuration: firstFare.duration || null,
+                    apiDistanceMiles: bookingData.apiDistanceMiles,
+                    fareDataObj: fareDataObj,
+                    nearby_drivers: faresResult.nearby_drivers || []
+                });
 
                 if (typeof updateDistanceDurationUI === 'function') {
                     updateDistanceDurationUI(firstFare.distance, firstFare.duration);
@@ -14669,6 +14712,9 @@
                 $('.mobile-from, .mobile-to').removeClass('expanded-text');
                 $('#mcsPickup, #mcsDropoff').addClass('text-truncate');
             } else {
+                if (typeof _updateDistanceDurationUI === 'function') {
+                    _updateDistanceDurationUI(BookingStore.getState());
+                }
                 body.slideDown(300);
                 backdrop.fadeIn(300);
                 arrow.addClass('rotate');

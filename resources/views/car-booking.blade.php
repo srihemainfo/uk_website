@@ -1044,7 +1044,7 @@
 
                     <!-- OFFER BANNER IMAGE -->
                     <div class="offer-banner-wrapper">
-                        <img src="{{ asset('goride/img/offer-image.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
+                        <img src="{{ asset('goride/img/offer-image2.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->

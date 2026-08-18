@@ -1770,7 +1770,7 @@
 
         .btn-cancel-job-small {
             padding: 11px 22px;
-            background: #000000;
+            background: #dc2626;
             color: #ffffff;
             border: none;
             border-radius: 8px;
@@ -1783,15 +1783,15 @@
             justify-content: center;
             gap: 8px;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
             letter-spacing: 0.2px;
         }
 
         .btn-cancel-job-small:hover {
-            background: #222222;
+            background: #b91c1c;
             color: #ffffff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
         }
 
         .btn-cancel-job-small:active {
@@ -14668,24 +14668,25 @@
         // (called on every BookingStore.setState and on page load restore)
 
         const phoneInput = document.querySelector("#passengerPhone");
-
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto",
-            geoIpLookup: function (success, failure) {
-                fetch("https://get.geojs.io/v1/ip/geo.json")
-                    .then(function (res) { return res.json(); })
-                    .then(function (data) { success(data && data.country_code ? data.country_code.toLowerCase() : "gb"); })
-                    .catch(function () { success("gb"); });
-            },
-            preferredCountries: ["gb", "us", "in", "ae", "au"],
-            separateDialCode: true,
-            nationalMode: true,
-            autoPlaceholder: "polite",
-            strictMode: true,
-            loadUtils: () =>
-                import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
-        });
-        window.passengerPhoneIti = iti;
+        if (phoneInput && typeof window.intlTelInput === 'function') {
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "auto",
+                geoIpLookup: function (success, failure) {
+                    fetch("https://get.geojs.io/v1/ip/geo.json")
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) { success(data && data.country_code ? data.country_code.toLowerCase() : "gb"); })
+                        .catch(function () { success("gb"); });
+                },
+                preferredCountries: ["gb", "us", "in", "ae", "au"],
+                separateDialCode: true,
+                nationalMode: true,
+                autoPlaceholder: "polite",
+                strictMode: true,
+                loadUtils: () =>
+                    import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
+            });
+            window.passengerPhoneIti = iti;
+        }
     </script>
 
 

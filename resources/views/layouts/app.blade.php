@@ -2489,59 +2489,60 @@
             font-size: 16px;
             transition: color 0.3s;
         }
-         .footer-app-downloads {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 25px;
-                    margin-top: 10px;
-                }
 
-                .footer-store-btn {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 10px;
-                    background: white;
-                    color: #ffffff !important;
-                    padding: 8px 14px;
-                    border-radius: 10px;
-                    width: 185px;
-                    text-decoration: none !important;
-                    transition: transform 0.2s ease, background-color 0.2s ease;
-                }
+        .footer-app-downloads {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 25px;
+            margin-top: 10px;
+        }
 
-                .footer-store-btn:hover {
-                    color: #ffffff !important;
-                    transform: translateY(-2px);
-                }
+        .footer-store-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            color: #ffffff !important;
+            padding: 8px 14px;
+            border-radius: 10px;
+            width: 185px;
+            text-decoration: none !important;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
 
-                .footer-store-btn i {
-                    font-size: 22px;
-                    color: black;
-                }
+        .footer-store-btn:hover {
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
 
-                .footer-store-btn-text {
-                    display: flex;
-                    flex-direction: column;
-                    line-height: 1.1;
-                }
+        .footer-store-btn i {
+            font-size: 22px;
+            color: black;
+        }
 
-                .footer-store-btn-sub {
-                    font-size: 10px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    color: black;
-                    opacity: 0.9;
-                    margin-bottom: 2px;
-                }
+        .footer-store-btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
 
-                .footer-store-btn-title {
-                    font-size: 15px;
-                    font-weight: 700;
-                    color: black;
-                }
+        .footer-store-btn-sub {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: black;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+
+        .footer-store-btn-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: black;
+        }
 
         .footer-links-list a:hover {
             color: #fff;
@@ -8234,41 +8235,88 @@
 
 <body>
     @if(request()->has('payment_intent') && request()->has('redirect_status'))
-    <div id="paymentRedirectOverlay" style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
-        <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
-        <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
-            <!-- Brand Logo -->
-            <div style="margin-bottom: 32px;">
-                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+        <div id="paymentRedirectOverlay"
+            style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
+            <div
+                style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;">
             </div>
-            
-            <!-- Glowing Animated Spinner -->
-            <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
-                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
-                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;"></div>
-                <div style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;"></div>
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+            <div
+                style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
+                <!-- Brand Logo -->
+                <div style="margin-bottom: 32px;">
+                    <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png"
+                        alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;"
+                        onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                </div>
+
+                <!-- Glowing Animated Spinner -->
+                <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
+                    <div
+                        style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);">
+                    </div>
+                    <div
+                        style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;">
+                    </div>
+                    <div
+                        style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;">
+                    </div>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">
+                    Finalizing Your Booking...</h3>
+                <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
+                    We're securely confirming your payment with Stripe. Please do not close or refresh this page.
+                </p>
+
+                <!-- Progress Indicator -->
+                <div
+                    style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div
+                        style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;">
+                    </div>
+                    <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing
+                        payment settlement...</span>
                 </div>
             </div>
-
-            <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">Finalizing Your Booking...</h3>
-            <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
-                We're securely confirming your payment with Stripe. Please do not close or refresh this page.
-            </p>
-
-            <!-- Progress Indicator -->
-            <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;"></div>
-                <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing payment settlement...</span>
-            </div>
         </div>
-    </div>
-    <style>
-    @keyframes overlaySpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes overlaySpinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
-    @keyframes overlayPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
-    </style>
+        <style>
+            @keyframes overlaySpin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes overlaySpinReverse {
+                0% {
+                    transform: rotate(360deg);
+                }
+
+                100% {
+                    transform: rotate(0deg);
+                }
+            }
+
+            @keyframes overlayPulse {
+
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                50% {
+                    opacity: 0.4;
+                    transform: scale(0.85);
+                }
+            }
+        </style>
     @endif
     @include('partials.header')
     @yield('content')
@@ -8431,7 +8479,8 @@
                 <!-- Carousel -->
                 <div
                     style="position: relative; width: 100%; height: 300px; margin-bottom: 20px; overflow: hidden; border-radius: 8px;">
-                    <img id="carCarouselImage" src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/fleet1.png"
+                    <img id="carCarouselImage"
+                        src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/fleet1.png"
                         style="width: 100%; height: 100%; object-fit: contain;" alt="Car view">
                     <button onclick="prevCarImage()"
                         style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -10817,7 +10866,7 @@
                 const rawInclusions = fare.included_list || fare.inclusions || fare.included || staticV.inclusions || [];
                 const inclusionsList = Array.isArray(rawInclusions)
                     ? rawInclusions
-                    : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
+                    : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
                 const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
                     inclusionsList.map((inc) => {
@@ -10837,7 +10886,7 @@
                 const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || staticV.exclusions || [];
                 const exclusionsList = Array.isArray(rawExclusions)
                     ? rawExclusions
-                    : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawExclusions]; } })() : []);
+                    : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
 
                 const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
                     exclusionsList.map((exc) => {
@@ -11356,7 +11405,7 @@
                     if (window.recaptchaVerifier) {
                         try {
                             window.recaptchaVerifier.clear();
-                        } catch (e) {}
+                        } catch (e) { }
                         window.recaptchaVerifier = null;
                     }
 
@@ -13126,7 +13175,7 @@
                     const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
                     const inclusionsList = Array.isArray(rawInclusions)
                         ? rawInclusions
-                        : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
+                        : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
                     const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
                         inclusionsList.map(inc => {
@@ -13141,7 +13190,7 @@
                     const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
                     const exclusionsList = Array.isArray(rawExclusions)
                         ? rawExclusions
-                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawExclusions]; } })() : []);
+                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
 
                     const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
                         exclusionsList.map(exc => {
@@ -13334,7 +13383,7 @@
             const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
             const inclusionsList = Array.isArray(rawInclusions)
                 ? rawInclusions
-                : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch(e) { return [rawInclusions]; } })() : []);
+                : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
             const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
                 inclusionsList.map(inc => {
@@ -13349,7 +13398,7 @@
             const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
             const exclusionsList = Array.isArray(rawExclusions)
                 ? rawExclusions
-                : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch(e) { return [rawInclusions]; } })() : []);
+                : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
             const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
                 exclusionsList.map(exc => {
@@ -14620,7 +14669,8 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png"
+                    alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>
@@ -14721,9 +14771,12 @@
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-                <div style="display: flex; align-items: center; justify-content: center; margin-top: 14px; font-size: 13px; color: #666; gap: 6px;">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; margin-top: 14px; font-size: 13px; color: #666; gap: 6px;">
                     <span>Didn't receive the code?</span>
-                    <button type="button" id="authResendOtpBtn" onclick="handleResendOtp()" style="background: none; border: none; padding: 0; color: #111; font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13px;">Resend OTP</button>
+                    <button type="button" id="authResendOtpBtn" onclick="handleResendOtp()"
+                        style="background: none; border: none; padding: 0; color: #111; font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13px;">Resend
+                        OTP</button>
                     <span id="authResendTimer" style="font-size: 12px; color: #888; display: none;"></span>
                 </div>
             </div>
@@ -14733,8 +14786,10 @@
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our
-                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}terms" target="_blank">Terms of Service</a> &amp;
-                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}privacy" target="_blank">Privacy Policy</a>.
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}terms" target="_blank">Terms of
+                    Service</a> &amp;
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}privacy" target="_blank">Privacy
+                    Policy</a>.
             </p>
         </div>
     </div>
@@ -15618,7 +15673,9 @@
                 <div class="track-header-badges">
                     <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
                     <div class="track-header-right-actions">
-                        <button type="button" class="track-refresh-btn" id="trackRefreshBtn" onclick="refreshTrackingData(event)" title="Refresh tracking status" aria-label="Refresh tracking">
+                        <button type="button" class="track-refresh-btn" id="trackRefreshBtn"
+                            onclick="refreshTrackingData(event)" title="Refresh tracking status"
+                            aria-label="Refresh tracking">
                             <i class="fas fa-rotate-right"></i>
                             <span class="refresh-text">Refresh</span>
                         </button>
@@ -15924,6 +15981,7 @@
             from {
                 transform: rotate(0deg);
             }
+
             to {
                 transform: rotate(360deg);
             }
@@ -16850,7 +16908,8 @@
         }
     </style>
 
-    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
+    <script id="socketIoScript" src="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js"
+        data-cfasync="false" async defer></script>
     <script>
         let liveTrackingSocket = null;
         let currentLiveTrackingId = null;
@@ -16881,7 +16940,7 @@
             s = document.createElement('script');
             s.id = 'socketIoScript';
             s.setAttribute('data-cfasync', 'false');
-            s.src = '/js/socket.io.min.js';
+            s.src = '{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js';
             s.onload = function () {
                 if (callback) callback();
             };
@@ -16911,7 +16970,7 @@
                     currentTrackedBookingNo = '';
                     currentLiveTrackingId = null;
                     if (liveTrackingSocket) {
-                        try { liveTrackingSocket.close(); } catch (e) {}
+                        try { liveTrackingSocket.close(); } catch (e) { }
                     }
                 }, 400);
 

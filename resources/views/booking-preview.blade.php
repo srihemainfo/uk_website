@@ -1013,6 +1013,7 @@
             from {
                 transform: rotate(0deg);
             }
+
             to {
                 transform: rotate(360deg);
             }
@@ -1399,7 +1400,9 @@
                     <div class="track-header-badges">
                         <div class="booking-id-badge" id="displayBookingNo">{{ $job_no ?? '' }}</div>
                         <div class="track-header-right-actions">
-                            <button type="button" class="track-refresh-btn" id="trackRefreshBtn" onclick="refreshTrackingData(event)" title="Refresh tracking status" aria-label="Refresh tracking">
+                            <button type="button" class="track-refresh-btn" id="trackRefreshBtn"
+                                onclick="refreshTrackingData(event)" title="Refresh tracking status"
+                                aria-label="Refresh tracking">
                                 <i class="fa-solid fa-rotate-right"></i>
                                 <span class="refresh-text">Refresh</span>
                             </button>
@@ -1430,7 +1433,8 @@
         <!-- Top Brand Bar -->
         <div class="top-brand-bar">
             <a href="#" class="brand-logo text-decoration-none">
-                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-dark.png" alt="GoRide Logo" style="height: 36px; width: auto;"
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-dark.png"
+                    alt="GoRide Logo" style="height: 36px; width: auto;"
                     onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png'">
             </a>
 
@@ -1515,7 +1519,8 @@
                                     <div>
                                         <div class="hero-sec-label">Ride OTP</div>
                                         <div class="hero-sec-otp">
-                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}</div>
+                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1546,7 +1551,7 @@
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </div>
-                            <div class="fare-amount">£{{ number_format((float)($total_fare ?? 0), 2) }}</div>
+                            <div class="fare-amount">£{{ number_format((float) ($total_fare ?? 0), 2) }}</div>
                         </div>
 
                         <!-- Collapsible Fare Breakdown -->
@@ -1585,18 +1590,19 @@
                                         <strong>£{{ $govt_levy }}</strong>
                                     </div>
                                 @endif
-                                @if((isset($firstAmt) && (float)$firstAmt != 0) || (isset($user_details['firstAmt']) && (float)$user_details['firstAmt'] != 0))
+                                @if((isset($firstAmt) && (float) $firstAmt != 0) || (isset($user_details['firstAmt']) && (float) $user_details['firstAmt'] != 0))
                                     @php
                                         $firstDiscount = $firstAmt ?? $user_details['firstAmt'];
                                     @endphp
                                     <div class="fare-line-item">
                                         <span>First Booking Discount</span>
-                                        <strong style="color: #059669;">-£{{ number_format((float)$firstDiscount, 2) }}</strong>
+                                        <strong
+                                            style="color: #059669;">-£{{ number_format((float) $firstDiscount, 2) }}</strong>
                                     </div>
                                 @endif
                                 <div class="fare-total-line">
                                     <span>Total Fare</span>
-                                    <strong>£{{ number_format((float)($total_fare ?? 0), 2) }}</strong>
+                                    <strong>£{{ number_format((float) ($total_fare ?? 0), 2) }}</strong>
                                 </div>
 
                                 @if(isset($isPayment) && $isPayment)
@@ -1731,7 +1737,8 @@
                             <div>
                                 <div class="info-label mb-0">Pickup Time</div>
                                 <div class="info-value" style="font-size: 12px;">
-                                    {{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
+                                    {{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2027,22 +2034,22 @@
 
                     {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
                     <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                            <div class="info-value">Meet & Greet Included</div>
+                        <div class="col-md-3 col-6">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                                <div class="info-value">Meet & Greet Included</div>
+                            </div>
                         </div>
-                    </div>
-                    @endif
+                        @endif
 
-                    @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                            <div class="info-value">Wheelchair Required</div>
+                        @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                        <div class="col-md-3 col-6">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                                <div class="info-value">Wheelchair Required</div>
+                            </div>
                         </div>
-                    </div>
-                    @endif -->
+                        @endif -->
 
                     @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
                         <div class="col-md-6 col-12">
@@ -2198,7 +2205,8 @@
     }
     </script>
 
-    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
+    <script id="socketIoScript" src="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js"
+        data-cfasync="false" async defer></script>
     <script>
         function ensureSocketIoLoaded(callback) {
             if (typeof io !== 'undefined') {
@@ -2223,7 +2231,7 @@
             s = document.createElement('script');
             s.id = 'socketIoScript';
             s.setAttribute('data-cfasync', 'false');
-            s.src = '/js/socket.io.min.js';
+            s.src = '{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js';
             s.onload = function () {
                 if (callback) callback();
             };
@@ -2330,7 +2338,7 @@
                     currentTrackedBookingNo = '';
                     currentLiveTrackingId = null;
                     if (liveTrackingSocket) {
-                        try { liveTrackingSocket.close(); } catch (e) {}
+                        try { liveTrackingSocket.close(); } catch (e) { }
                     }
                 }, 400);
             } else {

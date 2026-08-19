@@ -9807,18 +9807,22 @@
             BookingStore.subscribe(_updateJourneySummaryUI);
             BookingStore.subscribe(_updateDistanceDurationUI);
 
+            const _nowUKInit = getUKDate();
+            const _todayInitStr = `${_nowUKInit.getFullYear()}-${String(_nowUKInit.getMonth() + 1).padStart(2, '0')}-${String(_nowUKInit.getDate()).padStart(2, '0')}`;
+            const _validRestoredDate = (_restoredState.date && _restoredState.date >= _todayInitStr) ? _restoredState.date : _todayInitStr;
+
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
                 minDate: getUKDate(),
-                defaultDate: _restoredState.date || getUKDate(),
+                defaultDate: _validRestoredDate,
                 disableMobile: true,
                 onReady(selectedDates, dateStr, instance) {
                     let dStr = dateStr;
                     if (!dStr && selectedDates.length > 0) {
                         dStr = instance.formatDate(selectedDates[0], "Y-m-d");
                     }
-                    if (!dStr) {
-                        dStr = instance.formatDate(getUKDate(), "Y-m-d");
+                    if (!dStr || dStr < _todayInitStr) {
+                        dStr = _todayInitStr;
                     }
                     BookingStore.setState({ date: dStr, bookingType: 'schedule' });
                     generateTimeOptions(dStr);
@@ -10056,24 +10060,175 @@
             }
         }
 
+        // ===== VALIDATE AND AUTO-SET IF PAST TIME =====
+        function checkAndAutoSetIfPastTime() {
+            const nowUK = getUKDate();
+            const yr = nowUK.getFullYear();
+            const mo = String(nowUK.getMonth() + 1).padStart(2, '0');
+            const da = String(nowUK.getDate()).padStart(2, '0');
+            const todayStr = `${yr}-${mo}-${da}`;
+            const currentHours = nowUK.getHours();
+            const currentMinutes = nowUK.getMinutes();
+
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            let selectedDate = state.date || (typeof bookingData !== 'undefined' ? bookingData.date : null) || $('#date').val();
+            let selectedTime = state.time || (typeof bookingData !== 'undefined' ? bookingData.time : null);
+
+            let isPast = false;
+
+            // 1. If date is missing or earlier than today
+            if (!selectedDate || selectedDate < todayStr) {
+                isPast = true;
+            } else if (selectedDate === todayStr) {
+                // 2. If date is today, check if time is missing or in the past
+                if (!selectedTime) {
+                    isPast = true;
+                } else {
+                    let parsedHours = null;
+                    let parsedMinutes = null;
+
+                    const timeParts12 = selectedTime.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+                    if (timeParts12) {
+                        let h = parseInt(timeParts12[1], 10);
+                        const m = parseInt(timeParts12[2], 10);
+                        const ampm = timeParts12[3] ? timeParts12[3].toUpperCase() : null;
+                        if (ampm === 'PM' && h < 12) h += 12;
+                        if (ampm === 'AM' && h === 12) h = 0;
+                        parsedHours = h;
+                        parsedMinutes = m;
+                    } else {
+                        const timeParts24 = selectedTime.trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+                        if (timeParts24) {
+                            parsedHours = parseInt(timeParts24[1], 10);
+                            parsedMinutes = parseInt(timeParts24[2], 10);
+                        }
+                    }
+
+                    if (parsedHours === null || parsedMinutes === null) {
+                        isPast = true;
+                    } else if (parsedHours < currentHours || (parsedHours === currentHours && parsedMinutes <= currentMinutes)) {
+                        isPast = true;
+                    }
+                }
+            }
+
+            if (isPast) {
+                let targetDate = (!selectedDate || selectedDate < todayStr) ? todayStr : selectedDate;
+
+                // Find the first valid future 30-min slot for targetDate
+                let firstSlotTime = null;
+                for (let hour = 0; hour < 24; hour++) {
+                    for (let minute = 0; minute < 60; minute += 30) {
+                        if (targetDate === todayStr) {
+                            if (hour < currentHours || (hour === currentHours && minute <= currentMinutes)) {
+                                continue;
+                            }
+                        }
+                        const ampm = hour >= 12 ? 'PM' : 'AM';
+                        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+                        const displayMinute = minute === 0 ? '00' : '30';
+                        firstSlotTime = `${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`;
+                        break;
+                    }
+                    if (firstSlotTime) break;
+                }
+
+                // If today has no remaining slots (after 23:30), roll over to tomorrow
+                if (!firstSlotTime && targetDate === todayStr) {
+                    const tomorrow = getUKDate();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const tYr = tomorrow.getFullYear();
+                    const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
+                    const tDa = String(tomorrow.getDate()).padStart(2, '0');
+                    targetDate = `${tYr}-${tMo}-${tDa}`;
+                    firstSlotTime = '12:00 AM';
+                }
+
+                // Sync flatpickr input if present
+                const dateInput = document.getElementById('date');
+                if (dateInput && dateInput._flatpickr) {
+                    dateInput._flatpickr.setDate(targetDate, false);
+                } else if (dateInput) {
+                    dateInput.value = targetDate;
+                }
+
+                // Update state in BookingStore and bookingData
+                if (typeof BookingStore !== 'undefined') {
+                    BookingStore.setState({
+                        date: targetDate,
+                        time: firstSlotTime,
+                        bookingType: 'schedule'
+                    });
+                }
+                if (typeof bookingData !== 'undefined') {
+                    bookingData.date = targetDate;
+                    bookingData.time = firstSlotTime;
+                }
+
+                // Re-generate time options dropdown for targetDate
+                if (typeof generateTimeOptions === 'function') {
+                    generateTimeOptions(targetDate);
+                }
+
+                // Update all related UI fields
+                $('#normalJourneyDate').val(targetDate);
+                $('#normalJourneyTime').val(firstSlotTime);
+                $('#timeDropdownValue').text(firstSlotTime);
+
+                if (typeof checkNightChargeNotice === 'function') {
+                    checkNightChargeNotice(firstSlotTime);
+                }
+                if (typeof _updateDateTimeUI === 'function' && typeof BookingStore !== 'undefined') {
+                    _updateDateTimeUI(BookingStore.getState());
+                }
+                if (typeof updatePickupUI === 'function') {
+                    updatePickupUI();
+                }
+                if (typeof updateBookingSummary === 'function') {
+                    updateBookingSummary();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         function generateTimeOptions(dateStr) {
             const timeDropdownList = document.getElementById('timeDropdownList');
             if (!timeDropdownList) return;
             timeDropdownList.innerHTML = '';
 
+            const now = getUKDate();
+            const yr = now.getFullYear();
+            const mo = String(now.getMonth() + 1).padStart(2, '0');
+            const da = String(now.getDate()).padStart(2, '0');
+            const todayStr = `${yr}-${mo}-${da}`;
+
             let selectedDate = getUKDate();
             if (dateStr && typeof dateStr === 'string') {
+                if (dateStr < todayStr) {
+                    dateStr = todayStr;
+                    const dateInput = document.getElementById('date');
+                    if (dateInput && dateInput._flatpickr) {
+                        dateInput._flatpickr.setDate(todayStr, false);
+                    } else if (dateInput) {
+                        dateInput.value = todayStr;
+                    }
+                    if (typeof BookingStore !== 'undefined') {
+                        BookingStore.setState({ date: todayStr, bookingType: 'schedule' });
+                    }
+                }
                 const parts = dateStr.split('-');
                 if (parts.length === 3) {
                     selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
                 }
             }
-            const now = getUKDate();
             const isToday = selectedDate.toDateString() === now.toDateString();
 
             let firstOptionTime = null;
             let firstOptionFormatted = null;
-            const currentSelectedTime = BookingStore.getState().time;
+            const currentSelectedTime = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().time : '';
             let foundCurrentTime = false;
 
             // Generate times every 30 minutes from 00:00 to 23:30
@@ -10148,7 +10303,9 @@
                     } else if (dateInput) {
                         dateInput.value = tomorrowStr;
                     }
-                    BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
+                    if (typeof BookingStore !== 'undefined') {
+                        BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
+                    }
                     generateTimeOptions(tomorrowStr);
                     return;
                 }
@@ -10547,6 +10704,7 @@
             _doTripDetails();
         }
         function _doTripDetails() {
+            checkAndAutoSetIfPastTime();
             const pickup = $('#pickupInput').val();
             const dropoff = $('#dropoffInput').val();
             // Batch update pickup + dropoff in one store call (fires subscribers once)
@@ -10578,6 +10736,9 @@
 
         // ===== FETCH FARES FROM API =====
         async function fetchFaresFromAPI() {
+            // Check if selected time is in the past, and auto-set if needed before calling API
+            checkAndAutoSetIfPastTime();
+
             const token = getCookieValue('auth_token');
 
             // Build pickup datetime string (Y-m-d H:i:s)
@@ -10587,12 +10748,14 @@
             // Fallback to today + now if not set
             if (!pickupDate) {
                 const now = getUKDate();
-                pickupDate = now.toISOString().slice(0, 10);
+                const yr = now.getFullYear();
+                const mo = String(now.getMonth() + 1).padStart(2, '0');
+                const da = String(now.getDate()).padStart(2, '0');
+                pickupDate = `${yr}-${mo}-${da}`;
             }
             if (!pickupTime) {
-                // Use current time rounded to the next 90 mins
+                // Use current time
                 const now = getUKDate();
-                now.setMinutes(now.getMinutes() + 90);
                 pickupTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':00';
             } else {
                 // Convert "07:00 AM" → "07:00:00"
@@ -10605,7 +10768,12 @@
                     if (meridiem === 'AM' && hours === 12) hours = 0;
                     pickupTime = hours.toString().padStart(2, '0') + ':' + mins + ':00';
                 } else {
-                    pickupTime = pickupTime + ':00';
+                    const timeParts24 = pickupTime.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+                    if (timeParts24) {
+                        pickupTime = timeParts24[1].padStart(2, '0') + ':' + timeParts24[2] + ':00';
+                    } else {
+                        pickupTime = pickupTime + ':00';
+                    }
                 }
             }
 
@@ -10759,6 +10927,7 @@
             );
         }
         function saveSchedule() {
+            checkAndAutoSetIfPastTime();
             const date = BookingStore.getState().date;
             $("#date").val(date);
             const currentTime = BookingStore.getState().time;
@@ -17074,8 +17243,7 @@
         }
     </style>
 
-    <script id="socketIoScript" src="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js"
-        data-cfasync="false" async defer></script>
+    <script id="socketIoScript" src="{{ asset('js/socket.io.min.js') }}" data-cfasync="false"></script>
     <script>
         let liveTrackingSocket = null;
         let currentLiveTrackingId = null;
@@ -17088,37 +17256,40 @@
                 if (callback) callback();
                 return;
             }
-            let s = document.getElementById('socketIoScript');
-            if (s) {
-                let attempts = 0;
-                const interval = setInterval(() => {
-                    attempts++;
-                    if (typeof io !== 'undefined') {
-                        clearInterval(interval);
-                        if (callback) callback();
-                    } else if (attempts > 30) {
-                        clearInterval(interval);
-                        console.warn("Socket.io load timeout, continuing...");
-                    }
-                }, 100);
-                return;
-            }
-            s = document.createElement('script');
-            s.id = 'socketIoScript';
-            s.setAttribute('data-cfasync', 'false');
-            s.src = '{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/js/socket.io.min.js';
-            s.onload = function () {
-                if (callback) callback();
-            };
-            s.onerror = function () {
-                console.warn("Local socket.io.min.js failed, trying CDN fallback...");
+
+            function loadCdnFallback() {
+                if (typeof io !== 'undefined') {
+                    if (callback) callback();
+                    return;
+                }
+                const existingCdn = document.getElementById('socketIoCdnScript');
+                if (existingCdn) return;
                 const cdnS = document.createElement('script');
+                cdnS.id = 'socketIoCdnScript';
                 cdnS.setAttribute('data-cfasync', 'false');
                 cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-                cdnS.onload = function () { if (callback) callback(); };
+                cdnS.onload = function () {
+                    console.log('Socket.io loaded from CDN.');
+                    if (callback) callback();
+                };
+                cdnS.onerror = function () {
+                    console.error('Failed to load Socket.io from CDN fallback.');
+                };
                 document.head.appendChild(cdnS);
-            };
-            document.head.appendChild(s);
+            }
+
+            let attempts = 0;
+            const interval = setInterval(() => {
+                attempts++;
+                if (typeof io !== 'undefined') {
+                    clearInterval(interval);
+                    if (callback) callback();
+                } else if (attempts > 15) { // after 1.5 seconds, load CDN fallback
+                    clearInterval(interval);
+                    console.warn("Local Socket.io not detected, falling back to CDN...");
+                    loadCdnFallback();
+                }
+            }, 100);
         }
 
         function toggleTrackRideOverlay(e) {
@@ -17155,7 +17326,9 @@
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
             const key = window.currentBookingPreviewHash || state.preview_hash || bookingData.preview_hash || state.job_no || bookingData.job_no || (currentNum && currentNum !== '—' && currentNum !== 'GR-2026-14851' ? currentNum : (bookingData.bookingId || state.bookingId || ''));
             if (key) {
-                window.open('/booking-preview/' + encodeURIComponent(key), '_blank');
+                const bookingKey = encodeURIComponent(key);
+                const url = '{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/booking-preview/' + bookingKey;
+                window.open(url, '_blank');
             } else {
                 showToast('Booking preview will be available shortly.', 'info');
             }
@@ -17637,11 +17810,11 @@
                     }
 
                     liveTrackingSocket = io(url, {
-                        transports: ['websocket'],
+                        transports: ['websocket', 'polling'],
                         auth: {
                             token: token,
                             user_type: "customer",
-                            platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                            platform: "{{ env('SOCKET_PLATFORM', 'development') }}"
                         }
                     });
 
@@ -17656,7 +17829,7 @@
                     // 3. Listen for driver location updates
                     liveTrackingSocket.on("driver_location", (locationData) => {
                         try {
-                            console.log("New Driver Location Received:", locationData);
+                            // console.log("New Driver Location Received:", locationData);
                             if (locationData && locationData.lat && locationData.lng) {
                                 const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
 

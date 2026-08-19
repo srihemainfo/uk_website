@@ -82,4 +82,32 @@ Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.s
 Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
 Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
 
+// UK Route Group for explicit /uk URLs
+Route::prefix('uk')->name('uk.')->group(function () {
+    Route::get('/', function () {
+        return view('car-booking');
+    })->name('home');
+
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
+
+    Route::get('/terms', function () {
+        return view('terms');
+    })->name('terms');
+
+    Route::get('/privacy', function () {
+        return view('privacy');
+    })->name('privacy');
+
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
+
+    Route::get('/blog', [BlogController::class, 'blogIndex'])->name('blog');
+    Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
+    Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
+    Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
+});
+
 Route::post('/submit-contact', [UtilityController::class, 'submitContactForm'])->name('contact.submit');

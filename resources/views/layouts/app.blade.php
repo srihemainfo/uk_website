@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide</title>
+    @include('partials.seo')
 
     @php
         // Checks the original domain requested by the browser

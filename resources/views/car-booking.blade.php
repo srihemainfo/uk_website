@@ -2149,49 +2149,17 @@
                             </div>
                             <div class="tab-pane inclusions-pane active">
                                 <div class="tab-points-list mt-2" id="paymentInclusionsList">
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-parking point-icon point-icon-check"></i>
-                                        <div>Parking Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-road point-icon point-icon-check"></i>
-                                        <div>Congestion Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-moon point-icon point-icon-check"></i>
-                                        <div>Night Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-calendar-day point-icon point-icon-check"></i>
-                                        <div>Special Day Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-clock point-icon point-icon-check"></i>
-                                        <div>Waiting Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i>
-                                        <div>Child Seat is Included</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-user-check point-icon point-icon-check"></i>
-                                        <div>Meet & Greet</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-gas-pump point-icon point-icon-check"></i>
-                                        <div>Fuel charges included.</div>
+                                    <div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;">
+                                        <i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i>
+                                        <div>No additional inclusions are included in this fare.</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane exclusions-pane" style="display: none;">
                                 <div class="tab-points-list" id="paymentExclusionsList">
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-times point-icon point-icon-cross"></i>
-                                        <div>Any government or local authority charges, if applicable.</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-times point-icon point-icon-cross"></i>
-                                        <div>Additional mileage and waiting charges beyond the included limits.</div>
+                                    <div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;">
+                                        <i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i>
+                                        <div>No extra exclusions specified for this fare.</div>
                                     </div>
                                 </div>
                             </div>

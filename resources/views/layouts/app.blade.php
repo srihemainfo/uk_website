@@ -11189,7 +11189,7 @@
                 // Distance/duration badge if available
                 const tripInfoHtml = '';
 
-                const rawInclusions = fare.included_list || fare.inclusions || fare.included || staticV.inclusions || [];
+                const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
                 const inclusionsList = Array.isArray(rawInclusions)
                     ? rawInclusions
                     : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
@@ -11200,16 +11200,9 @@
                         const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
                         return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
                     }).join('') :
-                    `<li class="tab-point-item"><i class="fas fa-parking point-icon point-icon-check"></i><div>Parking Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-road point-icon point-icon-check"></i><div>Congestion Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-moon point-icon point-icon-check"></i><div>Night Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-calendar-day point-icon point-icon-check"></i><div>Special Day Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li> 
-                     <li class="tab-point-item"><i class="fas fa-baby-carriage point-icon point-icon-check"></i><div>Child Seat is Included</div></li>
-                     <li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet</div></li>
-                     <li class="tab-point-item"><i class="fas fa-gas-pump point-icon point-icon-check"></i><div>Fuel charges included.</div></li>`;
+                    `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
 
-                const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || staticV.exclusions || [];
+                const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
                 const exclusionsList = Array.isArray(rawExclusions)
                     ? rawExclusions
                     : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
@@ -11219,8 +11212,7 @@
                         const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
                         return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
                     }).join('') :
-                    `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
-                     <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
+                    `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
                 const stateVehicle = typeof BookingStore !== 'undefined' ? BookingStore.getState().vehicle : null;
                 const isSelected = stateVehicle && (stateVehicle.id === vData.id || stateVehicle.key === vData.key);
@@ -13509,9 +13501,7 @@
                             const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
                             return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
                         }).join('') :
-                        `<li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet included</div></li>
-                         <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Free waiting time (up to 45 mins at airports)</div></li>
-                         <li class="tab-point-item"><i class="fas fa-plane-arrival point-icon point-icon-check"></i><div>Flight tracking included</div></li>`;
+                        `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
 
                     const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
                     const exclusionsList = Array.isArray(rawExclusions)
@@ -13523,8 +13513,7 @@
                             const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
                             return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
                         }).join('') :
-                        `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
-                         <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
+                        `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
                     const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper">
@@ -13717,9 +13706,7 @@
                     const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
                     return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
                 }).join('') :
-                `<li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet included</div></li>
-                 <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Free waiting time (up to 45 mins at airports)</div></li>
-                 <li class="tab-point-item"><i class="fas fa-plane-arrival point-icon point-icon-check"></i><div>Flight tracking included</div></li>`;
+                `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
 
             const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
             const exclusionsList = Array.isArray(rawExclusions)
@@ -13731,8 +13718,7 @@
                     const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
                     return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
                 }).join('') :
-                `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
-                 <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
+                `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
@@ -14034,6 +14020,10 @@
                         return `<div class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></div>`;
                     }).join('');
                     $('#paymentInclusionsList, #step6 .inclusions-pane .tab-points-list').html(incHtml);
+                } else {
+                    $('#paymentInclusionsList, #step6 .inclusions-pane .tab-points-list').html(
+                        `<div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></div>`
+                    );
                 }
 
                 const rawExclusions = bd.exclusion || bd.exclusions || bd.excluded_list || bd.excluded || [];
@@ -14044,6 +14034,10 @@
                         return `<div class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></div>`;
                     }).join('');
                     $('#paymentExclusionsList, #step6 .exclusions-pane .tab-points-list').html(excHtml);
+                } else {
+                    $('#paymentExclusionsList, #step6 .exclusions-pane .tab-points-list').html(
+                        `<div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></div>`
+                    );
                 }
             } catch (err) {
                 console.error('Error rendering payment breakdown inclusions:', err);

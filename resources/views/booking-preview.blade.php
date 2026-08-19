@@ -1618,7 +1618,7 @@
                                     </div>
                                     @if(isset($deductAmt) && $deductAmt == 0)
                                         <div class="fare-line-item">
-                                            <span>Paid via Online (UPI / Card)</span>
+                                            <span>Paid via Online</span>
                                             <strong style="color:#059669;">£{{ $paid_amt ?? 0 }}</strong>
                                         </div>
                                     @endif
@@ -1652,12 +1652,12 @@
                         </div>
                         <div class="person-info-item">
                             <span>Name</span>
-                            <strong>{{ $name ?? '' }}</strong>
+                            <strong>{{ !empty($name) ? ucwords(strtolower($name)) : '' }}</strong>
                         </div>
                         @if(!empty($user_details['c_booked_for']) || !empty($booked_for))
                             <div class="person-info-item">
                                 <span>Booked For</span>
-                                <strong>{{ $user_details['c_booked_for'] ?? $booked_for ?? '' }}</strong>
+                                <strong>{{ ucwords(strtolower($user_details['c_booked_for'] ?? $booked_for ?? '')) }}</strong>
                             </div>
                         @endif
                         <div class="person-info-item">
@@ -1693,13 +1693,13 @@
                                     <img src="{{ !empty($driver_image) ? $driver_image : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/driver-dummy.png' }}"
                                         style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
                                         onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/driver-dummy.png'">
-                                    <strong>{{ $driver_name }}</strong>
+                                    <strong>{{ !empty($driver_name) ? ucwords(strtolower($driver_name)) : '' }}</strong>
                                 </div>
                             </div>
                             @if(!empty($cab_type) || !empty($vehicle_model))
                                 <div class="person-info-item">
                                     <span>Vehicle Model</span>
-                                    <strong>{{ $cab_type ?? $vehicle_model ?? '' }}</strong>
+                                    <strong>{{ ucwords(strtolower($cab_type ?? $vehicle_model ?? '')) }}</strong>
                                 </div>
                             @endif
                             @if(!empty($vehicle_number))
@@ -1778,7 +1778,7 @@
                             <i class="fa-solid fa-car text-dark fs-5"></i>
                             <div>
                                 <div class="info-label mb-0">Vehicle</div>
-                                <div class="info-value">{{ $cab_type }}</div>
+                                <div class="info-value">{{ ucwords(strtolower($cab_type)) }}</div>
                             </div>
                         </div>
                     </div>
@@ -1995,7 +1995,7 @@
                         <div class="col-md-3 col-6">
                             <div class="info-item-box">
                                 <div class="info-label"><i class="fa-solid fa-ship"></i> Cruise / Ferry Name</div>
-                                <div class="info-value">{{ $cruiseName }}</div>
+                                <div class="info-value">{{ ucwords(strtolower($cruiseName)) }}</div>
                             </div>
                         </div>
 
@@ -2033,7 +2033,7 @@
                             <div class="col-md-6 col-6">
                                 <div class="info-item-box">
                                     <div class="info-label"><i class="fa-solid fa-user"></i> Passenger Name</div>
-                                    <div class="info-value">{{ $user_details['c_pass_name'] }}</div>
+                                    <div class="info-value">{{ ucwords(strtolower($user_details['c_pass_name'])) }}</div>
                                 </div>
                             </div>
                         @endif

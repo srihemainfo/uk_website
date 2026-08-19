@@ -608,6 +608,8 @@
 
             #step1 .booking-title-group {
                 margin-bottom: 6px !important;
+                flex-direction: column-reverse;
+                align-items: start;
             }
 
             /* #step1 .form-group-uber {
@@ -625,6 +627,135 @@
             #step1 .offer-banner-wrapper {
                 margin-top: 10px !important;
             }
+        }
+
+        /* Vibrant Gold Animated Promo Header Badge next to 'Where to?' */
+        .booking-title-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .promo-header-badge {
+          position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #f1eee6 0%, #f1eee6 100%);
+        color: #000000;
+        /* border: 0px solid #000000; */
+        padding: 7px 14px;
+        border-radius: 30px;
+        /* box-shadow: 0 4px 14px rgba(249, 193, 6, 0.45); */
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        animation: promoWiggleGlow 4s infinite ease-in-out;
+    }
+
+        .promo-header-badge:hover {
+            transform: scale(1.05) translateY(-2px);
+            /* box-shadow: 0 6px 20px rgba(249, 193, 6, 0.65); */
+             background: linear-gradient(135deg, #f1eee6 0%, #f1eee6 100%);
+        }
+
+        @keyframes promoWiggleGlow {
+            0%, 80%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            85% {
+                transform: rotate(-3deg) scale(1.03);
+            }
+            90% {
+                transform: rotate(3deg) scale(1.03);
+            }
+            95% {
+                transform: rotate(-2deg) scale(1.02);
+            }
+        }
+
+        .promo-badge-tag {
+           background: #000000;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .promo-badge-tag i {
+          font-size: 12px;
+          color: white;
+          /* animation: promoGiftSpin 2.5s infinite ease-in-out; */
+        }
+
+        @keyframes promoGiftSpin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(12deg); }
+        }
+
+        .promo-badge-text-wrap {
+            display: inline-flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .promo-badge-marquee-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            animation: promoTextPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes promoTextPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+
+        /* Bright Light Beam Sweep across Gold Background */
+        .promo-header-badge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.65) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg);
+            animation: promoGoldShimmer 2.8s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes promoGoldShimmer {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        @media (max-width: 576px) {
+          
+            /* .promo-badge-tag {
+                font-size: 11px;
+                padding: 2px 7px;
+            }
+            .promo-badge-marquee-text {
+                font-size: 11px;
+            } */
         }
     </style>
     <div id="mobileActionBar">
@@ -1024,9 +1155,12 @@
                 <div class="container">
                     <div class="booking-title-group">
                         <h3 class="booking-title">Where to?</h3>
-                        <!--<button type="button" id="addViaBtn" class="btn-add-via" onclick="addViaPoint()">-->
-                        <!--    + Add Via-->
-                        <!--</button>-->
+                        <div class="promo-header-badge" onclick="if(typeof showAppPromoModal === 'function') showAppPromoModal();" title="Click for offer details">
+                            <div class="promo-badge-tag"><i class="fas fa-gift"></i> £10 OFF</div>
+                            <div class="promo-badge-text-wrap">
+                                <span class="promo-badge-marquee-text">YOUR FIRST RIDE!</span>
+                            </div>
+                        </div>
                     </div>
                     <!-- <div id="selectedDateTime" class="selectdate"></div> -->
                     <div class="location-group-wrapper">

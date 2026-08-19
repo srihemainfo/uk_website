@@ -2875,7 +2875,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .phone-input-wrapper {

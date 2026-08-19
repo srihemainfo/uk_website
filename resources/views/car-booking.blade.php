@@ -614,7 +614,7 @@
                 margin-bottom: 8px !important;
             } */
 
-            #step1 .m-3 {
+            #step1 .m-2 {
                 margin: 6px 0 !important;
             }
 
@@ -1068,7 +1068,7 @@
                             <i class="fas fa-exchange-alt" style="transform: rotate(90deg);"></i>
                         </button>
                     </div>
-                    <div class="m-3">
+                    <div class="m-2">
                         <button class="pickup-now-btn" id="pickupNowBtn" onclick="showSchedulePanelFromStep1()">
                             <i class="fas fa-clock"></i>
                             Pickup Now
@@ -1076,14 +1076,14 @@
                         </button>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 20px;">
+                        <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 10px;">
                             <i class="fas fa-arrow-right me-2"></i> See prices
                         </button>
                     </div>
 
                     <!-- OFFER BANNER IMAGE -->
                     <div class="offer-banner-wrapper">
-                        <img src="{{ asset('goride/img/offer33.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
+                        <img src="{{ asset('goride/img/off-img2.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->

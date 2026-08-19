@@ -587,6 +587,45 @@
                 border-radius: 12px;
             }
         }
+
+        /* Mobile Spacing Optimization - Step 1 Only */
+        @media (max-width: 768px) {
+            .hero-container:has(#step1.active),
+            .hero-form-section:has(#step1.active) {
+                min-height: auto !important;
+                height: auto !important;
+            }
+
+            #step1.form-section.active {
+                min-height: auto !important;
+                flex: none !important;
+            }
+
+            #step1 .container {
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+            }
+
+            #step1 .booking-title-group {
+                margin-bottom: 6px !important;
+            }
+
+            /* #step1 .form-group-uber {
+                margin-bottom: 8px !important;
+            } */
+
+            #step1 .m-3 {
+                margin: 6px 0 !important;
+            }
+
+            #step1 .btn-search-uber {
+                margin-top: 8px !important;
+            }
+
+            #step1 .offer-banner-wrapper {
+                margin-top: 10px !important;
+            }
+        }
     </style>
     <div id="mobileActionBar">
         <a href="tel:+447950323242" class="mob-action-btn">
@@ -1044,7 +1083,7 @@
 
                     <!-- OFFER BANNER IMAGE -->
                     <div class="offer-banner-wrapper">
-                        <img src="{{ asset('goride/img/offer-image2.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
+                        <img src="{{ asset('goride/img/offer33.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->
@@ -3262,7 +3301,7 @@
                                 </div>
                             </div>
                         </section> -->
-    <section class="reviews-section section-padding mt-5" id="reviews">
+    <section class="reviews-section section-padding mt-2 mt-md-5" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>
             <div class="review-grid">

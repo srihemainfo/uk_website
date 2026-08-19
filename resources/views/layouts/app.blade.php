@@ -8294,6 +8294,37 @@
         .global-toast.info {
             background: #111;
         }
+
+        /* Track Ride Modal Specific Toast (White Background, Black Text) */
+        .track-ride-overlay.show ~ .global-toast,
+        .track-ride-overlay.show ~ .global-toast.success,
+        .track-ride-overlay.show ~ .global-toast.info,
+        .track-ride-overlay .global-toast,
+        .track-ride-overlay .global-toast.success,
+        .track-ride-overlay .global-toast.info,
+        body:has(.track-ride-overlay.show) .global-toast,
+        body:has(.track-ride-overlay.show) .global-toast.success,
+        body:has(.track-ride-overlay.show) .global-toast.info {
+            background: #ffffff !important;
+            color: #111111 !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 100000 !important;
+        }
+
+        .track-ride-overlay.show ~ .global-toast span,
+        .track-ride-overlay .global-toast span,
+        body:has(.track-ride-overlay.show) .global-toast span,
+        .track-ride-overlay.show ~ .global-toast #globalToastMsg,
+        .track-ride-overlay .global-toast #globalToastMsg,
+        body:has(.track-ride-overlay.show) .global-toast #globalToastMsg {
+            color: #111111 !important;
+        }
+
+        .track-ride-overlay.show ~ .global-toast i:not(.text-danger),
+        .track-ride-overlay .global-toast i:not(.text-danger),
+        body:has(.track-ride-overlay.show) .global-toast i:not(.text-danger) {
+            color: #111111 !important;
+        }
     </style>
 </head>
 

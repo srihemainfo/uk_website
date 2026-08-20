@@ -17491,7 +17491,12 @@
             const otpBadge = document.getElementById('displayOtpBadge');
             const otpValue = document.getElementById('displayOtpValue');
             const otp = (data.booking && data.booking.otp) ? data.booking.otp : (data.tracking && data.tracking.otp ? data.tracking.otp : '');
-            if (otpBadge && otp) {
+            const tl = data.timeline || {};
+            const rawStatus = (data.booking && data.booking.status) || (data.tracking && data.tracking.status) || (data.tracking && data.tracking.job_status) || (data.status || '');
+            const normStatus = String(rawStatus).toLowerCase();
+            const hideOtpForStatus = !!(tl.onboard || tl.completed || tl.cancelled || ['onboard', 'onboarded', 'started', 'completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled'].includes(normStatus));
+
+            if (otpBadge && otp && !hideOtpForStatus) {
                 otpBadge.style.display = 'inline-flex';
                 if (otpValue) otpValue.innerText = otp;
             } else if (otpBadge) {
@@ -17890,6 +17895,11 @@
                 if (idx < activeIdx) li.classList.add('completed');
                 else if (idx === activeIdx) li.classList.add('active');
             });
+
+            if (activeKey === 'onboard' || activeKey === 'completed') {
+                const otpBadge = document.getElementById('displayOtpBadge');
+                if (otpBadge) otpBadge.style.display = 'none';
+            }
 
             // Also update the display message based on activeKey
             const msgs = {

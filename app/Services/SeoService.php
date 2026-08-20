@@ -120,6 +120,7 @@ class SeoService
         // Base URL & Canonical formatting
         $websiteUrl = env('WEBSITE_APP_URL') ?: (env('WEB_APP_URL') ?: url('/'));
         $websiteUrl = rtrim($websiteUrl, '/');
+        $websiteUrl = self::lowercaseDomain($websiteUrl);
 
         $countrySlug = env('COUNTRY_SLUG_II') ?: (env('COUNTRY_SLUG') ?: '/uk');
         $countrySlug = '/' . trim($countrySlug, '/');
@@ -134,6 +135,7 @@ class SeoService
                 $canonicalUrl = $websiteUrl . ($slug === '/' ? $countrySlug : $slug);
             }
         }
+        $canonicalUrl = self::lowercaseDomain($canonicalUrl);
 
         // Image formatting: Prefix with WEBSITE_APP_URL and COUNTRY_SLUG
         $ogImage = $merged['og_image'] ?? '/goride/img/logo-dark.png';
@@ -141,6 +143,7 @@ class SeoService
             $imagePath = '/' . ltrim($ogImage, '/');
             $ogImage = $websiteUrl . $countrySlug . $imagePath;
         }
+        $ogImage = self::lowercaseDomain($ogImage);
 
         // Schema markup
         $schema = self::buildSchema($title, $description, $canonicalUrl, $ogImage, $ogType, $websiteUrl, $countrySlug);
@@ -213,5 +216,15 @@ class SeoService
                 ]
             ]
         ];
+    }
+
+    /**
+     * Transform scheme and host (e.g. WWW.goride.run) into lowercase.
+     */
+    public static function lowercaseDomain(string $url): string
+    {
+        return preg_replace_callback('#^https?://[^/]+#i', function ($matches) {
+            return strtolower($matches[0]);
+        }, $url);
     }
 }

@@ -20,6 +20,8 @@
 <meta name="keywords" content="{{ $seo['keywords'] }}">
 @endif
 <meta name="robots" content="{{ $seo['robots'] ?? 'index, follow' }}">
+<link rel="alternate" hreflang="en-IN" href="https://www.goride.run/in">
+<link rel="alternate" hreflang="en-GB" href="https://www.goride.run/uk">
 <link rel="canonical" href="{{ $seo['canonical_url'] }}">
 
 <!-- Open Graph / Facebook -->

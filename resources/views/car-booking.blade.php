@@ -1155,12 +1155,12 @@
                 <div class="container">
                     <div class="booking-title-group">
                         <h3 class="booking-title">Where to?</h3>
-                        <div class="promo-header-badge" onclick="if(typeof showAppPromoModal === 'function') showAppPromoModal();" title="Click for offer details">
-                            <div class="promo-badge-tag"><i class="fas fa-gift"></i> £10 OFF</div>
-                            <div class="promo-badge-text-wrap">
-                                <span class="promo-badge-marquee-text">YOUR FIRST RIDE!</span>
-                            </div>
+                        <div class="promo-header-badge" title="Click for offer details">
+                        <div class="promo-badge-tag"><i class="fas fa-gift"></i> £10 OFF</div>
+                        <div class="promo-badge-text-wrap">
+                            <span class="promo-badge-marquee-text">YOUR FIRST RIDE!</span>
                         </div>
+                    </div>
                     </div>
                     <!-- <div id="selectedDateTime" class="selectdate"></div> -->
                     <div class="location-group-wrapper">

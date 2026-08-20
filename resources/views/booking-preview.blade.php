@@ -2497,7 +2497,7 @@
                             <span class="detail-label">Pickup Time</span>
                             <span class="detail-value">${data.booking.pickup_date || '-'}</span>
                         </div>
-                        ${(['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled'].includes((data.booking.status || data.status || '{{ strtolower($job_status ?? "") }}').toLowerCase())) ? '' : `
+                        ${(['onboard', 'onboarded', 'started', 'completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled'].includes((data.booking.status || data.status || '{{ strtolower($job_status ?? "") }}').toLowerCase()) || (data.timeline && (data.timeline.onboard || data.timeline.completed || data.timeline.cancelled))) ? '' : `
                         <div class="booking-detail-item">
                             <span class="detail-label">OTP</span>
                             <span class="detail-value otp-value">${data.booking.otp || '-'}</span>

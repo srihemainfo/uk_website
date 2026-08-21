@@ -10844,6 +10844,10 @@
                 clearTimeout(window._routeMapTimer);
                 window._routeMapTimer = null;
             }
+            BookingStore.setState({ vehicle: null });
+            if (typeof bookingData !== 'undefined') {
+                bookingData.vehicle = null;
+            }
             $('#bookingMap').hide();
             $('#mapRouteBadge').hide();
             $('#bookingImage').show();
@@ -10988,6 +10992,10 @@
             }
         }
         async function proceedToVehicles() {
+            BookingStore.setState({ vehicle: null });
+            if (typeof bookingData !== 'undefined') {
+                bookingData.vehicle = null;
+            }
             showStep(3);
             if (window.innerWidth > 768) {
                 $('#vehicleGrid').addClass('single-col');
@@ -17542,7 +17550,6 @@
             }
 
             // Render Animated Timeline
-            const tl = data.timeline;
             const ul = document.getElementById('trackingTimeline');
             ul.innerHTML = '';
 

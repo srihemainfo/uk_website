@@ -1595,7 +1595,7 @@
                                 </div>
                                 @if(isset($extra_amount) && (float) $extra_amount > 0)
                                     <div class="fare-line-item">
-                                        <span>{{ !empty($extra_amount_reason) ? $extra_amount_reason : 'Extra Amount' }}</span>
+                                        <span>Extra @if(!empty($extra_amount_reason))<span style="font-size: 11px; color: #6b7280; font-weight: 400; text-transform: none;">({{ $extra_amount_reason }})</span>@endif</span>
                                         <strong>£{{ number_format((float) $extra_amount, 2) }}</strong>
                                     </div>
                                 @endif

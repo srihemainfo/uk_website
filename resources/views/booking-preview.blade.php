@@ -1357,13 +1357,20 @@
     @php
         if (!isset($user_details) || $user_details == null) {
             $base_fare = $base_fare ?? 0;
+            $user_details = [];
         } else {
             if (is_string($user_details)) {
                 $user_details = json_decode($user_details, true);
             }
         }
 
-        // dd($user_details);
+        $extra_amount = (float) ($extra_amount ?? $user_details['extra_amount'] ?? 0);
+        $extra_amount_reason = $extra_amount_reason ?? $user_details['extra_amount_reason'] ?? '';
+
+        if ($extra_amount > 0) {
+            $total_fare = (float) ($total_fare ?? 0) + $extra_amount;
+            $balance_amt = (float) ($balance_amt ?? 0) + $extra_amount;
+        }
     @endphp
 
     <div class="main-wrapper">
@@ -1586,6 +1593,12 @@
                                     <span> {{ $isTax ? 'Tax with Other Charges' : 'Other Charges' }}</span>
                                     <strong>£{{ $tax ?? 0 }}</strong>
                                 </div>
+                                @if(isset($extra_amount) && (float) $extra_amount > 0)
+                                    <div class="fare-line-item">
+                                        <span>{{ !empty($extra_amount_reason) ? $extra_amount_reason : 'Extra Amount' }}</span>
+                                        <strong>£{{ number_format((float) $extra_amount, 2) }}</strong>
+                                    </div>
+                                @endif
                                 @if(isset($meet_amt) && $meet_amt > 0)
                                     <div class="fare-line-item">
                                         <span>Meet &amp; Greet</span>
@@ -1631,7 +1644,7 @@
                                     @endif
                                     <div class="fare-line-item fare-balance-item" style="font-size: 13.5px; padding-top: 5px; margin-top: 3px; border-top: 1px dashed #e5e7eb;">
                                         <span style="font-weight: 700; color: #111827;">{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
-                                        <strong style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ $balance_amt ?? 0 }}</strong>
+                                        <strong style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ (isset($balance_amt) && (float)$balance_amt == 0) ? '0' : (is_numeric($balance_amt) ? number_format((float)$balance_amt, 2) : ($balance_amt ?? 0)) }}</strong>
                                     </div>
                                 @endif
                             </div>

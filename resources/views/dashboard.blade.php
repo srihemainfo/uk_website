@@ -777,35 +777,6 @@
             color: #f59e0b;
         }
 
-        /* Floating Chat Widget */
-        .chat-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1050;
-        }
-
-        .chat-widget-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #111;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 23px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            border: none;
-            transition: transform 0.2s;
-            text-decoration: none;
-        }
-
-        .chat-widget-btn:hover {
-            transform: scale(1.05);
-        }
-
         /* Top-up Amounts */
         .topup-amounts {
             display: flex;
@@ -1493,14 +1464,8 @@
         </div>
     </div>
   
-    <!-- Floating Chat Widget -->
-    <div class="chat-widget">
-        <a href="#" class="chat-widget-btn" title="Support Chat" data-bs-toggle="modal" data-bs-target="#helpModal">
-
-            <i class="fas fa-comment-dots"></i>
-
-        </a>
-    </div>
+  
+    
 
     <script>
         const DASH_API_URL = "{{ env('API_URL') }}";

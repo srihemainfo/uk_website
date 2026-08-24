@@ -759,13 +759,13 @@
         }
     </style>
     <div id="mobileActionBar">
-        <a href="tel:+447950323242" class="mob-action-btn">
+        <a href="tel:+442083373777" class="mob-action-btn">
             <div class="mob-action-icon">
                 <i class="fas fa-phone"></i>
             </div>
             <span>Call Us</span>
         </a>
-        <a href="https://wa.me/447950323242" target="_blank" class="mob-action-btn">
+        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C+I+would+like+to+make+a+booking.+Please+share+the+available+options+and+details.+Thank+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com" target="_blank" class="mob-action-btn">
             <div class="mob-action-icon">
                 <i class="fab fa-whatsapp"></i>
             </div>

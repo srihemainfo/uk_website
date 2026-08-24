@@ -1,16 +1,20 @@
 @php
     $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
     if ($requestedHost === 'uk.goride.run') {
+        $headerHomeUrl = 'https://uk.goride.run';
         $headerProfileUrl = 'https://uk.goride.run/profile';
         $headerDashboardUrl = 'https://uk.goride.run/dashboard';
     } else {
+        $headerHomeUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II');
         $headerProfileUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/profile';
         $headerDashboardUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/dashboard';
     }
 @endphp
 <nav class="navbar-uber">
     <div class="navbar-brand-uber">
-        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+        <a href="{{ $headerHomeUrl }}">
+            <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+        </a>
     </div>
     <ul class="navbar-menu">
         <li>
@@ -94,7 +98,9 @@
     <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
-            <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+            <a href="{{ $headerHomeUrl }}">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+            </a>
             <button onclick="toggleMobileMenu()">
                 <i class="fas fa-times"></i>
             </button>

@@ -1,3 +1,13 @@
+@php
+    $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+    if ($requestedHost === 'uk.goride.run') {
+        $headerProfileUrl = 'https://uk.goride.run/profile';
+        $headerDashboardUrl = 'https://uk.goride.run/dashboard';
+    } else {
+        $headerProfileUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/profile';
+        $headerDashboardUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/dashboard';
+    }
+@endphp
 <nav class="navbar-uber">
     <div class="navbar-brand-uber">
         <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
@@ -22,12 +32,12 @@
             <div id="navbarUserDropdown" class="navbar-user-dropdown">
                 <ul class="navbar-user-menu">
                     <li>
-                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/profile" class="navbar-user-menu-btn">
+                        <a href="{{ $headerProfileUrl }}" class="navbar-user-menu-btn">
                             <i class="far fa-user me-2"></i> Profile
                         </a>
                     </li>
                     <li id="desktopNavDashboardLink">
-                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/dashboard" class="navbar-user-menu-btn">
+                        <a href="{{ $headerDashboardUrl }}" class="navbar-user-menu-btn">
                             <i class="fas fa-chart-line me-2"></i> Dashboard
                         </a>
                     </li>
@@ -46,10 +56,10 @@
     </button>
     <div id="language-dropdown" class="dropdown-menu-navbar">
         <button onclick="selectLanguage('en')">English</button>
-        <button onclick="selectLanguage('hi')">à¤¹à¤¿à¤‚à¤¦à¥€</button>
-        <button onclick="selectLanguage('ta')">à®¤à®®à®¿à®´à¯</button>
-        <button onclick="selectLanguage('te')">à°¤à±†à°²à±à°—à±</button>
-        <button onclick="selectLanguage('kn')">à²•à²¨à³à²¨à²¡</button>
+        <button onclick="selectLanguage('hi')">हिंदी</button>
+        <button onclick="selectLanguage('ta')">தமிழ்</button>
+        <button onclick="selectLanguage('te')">తెలుగు</button>
+        <button onclick="selectLanguage('kn')">ಕನ್ನಡ</button>
     </div>
     <div id="user-dropdown" class="account-dropdown">
         <div class="account-header">
@@ -60,8 +70,8 @@
             </div>
         </div>
         <div class="account-menu">
-            <a href="{{ route('profile') }}"><i class="fas fa-user"></i><span>Profile</span></a>
-            <a href="{{ route('dashboard') }}"><i class="fas fa-table-columns"></i><span>Dashboard</span></a>
+            <a href="{{ $headerProfileUrl }}"><i class="fas fa-user"></i><span>Profile</span></a>
+            <a href="{{ $headerDashboardUrl }}"><i class="fas fa-table-columns"></i><span>Dashboard</span></a>
             <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i><span>Track
                     Ride</span></a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i
@@ -96,9 +106,9 @@
             </div>
         </div>
         <div class="mobile-menu-links">
-            <a href="{{ route('profile') }}" class="mobile-auth-only" style="display: none !important;"><i
+            <a href="{{ $headerProfileUrl }}" class="mobile-auth-only" style="display: none !important;"><i
                     class="fas fa-user"></i>Profile</a>
-            <a href="{{ route('dashboard') }}" class="mobile-auth-only" style="display: none !important;"><i
+            <a href="{{ $headerDashboardUrl }}" class="mobile-auth-only" style="display: none !important;"><i
                     class="fas fa-table-columns"></i>Dashboard</a>
             <a href="#" onclick="toggleTrackRideOverlay(event)"><i class="fas fa-location-arrow"></i>Track Ride</a>
             <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal"><i

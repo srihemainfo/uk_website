@@ -1634,15 +1634,21 @@
                                                 <div class="fare-breakdown-title">FARE BREAKDOWN</div>
                                                 <div class="d-flex justify-content-between mb-2 fs-13">
                                                     <span>Base Fare</span>
-                                                    <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                                    <span>£${parseFloat(trip.fare.base || 0).toFixed(2)}</span>
                                                 </div>
                                                 <div class="d-flex justify-content-between mb-2 fs-13">
                                                     <span>Tax and Other charges</span>
-                                                    <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+                                                    <span>£${parseFloat(trip.fare.tax || 0).toFixed(2)}</span>
                                                 </div>
+                                                ${trip.fare.extra_amount && parseFloat(trip.fare.extra_amount) > 0 ? `
+                                                <div class="d-flex justify-content-between mb-2 fs-13">
+                                                    <span>Extra ${trip.fare.extra_reason ? `<span style="font-size: 11px; color: #6b7280; font-weight: 400; text-transform: none;">(${trip.fare.extra_reason})</span>` : ''}</span>
+                                                    <strong class="text-dark">£${parseFloat(trip.fare.extra_amount).toFixed(2)}</strong>
+                                                </div>
+                                                ` : ''}
                                                 <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
                                                     <span>Total</span>
-                                                    <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+                                                    <span>£${parseFloat(trip.fare.total || 0).toFixed(2)}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -1368,8 +1368,8 @@
         $extra_amount_reason = $extra_amount_reason ?? $user_details['extra_amount_reason'] ?? '';
 
         if ($extra_amount > 0) {
-            $total_fare = (float) ($total_fare ?? 0) + $extra_amount;
-            $balance_amt = (float) ($balance_amt ?? 0) + $extra_amount;
+            $total_fare = (float) ($total_fare ?? 0);
+            $balance_amt = (float) ($balance_amt ?? 0);
         }
     @endphp
 

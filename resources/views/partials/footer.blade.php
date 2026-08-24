@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row d-flex justify-content-between">
             <!-- Logo & Tagline -->
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-4">
                 <div class="footer-logo-section">
                     <div class="footer-logo">
                         <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide Logo">
@@ -12,6 +12,10 @@
                 <!-- Social Icons -->
                 <div class="footer-section">
                     <div class="footer-social-icons">
+                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C+I+would+like+to+make+a+booking.+Please+share+the+available+options+and+details.+Thank+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com"
+                            class="social-icon" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
                         <a href="https://www.facebook.com/people/Goride-Run/pfbid0jVh2iGFREVFLyTYRQFybaLXW3ECbUrgR9kJqcN4EMVYbSzPzFr7SRRLWgsTWf1BJl/"
                             class="social-icon" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
@@ -46,7 +50,7 @@
             </div>
 
             <!-- Contact Column -->
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="footer-section">
                     <div class="footer-section-title">Contact</div>
                     <div class="footer-links-list">
@@ -55,9 +59,6 @@
 
                             <a href="tel:+442083373777">+44 208 337 3777</a>
 
-                            <span>/</span>
-
-                            <a href="tel:+447950323242">+44 7950 323242</a>
                         </div>
                         <a href="mailto:support.uk@goride.run">
                             <i class="fas fa-envelope footer-contact-icon"></i>

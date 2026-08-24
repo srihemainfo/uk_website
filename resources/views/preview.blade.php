@@ -5,8 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include('partials.seo')
-    <title>GoRide | Booking Confirmation Preview</title>
-    <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
+    @php
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $faviconUrl = ($requestedHost === 'uk.goride.run')
+            ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
+            : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
+    @endphp
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

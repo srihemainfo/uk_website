@@ -9,6 +9,11 @@
     @php
         // Checks the original domain requested by the browser
         $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        if ($requestedHost === 'uk.goride.run') {
+            $faviconUrl = 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp';
+        } else {
+            $faviconUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
+        }
     @endphp
 
     {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
@@ -27,7 +32,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
         rel="stylesheet">
-    <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"

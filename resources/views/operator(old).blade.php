@@ -9,7 +9,13 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
+    @php
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $faviconUrl = ($requestedHost === 'uk.goride.run')
+            ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
+            : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
+    @endphp
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>

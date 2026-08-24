@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoRide | Tax Invoice</title>
-    <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
+    @php
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $faviconUrl = ($requestedHost === 'uk.goride.run')
+            ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
+            : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
+    @endphp
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome Icons -->

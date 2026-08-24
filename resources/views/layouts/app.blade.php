@@ -4395,82 +4395,329 @@
             font-weight: 600;
         }
 
+        /* Help / Support Modal Redesign (Compact) */
+        .help-modal-dialog {
+            max-width: 450px;
+            margin: 0.5rem auto;
+        }
+
         .help-modal {
-            border: 0;
-            border-radius: 16px;
+            border: none;
+            border-radius: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            background: #ffffff;
             overflow: hidden;
         }
 
-        .help-modal .modal-header {
-            border-bottom: 1px solid #eee;
-            padding: 16px 20px;
+        .help-modal-header {
+            padding: 16px 20px 4px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .help-modal-header-title {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .help-modal .modal-title {
-            font-size: 20px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: 800;
+            color: #111827;
+            margin: 0;
+            line-height: 1.2;
         }
 
-        .help-modal .btn-close {
-            font-size: 14px;
-            opacity: 1;
+        .title-underline {
+            width: 32px;
+            height: 3.5px;
+            background: #ffb800;
+            border-radius: 2px;
+            margin-top: 4px;
         }
 
-        .help-modal .modal-body {
-            padding: 28px 20px;
-        }
-
-        .help-icon {
-            width: 63px;
-            height: 63px;
-            margin: 0 auto 18px;
+        .help-btn-close {
+            background-color: #f3f4f6;
             border-radius: 50%;
-            background: #2aca19;
-            color: white;
+            padding: 6px;
+            font-size: 11px;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+            box-shadow: none;
+        }
+
+        .help-btn-close:hover {
+            opacity: 1;
+            background-color: #e5e7eb;
+            transform: rotate(90deg);
+        }
+
+        .help-modal-body {
+            padding: 0 20px 18px 20px;
+        }
+
+        .help-banner-wrapper {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .help-banner-img {
+            max-width: 170px;
+            max-height: 120px;
+            height: auto;
+            object-fit: contain;
+            display: inline-block;
+        }
+
+        .help-subtitle {
+            font-size: 18px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 3px;
+        }
+
+        .help-subtitle .text-highlight {
+            color: #ffb800;
+        }
+
+        .help-desc {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .help-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .help-card {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background: #ffffff;
+            border: 1px solid #f0f2f5;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .help-card:hover {
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+            border-color: #e2e8f0;
+            text-decoration: none;
+        }
+
+        .help-card-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 17px;
+            flex-shrink: 0;
+            margin-right: 12px;
         }
-        .contact-details {
-    width: 100%;
-}
 
-.contact-item {
-    width: 100%;
-    max-width: 260px;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    padding: 4px 0;
-}
+        .whatsapp-bg {
+            background-color: #25d366;
+            color: white;
+        }
 
-.contact-item a {
-    color: #222;
-    text-decoration: none;
-    white-space: nowrap;
-    font-size: 14px;
-}
+        .call-bg {
+            background-color: #ffb800;
+            color: white;
+        }
 
-.contact-item i {
-    flex-shrink: 0;
-}
+        .email-bg {
+            background-color: #3b82f6;
+            color: white;
+        }
 
-.phone-item {
-    white-space: nowrap;
-}
+        .help-card-info {
+            flex: 1;
+            text-align: left;
+            min-width: 0;
+        }
 
-.phone-separator {
-    margin: 0 4px;
-    color: #555;
-    font-size: 14px;
-}
-        .help-modal a {
-            color: #111;
-            text-decoration: none;
-            font-weight: 600;
+        .help-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f2937;
+            line-height: 1.2;
+        }
+
+        .help-card-sub {
+            font-size: 11px;
+            color: #6b7280;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .help-card-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 8px;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .help-card-contact {
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: opacity 0.2s;
+        }
+
+        .help-card-contact:hover {
+            opacity: 0.8;
+        }
+
+        .whatsapp-color {
+            color: #25d366 !important;
+        }
+
+        .call-color {
+            color: #ffb800 !important;
+        }
+
+        .email-color {
+            color: #3b82f6 !important;
+        }
+
+        .help-card-arrow {
+            font-size: 11px;
+            transition: transform 0.2s ease;
+        }
+
+        .help-card:hover .help-card-arrow {
+            transform: translateX(2px);
+        }
+
+        /* Media Queries for Mobile Responsiveness */
+        @media (max-width: 576px) {
+            .help-modal-dialog {
+                margin: 0.5rem auto;
+                max-width: calc(100% - 1.5rem);
+            }
+
+            .help-modal {
+                border-radius: 16px;
+            }
+
+            .help-modal-header {
+                padding: 14px 16px 2px 16px;
+            }
+
+            .help-modal-body {
+                padding: 0 14px 14px 14px;
+            }
+
+            .help-banner-wrapper {
+                margin-bottom: 4px;
+            }
+
+           
+
+            .help-subtitle {
+                
+                margin-bottom: 2px;
+            }
+
+            .help-desc {
+            
+                margin-bottom: 10px;
+            }
+
+            .help-cards-list {
+                gap: 7px;
+            }
+
+            .help-card {
+                padding: 8px 10px;
+                border-radius: 10px;
+                flex-wrap: nowrap !important;
+            }
+
+            .help-card-icon-box {
+                width: 32px;
+                height: 32px;
+                
+                margin-right: 8px;
+            }
+
+            .help-card-info {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .help-card-title {
+             
+                white-space: nowrap;
+            }
+
+            .help-card-action {
+                margin-left: auto;
+                gap: 4px;
+                flex-shrink: 0;
+            }
+
+            .help-card-contact {
+             
+                white-space: nowrap;
+            }
+
+            .help-card-arrow {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .help-modal-dialog {
+                margin: 0.35rem auto;
+                max-width: calc(100% - 1rem);
+            }
+
+            .help-modal-header {
+                padding: 12px 12px 2px 12px;
+            }
+
+            .help-modal-body {
+                padding: 0 12px 12px 12px;
+            }
+   
+            .help-desc {
+             
+                margin-bottom: 8px;
+            }
+
+            .help-card {
+                padding: 7px 8px;
+            }
+
+            .help-card-icon-box {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+                margin-right: 6px;
+            }
+
+        
+
+           
         }
 
         .driver-wrap {
@@ -8442,42 +8689,72 @@
     </div>
 
     <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-dialog modal-dialog-centered help-modal-dialog">
             <div class="modal-content help-modal">
 
-                <div class="modal-header">
-                    <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
-
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header help-modal-header border-0 pb-0">
+                    <div class="help-modal-header-title">
+                        <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
+                        <div class="title-underline"></div>
+                    </div>
+                    <button type="button" class="btn-close help-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body text-center">
+                <div class="modal-body help-modal-body text-center pt-2">
 
-                    <div class="help-icon">
-                     <i class="fab fa-whatsapp"></i>
+                    <div class="help-banner-wrapper">
+                        <img src="{{ asset('goride/img/support-call.png') }}" alt="Customer Support" class="help-banner-img">
                     </div>
 
-                    <h6>Need Assistance?</h6>
+                    <h5 class="help-subtitle">Need <span class="text-highlight">Assistance?</span></h5>
 
-                    <p class="mb-3 text-muted">
-                        Our support team is here to help.
+                    <p class="help-desc">
+                        Our support team is here to help you 24/7.
                     </p>
-                    <div class="contact-details">
 
-                        <p class="mb-2 contact-item phone-item">
-                            <i class="fas fa-phone-alt me-2 text-warning"
-                            style="transform: rotate(90deg);"></i>
+                    <div class="help-cards-list">
+                        <!-- WhatsApp Card -->
+                        <a href="https://wa.me/447950323242" target="_blank" class="help-card help-card-whatsapp">
+                            <div class="help-card-icon-box whatsapp-bg">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="help-card-info">
+                                <div class="help-card-title">WhatsApp Us</div>
+                            </div>
+                            <div class="help-card-action">
+                                <span class="help-card-contact whatsapp-color">+44 7950 323242</span>
+                                <i class="fas fa-chevron-right help-card-arrow whatsapp-color"></i>
+                            </div>
+                        </a>
 
-                            <a href="tel:+442083373777">+44 208 337 3777</a>
-                            <span class="phone-separator"> / </span>
-                            <a href="tel:+447950323242">+44 7950 323242</a>
-                        </p>
+                        <!-- Call Card -->
+                        <div class="help-card help-card-call">
+                            <div class="help-card-icon-box call-bg">
+                                <i class="fas fa-phone-alt"   style="transform: rotate(90deg);"></i>
+                            </div>
+                            <div class="help-card-info">
+                                <div class="help-card-title">Call Us</div>
+                            </div>
+                            <div class="help-card-action flex-column align-items-end">
+                                <a href="tel:+442083373777" class="help-card-contact call-color">+44 208 337 3777</a>
+                                <a href="tel:+447950323242" class="help-card-contact call-color">+44 7950 323242</a>
+                            </div>
+                            <i class="fas fa-chevron-right help-card-arrow call-color ms-1"></i>
+                        </div>
 
-                        <p class="mb-0 contact-item">
-                            <i class="fas fa-envelope me-2 text-warning"></i>
-                            <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                        </p>
-
+                        <!-- Email Card -->
+                        <a href="mailto:support.uk@goride.run" class="help-card help-card-email">
+                            <div class="help-card-icon-box email-bg">
+                                <i class="far fa-envelope"></i>
+                            </div>
+                            <div class="help-card-info">
+                                <div class="help-card-title">Email Us</div>
+                            </div>
+                            <div class="help-card-action">
+                                <span class="help-card-contact email-color">support.uk@goride.run</span>
+                                <i class="fas fa-chevron-right help-card-arrow email-color"></i>
+                            </div>
+                        </a>
                     </div>
 
                 </div>

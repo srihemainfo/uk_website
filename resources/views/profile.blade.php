@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        if ($requestedHost === 'uk.goride.run') {
+            $profileBookNowUrl = 'https://uk.goride.run';
+        } else {
+            $profileBookNowUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II');
+        }
+    @endphp
     <style>
         /* Profile Specific Styles */
         .profile-wrapper {
@@ -368,7 +376,7 @@
                 <h1 class="profile-title">Edit Profile</h1>
                 <p class="profile-subtitle">Manage your personal information</p>
             </div>
-            <a href="{{ url('/') }}" class="btn-book-now">
+            <a href="{{ $profileBookNowUrl }}" class="btn-book-now">
                 <i class="fas fa-arrow-left"></i> Book Now
             </a>
         </div>
@@ -429,7 +437,7 @@
                 You must be signed in to view and edit your profile details. Please sign in or return to the home page.
             </p>
             <div class="unauth-actions">
-                <a href="{{ url('/') }}" class="btn-unauth-primary">
+                <a href="{{ $profileBookNowUrl }}" class="btn-unauth-primary">
                     <i class="fas fa-home"></i> Go to Home Page
                 </a>
                 <button type="button" class="btn-unauth-secondary" onclick="openAuthModal()">

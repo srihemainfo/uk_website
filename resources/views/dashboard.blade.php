@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        if ($requestedHost === 'uk.goride.run') {
+            $dashBookNowUrl = 'https://uk.goride.run';
+        } else {
+            $dashBookNowUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II');
+        }
+    @endphp
     <style>
         body {
             background-color: #f8f9fa !important;
@@ -1116,7 +1124,7 @@
                             <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}" class="btn-book-now skeleton"
+                    <a href="{{ $dashBookNowUrl }}" class="btn-book-now skeleton"
                         style="pointer-events: none; opacity: 0.5; min-width: 140px;">
                         <i class="fas fa-arrow-left"></i> Book Now
                     </a>
@@ -1370,7 +1378,7 @@
                 You must be logged in to view your dashboard, manage active rides, and check your trip history.
             </p>
             <div class="unauth-actions">
-                <a href="{{ url('/') }}" class="btn-unauth-primary">
+                <a href="{{ $dashBookNowUrl }}" class="btn-unauth-primary">
                     <i class="fas fa-home"></i> Go to Home Page
                 </a>
                 <button type="button" class="btn-unauth-secondary" onclick="openAuthModal()">
@@ -1570,7 +1578,7 @@
                                         <div class="stat-label">Total Rides</div>
                                     </div>
                                 </div>
-                                <a href="{{ url('/') }}" class="btn-book-now">
+                                <a href="{{ $dashBookNowUrl }}" class="btn-book-now">
                                     <i class="fas fa-arrow-left"></i> Book Now
                                 </a>
                             `;

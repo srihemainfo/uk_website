@@ -3758,41 +3758,65 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
             btn.disabled = true;
 
-            fetch('{{env("API_URL")}}' + '/cancel-job', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
+            const executeCancel = (retryAttempt = 0) => {
+                const token = (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '') || '';
 
-                    if (data.status) {
-                        hideCancelJobModal();
-                        showToast(data.message || 'Job cancelled successfully.', 'success');
-
-                        // Show a full-screen loading overlay to prevent empty UI flash
-                        $('<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;"><i class="fas fa-spinner fa-spin fa-3x" style="color:#fff;"></i></div>').appendTo('body');
-
-                        setTimeout(() => {
-                            if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
-                                BookingStore.clear();
-                            }
-                            window.location.href = '/';
-                        }, 1500);
-                    } else {
-                        showToast(data.message || 'Failed to cancel job.', 'error');
-                    }
+                fetch('{{env("API_URL")}}' + '/cancel-job', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify(payload)
                 })
-                .catch(err => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    showToast('An error occurred while cancelling the job.', 'error');
-                });
+                    .then(res => {
+                        if (res.status === 401 && retryAttempt < 1) {
+                            console.warn('[CancelJob] 401 received, retrying request once...');
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                            return null;
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (!data) return;
+
+                        if (data.status) {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            hideCancelJobModal();
+                            showToast(data.message || 'Job cancelled successfully.', 'success');
+
+                            // Show a full-screen loading overlay to prevent empty UI flash
+                            $('<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:99999;display:flex;align-items:center;justify-content:center;"><i class="fas fa-spinner fa-spin fa-3x" style="color:#fff;"></i></div>').appendTo('body');
+
+                            setTimeout(() => {
+                                if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
+                                    BookingStore.clear();
+                                }
+                                window.location.href = '/';
+                            }, 1500);
+                        } else if ((data.message === 'Unauthorized customer access.' || data.message === 'Authorization token missing.') && retryAttempt < 1) {
+                            console.warn('[CancelJob] Unauthorized response received, retrying request once...');
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                        } else {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            showToast(data.message || 'Failed to cancel job.', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        if (retryAttempt < 1) {
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                        } else {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            showToast('An error occurred while cancelling the job.', 'error');
+                        }
+                    });
+            };
+
+            executeCancel(0);
         }
     </script>
 @endsection

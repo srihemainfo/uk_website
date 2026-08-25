@@ -1871,47 +1871,69 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
             btn.disabled = true;
 
-            fetch(DASH_API_URL + '/cancel-job', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + getToken()
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-
-                    if (data.status) {
-                        hideDashboardCancelModal();
-                        if (typeof showToast === 'function') {
-                            showToast(data.message || 'Job cancelled successfully.', 'success');
-                        } else {
-                            alert(data.message || 'Job cancelled successfully.');
-                        }
-
-                        fetchCurrentRides();
-                        fetchCancelledRides(1);
-                        fetchDashboardSummary();
-                    } else {
-                        if (typeof showToast === 'function') {
-                            showToast(data.message || 'Failed to cancel job.', 'error');
-                        } else {
-                            alert(data.message || 'Failed to cancel job.');
-                        }
-                    }
+            const executeCancel = (retryAttempt = 0) => {
+                fetch(DASH_API_URL + '/cancel-job', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer ' + getToken()
+                    },
+                    body: JSON.stringify(payload)
                 })
-                .catch(err => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    if (typeof showToast === 'function') {
-                        showToast('An error occurred while cancelling the job.', 'error');
-                    } else {
-                        alert('An error occurred while cancelling the job.');
-                    }
-                });
+                    .then(res => {
+                        if (res.status === 401 && retryAttempt < 1) {
+                            console.warn('[DashboardCancelJob] 401 received, retrying request once...');
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                            return null;
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (!data) return;
+
+                        if (data.status) {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            hideDashboardCancelModal();
+                            if (typeof showToast === 'function') {
+                                showToast(data.message || 'Job cancelled successfully.', 'success');
+                            } else {
+                                alert(data.message || 'Job cancelled successfully.');
+                            }
+
+                            fetchCurrentRides();
+                            fetchCancelledRides(1);
+                            fetchDashboardSummary();
+                        } else if ((data.message === 'Unauthorized customer access.' || data.message === 'Authorization token missing.') && retryAttempt < 1) {
+                            console.warn('[DashboardCancelJob] Unauthorized response received, retrying request once...');
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                        } else {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            if (typeof showToast === 'function') {
+                                showToast(data.message || 'Failed to cancel job.', 'error');
+                            } else {
+                                alert(data.message || 'Failed to cancel job.');
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        if (retryAttempt < 1) {
+                            setTimeout(() => executeCancel(retryAttempt + 1), 300);
+                        } else {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            if (typeof showToast === 'function') {
+                                showToast('An error occurred while cancelling the job.', 'error');
+                            } else {
+                                alert('An error occurred while cancelling the job.');
+                            }
+                        }
+                    });
+            };
+
+            executeCancel(0);
         }
 
         document.addEventListener('DOMContentLoaded', function () {

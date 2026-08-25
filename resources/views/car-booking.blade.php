@@ -651,7 +651,7 @@
         /* box-shadow: 0 4px 14px rgba(249, 193, 6, 0.45); */
         overflow: hidden;
         white-space: nowrap;
-        cursor: pointer;
+        /* cursor: pointer; */
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         user-select: none;
         animation: promoWiggleGlow 4s infinite ease-in-out;
@@ -1155,7 +1155,7 @@
                 <div class="container">
                     <div class="booking-title-group">
                         <h3 class="booking-title">Where to?</h3>
-                        <div class="promo-header-badge" title="Click for offer details">
+                        <div class="promo-header-badge">
                         <div class="promo-badge-tag"><i class="fas fa-gift"></i> £10 OFF</div>
                         <div class="promo-badge-text-wrap">
                             <span class="promo-badge-marquee-text">YOUR FIRST RIDE!</span>

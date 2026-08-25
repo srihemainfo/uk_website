@@ -3146,10 +3146,31 @@
                 }
 
                 let _nearbyDriverMarkers = [];
-                function _drawNearbyDrivers(drivers) {
+                let _lastDriversJson = null;
+
+                function _resetNearbyDrivers() {
+                    _nearbyDriverMarkers.forEach(marker => {
+                        if (marker && typeof marker.setMap === 'function') {
+                            marker.setMap(null);
+                        } else if (marker && marker.marker) {
+                            marker.marker.setMap(null);
+                            if (marker.interval) clearInterval(marker.interval);
+                        }
+                    });
+                    _nearbyDriverMarkers = [];
+                    _lastDriversJson = null;
+                }
+
+                function _drawNearbyDrivers(drivers, forceRedraw = false) {
                     if (!bookingGoogleMap) return;
 
-                    // Clear existing markers first
+                    const driversJson = JSON.stringify(drivers || []);
+                    if (!forceRedraw && _nearbyDriverMarkers.length > 0 && _lastDriversJson === driversJson) {
+                        return; // Nearby drivers already rendered; do not re-draw or re-animate on step transitions
+                    }
+                    _lastDriversJson = driversJson;
+
+                    // Clear existing markers
                     _nearbyDriverMarkers.forEach(marker => {
                         if (marker && typeof marker.setMap === 'function') {
                             marker.setMap(null);
@@ -3163,14 +3184,23 @@
                     if (!drivers || drivers.length === 0) return;
 
                     drivers.forEach((driver, index) => {
-                        // Generate a pseudo-random angle (0 to 359) based on lat/lng or just random
-                        // so each car faces a different direction
+                        // Generate a pseudo-random angle so each car faces a different direction
                         const angle = Math.floor(Math.random() * 360);
 
-                        // We create the SVG for this specific car with the rotation applied
+                        // Professional SVG fade-in effect instead of DROP animation
                         const carSvg = `
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-                                                <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                                                <style>
+                                                    @keyframes carFadeIn {
+                                                        0% { opacity: 0; transform: scale(0.6); }
+                                                        100% { opacity: 1; transform: scale(1); }
+                                                    }
+                                                    .car-icon-group {
+                                                        animation: carFadeIn 0.35s ease-out forwards;
+                                                        transform-origin: 64px 64px;
+                                                    }
+                                                </style>
+                                                <g class="car-icon-group" transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
                                                     <!-- Car Body -->
                                                     <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
 
@@ -3199,7 +3229,7 @@
                                         `;
                         const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg);
 
-                        // Stagger animation for a smooth, organic feel
+                        // Stagger fade-in for a smooth, organic entry
                         setTimeout(() => {
                             let currentLat = parseFloat(driver.lat);
                             let currentLng = parseFloat(driver.lng);
@@ -3212,12 +3242,11 @@
                                     scaledSize: new google.maps.Size(40, 40),
                                     anchor: new google.maps.Point(20, 20)
                                 },
-                                animation: google.maps.Animation.DROP,
                                 title: `Nearby Driver (${driver.distance_miles} miles away)`
                             });
 
                             _nearbyDriverMarkers.push(marker);
-                        }, index * 200);
+                        }, index * 120);
                     });
                 }
 

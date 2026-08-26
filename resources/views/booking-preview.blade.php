@@ -2769,9 +2769,12 @@
                         }
                     });
 
+                    const socketPlatform = "{{ env('SOCKET_PLATFORM', 'development') }}";
+                    const formattedTripId = String(trackingId).startsWith(socketPlatform + '_') ? String(trackingId) : `${socketPlatform}_${trackingId}`;
+
                     liveTrackingSocket.on("connect", () => {
-                        console.log('Customer connected to tracking socket');
-                        liveTrackingSocket.emit("join_trip", { trip_id: trackingId });
+                        console.log('Customer connected to tracking socket for trip:', formattedTripId);
+                        liveTrackingSocket.emit("join_trip", { trip_id: formattedTripId });
                     });
 
                     let lastPos = null;
@@ -2809,7 +2812,7 @@
 
                     liveTrackingSocket.on("trip_completed", () => {
                         updateLiveTrackingTimeline('completed');
-                        liveTrackingSocket.emit("leave_trip", { trip_id: trackingId });
+                        liveTrackingSocket.emit("leave_trip", { trip_id: formattedTripId });
                         setTimeout(() => toggleTrackRideOverlay(), 3000);
                     });
 

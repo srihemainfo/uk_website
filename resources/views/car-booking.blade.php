@@ -1593,11 +1593,22 @@
                         </div>
                     </div>
                     <div class="vehicle-grid-uber" id="vehicleGrid"></div>
+
+                    <!-- Floating Scroll Indicator -->
+                    <div class="cab-scroll-floating-controls" id="cabScrollControls_step3" style="display: none;">
+                        <button type="button" class="cab-scroll-pill-btn mode-down" id="cabScrollBtn_step3" onclick="handleCabScrollClick('step3')">
+                            <span class="cab-scroll-text" id="cabScrollText_step3">More Cabs</span>
+                            <span class="icon-circle">
+                                <i class="fas fa-chevron-down animated-bounce" id="cabScrollIcon_step3"></i>
+                            </span>
+                        </button>
+                    </div>
+
                     <div class="btn-group-uber step-bottom-btns">
                         <button class="btn-back-uber" onclick="goBackToLocations()">
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
-                        <button class="btn-search-uber" onclick="proceedToPassengerDetails()">
+                        <button class="btn-search-uber" id="step3ContinueBtn" onclick="proceedToPassengerDetails()">
                             <i class="fas fa-arrow-right"></i> Continue
                         </button>
                     </div>
@@ -2713,6 +2724,16 @@
                         </div>
                     </div>
                     <div id="driverList" style="display:none;"></div>
+
+                    <!-- Floating Scroll Indicator -->
+                    <div class="cab-scroll-floating-controls" id="cabScrollControls_step6" style="display: none;">
+                        <button type="button" class="cab-scroll-pill-btn mode-down" id="cabScrollBtn_step6" onclick="handleCabScrollClick('step6')">
+                            <span class="cab-scroll-text" id="cabScrollText_step6">More Drivers</span>
+                            <span class="icon-circle">
+                                <i class="fas fa-chevron-down animated-bounce" id="cabScrollIcon_step6"></i>
+                            </span>
+                        </button>
+                    </div>
 
                     <!-- BOOKING EXPIRED UI CARD -->
                     <div id="bookingExpiredCard" class="booking-expired-card text-center p-4 rounded-4"

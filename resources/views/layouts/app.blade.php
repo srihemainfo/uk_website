@@ -17,7 +17,7 @@
     @endphp
 
     {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
-    @if($requestedHost === 'uk.goride.run')
+    @if($requestedHost === 'uk.goride.run' || $requestedHost === 'in.goride.uk' || $requestedHost === 'www.goride.uk' || $requestedHost === 'goride.uk')
         <meta name="robots" content="noindex, nofollow">
     @endif
 
@@ -4635,15 +4635,15 @@
                 margin-bottom: 4px;
             }
 
-           
+
 
             .help-subtitle {
-                
+
                 margin-bottom: 2px;
             }
 
             .help-desc {
-            
+
                 margin-bottom: 10px;
             }
 
@@ -4660,7 +4660,7 @@
             .help-card-icon-box {
                 width: 32px;
                 height: 32px;
-                
+
                 margin-right: 8px;
             }
 
@@ -4670,7 +4670,7 @@
             }
 
             .help-card-title {
-             
+
                 white-space: nowrap;
             }
 
@@ -4681,7 +4681,7 @@
             }
 
             .help-card-contact {
-             
+
                 white-space: nowrap;
             }
 
@@ -4703,9 +4703,9 @@
             .help-modal-body {
                 padding: 0 12px 12px 12px;
             }
-   
+
             .help-desc {
-             
+
                 margin-bottom: 8px;
             }
 
@@ -4720,9 +4720,9 @@
                 margin-right: 6px;
             }
 
-        
 
-           
+
+
         }
 
         .driver-wrap {
@@ -7994,6 +7994,168 @@
             }
 
         }
+
+        /* ===== ULTRA-PREMIUM ADAPTIVE FLOATING SCROLL INDICATOR ===== */
+        .cab-scroll-floating-controls {
+            position: sticky;
+            bottom: 72px;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            margin-top: -42px;
+            margin-bottom: 8px;
+            padding: 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .cab-scroll-pill-btn {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 14px;
+            background: rgba(255, 255, 255, 0.96);
+            color: #0f172a;
+            border: 1.5px solid #f39c12;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12), 0 2px 10px rgba(243, 156, 18, 0.25);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cab-scroll-pill-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(243, 156, 18, 0.25), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cab-scroll-pill-btn:hover::before {
+            left: 100%;
+        }
+
+        .cab-scroll-pill-btn:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.3), 0 0 18px rgba(243, 156, 18, 0.4);
+        }
+
+        .cab-scroll-pill-btn:active {
+            transform: translateY(0) scale(0.97);
+        }
+
+        .cab-scroll-pill-btn .icon-circle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f39c12;
+            color: #000000;
+            font-size: 10px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 5px rgba(243, 156, 18, 0.4);
+        }
+
+        .cab-scroll-pill-btn:hover .icon-circle {
+            background: #ffffff;
+            color: #0f172a;
+            transform: scale(1.08);
+        }
+
+        .cab-scroll-pill-btn.mode-top {
+            background: rgba(255, 255, 255, 0.96);
+            border-color: #f39c12;
+            color: #0f172a;
+        }
+
+        .cab-scroll-pill-btn.mode-top:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        .cab-scroll-pill-btn .animated-bounce {
+            animation: cabBounce 1.5s infinite ease-in-out;
+        }
+
+        .cab-scroll-pill-btn .animated-bounce-up {
+            animation: cabBounceUp 1.5s infinite ease-in-out;
+        }
+
+        @keyframes cabBounce {
+            0%, 100% {
+                transform: translateY(-2px);
+            }
+            50% {
+                transform: translateY(3px);
+            }
+        }
+
+        @keyframes cabBounceUp {
+            0%, 100% {
+                transform: translateY(2px);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cab-scroll-floating-controls {
+                position: fixed !important;
+                bottom: 92px !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10000 !important;
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                padding: 0 15px !important;
+                pointer-events: none !important;
+            }
+        }
+
+        #step3ContinueBtn:disabled,
+        #step3ContinueBtn.disabled-btn,
+        #step3 .btn-search-uber:disabled,
+        #step3 .btn-search-uber.disabled-btn {
+            opacity: 0.95 !important;
+            cursor: not-allowed !important;
+            pointer-events: auto !important;
+            background: #94a3b8 !important;
+            border-color: #94a3b8 !important;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        #step3ContinueBtn:disabled:hover,
+        #step3ContinueBtn.disabled-btn:hover,
+        #step3 .btn-search-uber:disabled:hover,
+        #step3 .btn-search-uber.disabled-btn:hover {
+            cursor: not-allowed !important;
+            transform: none !important;
+            background: #94a3b8 !important;
+            box-shadow: none !important;
+        }
     </style>
     <style id="three-column-styles">
         .hero-form-section.three-column-mode {
@@ -8548,9 +8710,9 @@
         }
 
         /* Track Ride Modal Specific Toast (White Background, Black Text) */
-        .track-ride-overlay.show ~ .global-toast,
-        .track-ride-overlay.show ~ .global-toast.success,
-        .track-ride-overlay.show ~ .global-toast.info,
+        .track-ride-overlay.show~.global-toast,
+        .track-ride-overlay.show~.global-toast.success,
+        .track-ride-overlay.show~.global-toast.info,
         .track-ride-overlay .global-toast,
         .track-ride-overlay .global-toast.success,
         .track-ride-overlay .global-toast.info,
@@ -8563,16 +8725,16 @@
             z-index: 100000 !important;
         }
 
-        .track-ride-overlay.show ~ .global-toast span,
+        .track-ride-overlay.show~.global-toast span,
         .track-ride-overlay .global-toast span,
         body:has(.track-ride-overlay.show) .global-toast span,
-        .track-ride-overlay.show ~ .global-toast #globalToastMsg,
+        .track-ride-overlay.show~.global-toast #globalToastMsg,
         .track-ride-overlay .global-toast #globalToastMsg,
         body:has(.track-ride-overlay.show) .global-toast #globalToastMsg {
             color: #111111 !important;
         }
 
-        .track-ride-overlay.show ~ .global-toast i:not(.text-danger),
+        .track-ride-overlay.show~.global-toast i:not(.text-danger),
         .track-ride-overlay .global-toast i:not(.text-danger),
         body:has(.track-ride-overlay.show) .global-toast i:not(.text-danger) {
             color: #111111 !important;
@@ -8702,13 +8864,15 @@
                         <h5 class="modal-title" id="helpModalLabel">Contact Us</h5>
                         <div class="title-underline"></div>
                     </div>
-                    <button type="button" class="btn-close help-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close help-btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body help-modal-body text-center pt-2">
 
                     <div class="help-banner-wrapper">
-                        <img src="{{ asset('goride/img/support-call.png') }}" alt="Customer Support" class="help-banner-img">
+                        <img src="{{ asset('goride/img/support-call.png') }}" alt="Customer Support"
+                            class="help-banner-img">
                     </div>
 
                     <h5 class="help-subtitle">Need <span class="text-highlight">Assistance?</span></h5>
@@ -8719,7 +8883,8 @@
 
                     <div class="help-cards-list">
                         <!-- WhatsApp Card -->
-                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C+I+would+like+to+make+a+booking.+Please+share+the+available+options+and+details.+Thank+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com" target="_blank" class="help-card help-card-whatsapp">
+                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C+I+would+like+to+make+a+booking.+Please+share+the+available+options+and+details.+Thank+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com"
+                            target="_blank" class="help-card help-card-whatsapp">
                             <div class="help-card-icon-box whatsapp-bg">
                                 <i class="fab fa-whatsapp"></i>
                             </div>
@@ -8735,14 +8900,14 @@
                         <!-- Call Card -->
                         <div class="help-card help-card-call">
                             <div class="help-card-icon-box call-bg">
-                                <i class="fas fa-phone-alt"   style="transform: rotate(90deg);"></i>
+                                <i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i>
                             </div>
                             <div class="help-card-info">
                                 <div class="help-card-title">Call Us</div>
                             </div>
                             <div class="help-card-action flex-column align-items-end">
                                 <a href="tel:+442083373777" class="help-card-contact call-color">+44 208 337 3777</a>
-                              
+
                             </div>
                             <i class="fas fa-chevron-right help-card-arrow call-color ms-1"></i>
                         </div>
@@ -9583,11 +9748,12 @@
             const tripDate = document.getElementById('tripSelectedDate');
             const tripTime = document.getElementById('tripSelectedTime');
             if (tripDate) tripDate.textContent = state.date ? formatUIOrdinalDate(state.date) : '--';
-            if (tripTime) tripTime.textContent = state.time || '--';
+            const displayTime = (state.pickupType === 'airport' ? (state.landingTime || state.flightLandingTime || state.flightArrivingTime || state.time) : (state.pickupType === 'seaport' ? (state.dockingTime || state.cruiseDockingTime || state.time) : state.time));
+            if (tripTime) tripTime.textContent = displayTime || '--';
 
             // Mobile compact summary grid
             const d = state.date ? formatUIOrdinalDate(state.date) : 'Today';
-            const t = state.time || 'Now';
+            const t = displayTime || 'Now';
             $('#mcsDateValue').text(d);
             $('#mcsTimeValue').text(t);
 
@@ -9861,7 +10027,7 @@
                 $('#summaryDateLabel').html('<i class="fas fa-calendar"></i> Flight Arrival Date');
                 $('#summaryBookingDate').text(state.date || '\u2013');
                 $('#summaryTimeLabel').html('<i class="fas fa-clock"></i> Flight Landing Time');
-                $('#summaryBookingTime').text(state.time || '\u2013');
+                $('#summaryBookingTime').text(state.landingTime || state.flightLandingTime || state.flightArrivingTime || state.time || '\u2013');
 
                 const airportDetails = [state.flightNumber, state.comingFrom, state.dropoffAddress]
                     .filter(v => v && v.trim() !== '' && v.trim() !== '\u2013' && v.trim() !== '-')
@@ -10088,6 +10254,9 @@
             BookingStore.subscribe(_updatePassengerSummaryUI);
             BookingStore.subscribe(_updateJourneySummaryUI);
             BookingStore.subscribe(_updateDistanceDurationUI);
+            BookingStore.subscribe(function () {
+                if (typeof updateStep3ContinueButtonState === 'function') updateStep3ContinueButtonState();
+            });
 
             const _nowUKInit = getUKDate();
             const _todayInitStr = `${_nowUKInit.getFullYear()}-${String(_nowUKInit.getMonth() + 1).padStart(2, '0')}-${String(_nowUKInit.getDate()).padStart(2, '0')}`;
@@ -10344,6 +10513,14 @@
 
         // ===== VALIDATE AND AUTO-SET IF PAST TIME =====
         function checkAndAutoSetIfPastTime() {
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+
+            // CRITICAL FIX: If a booking has already been created/submitted (currentStep >= 5 or job_no / bookingId / jobId exists),
+            // NEVER mutate the booking date and time! The booking is locked in with its original requested pickup time.
+            if (state.currentStep >= 5 || state.job_no || state.bookingId || state.jobId || state.isBookingExpired) {
+                return;
+            }
+
             const nowUK = getUKDate();
             const yr = nowUK.getFullYear();
             const mo = String(nowUK.getMonth() + 1).padStart(2, '0');
@@ -10351,8 +10528,6 @@
             const todayStr = `${yr}-${mo}-${da}`;
             const currentHours = nowUK.getHours();
             const currentMinutes = nowUK.getMinutes();
-
-            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
             let selectedDate = state.date || (typeof bookingData !== 'undefined' ? bookingData.date : null) || $('#date').val();
             let selectedTime = state.time || (typeof bookingData !== 'undefined' ? bookingData.time : null);
 
@@ -10477,6 +10652,10 @@
         }
 
         function generateTimeOptions(dateStr) {
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            if (state.currentStep >= 5 || state.job_no || state.bookingId || state.jobId || state.isBookingExpired) {
+                return;
+            }
             const timeDropdownList = document.getElementById('timeDropdownList');
             if (!timeDropdownList) return;
             timeDropdownList.innerHTML = '';
@@ -10621,6 +10800,10 @@
         }
 
         function selectTime(time) {
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            if (state.currentStep >= 5 || state.job_no || state.bookingId || state.jobId || state.isBookingExpired) {
+                return;
+            }
             // Store time in the store (triggers subscribers)
             BookingStore.setState({ time: time });
             $('#timeDropdownValue').text(time);
@@ -11150,10 +11333,14 @@
             // Re-enable body scroll
             $('body').css('overflow', 'auto');
         }
+        window.hidePickupTimePanel = hidePickupTimePanel;
+
         function showSchedulePanel() {
             bookingType = "schedule";
             $("#timeSelectionPanel").addClass("show");
         }
+        window.showSchedulePanel = showSchedulePanel;
+
         function showSchedulePanelFromStep1() {
             bookingType = "schedule";
             // Hide all background sections
@@ -11165,6 +11352,7 @@
             $('body').css('overflow', 'hidden');
             updatePickupUI();
         }
+        window.showSchedulePanelFromStep1 = showSchedulePanelFromStep1;
         // Call this whenever pickup location changes
         function updatePickupUI() {
             const pickupType = bookingData.pickupType; // airport, seaport, or address
@@ -11248,6 +11436,7 @@
             // Open the car selection
             proceedToTripDetails();
         }
+        window.saveSchedule = saveSchedule;
         function showForMeModal() {
             $('#forMeModal').addClass('show');
         }
@@ -11577,6 +11766,9 @@
                 grid.append(html);
             });
             updateFeaturesLayout();
+            if (typeof updateCabScrollIndicators === 'function') {
+                setTimeout(updateCabScrollIndicators, 150);
+            }
         }
 
         function updateFeaturesLayout() {
@@ -11636,6 +11828,7 @@
             $('.btn-v-select').html('Select');
             $(el).addClass('selected');
             $(el).find('.btn-v-select').html('<i class="fas fa-check"></i> Selected');
+            if (typeof updateStep3ContinueButtonState === 'function') updateStep3ContinueButtonState();
             console.log('Vehicle selected:', vehicle.name, '- Price: £' + vehicle.price);
         }
         function _autoFillPassengerDetailsFromAuth() {
@@ -12079,6 +12272,28 @@
         // ===== STRIPE PAYMENT INTEGRATION =====
         window.selectedStripePaymentType = 'full';
 
+        window.resetStripePayment = function () {
+            window.stripeElements = null;
+            window.stripeInstance = null;
+            window.isPaymentAlreadyTerminal = false;
+            $('#payment-element').empty();
+            const loadingEl = document.getElementById('stripe-element-loading');
+            if (loadingEl) {
+                loadingEl.style.display = 'none';
+                loadingEl.innerHTML = '';
+            }
+            const msgEl = document.getElementById('payment-message');
+            if (msgEl) {
+                msgEl.style.display = 'none';
+                msgEl.textContent = '';
+            }
+            const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-arrow-right"></i> Proceed to Card Payment';
+                btn.disabled = false;
+            }
+        };
+
         window.selectPaymentMethod = function (method = 'stripe') {
             $('#paymentMethod').val('stripe').trigger('change');
             $('#payMethodCardStripe').addClass('active');
@@ -12101,14 +12316,10 @@
                 $('#stripeTypeFull').removeClass('active');
             }
 
-            // If Stripe Elements was already mounted for a different type, reset it so new intent is fetched
-            if (window.stripeElements) {
-                window.stripeElements = null;
-                window.stripeInstance = null;
-                $('#payment-element').empty();
-                $('#stripePaymentContainer').slideUp(200);
-                const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
-                if (btn) btn.innerHTML = '<i class="fas fa-arrow-right"></i> Proceed to Card Payment';
+            // Reset existing Stripe session and re-initialize with selected type/amount
+            window.resetStripePayment();
+            if (typeof initStripePaymentElement === 'function') {
+                initStripePaymentElement();
             }
         };
 
@@ -13446,6 +13657,22 @@
             return false;
         }
 
+        // Immediately check expiration when tab becomes active after user was away
+        document.addEventListener('visibilitychange', function () {
+            if (!document.hidden) {
+                const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+                if (state.currentStep === 6 || state.currentStep === 3) {
+                    checkBookingExpiration();
+                }
+            }
+        });
+        window.addEventListener('focus', function () {
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            if (state.currentStep === 6 || state.currentStep === 3) {
+                checkBookingExpiration();
+            }
+        });
+
         function resetToNewBooking() {
             try {
                 sessionStorage.clear();
@@ -14339,6 +14566,10 @@
         async function proceedToPaymentWithDriver(driver, btnElement) {
             bookingData.selectedDriver = driver;
 
+            if (typeof resetStripePayment === 'function') {
+                resetStripePayment();
+            }
+
             let originalText = '';
             let $btn = null;
             if (btnElement) {
@@ -14392,6 +14623,13 @@
 
                     renderPaymentBreakdownUI(data.data);
                     showStep(5);
+                    if (typeof selectPaymentMethod === 'function') {
+                        selectPaymentMethod('stripe');
+                    }
+                    $('#stripePaymentContainer').show();
+                    if (typeof initStripePaymentElement === 'function') {
+                        initStripePaymentElement();
+                    }
                 } else {
                     showToast(data.message || 'Failed to fetch payment breakdown.', 'error');
                 }
@@ -14522,6 +14760,17 @@
             $('#driverConfirmModal').addClass('show');
         }
         $(document).ready(function () {
+            // Bind scroll indicators for cab and driver lists using capture phase
+            document.addEventListener('scroll', function () {
+                if (typeof updateCabScrollIndicators === 'function') updateCabScrollIndicators();
+            }, true);
+            $(window).on('resize', function () {
+                if (typeof updateCabScrollIndicators === 'function') updateCabScrollIndicators();
+            });
+            setTimeout(function () {
+                if (typeof updateCabScrollIndicators === 'function') updateCabScrollIndicators();
+            }, 500);
+
             // Initialize flight time dropdown value from hidden input
             const initialFlightTime = $('#flightArrivingTime').val() || '11:00';
             $('#flightTimeDropdownValue').html('<i class="fas fa-clock me-1"></i>' + initialFlightTime);
@@ -14682,6 +14931,141 @@
             });
         }
 
+        // ===== FLOATING SCROLL INDICATORS FOR VEHICLES & DRIVERS =====
+        window.handleCabScrollClick = function (stepId) {
+            const btn = document.getElementById('cabScrollBtn_' + stepId);
+            const isTopMode = btn && btn.classList.contains('mode-top');
+
+            if (isTopMode) {
+                scrollCabList(stepId, 'up');
+            } else {
+                scrollCabList(stepId, 'down');
+            }
+        };
+
+        window.scrollCabList = function (stepId, direction) {
+            const stepElem = document.getElementById(stepId);
+            if (!stepElem) return;
+
+            const listId = stepId === 'step3' ? 'vehicleGrid' : 'driverList';
+            const listElem = document.getElementById(listId);
+
+            let container = stepElem.querySelector('.container');
+            let heroSection = document.querySelector('.hero-form-section');
+            let isContainerScrollable = container && (container.scrollHeight > container.clientHeight + 20);
+
+            let scrollTarget = isContainerScrollable ? container : (heroSection && heroSection.scrollHeight > heroSection.clientHeight + 20 ? heroSection : window);
+
+            if (direction === 'up') {
+                if (listElem) {
+                    listElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else if (scrollTarget === window) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } else {
+                const distance = 360;
+                if (scrollTarget === window) {
+                    window.scrollBy({ top: distance, behavior: 'smooth' });
+                } else {
+                    scrollTarget.scrollBy({ top: distance, behavior: 'smooth' });
+                }
+            }
+        };
+
+        window.updateCabScrollIndicators = function () {
+            const steps = [
+                { stepId: 'step3', listId: 'vehicleGrid', itemClass: '.vehicle-item', defaultText: 'More Cabs' },
+                { stepId: 'step6', listId: 'driverList', itemClass: '.driver-item', defaultText: 'More Drivers' }
+            ];
+
+            steps.forEach(config => {
+                const stepElem = document.getElementById(config.stepId);
+                const controls = document.getElementById('cabScrollControls_' + config.stepId);
+                const btn = document.getElementById('cabScrollBtn_' + config.stepId);
+                const textElem = document.getElementById('cabScrollText_' + config.stepId);
+                const iconElem = document.getElementById('cabScrollIcon_' + config.stepId);
+
+                if (!stepElem || !controls || !btn) return;
+
+                const isStepVisible = $(stepElem).is(':visible') && stepElem.classList.contains('active');
+                if (!isStepVisible) {
+                    controls.style.display = 'none';
+                    return;
+                }
+
+                const listElem = document.getElementById(config.listId);
+                if (!listElem) {
+                    controls.style.display = 'none';
+                    return;
+                }
+
+                const items = listElem.querySelectorAll(config.itemClass);
+                if (!items || items.length <= 1) {
+                    controls.style.display = 'none';
+                    return;
+                }
+
+                const firstItem = items[0];
+                const lastItem = items[items.length - 1];
+
+                const container = stepElem.querySelector('.container');
+                const heroSection = document.querySelector('.hero-form-section');
+
+                let viewportTop = 0;
+                let viewportBottom = window.innerHeight;
+
+                const isMobile = window.innerWidth <= 768;
+                if (!isMobile) {
+                    if (container && container.scrollHeight > container.clientHeight + 20 && container.clientHeight > 0) {
+                        const cRect = container.getBoundingClientRect();
+                        viewportTop = cRect.top;
+                        viewportBottom = cRect.bottom;
+                    } else if (heroSection && heroSection.scrollHeight > heroSection.clientHeight + 20 && heroSection.clientHeight > 0) {
+                        const hRect = heroSection.getBoundingClientRect();
+                        viewportTop = hRect.top;
+                        viewportBottom = hRect.bottom;
+                    }
+                } else {
+                    viewportTop = 80;
+                    viewportBottom = window.innerHeight - 70;
+                }
+
+                const firstRect = firstItem.getBoundingClientRect();
+                const lastRect = lastItem.getBoundingClientRect();
+
+                const listTotalHeight = lastRect.bottom - firstRect.top;
+                const viewportHeight = viewportBottom - viewportTop;
+
+                if (listTotalHeight <= viewportHeight - 30) {
+                    controls.style.display = 'none';
+                    return;
+                }
+
+                controls.style.display = 'flex';
+
+                // Check if first card is near the top of the viewport
+                const isAtTop = firstRect.top >= (viewportTop - 40);
+
+                if (isAtTop) {
+                    btn.classList.remove('mode-top');
+                    btn.classList.add('mode-down');
+                    if (textElem) textElem.textContent = config.defaultText;
+                    if (iconElem) {
+                        iconElem.className = 'fas fa-chevron-down animated-bounce';
+                    }
+                } else {
+                    btn.classList.remove('mode-down');
+                    btn.classList.add('mode-top');
+                    if (textElem) textElem.textContent = 'Top';
+                    if (iconElem) {
+                        iconElem.className = 'fas fa-chevron-up animated-bounce-up';
+                    }
+                }
+            });
+        };
+
         function showStep(stepNumber) {
             // Cancel any pending map initialization timer immediately
             if (window._routeMapTimer) {
@@ -14833,8 +15217,49 @@
                     renderPaymentBreakdownUI();
                 }
             }
+            if (typeof updateCabScrollIndicators === 'function') {
+                setTimeout(updateCabScrollIndicators, 150);
+            }
+            if (typeof updateStep3ContinueButtonState === 'function') {
+                updateStep3ContinueButtonState();
+            }
         }
+
+        window.updateStep3ContinueButtonState = function () {
+            const vehicle = BookingStore.getState().vehicle;
+            const btn = $('#step3ContinueBtn, #step3 .btn-search-uber');
+            if (!btn.length) return;
+
+            if (!vehicle) {
+                btn.prop('disabled', true)
+                   .addClass('disabled-btn')
+                   .attr('title', 'Please select a vehicle to continue')
+                   .css({
+                       'opacity': '0.95',
+                       'cursor': 'not-allowed',
+                       'pointer-events': 'auto',
+                       'background': '#94a3b8',
+                       'border-color': '#94a3b8',
+                       'box-shadow': 'none'
+                   });
+            } else {
+                btn.prop('disabled', false)
+                   .removeClass('disabled-btn')
+                   .removeAttr('title')
+                   .css({
+                       'opacity': '1',
+                       'cursor': 'pointer',
+                       'pointer-events': 'auto',
+                       'background': '',
+                       'border-color': '',
+                       'box-shadow': ''
+                   });
+            }
+        };
         function goBack(step) {
+            if (step === 6 && typeof resetStripePayment === 'function') {
+                resetStripePayment();
+            }
             showStep(step);
             if (step === 6) {
                 if (typeof startDynamicDriverSearch === 'function') {
@@ -15014,6 +15439,14 @@
                     recommendedHtml = `
                   <ul class="vehicle-recommended-list">
     <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Ford Mondeo, VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
+</ul>
+                    `;
+                case 'Executive':
+                    recommendedHtml = `
+                  <ul class="vehicle-recommended-list">
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Passat or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
 </ul>

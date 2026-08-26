@@ -421,9 +421,8 @@
         }
 
         .contact-info-item .icon-circle {
-            width: 48px;
-            height: 48px;
-            min-width: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: #000;
             color: #fff;
@@ -1006,6 +1005,20 @@
                             transform your transportation business? Contact us today, and our team of experts will be
                             happy to assist you.
                         </p>
+                         <div class="contact-info-item">
+                            <div class="icon-circle">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+
+                            <div class="info-text">
+                                <h4>WhatsApp</h4>
+                                <p>
+                                    <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0" target="_blank">
+                                        +44 795 032 3242
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
                         <div class="contact-info-item">
                             <div class="icon-circle">
                                 <i class="fas fa-phone"></i>
@@ -1013,7 +1026,7 @@
                             <div class="info-text">
                                 <h4>Phone</h4>
                                 <p><a href="tel:+44 208 337 3777">+44 208 337 3777</a></p>
-                                <p><a href="tel:+44 795 032 3242">+44 795 032 3242</a></p>                           
+                                                     
                             </div>
                         </div>
                         <div class="contact-info-item">
@@ -1033,10 +1046,8 @@
                                 <h4>Address</h4>
                                 <p>
                                     Goride Plus Ltd<br>
-                                    83 1st Floor<br>
-                                    Surbiton Road<br>
-                                    Kingston Upon Thames<br>
-                                    KT1 2HW<br>
+                                    83 1st Floor , Surbiton Road<br>                                  
+                                    Kingston Upon Thames , KT1 2HW ,<br>
                                     United Kingdom
                                 </p>
                             </div>

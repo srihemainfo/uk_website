@@ -12,7 +12,7 @@
                 <!-- Social Icons -->
                 <div class="footer-section">
                     <div class="footer-social-icons">
-                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C+I+would+like+to+make+a+booking.+Please+share+the+available+options+and+details.+Thank+you.&type=phone_number&app_absent=0&utm_source=chatgpt.com"
+                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0"
                             class="social-icon" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -67,10 +67,9 @@
                         <div class="footer-address">
                             <i class="fas fa-location-dot footer-contact-icon"></i>
                             <div>
-                                83 1st Floor<br>
-                                Surbiton Road<br>
-                                Kingston Upon Thames<br>
-                                KT1 2HW<br>
+                                83 1st Floor ,   Surbiton Road ,<br>
+                                Kingston Upon Thames ,<br>
+                                KT1 2HW ,<br>
                                 United Kingdom
                             </div>
                         </div>

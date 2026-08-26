@@ -1721,12 +1721,6 @@
                                     <strong>{{ ucwords(strtolower($cab_type ?? $vehicle_model ?? '')) }}</strong>
                                 </div>
                             @endif
-                            @if(!empty($vehicle_number))
-                                <div class="person-info-item">
-                                    <span>Vehicle Number</span>
-                                    <strong><span class="reg-badge">{{ $vehicle_number }}</span></strong>
-                                </div>
-                            @endif
                             <div class="person-info-item">
                                 <span>Contact</span>
                                 <div class="d-flex align-items-center gap-2">
@@ -1735,6 +1729,18 @@
                                     </a>
                                 </div>
                             </div>
+                            @if(!empty($reg_no) || !empty($vehicle_number))
+                                <div class="person-info-item">
+                                    <span>Vehicle Register No</span>
+                                    <strong>{{ $reg_no ?? $vehicle_number ?? '' }}</strong>
+                                </div>
+                            @endif
+                            @if(!empty($dl_no))
+                                <div class="person-info-item">
+                                    <span>Driver Licence No</span>
+                                    <strong>{{ $dl_no }}</strong>
+                                </div>
+                            @endif
                             @if(isset($vehicle_images) && is_array($vehicle_images) && count($vehicle_images) > 0)
                                 <div class="person-info-item">
                                     <span>Vehicle Photos</span>

@@ -11613,6 +11613,7 @@
 
         function getInclusionIcon(text) {
             const t = (text || '').toLowerCase();
+            if (t.includes('zone') || t.includes('surge') || t.includes('area')) return 'fa-map-marked-alt';
             if (t.includes('park')) return 'fa-parking';
             if (t.includes('congestion') || t.includes('toll') || t.includes('road')) return 'fa-road';
             if (t.includes('night')) return 'fa-moon';

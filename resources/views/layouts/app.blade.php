@@ -15442,6 +15442,7 @@
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
 </ul>
                     `;
+                    break;
                 case 'Executive':
                     recommendedHtml = `
                   <ul class="vehicle-recommended-list">

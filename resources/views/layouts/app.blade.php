@@ -10510,6 +10510,30 @@
             }
         }
 
+        // ===== DATE NORMALIZATION HELPER =====
+        function normalizeDateToYYYYMMDD(dStr) {
+            if (!dStr || typeof dStr !== 'string') return '';
+            dStr = dStr.trim();
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dStr)) return dStr;
+            const matchYMD = dStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+            if (matchYMD) {
+                return `${matchYMD[1]}-${matchYMD[2].padStart(2, '0')}-${matchYMD[3].padStart(2, '0')}`;
+            }
+            const matchDMY = dStr.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
+            if (matchDMY) {
+                return `${matchDMY[3]}-${matchDMY[2].padStart(2, '0')}-${matchDMY[1].padStart(2, '0')}`;
+            }
+            const cleaned = dStr.replace(/(\d+)(st|nd|rd|th)/i, '$1');
+            const parsed = new Date(cleaned);
+            if (!isNaN(parsed.getTime())) {
+                const yr = parsed.getFullYear();
+                const mo = String(parsed.getMonth() + 1).padStart(2, '0');
+                const da = String(parsed.getDate()).padStart(2, '0');
+                return `${yr}-${mo}-${da}`;
+            }
+            return dStr;
+        }
+
         // ===== VALIDATE AND AUTO-SET IF PAST TIME =====
         function checkAndAutoSetIfPastTime() {
             const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
@@ -10517,7 +10541,7 @@
             // CRITICAL FIX: If a booking has already been created/submitted (currentStep >= 5 or job_no / bookingId / jobId exists),
             // NEVER mutate the booking date and time! The booking is locked in with its original requested pickup time.
             if (state.currentStep >= 5 || state.job_no || state.bookingId || state.jobId || state.isBookingExpired) {
-                return;
+                return false;
             }
 
             const nowUK = getUKDate();
@@ -10527,7 +10551,8 @@
             const todayStr = `${yr}-${mo}-${da}`;
             const currentHours = nowUK.getHours();
             const currentMinutes = nowUK.getMinutes();
-            let selectedDate = state.date || (typeof bookingData !== 'undefined' ? bookingData.date : null) || $('#date').val();
+            let rawDate = state.date || (typeof bookingData !== 'undefined' ? bookingData.date : null) || $('#date').val();
+            let selectedDate = normalizeDateToYYYYMMDD(rawDate);
             let selectedTime = state.time || (typeof bookingData !== 'undefined' ? bookingData.time : null);
 
             let isPast = false;
@@ -10777,6 +10802,11 @@
         }
 
         function toggleTimeDropdown() {
+            checkAndAutoSetIfPastTime();
+            const currentDate = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().date : null;
+            if (typeof generateTimeOptions === 'function' && currentDate) {
+                generateTimeOptions(currentDate);
+            }
             $('#flightTimeDropdownList').removeClass('show');
             $('#flightTimeDropdownBtn').removeClass('active');
             $('#seaportTimeDropdownList').removeClass('show');
@@ -11336,12 +11366,22 @@
 
         function showSchedulePanel() {
             bookingType = "schedule";
+            checkAndAutoSetIfPastTime();
+            const currentDate = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().date : null;
+            if (typeof generateTimeOptions === 'function' && currentDate) {
+                generateTimeOptions(currentDate);
+            }
             $("#timeSelectionPanel").addClass("show");
         }
         window.showSchedulePanel = showSchedulePanel;
 
         function showSchedulePanelFromStep1() {
             bookingType = "schedule";
+            checkAndAutoSetIfPastTime();
+            const currentDate = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().date : null;
+            if (typeof generateTimeOptions === 'function' && currentDate) {
+                generateTimeOptions(currentDate);
+            }
             // Hide all background sections
             $('section').not('.hero-container').addClass('sections-hidden');
             $('footer').addClass('sections-hidden');
@@ -11400,7 +11440,7 @@
             );
         }
         function saveSchedule() {
-            checkAndAutoSetIfPastTime();
+            const wasAutoUpdated = checkAndAutoSetIfPastTime();
             const date = BookingStore.getState().date;
             $("#date").val(date);
             const currentTime = BookingStore.getState().time;
@@ -11411,6 +11451,9 @@
             if (!currentTime) {
                 showToast('Please select a time', 'error');
                 return;
+            }
+            if (wasAutoUpdated) {
+                showToast('Pickup time was updated to ' + currentTime + ' as the previous time had passed.', 'info');
             }
             // Batch update date + time + bookingType in one store call
             BookingStore.setState({ date, time: currentTime, bookingType: 'schedule' });

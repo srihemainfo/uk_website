@@ -822,7 +822,7 @@
                 </div>
                 <div class="mobile-trip-body" id="mobileTripBody">
                     <div class="row g-2">
-                        <div class="col-6">
+                        <div class="col-6" onclick="showSchedulePanelFromStep1()" style="cursor: pointer;" title="Change date">
                             <div class="trip-stat-box">
                                 <div class="stat-icon-circle yellow-icon">
                                     <i class="far fa-calendar-alt"></i>
@@ -833,7 +833,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-6" onclick="showSchedulePanelFromStep1()" style="cursor: pointer;" title="Change time">
                             <div class="trip-stat-box">
                                 <div class="stat-icon-circle yellow-icon">
                                     <i class="far fa-clock"></i>
@@ -1295,7 +1295,10 @@
                         </div>
 
                         <!-- BOX 2: DATE, TIME, DISTANCE & DURATION CARD (STRICT 2 IN A ROW) -->
-                        <div class="trip-datetime-card summary-box-card" id="tripDateTimeCard">
+                        <div class="trip-datetime-card summary-box-card position-relative" id="tripDateTimeCard" onclick="showSchedulePanelFromStep1()" style="cursor: pointer;" title="Click to change date & time">
+                            <button type="button" class="edit-icon-btn position-absolute top-0 end-0 m-2" style="z-index: 2;" onclick="event.stopPropagation(); showSchedulePanelFromStep1()" title="Edit Date & Time">
+                                <i class="fas fa-pencil"></i>
+                            </button>
                             <div class="row g-2 align-items-center">
                                 <!-- DATE STAT (ROW 1, COL 1) -->
                                 <div class="col-6 col-md-6">

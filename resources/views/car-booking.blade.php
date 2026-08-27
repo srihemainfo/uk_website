@@ -1612,7 +1612,7 @@
                             <i class="fas fa-chevron-left"></i> Back
                         </button>
                         <button class="btn-search-uber" id="step3ContinueBtn" onclick="proceedToPassengerDetails()">
-                            <i class="fas fa-arrow-right"></i> Continue
+                            <i class="fas fa-arrow-right"></i> Select Car & Continue
                         </button>
                     </div>
                 </div>

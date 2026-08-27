@@ -15437,7 +15437,7 @@
                 case 'Standard':
                     recommendedHtml = `
                   <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Ford Mondeo, VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Toyota Prius or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
 </ul>
@@ -15445,7 +15445,7 @@
                 case 'Executive':
                     recommendedHtml = `
                   <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes-Benz E-Class or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 2 large suitcases (20kg max each) + 2 hand luggage</li>
 </ul>
@@ -15454,27 +15454,16 @@
                 case 'Estate':
                     recommendedHtml = `
                        <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Volvo Estate, VW Passat or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Toyota Corolla or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 3 large suitcases (20kg max each) + 3 hand luggage</li>
 </ul>
                     `;
                     break;
-                case 'Executive':
-                    recommendedHtml = `
-                        <ul class="vehicle-recommended-list">
-                            <li><i class="fas fa-check-circle"></i> 1 Passenger + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 2 Passengers + 3 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 3 Passengers + 2 Large Luggage</li>
-                            <li><i class="fas fa-check-circle"></i> 4 Passengers + 2 Cabin Bags</li>
-                            <li><i class="fas fa-star"></i> Premium vehicle for business and executive travel.</li>
-                        </ul>
-                    `;
-                    break;
                 case 'MPV':
                     recommendedHtml = `
                       <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Sharan, Ford Galaxy or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Volkswagen Sharan or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 4 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 4 large suitcases (20kg max each) + 4 hand luggage</li>
 </ul>
@@ -15484,7 +15473,7 @@
                 case 'MPV 6':
                     recommendedHtml = `
                        <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes V-Class or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes-Benz V-Class or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 6 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 6 large suitcases (20kg max each) + 6 hand luggage</li>
     <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Families and group airport transfers</li>
@@ -15494,7 +15483,7 @@
                 case 'MPV 7':
                     recommendedHtml = `
                        <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes V-Class or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Volkswagen Transporter or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 7 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 7 large suitcases (20kg max each) + 7 hand luggage</li>
     <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large groups and extended families</li>
@@ -15504,7 +15493,7 @@
                 case 'MPV 7 Luxury':
                     recommendedHtml = `
                     <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes Vito, Mercedes V-Class or similar Luxury MPV7</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes-Benz V-Class or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 7 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 7 large suitcases (20kg max each) + 7 hand luggage</li>
     <li><i class="fas fa-check-circle"></i> <strong>Features:</strong> Spacious cabin, premium interiors & first-class travel experience</li>
@@ -15515,7 +15504,7 @@
                 case 'MPV 8':
                     recommendedHtml = `
                        <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> VW Transporter or similar</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Volkswagen Transporter or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 8 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 8 large suitcases (20kg max each) + 8 hand luggage (10kg max each)</li>
     <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large families, tours & group travel</li>
@@ -15525,7 +15514,7 @@
                 case 'MPV 8 Luxury':
                     recommendedHtml = `
                        <ul class="vehicle-recommended-list">
-    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes Vito, VW Transporter or similar MPV8</li>
+    <li><i class="fas fa-check-circle"></i> <strong>Vehicle:</strong> Mercedes-Benz Vito or similar</li>
     <li><i class="fas fa-check-circle"></i> <strong>Capacity:</strong> Up to 8 passengers</li>
     <li><i class="fas fa-check-circle"></i> <strong>Luggage:</strong> 8 large suitcases (20kg max each) + 8 hand luggage (10kg max each)</li>
     <li><i class="fas fa-check-circle"></i> <strong>Ideal for:</strong> Large families, tours & group travel</li>

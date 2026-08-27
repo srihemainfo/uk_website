@@ -2754,10 +2754,15 @@
                             style="font-size: 13px; border: 1px solid #fecaca;" id="expiredPickupTimeDetails">
                             <i class="fa-solid fa-calendar-xmark"></i> Exceeded Pickup Time
                         </div>
-                        <div class="mt-2 d-flex justify-content-center">
+                        <div class="mt-2 d-flex flex-column flex-sm-row justify-content-center gap-2">
+                            <button type="button" class="btn btn-warning btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm"
+                                onclick="changeExpiredPickupTime()"
+                                style="max-width: 240px; font-size: 15px; background: #ffc107; color: #000; border: none; cursor: pointer;">
+                                <i class="fa-solid fa-clock me-2"></i> Change Time
+                            </button>
                             <button type="button" class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm"
                                 onclick="resetToNewBooking()"
-                                style="max-width: 320px; font-size: 15px; background: #000; color: #fff; border: none; cursor: pointer;">
+                                style="max-width: 240px; font-size: 15px; background: #000; color: #fff; border: none; cursor: pointer;">
                                 <i class="fa-solid fa-plus me-2"></i> New Booking
                             </button>
                         </div>

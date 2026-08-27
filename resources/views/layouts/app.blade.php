@@ -10829,12 +10829,11 @@
         }
 
         function selectTime(time) {
-            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
-            if (state.currentStep >= 5 || state.job_no || state.bookingId || state.jobId || state.isBookingExpired) {
-                return;
+            // Unblock expired state and store new time
+            if (typeof BookingStore !== 'undefined' && BookingStore.setState) {
+                BookingStore.setState({ time: time, isBookingExpired: false });
             }
-            // Store time in the store (triggers subscribers)
-            BookingStore.setState({ time: time });
+            $('#bookingExpiredCard').hide();
             $('#timeDropdownValue').text(time);
             $('#timeDropdownList').removeClass('show');
             $('#timeDropdownBtn').removeClass('active');
@@ -13535,26 +13534,13 @@
 
         function parseDateTimeToJSDate(dateStr, timeStr) {
             if (!dateStr) return null;
-            let cleanDateStr = String(dateStr).replace(/(\d+)(st|nd|rd|th)/gi, '$1').trim();
-            let dt = new Date(cleanDateStr);
+            const normalizedDate = (typeof normalizeDateToYYYYMMDD === 'function') ? normalizeDateToYYYYMMDD(dateStr) : dateStr;
+            if (!normalizedDate) return null;
 
-            if (isNaN(dt.getTime())) {
-                const parts = cleanDateStr.split(/[-/\s]+/);
-                if (parts.length >= 3) {
-                    if (parts[0].length === 4) { // YYYY-MM-DD
-                        dt = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-                    } else if (parts[2].length === 4) { // DD-MM-YYYY
-                        dt = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-                    }
-                }
-            }
-
-            if (isNaN(dt.getTime())) return null;
-
+            let hours = 0;
+            let minutes = 0;
             if (timeStr) {
                 timeStr = String(timeStr).trim().toUpperCase();
-                let hours = 0;
-                let minutes = 0;
                 const match12 = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
                 if (match12) {
                     hours = parseInt(match12[1], 10);
@@ -13569,9 +13555,11 @@
                         minutes = parseInt(match24[2], 10);
                     }
                 }
-                dt.setHours(hours, minutes, 0, 0);
             }
-            return dt;
+            const hh = String(hours).padStart(2, '0');
+            const mm = String(minutes).padStart(2, '0');
+            const dt = new Date(`${normalizedDate}T${hh}:${mm}:00`);
+            return isNaN(dt.getTime()) ? null : dt;
         }
 
         function calculateEffectivePickupTime(state) {
@@ -13634,12 +13622,31 @@
 
         function getUKCurrentTime() {
             try {
-                const ukTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/London" });
-                return new Date(ukTimeStr);
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-GB', {
+                    timeZone: 'Europe/London',
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+                });
+                const parts = formatter.formatToParts(now).reduce((acc, part) => {
+                    acc[part.type] = part.value;
+                    return acc;
+                }, {});
+                return new Date(`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}`);
             } catch (e) {
                 return new Date();
             }
         }
+
+        function changeExpiredPickupTime() {
+            if (typeof BookingStore !== 'undefined' && BookingStore.setState) {
+                BookingStore.setState({ isBookingExpired: false });
+            }
+            $('#bookingExpiredCard').hide();
+            checkAndAutoSetIfPastTime();
+            showSchedulePanelFromStep1();
+        }
+        window.changeExpiredPickupTime = changeExpiredPickupTime;
 
         function triggerBookingExpiredState(effectiveTime) {
             if (driversListener) {
@@ -13691,10 +13698,22 @@
             });
 
             if (isExpired) {
+                if (state.currentStep === 3) {
+                    const wasAutoUpdated = checkAndAutoSetIfPastTime();
+                    if (wasAutoUpdated) {
+                        BookingStore.setState({ isBookingExpired: false });
+                        $('#bookingExpiredCard').hide();
+                        return false;
+                    }
+                }
                 console.log('%c[PickupTimeCheck] ❌ Pickup time has EXPIRED! Triggering Expired UI & stopping Firebase.', 'color: #ef4444; font-weight: bold;');
                 triggerBookingExpiredState(effectivePickupDateTime);
                 return true;
             } else {
+                if (state.isBookingExpired) {
+                    BookingStore.setState({ isBookingExpired: false });
+                }
+                $('#bookingExpiredCard').hide();
                 console.log('%c[PickupTimeCheck] ✅ Booking active - pickup time is in future.', 'color: #10b981;');
             }
             return false;

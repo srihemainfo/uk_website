@@ -8734,10 +8734,114 @@
             color: #111111 !important;
         }
 
-        .track-ride-overlay.show~.global-toast i:not(.text-danger),
-        .track-ride-overlay .global-toast i:not(.text-danger),
-        body:has(.track-ride-overlay.show) .global-toast i:not(.text-danger) {
-            color: #111111 !important;
+        /* Global Floating WhatsApp Button (Icon Only with Attractive Animations) */
+        .global-whatsapp-btn {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #ffffff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            z-index: 9990;
+            text-decoration: none !important;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 3px solid #ffffff;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: waFloatBounce 3s infinite ease-in-out;
+        }
+
+        .global-whatsapp-btn i {
+            color: #ffffff;
+            line-height: 1;
+            transition: transform 0.3s ease;
+            animation: waWiggle 4s infinite ease-in-out;
+        }
+
+        .global-whatsapp-btn:hover {
+            background: linear-gradient(135deg, #20ba5a 0%, #0e766a 100%);
+            transform: scale(1.12) rotate(-8deg);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.65), 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: #ffffff !important;
+            text-decoration: none !important;
+        }
+
+        .global-whatsapp-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Dual Expanding Pulse Rings */
+        .global-whatsapp-btn::before,
+        .global-whatsapp-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: rgba(37, 211, 102, 0.45);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .global-whatsapp-btn::before {
+            animation: waPulseRing 2.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        .global-whatsapp-btn::after {
+            animation: waPulseRing 2.4s infinite cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s;
+        }
+
+        /* Floating Bounce Animation */
+        @keyframes waFloatBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Periodic Eye-Catching Wiggle Animation */
+        @keyframes waWiggle {
+            0%, 80%, 100% {
+                transform: rotate(0deg);
+            }
+            85% {
+                transform: rotate(-14deg);
+            }
+            90% {
+                transform: rotate(14deg);
+            }
+            95% {
+                transform: rotate(-8deg);
+            }
+        }
+
+        /* Expanding Pulse Waves Keyframes */
+        @keyframes waPulseRing {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+            70%, 100% {
+                transform: scale(1.6);
+                opacity: 0;
+            }
+        }
+
+        /* Hide on mobile screens <= 768px where bottom mobile action bar is present */
+        @media (max-width: 768px) {
+            .global-whatsapp-btn {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -18757,6 +18861,14 @@
             contentContainer.find('.' + tab + '-pane').fadeIn(300);
         }
     </script>
+    <!-- Global Floating WhatsApp Button (Icon Only) -->
+    <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0" 
+       target="_blank" 
+       rel="noopener noreferrer" 
+       class="global-whatsapp-btn"
+       aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
     <!-- Global Toast -->
     <div id="globalToast" class="global-toast">
         <i id="globalToastIcon" class="fas fa-check-circle"></i>

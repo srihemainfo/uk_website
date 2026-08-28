@@ -1295,8 +1295,8 @@
                         </div>
 
                         <!-- BOX 2: DATE, TIME, DISTANCE & DURATION CARD (STRICT 2 IN A ROW) -->
-                        <div class="trip-datetime-card summary-box-card position-relative" id="tripDateTimeCard" onclick="showSchedulePanelFromStep1()" style="cursor: pointer;" title="Click to change date & time">
-                            <button type="button" class="edit-icon-btn position-absolute top-0 end-0 m-2" style="z-index: 2;" onclick="event.stopPropagation(); showSchedulePanelFromStep1()" title="Edit Date & Time">
+                        <div class="trip-datetime-card summary-box-card position-relative" id="tripDateTimeCard">
+                            <button type="button" class="edit-icon-btn position-absolute top-0 end-0 m-2" style="z-index: 2;" onclick="showSchedulePanelFromStep1()" title="Edit Date & Time">
                                 <i class="fas fa-pencil"></i>
                             </button>
                             <div class="row g-2 align-items-center">

@@ -2757,7 +2757,7 @@
                         <div class="mt-2 d-flex flex-column flex-sm-row justify-content-center gap-2">
                             <button type="button" class="btn btn-warning btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm"
                                 onclick="changeExpiredPickupTime()"
-                                style="max-width: 240px; font-size: 15px; background: #ffc107; color: #000; border: none; cursor: pointer;">
+                                style="max-width: 240px; font-size: 15px; background: #ffc107; color: #000; border: none; cursor: pointer; display: none !important;">
                                 <i class="fa-solid fa-clock me-2"></i> Change Time
                             </button>
                             <button type="button" class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm"

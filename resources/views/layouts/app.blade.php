@@ -15027,11 +15027,16 @@
                     scrollTarget.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             } else {
-                const distance = 360;
+                const itemClass = stepId === 'step3' ? '.vehicle-item' : '.driver-item';
+                const items = listElem ? listElem.querySelectorAll(itemClass) : [];
+                if (items && items.length > 0) {
+                    const lastItem = items[items.length - 1];
+                    lastItem.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                }
                 if (scrollTarget === window) {
-                    window.scrollBy({ top: distance, behavior: 'smooth' });
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                 } else {
-                    scrollTarget.scrollBy({ top: distance, behavior: 'smooth' });
+                    scrollTarget.scrollTo({ top: scrollTarget.scrollHeight, behavior: 'smooth' });
                 }
             }
         };

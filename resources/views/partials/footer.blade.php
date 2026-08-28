@@ -57,7 +57,7 @@
                         <div class="footer-phone">
                             <i class="fas fa-phone footer-contact-icon"></i>
 
-                            <a href="tel:+442083373777">+44 208 337 3777</a>
+                            <a href="tel:+442083373777">+44 20 8337 3777</a>
 
                         </div>
                         <a href="mailto:support.uk@goride.run">

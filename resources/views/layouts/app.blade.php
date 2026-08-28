@@ -8995,7 +8995,7 @@
                                 <div class="help-card-title">WhatsApp Us</div>
                             </div>
                             <div class="help-card-action">
-                                <span class="help-card-contact whatsapp-color">+44 7950 323242</span>
+                                <span class="help-card-contact whatsapp-color">+44 79 5032 3242</span>
                                 <i class="fas fa-chevron-right help-card-arrow whatsapp-color"></i>
                             </div>
                         </a>
@@ -9009,7 +9009,7 @@
                                 <div class="help-card-title">Call Us</div>
                             </div>
                             <div class="help-card-action flex-column align-items-end">
-                                <a href="tel:+442083373777" class="help-card-contact call-color">+44 208 337 3777</a>
+                                <a href="tel:+442083373777" class="help-card-contact call-color">+44 20 8337 3777</a>
 
                             </div>
                             <i class="fas fa-chevron-right help-card-arrow call-color ms-1"></i>

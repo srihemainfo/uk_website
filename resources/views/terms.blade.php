@@ -739,7 +739,7 @@
                 <p>
                     <strong>GoRide Plus Ltd</strong><br>
                     Email: <a href="mailto:support.uk@goride.run">support.uk@goride.run</a><br>
-                    Phone: <a href="tel:+442083373777">+44 208 337 3777</a>
+                    Phone: <a href="tel:+442083373777">+44 20 8337 3777</a>
                 </p>
             </div>
         </div>

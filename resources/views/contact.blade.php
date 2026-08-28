@@ -1014,7 +1014,7 @@
                                 <h4>WhatsApp</h4>
                                 <p>
                                     <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0" target="_blank">
-                                        +44 795 032 3242
+                                        +44 79 5032 3242
                                     </a>
                                 </p>
                             </div>
@@ -1025,7 +1025,7 @@
                             </div>
                             <div class="info-text">
                                 <h4>Phone</h4>
-                                <p><a href="tel:+44 208 337 3777">+44 208 337 3777</a></p>
+                                <p><a href="tel:+44 20 8337 3777">+44 20 8337 3777</a></p>
                                                      
                             </div>
                         </div>

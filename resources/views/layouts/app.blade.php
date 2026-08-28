@@ -10700,8 +10700,8 @@
             if (isPast) {
                 let targetDate = (!selectedDate || selectedDate < todayStr) ? todayStr : selectedDate;
 
-                // Find the first valid future 30-min slot for targetDate
-                let firstSlotTime = null;
+                // Collect all valid future 30-min slots for targetDate
+                const futureSlots = [];
                 for (let hour = 0; hour < 24; hour++) {
                     for (let minute = 0; minute < 60; minute += 30) {
                         if (targetDate === todayStr) {
@@ -10712,21 +10712,29 @@
                         const ampm = hour >= 12 ? 'PM' : 'AM';
                         const displayHour = hour % 12 === 0 ? 12 : hour % 12;
                         const displayMinute = minute === 0 ? '00' : '30';
-                        firstSlotTime = `${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`;
-                        break;
+                        futureSlots.push(`${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`);
                     }
-                    if (firstSlotTime) break;
                 }
 
-                // If today has no remaining slots (after 23:30), roll over to tomorrow
-                if (!firstSlotTime && targetDate === todayStr) {
-                    const tomorrow = getUKDate();
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    const tYr = tomorrow.getFullYear();
-                    const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
-                    const tDa = String(tomorrow.getDate()).padStart(2, '0');
-                    targetDate = `${tYr}-${tMo}-${tDa}`;
-                    firstSlotTime = '12:00 AM';
+                let autoSelectedSlot = null;
+                if (targetDate === todayStr) {
+                    if (futureSlots.length < 2) {
+                        // If second slot is not available for current day, advance to next day
+                        const tomorrow = getUKDate();
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        const tYr = tomorrow.getFullYear();
+                        const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
+                        const tDa = String(tomorrow.getDate()).padStart(2, '0');
+                        targetDate = `${tYr}-${tMo}-${tDa}`;
+                        // For tomorrow, select the second slot (12:30 AM)
+                        autoSelectedSlot = '12:30 AM';
+                    } else {
+                        // Select the second slot for today
+                        autoSelectedSlot = futureSlots[1];
+                    }
+                } else {
+                    // For future dates, select the second slot
+                    autoSelectedSlot = futureSlots.length >= 2 ? futureSlots[1] : (futureSlots[0] || '12:30 AM');
                 }
 
                 // Sync flatpickr input if present
@@ -10741,13 +10749,13 @@
                 if (typeof BookingStore !== 'undefined') {
                     BookingStore.setState({
                         date: targetDate,
-                        time: firstSlotTime,
+                        time: autoSelectedSlot,
                         bookingType: 'schedule'
                     });
                 }
                 if (typeof bookingData !== 'undefined') {
                     bookingData.date = targetDate;
-                    bookingData.time = firstSlotTime;
+                    bookingData.time = autoSelectedSlot;
                 }
 
                 // Re-generate time options dropdown for targetDate
@@ -10757,11 +10765,11 @@
 
                 // Update all related UI fields
                 $('#normalJourneyDate').val(targetDate);
-                $('#normalJourneyTime').val(firstSlotTime);
-                $('#timeDropdownValue').text(firstSlotTime);
+                $('#normalJourneyTime').val(autoSelectedSlot);
+                $('#timeDropdownValue').text(autoSelectedSlot);
 
                 if (typeof checkNightChargeNotice === 'function') {
-                    checkNightChargeNotice(firstSlotTime);
+                    checkNightChargeNotice(autoSelectedSlot);
                 }
                 if (typeof _updateDateTimeUI === 'function' && typeof BookingStore !== 'undefined') {
                     _updateDateTimeUI(BookingStore.getState());
@@ -10815,10 +10823,9 @@
             }
             const isToday = selectedDate.toDateString() === now.toDateString();
 
-            let firstOptionTime = null;
-            let firstOptionFormatted = null;
             const currentSelectedTime = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().time : '';
             let foundCurrentTime = false;
+            const availableSlots = [];
 
             // Generate times every 30 minutes from 00:00 to 23:30
             for (let hour = 0; hour < 24; hour++) {
@@ -10844,60 +10851,68 @@
                         currentSelectedTime.replace(/^0/, '') === timeValueNoZero
                     );
 
-                    if (!firstOptionTime) {
-                        firstOptionTime = timeValue;
-                        firstOptionFormatted = timeDisplay;
-                    }
+                    availableSlots.push({
+                        timeValue: timeValue,
+                        timeDisplay: timeDisplay,
+                        hour: hour,
+                        minute: minute,
+                        isCurrentSelected: isCurrentSelected
+                    });
 
                     if (isCurrentSelected) {
                         foundCurrentTime = true;
                     }
-
-                    const isNightSlot = (hour === 23 || (hour >= 0 && hour < 5) || (hour === 5 && minute === 0));
-
-                    const item = document.createElement('div');
-                    item.className = 'time-dropdown-item' + (isCurrentSelected ? ' selected' : '');
-                    item.setAttribute('data-time', timeValue);
-                    item.onclick = function () { selectTime(timeValue); };
-
-                    if (isNightSlot) {
-                        item.innerHTML = `<span>${timeDisplay}</span><span class="night-moon-icon"><i class="fas fa-moon"></i></span>`;
-                    } else {
-                        item.textContent = timeDisplay;
-                    }
-                    timeDropdownList.appendChild(item);
                 }
             }
+
+            // If second slot is not available for current day (e.g. fewer than 2 slots remaining today), jump to next day
+            if (isToday && availableSlots.length < 2) {
+                const tomorrow = getUKDate();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const tYr = tomorrow.getFullYear();
+                const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
+                const tDa = String(tomorrow.getDate()).padStart(2, '0');
+                const tomorrowStr = `${tYr}-${tMo}-${tDa}`;
+
+                const dateInput = document.getElementById('date');
+                if (dateInput && dateInput._flatpickr) {
+                    dateInput._flatpickr.setDate(tomorrowStr, false);
+                } else if (dateInput) {
+                    dateInput.value = tomorrowStr;
+                }
+                if (typeof BookingStore !== 'undefined') {
+                    BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
+                }
+                generateTimeOptions(tomorrowStr);
+                return;
+            }
+
+            // Build all dropdown items so the user can still manually select the 1st slot or any other slot
+            availableSlots.forEach(slot => {
+                const isNightSlot = (slot.hour === 23 || (slot.hour >= 0 && slot.hour < 5) || (slot.hour === 5 && slot.minute === 0));
+
+                const item = document.createElement('div');
+                item.className = 'time-dropdown-item' + (slot.isCurrentSelected ? ' selected' : '');
+                item.setAttribute('data-time', slot.timeValue);
+                item.onclick = function () { selectTime(slot.timeValue); };
+
+                if (isNightSlot) {
+                    item.innerHTML = `<span>${slot.timeDisplay}</span><span class="night-moon-icon"><i class="fas fa-moon"></i></span>`;
+                } else {
+                    item.textContent = slot.timeDisplay;
+                }
+                timeDropdownList.appendChild(item);
+            });
 
             if (foundCurrentTime && currentSelectedTime && currentSelectedTime.trim() !== '') {
                 // Keep existing user-selected valid future time
                 selectTime(currentSelectedTime);
-            } else if (firstOptionTime) {
-                // Default to the first available valid future time slot
-                selectTime(firstOptionTime);
+            } else if (availableSlots.length >= 2) {
+                // Default auto-select to the SECOND slot (index 1)
+                selectTime(availableSlots[1].timeValue);
+            } else if (availableSlots.length === 1) {
+                selectTime(availableSlots[0].timeValue);
             } else {
-                if (isToday) {
-                    // All times for today have passed (e.g. late night after 23:30)
-                    // Automatically advance date to tomorrow and generate time options
-                    const tomorrow = getUKDate();
-                    tomorrow.setDate(tomorrow.getDate() + 1);
-                    const yr = tomorrow.getFullYear();
-                    const mo = String(tomorrow.getMonth() + 1).padStart(2, '0');
-                    const da = String(tomorrow.getDate()).padStart(2, '0');
-                    const tomorrowStr = `${yr}-${mo}-${da}`;
-
-                    const dateInput = document.getElementById('date');
-                    if (dateInput && dateInput._flatpickr) {
-                        dateInput._flatpickr.setDate(tomorrowStr, false);
-                    } else if (dateInput) {
-                        dateInput.value = tomorrowStr;
-                    }
-                    if (typeof BookingStore !== 'undefined') {
-                        BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
-                    }
-                    generateTimeOptions(tomorrowStr);
-                    return;
-                }
                 const item = document.createElement('div');
                 item.className = 'time-dropdown-item';
                 item.textContent = 'No times available';
@@ -11249,10 +11264,18 @@
             return !!getCookieValue('auth_token');
         }
         function openAuthModal() {
-            document.getElementById('authLoginModal').classList.add('show');
+            if (typeof _resetGoogleBtn === 'function') {
+                _resetGoogleBtn();
+            }
+            const modal = document.getElementById('authLoginModal');
+            if (modal) modal.classList.add('show');
         }
         function closeAuthModal() {
-            document.getElementById('authLoginModal').classList.remove('show');
+            const modal = document.getElementById('authLoginModal');
+            if (modal) modal.classList.remove('show');
+            if (typeof _resetGoogleBtn === 'function') {
+                _resetGoogleBtn();
+            }
         }
         // Store pending action so we can resume after login
         let _pendingAfterAuth = null;
@@ -16089,6 +16112,10 @@
 
         // Reset the Google Sign-In button to its default state
         function _resetGoogleBtn() {
+            if (window._googleBtnTimer) {
+                clearTimeout(window._googleBtnTimer);
+                window._googleBtnTimer = null;
+            }
             const btn = document.getElementById('authGoogleBtn');
             if (!btn) return;
             btn.disabled = false;
@@ -16109,12 +16136,36 @@
             btn.disabled = true;
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Connecting to Google…`;
 
+            // Clear any error messages
+            const errEl = document.getElementById('authGoogleError');
+            if (errEl) errEl.textContent = '';
+
             // Ensure GSI library is loaded
             if (!window.google || !window.google.accounts) {
                 _showAuthError('Google Sign-In library not loaded yet. Please try again.');
                 _resetGoogleBtn();
                 return;
             }
+
+            // Safety timeout to reset button if popup is closed or blocked
+            if (window._googleBtnTimer) clearTimeout(window._googleBtnTimer);
+            window._googleBtnTimer = setTimeout(() => {
+                const btnNow = document.getElementById('authGoogleBtn');
+                if (btnNow && btnNow.disabled && btnNow.innerHTML.includes('fa-spinner')) {
+                    _resetGoogleBtn();
+                }
+            }, 10000);
+
+            // Reset button if user returns focus to main window after cancelling popup
+            const resetOnFocus = () => {
+                setTimeout(() => {
+                    const btnNow = document.getElementById('authGoogleBtn');
+                    if (btnNow && btnNow.disabled && btnNow.innerHTML.includes('fa-spinner')) {
+                        _resetGoogleBtn();
+                    }
+                }, 800);
+            };
+            window.addEventListener('focus', resetOnFocus, { once: true });
 
             // Initialize GSI and trigger the popup
             window.google.accounts.id.initialize({
@@ -16130,6 +16181,8 @@
                 if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
                     // One-Tap not available — use a token client popup instead
                     _triggerGoogleOAuthPopup();
+                } else if (notification.isDismissedMoment()) {
+                    _resetGoogleBtn();
                 }
             });
         }

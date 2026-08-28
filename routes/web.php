@@ -108,6 +108,18 @@ Route::prefix('uk')->name('uk.')->group(function () {
     Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
     Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
     Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
+
+    Route::get('/404', function () {
+        return response()->view('errors.404', [], 404);
+    })->name('404');
 });
 
+Route::get('/404', function () {
+    return response()->view('errors.404', [], 404);
+})->name('404');
+
 Route::post('/submit-contact', [UtilityController::class, 'submitContactForm'])->name('contact.submit');
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

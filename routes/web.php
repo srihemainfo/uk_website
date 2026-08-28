@@ -1,7 +1,17 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\BlogController;
+
+Route::get('/cache-clear', function () {
+    Artisan::call('optimize:clear');
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Optimization cache cleared successfully!',
+        'output' => nl2br(Artisan::output())
+    ]);
+})->name('cache.clear');
 
 Route::get('/', function () {
     return view('car-booking');

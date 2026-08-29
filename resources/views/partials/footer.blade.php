@@ -16,20 +16,20 @@
                             class="social-icon" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="https://www.facebook.com/people/Goride-Run/pfbid0jVh2iGFREVFLyTYRQFybaLXW3ECbUrgR9kJqcN4EMVYbSzPzFr7SRRLWgsTWf1BJl/"
-                            class="social-icon" title="Facebook">
+                        <a href="https://www.facebook.com/people/Goride-Run/61591600963177/"
+                             class="social-icon" title="Facebook">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="social-icon" title="Twitter">
+                        <a href="https://x.com/Goride_UK" class="social-icon" title="Twitter">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a href="https://www.instagram.com/goride.run_uk/" class="social-icon" title="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="social-icon" title="LinkedIn">
+                        <a href="https://www.linkedin.com/in/goride-uk-65924b425/" class="social-icon" title="LinkedIn">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="#" class="social-icon" title="YouTube">
+                        <a href="https://www.youtube.com/@Goride_UK" class="social-icon" title="YouTube">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>

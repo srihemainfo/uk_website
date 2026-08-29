@@ -1,6 +1,6 @@
 <nav class="navbar-uber">
     <div class="navbar-brand-uber">
-        <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
+        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
     </div>
     <ul class="navbar-menu">
         <li>
@@ -22,12 +22,12 @@
             <div id="navbarUserDropdown" class="navbar-user-dropdown">
                 <ul class="navbar-user-menu">
                     <li>
-                        <a href="{{ route('profile') }}" class="navbar-user-menu-btn">
+                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/profile" class="navbar-user-menu-btn">
                             <i class="far fa-user me-2"></i> Profile
                         </a>
                     </li>
                     <li id="desktopNavDashboardLink">
-                        <a href="{{ route('dashboard') }}" class="navbar-user-menu-btn">
+                        <a href="{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}/dashboard" class="navbar-user-menu-btn">
                             <i class="fas fa-chart-line me-2"></i> Dashboard
                         </a>
                     </li>
@@ -84,7 +84,7 @@
     <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
-            <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
+            <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
             <button onclick="toggleMobileMenu()">
                 <i class="fas fa-times"></i>
             </button>

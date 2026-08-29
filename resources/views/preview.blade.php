@@ -820,7 +820,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 <span class="text-uppercase text-secondary fw-bold"
                                     style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
-                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
+                                <button type="button" class="btn-fare-info active" id="btnToggleFareBreakdown"
                                     title="View Fare Breakdown">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
@@ -828,7 +828,7 @@
                             <div class="fare-amount">£80.14</div>
                         </div>
 
-                        <div class="fare-breakdown-collapse" id="fareBreakdownCollapse">
+                        <div class="fare-breakdown-collapse show" id="fareBreakdownCollapse">
                             <div class="fare-breakdown-inner">
                                 <div class="fare-breakdown-header">
                                     <i class="fa-solid fa-receipt"></i> Fare Breakdown

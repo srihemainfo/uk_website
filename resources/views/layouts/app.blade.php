@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide</title>
+    @include('partials.seo')
 
     @php
         // Checks the original domain requested by the browser
@@ -1768,6 +1768,36 @@
             border-color: #999;
         }
 
+        .btn-cancel-job-small {
+            padding: 11px 22px;
+            background: #dc2626;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+            letter-spacing: 0.2px;
+        }
+
+        .btn-cancel-job-small:hover {
+            background: #b91c1c;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
+        }
+
+        .btn-cancel-job-small:active {
+            transform: translateY(0);
+        }
+
         .passenger-form-uber {
             background: #f9f9f9;
             padding: 12px;
@@ -2434,7 +2464,7 @@
         }
 
         .footer-logo-section {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .footer-logo {
@@ -2453,6 +2483,7 @@
         .footer-tagline {
             font-size: 16px;
             color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0px;
         }
 
         .footer-section {
@@ -2487,6 +2518,60 @@
             text-decoration: none;
             font-size: 16px;
             transition: color 0.3s;
+        }
+
+        .footer-app-downloads {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .footer-store-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            color: #ffffff !important;
+            padding: 8px 14px;
+            border-radius: 10px;
+            width: 185px;
+            text-decoration: none !important;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .footer-store-btn:hover {
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
+
+        .footer-store-btn i {
+            font-size: 22px;
+            color: black;
+        }
+
+        .footer-store-btn-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .footer-store-btn-sub {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: black;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+
+        .footer-store-btn-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: black;
         }
 
         .footer-links-list a:hover {
@@ -2790,7 +2875,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .phone-input-wrapper {
@@ -4336,18 +4421,52 @@
         }
 
         .help-icon {
-            width: 70px;
-            height: 70px;
+            width: 63px;
+            height: 63px;
             margin: 0 auto 18px;
             border-radius: 50%;
-            background: #f8be00;
-            color: #000;
+            background: #2aca19;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
         }
+        .contact-details {
+    width: 100%;
+}
 
+.contact-item {
+    width: 100%;
+    max-width: 260px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 4px 0;
+}
+
+.contact-item a {
+    color: #222;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.contact-item i {
+    flex-shrink: 0;
+}
+
+.phone-item {
+    white-space: nowrap;
+}
+
+.phone-separator {
+    margin: 0 4px;
+    color: #555;
+    font-size: 14px;
+}
         .help-modal a {
             color: #111;
             text-decoration: none;
@@ -4552,6 +4671,17 @@
         /* Responsive */
         @media (max-width: 767px) {
 
+            .footer-app-downloads {
+                flex-direction: row;
+                gap: 10px;
+                margin-top: 15px;
+                justify-content: space-around;
+            }
+
+            .footer-store-btn i {
+                font-size: 18px;
+            }
+
             .accordion-content {
                 padding: 12px !important;
                 margin-top: 0px !important;
@@ -4649,7 +4779,7 @@
 
         .operator-register-section {
             position: relative;
-            padding: 50px 0;
+            padding: 35px 0;
             background: white;
             overflow: hidden;
         }
@@ -8164,46 +8294,124 @@
         .global-toast.info {
             background: #111;
         }
+
+        /* Track Ride Modal Specific Toast (White Background, Black Text) */
+        .track-ride-overlay.show ~ .global-toast,
+        .track-ride-overlay.show ~ .global-toast.success,
+        .track-ride-overlay.show ~ .global-toast.info,
+        .track-ride-overlay .global-toast,
+        .track-ride-overlay .global-toast.success,
+        .track-ride-overlay .global-toast.info,
+        body:has(.track-ride-overlay.show) .global-toast,
+        body:has(.track-ride-overlay.show) .global-toast.success,
+        body:has(.track-ride-overlay.show) .global-toast.info {
+            background: #ffffff !important;
+            color: #111111 !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+            z-index: 100000 !important;
+        }
+
+        .track-ride-overlay.show ~ .global-toast span,
+        .track-ride-overlay .global-toast span,
+        body:has(.track-ride-overlay.show) .global-toast span,
+        .track-ride-overlay.show ~ .global-toast #globalToastMsg,
+        .track-ride-overlay .global-toast #globalToastMsg,
+        body:has(.track-ride-overlay.show) .global-toast #globalToastMsg {
+            color: #111111 !important;
+        }
+
+        .track-ride-overlay.show ~ .global-toast i:not(.text-danger),
+        .track-ride-overlay .global-toast i:not(.text-danger),
+        body:has(.track-ride-overlay.show) .global-toast i:not(.text-danger) {
+            color: #111111 !important;
+        }
     </style>
 </head>
 
 <body>
     @if(request()->has('payment_intent') && request()->has('redirect_status'))
-    <div id="paymentRedirectOverlay" style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
-        <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
-        <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
-            <!-- Brand Logo -->
-            <div style="margin-bottom: 32px;">
-                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+        <div id="paymentRedirectOverlay"
+            style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
+            <div
+                style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;">
             </div>
-            
-            <!-- Glowing Animated Spinner -->
-            <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
-                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
-                <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;"></div>
-                <div style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;"></div>
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+            <div
+                style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
+                <!-- Brand Logo -->
+                <div style="margin-bottom: 32px;">
+                    <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png"
+                        alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;"
+                        onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                </div>
+
+                <!-- Glowing Animated Spinner -->
+                <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
+                    <div
+                        style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);">
+                    </div>
+                    <div
+                        style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid transparent; border-top-color: #f39c12; border-right-color: #f39c12; animation: overlaySpin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;">
+                    </div>
+                    <div
+                        style="position: absolute; inset: 10px; border-radius: 50%; border: 3px solid transparent; border-bottom-color: #10b981; animation: overlaySpinReverse 1.4s linear infinite;">
+                    </div>
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-lock" style="font-size: 22px; color: #f39c12;"></i>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">
+                    Finalizing Your Booking...</h3>
+                <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
+                    We're securely confirming your payment with Stripe. Please do not close or refresh this page.
+                </p>
+
+                <!-- Progress Indicator -->
+                <div
+                    style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <div
+                        style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;">
+                    </div>
+                    <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing
+                        payment settlement...</span>
                 </div>
             </div>
-
-            <h3 style="font-size: 24px; font-weight: 800; margin: 0 0 12px 0; color: #ffffff; letter-spacing: -0.5px;">Finalizing Your Booking...</h3>
-            <p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 24px 0; font-weight: 500;">
-                We're securely confirming your payment with Stripe. Please do not close or refresh this page.
-            </p>
-
-            <!-- Progress Indicator -->
-            <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.06); padding: 10px 22px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.08);">
-                <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 12px #10b981; animation: overlayPulse 1.5s infinite;"></div>
-                <span style="font-size: 13px; font-weight: 600; color: #e2e8f0;" id="overlayStatusText">Authorizing payment settlement...</span>
-            </div>
         </div>
-    </div>
-    <style>
-    @keyframes overlaySpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes overlaySpinReverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
-    @keyframes overlayPulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
-    </style>
+        <style>
+            @keyframes overlaySpin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            @keyframes overlaySpinReverse {
+                0% {
+                    transform: rotate(360deg);
+                }
+
+                100% {
+                    transform: rotate(0deg);
+                }
+            }
+
+            @keyframes overlayPulse {
+
+                0%,
+                100% {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+                50% {
+                    opacity: 0.4;
+                    transform: scale(0.85);
+                }
+            }
+        </style>
     @endif
     @include('partials.header')
     @yield('content')
@@ -8246,7 +8454,7 @@
                 <div class="modal-body text-center">
 
                     <div class="help-icon">
-                        <i class="fas fa-headset"></i>
+                     <i class="fab fa-whatsapp"></i>
                     </div>
 
                     <h6>Need Assistance?</h6>
@@ -8254,16 +8462,23 @@
                     <p class="mb-3 text-muted">
                         Our support team is here to help.
                     </p>
+                    <div class="contact-details">
 
-                    <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"> </i>
-                        <a href="tel:+442083373777">+44 208 337 3777</a>
-                    </p>
+                        <p class="mb-2 contact-item phone-item">
+                            <i class="fas fa-phone-alt me-2 text-warning"
+                            style="transform: rotate(90deg);"></i>
 
-                    <p class="mb-0">
-                        <i class="fas fa-envelope me-2 text-warning"></i>
-                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                    </p>
+                            <a href="tel:+442083373777">+44 208 337 3777</a>
+                            <span class="phone-separator"> / </span>
+                            <a href="tel:+447950323242">+44 7950 323242</a>
+                        </p>
+
+                        <p class="mb-0 contact-item">
+                            <i class="fas fa-envelope me-2 text-warning"></i>
+                            <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -8366,7 +8581,8 @@
                 <!-- Carousel -->
                 <div
                     style="position: relative; width: 100%; height: 300px; margin-bottom: 20px; overflow: hidden; border-radius: 8px;">
-                    <img id="carCarouselImage" src="goride/img/fleet1.png"
+                    <img id="carCarouselImage"
+                        src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/fleet1.png"
                         style="width: 100%; height: 100%; object-fit: contain;" alt="Car view">
                     <button onclick="prevCarImage()"
                         style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
@@ -8481,7 +8697,7 @@
                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
             </div>
             <div class="form-group-uber">
-                <label>Mobile Number(Optional)</label>
+                <label>Mobile Number</label>
                 <input type="text" id="otherPassengerPhone" placeholder="Enter Mobile Number" maxlength="12"
                     oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 12)">
             </div>
@@ -8626,14 +8842,18 @@
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
+                    const authToken = getCookieValue('auth_token');
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    };
+                    if (authToken && authToken !== 'null' && authToken !== 'undefined' && authToken.trim() !== '') {
+                        headers['Authorization'] = 'Bearer ' + authToken;
+                    }
                     const response = await fetch(API_BASE_URL + '/web-get-location?search=' + encodeURIComponent(query), {
                         method: 'GET',
                         signal: signal,
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                        }
+                        headers: headers
                     });
                     const result = await response.json();
                     if (wrapper) wrapper.classList.remove('is-loading');
@@ -8794,10 +9014,22 @@
             paymentMethod: '',
             meetAndGreet: false,
             wheelchairOption: false,
+            paymentBreakdown: null,
+            total_fare: null,
+            part_pay_fare: null,
+            base_fare: null,
+            tax: null,
+            firstAmt: null,
+            id: null,
+            payment_id: null,
+            paymentId: null,
+            transaction_id: '',
 
             // Driver (Steps 6/7)
             bookingId: null,
+            job_no: null,
             jobId: null,
+            job_id: null,
             selectedDriver: null,
             tempDriver: null,
             firebaseConfig: null,
@@ -8814,6 +9046,10 @@
         // ---- Create the store ----
         const BookingStore = createBookingStore(_bookingInitialState);
 
+        const WEBSITE_APP_URL = "{{ env('WEBSITE_APP_URL') }}";
+        const COUNTRY_SLUG_II = "{{ env('COUNTRY_SLUG_II') }}";
+        const GORIDE_IMG_PREFIX = `${WEBSITE_APP_URL}${COUNTRY_SLUG_II}/goride/img/`;
+
         // ---- Backward-compatible Proxy shim ----
         // All existing code that reads/writes bookingData.xyz continues working.
         // Reads always reflect current store state; writes call setState automatically.
@@ -8828,7 +9064,7 @@
             luggage: 2,
             price: 45,
             priceMax: 65,
-            image: "/goride/img/saloon.png",
+            image: `${GORIDE_IMG_PREFIX}saloon.png`,
             details: "Toyota Prius or Similar",
             fuel: "Hybrid",
             transmission: "Automatic",
@@ -8858,7 +9094,7 @@
             luggage: 4,
             price: 55,
             priceMax: 80,
-            image: "/goride/img/estate.png",
+            image: `${GORIDE_IMG_PREFIX}estate.png`,
             details: "Skoda Octavia Estate",
             fuel: "Diesel",
             transmission: "Automatic",
@@ -8887,7 +9123,7 @@
             luggage: 3,
             price: 75,
             priceMax: 110,
-            image: "/goride/img/executive.png",
+            image: `${GORIDE_IMG_PREFIX}executive.png`,
             details: "Mercedes E-Class",
             fuel: "Hybrid",
             transmission: "Automatic",
@@ -8916,7 +9152,7 @@
             luggage: 6,
             price: 85,
             priceMax: 125,
-            image: "/goride/img/mpv.png",
+            image: `${GORIDE_IMG_PREFIX}mpv.png`,
             details: "VW Sharan or Similar",
             fuel: "Diesel",
             transmission: "Automatic",
@@ -9113,6 +9349,70 @@
             }
         }
 
+        function extractExtraCharges(faresResult, fareDataObj) {
+            let raw = null;
+            if (faresResult) {
+                if (faresResult.extra_charge !== undefined) raw = faresResult.extra_charge;
+                else if (faresResult.extra_charges !== undefined) raw = faresResult.extra_charges;
+                else if (faresResult.extraCharge !== undefined) raw = faresResult.extraCharge;
+                else if (faresResult.extraCharges !== undefined) raw = faresResult.extraCharges;
+                else if (faresResult.data && faresResult.data.extra_charge !== undefined) raw = faresResult.data.extra_charge;
+                else if (faresResult.data && faresResult.data.extra_charges !== undefined) raw = faresResult.data.extra_charges;
+            }
+            if (!raw && fareDataObj && typeof fareDataObj === 'object') {
+                const first = Object.values(fareDataObj)[0];
+                if (first) {
+                    if (first.extra_charge !== undefined) raw = first.extra_charge;
+                    else if (first.extra_charges !== undefined) raw = first.extra_charges;
+                }
+            }
+
+            let childSeatRate = 0;
+            let meetAndGreetRate = 0;
+
+            if (raw) {
+                if (typeof raw === 'string') {
+                    try { raw = JSON.parse(raw); } catch (e) { }
+                }
+                if (typeof raw === 'number') {
+                    childSeatRate = parseFloat(raw) || 0;
+                    meetAndGreetRate = parseFloat(raw) || 0;
+                } else if (Array.isArray(raw)) {
+                    raw.forEach(item => {
+                        if (item && typeof item === 'object') {
+                            const name = (item.name || item.type || item.title || item.key || '').toLowerCase();
+                            const val = parseFloat(item.charge || item.price || item.amount || item.value || item.cost || 0) || 0;
+                            if (name.includes('child') || name.includes('baby') || name.includes('seat')) {
+                                childSeatRate = val;
+                            } else if (name.includes('meet') || name.includes('greet')) {
+                                meetAndGreetRate = val;
+                            }
+                        }
+                    });
+                } else if (typeof raw === 'object' && raw !== null) {
+                    // Check possible keys for child seat
+                    if (raw.child_seat !== undefined) childSeatRate = parseFloat(raw.child_seat) || 0;
+                    else if (raw.baby_seat !== undefined) childSeatRate = parseFloat(raw.baby_seat) || 0;
+                    else if (raw.child !== undefined) childSeatRate = parseFloat(raw.child) || 0;
+                    else if (raw.child_seat_charge !== undefined) childSeatRate = parseFloat(raw.child_seat_charge) || 0;
+                    else if (raw.childSeat !== undefined) childSeatRate = parseFloat(raw.childSeat) || 0;
+
+                    // Check possible keys for meet and greet
+                    if (raw.meet_and_greet !== undefined) meetAndGreetRate = parseFloat(raw.meet_and_greet) || 0;
+                    else if (raw.meet_greet !== undefined) meetAndGreetRate = parseFloat(raw.meet_greet) || 0;
+                    else if (raw.meetAndGreet !== undefined) meetAndGreetRate = parseFloat(raw.meetAndGreet) || 0;
+                    else if (raw.meet_and_greet_charge !== undefined) meetAndGreetRate = parseFloat(raw.meet_and_greet_charge) || 0;
+                    else if (raw.meet !== undefined) meetAndGreetRate = parseFloat(raw.meet) || 0;
+                }
+            }
+
+            return {
+                raw: raw,
+                child_seat: childSeatRate,
+                meet_and_greet: meetAndGreetRate
+            };
+        }
+
         function _updateVehicleSummaryUI(state) {
             if (!state.vehicle) {
                 $('#selectedCarSummary').hide();
@@ -9120,9 +9420,37 @@
                 return;
             }
             const v = state.vehicle;
-            const carPrice = v.price || v.fare || 0;
-            const priceText = v.priceMax ? `\u00a3${carPrice} \u2013 \u00a3${v.priceMax}` : `\u00a3${carPrice}`;
-            const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : 'goride/img/fleet1.png');
+            const basePriceFrom = parseFloat(v.price || v.fare || 0);
+            const basePriceTo = (v.priceMax !== undefined && v.priceMax !== null && v.priceMax !== '') ? parseFloat(v.priceMax) : null;
+
+            // Extract rates from stored extra_charge or vehicle breakdown
+            const extraChargeObj = (v && v.fareBreakdown && (v.fareBreakdown.extra_charge || v.fareBreakdown.extra_charges))
+                ? extractExtraCharges(null, { v: v.fareBreakdown })
+                : (state.extraCharge || bookingData.extra_charge || {});
+
+            const childSeatUnitRate = parseFloat(extraChargeObj.child_seat || extraChargeObj.baby_seat || 0) || 0;
+            const meetGreetRate = parseFloat(extraChargeObj.meet_and_greet || extraChargeObj.meet_greet || extraChargeObj.meet || 0) || 0;
+
+            const isBabySeat = state.isBabySeat || $('#carSeatCheckbox').is(':checked');
+            const childSeatCount = isBabySeat ? (parseInt(state.childSeatCount !== undefined ? state.childSeatCount : $('#childSeatCount').val()) || 0) : 0;
+            const isMeetGreet = state.meetAndGreet === '1' || state.meetAndGreet === true || $('#meetAndGreet').is(':checked') || $('#meetAndGreetSeaport').is(':checked') || $('.meet-and-greet-cb').is(':checked');
+
+            const childSeatTotalExtra = childSeatUnitRate * childSeatCount;
+            const meetGreetTotalExtra = isMeetGreet ? meetGreetRate : 0;
+            const totalExtra = childSeatTotalExtra + meetGreetTotalExtra;
+
+            // Add the extra charge to the "to" value (upper bound) of the price range
+            let priceText = '';
+            if (basePriceTo !== null && basePriceTo > 0) {
+                const updatedPriceTo = basePriceTo + totalExtra;
+                priceText = `\u00a3${basePriceFrom} \u2013 \u00a3${updatedPriceTo}`;
+            } else if (totalExtra > 0) {
+                const updatedPriceTo = basePriceFrom + totalExtra;
+                priceText = `\u00a3${basePriceFrom} \u2013 \u00a3${updatedPriceTo}`;
+            } else {
+                priceText = `\u00a3${basePriceFrom}`;
+            }
+            const carImg = v.image || (typeof getCarImageUrl === 'function' ? getCarImageUrl(1) : `${GORIDE_IMG_PREFIX}fleet1.png`);
 
             // Sidebar selected vehicle summary (Step 2 side panel)
             $('#summaryCarImage').attr('src', carImg);
@@ -9356,6 +9684,39 @@
             }
         }
 
+        function _updateDistanceDurationUI(state) {
+            if (!state) state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            let dist = state.apiDistance || state.vehicle?.fareBreakdown?.distance || (state.fareDataObj && Object.values(state.fareDataObj)[0]?.distance) || (typeof bookingData !== 'undefined' ? bookingData.apiDistance : null);
+            let dur = state.apiDuration || state.vehicle?.fareBreakdown?.duration || (state.fareDataObj && Object.values(state.fareDataObj)[0]?.duration) || (typeof bookingData !== 'undefined' ? bookingData.apiDuration : null);
+
+            if (typeof bookingData !== 'undefined') {
+                if (dist && !bookingData.apiDistance) bookingData.apiDistance = dist;
+                if (dur && !bookingData.apiDuration) bookingData.apiDuration = dur;
+            }
+
+            if (typeof updateDistanceDurationUI === 'function') {
+                updateDistanceDurationUI(dist, dur);
+            } else {
+                const formattedDist = typeof formatTripDistance === 'function' ? formatTripDistance(dist) : (dist || '');
+                const formattedDur = typeof formatTripDuration === 'function' ? formatTripDuration(dur) : (dur || '');
+                const dText = formattedDist || '--';
+                const tText = formattedDur || '--';
+
+                $('#leftTripDistance').text(dText);
+                $('#leftTripDuration').text(tText);
+                $('#mcsDistanceValue').text(dText);
+                $('#mcsDurationValue').text(tText);
+                $('#mapRouteDistance').text(dText);
+                $('#mapRouteDuration').text(tText);
+
+                if (formattedDist || formattedDur) {
+                    $('#tripRouteMetaContainer').attr('style', 'display: flex !important;');
+                } else {
+                    $('#tripRouteMetaContainer').attr('style', 'display: none !important;');
+                }
+            }
+        }
+
         function swapLocations() {
             const state = BookingStore.getState();
             if (!state.pickup && !state.dropoff) return; // Nothing to swap
@@ -9389,14 +9750,9 @@
             const paymentIntentId = urlParams.get('payment_intent');
 
             if (paymentIntentId && redirectStatus) {
-                if (redirectStatus === 'succeeded' || redirectStatus === 'processing') {
-                    if (typeof handleStripeRedirectReturn === 'function') {
-                        handleStripeRedirectReturn(paymentIntentId, redirectStatus);
-                        return;
-                    }
-                } else if (redirectStatus === 'failed') {
-                    showToast('Payment was cancelled or failed. Please try again.', 'error');
-                    window.history.replaceState({}, document.title, window.location.pathname);
+                if (typeof handleStripeRedirectReturn === 'function') {
+                    handleStripeRedirectReturn(paymentIntentId, redirectStatus);
+                    return;
                 }
             }
 
@@ -9449,19 +9805,24 @@
             BookingStore.subscribe(_updateVehicleSummaryUI);
             BookingStore.subscribe(_updatePassengerSummaryUI);
             BookingStore.subscribe(_updateJourneySummaryUI);
+            BookingStore.subscribe(_updateDistanceDurationUI);
+
+            const _nowUKInit = getUKDate();
+            const _todayInitStr = `${_nowUKInit.getFullYear()}-${String(_nowUKInit.getMonth() + 1).padStart(2, '0')}-${String(_nowUKInit.getDate()).padStart(2, '0')}`;
+            const _validRestoredDate = (_restoredState.date && _restoredState.date >= _todayInitStr) ? _restoredState.date : _todayInitStr;
 
             flatpickr("#date", {
                 dateFormat: "Y-m-d",
                 minDate: getUKDate(),
-                defaultDate: _restoredState.date || getUKDate(),
+                defaultDate: _validRestoredDate,
                 disableMobile: true,
                 onReady(selectedDates, dateStr, instance) {
                     let dStr = dateStr;
                     if (!dStr && selectedDates.length > 0) {
                         dStr = instance.formatDate(selectedDates[0], "Y-m-d");
                     }
-                    if (!dStr) {
-                        dStr = instance.formatDate(getUKDate(), "Y-m-d");
+                    if (!dStr || dStr < _todayInitStr) {
+                        dStr = _todayInitStr;
                     }
                     BookingStore.setState({ date: dStr, bookingType: 'schedule' });
                     generateTimeOptions(dStr);
@@ -9518,6 +9879,7 @@
                 updateTimePanel();
             }
             _updateVehicleSummaryUI(_restoredState);
+            _updateDistanceDurationUI(_restoredState);
 
             // Invalidate location selections if user manually types/edits inputs
             $('#pickupInput').on('input keyup change', function () {
@@ -9587,12 +9949,24 @@
                 if (_restoredState.currentStep === 8) {
                     BookingStore.clear();
                     showStep(1);
-                } else if (_restoredState.currentStep === 5 || _restoredState.currentStep === 6 || _restoredState.currentStep === 7) {
+                } else if (_restoredState.currentStep === 5) {
+                    showStep(5);
+                    if (typeof renderPaymentBreakdownUI === 'function') {
+                        renderPaymentBreakdownUI(_restoredState.paymentBreakdown);
+                    }
+                    if (typeof selectPaymentMethod === 'function') {
+                        selectPaymentMethod('stripe');
+                    }
+                    $('#stripePaymentContainer').show();
+                    if (typeof initStripePaymentElement === 'function') {
+                        initStripePaymentElement();
+                    }
+                } else if (_restoredState.currentStep === 6 || _restoredState.currentStep === 7) {
                     showStep(6);
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
                     }
-                    if (_restoredState.bookingId) {
+                    if (_restoredState.bookingId || _restoredState.job_no) {
                         if (typeof startDynamicDriverSearch === 'function') {
                             startDynamicDriverSearch(_restoredState.firebaseConfig, _restoredState.firebaseCustomToken);
                         }
@@ -9686,24 +10060,175 @@
             }
         }
 
+        // ===== VALIDATE AND AUTO-SET IF PAST TIME =====
+        function checkAndAutoSetIfPastTime() {
+            const nowUK = getUKDate();
+            const yr = nowUK.getFullYear();
+            const mo = String(nowUK.getMonth() + 1).padStart(2, '0');
+            const da = String(nowUK.getDate()).padStart(2, '0');
+            const todayStr = `${yr}-${mo}-${da}`;
+            const currentHours = nowUK.getHours();
+            const currentMinutes = nowUK.getMinutes();
+
+            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            let selectedDate = state.date || (typeof bookingData !== 'undefined' ? bookingData.date : null) || $('#date').val();
+            let selectedTime = state.time || (typeof bookingData !== 'undefined' ? bookingData.time : null);
+
+            let isPast = false;
+
+            // 1. If date is missing or earlier than today
+            if (!selectedDate || selectedDate < todayStr) {
+                isPast = true;
+            } else if (selectedDate === todayStr) {
+                // 2. If date is today, check if time is missing or in the past
+                if (!selectedTime) {
+                    isPast = true;
+                } else {
+                    let parsedHours = null;
+                    let parsedMinutes = null;
+
+                    const timeParts12 = selectedTime.trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+                    if (timeParts12) {
+                        let h = parseInt(timeParts12[1], 10);
+                        const m = parseInt(timeParts12[2], 10);
+                        const ampm = timeParts12[3] ? timeParts12[3].toUpperCase() : null;
+                        if (ampm === 'PM' && h < 12) h += 12;
+                        if (ampm === 'AM' && h === 12) h = 0;
+                        parsedHours = h;
+                        parsedMinutes = m;
+                    } else {
+                        const timeParts24 = selectedTime.trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+                        if (timeParts24) {
+                            parsedHours = parseInt(timeParts24[1], 10);
+                            parsedMinutes = parseInt(timeParts24[2], 10);
+                        }
+                    }
+
+                    if (parsedHours === null || parsedMinutes === null) {
+                        isPast = true;
+                    } else if (parsedHours < currentHours || (parsedHours === currentHours && parsedMinutes <= currentMinutes)) {
+                        isPast = true;
+                    }
+                }
+            }
+
+            if (isPast) {
+                let targetDate = (!selectedDate || selectedDate < todayStr) ? todayStr : selectedDate;
+
+                // Find the first valid future 30-min slot for targetDate
+                let firstSlotTime = null;
+                for (let hour = 0; hour < 24; hour++) {
+                    for (let minute = 0; minute < 60; minute += 30) {
+                        if (targetDate === todayStr) {
+                            if (hour < currentHours || (hour === currentHours && minute <= currentMinutes)) {
+                                continue;
+                            }
+                        }
+                        const ampm = hour >= 12 ? 'PM' : 'AM';
+                        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+                        const displayMinute = minute === 0 ? '00' : '30';
+                        firstSlotTime = `${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`;
+                        break;
+                    }
+                    if (firstSlotTime) break;
+                }
+
+                // If today has no remaining slots (after 23:30), roll over to tomorrow
+                if (!firstSlotTime && targetDate === todayStr) {
+                    const tomorrow = getUKDate();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const tYr = tomorrow.getFullYear();
+                    const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
+                    const tDa = String(tomorrow.getDate()).padStart(2, '0');
+                    targetDate = `${tYr}-${tMo}-${tDa}`;
+                    firstSlotTime = '12:00 AM';
+                }
+
+                // Sync flatpickr input if present
+                const dateInput = document.getElementById('date');
+                if (dateInput && dateInput._flatpickr) {
+                    dateInput._flatpickr.setDate(targetDate, false);
+                } else if (dateInput) {
+                    dateInput.value = targetDate;
+                }
+
+                // Update state in BookingStore and bookingData
+                if (typeof BookingStore !== 'undefined') {
+                    BookingStore.setState({
+                        date: targetDate,
+                        time: firstSlotTime,
+                        bookingType: 'schedule'
+                    });
+                }
+                if (typeof bookingData !== 'undefined') {
+                    bookingData.date = targetDate;
+                    bookingData.time = firstSlotTime;
+                }
+
+                // Re-generate time options dropdown for targetDate
+                if (typeof generateTimeOptions === 'function') {
+                    generateTimeOptions(targetDate);
+                }
+
+                // Update all related UI fields
+                $('#normalJourneyDate').val(targetDate);
+                $('#normalJourneyTime').val(firstSlotTime);
+                $('#timeDropdownValue').text(firstSlotTime);
+
+                if (typeof checkNightChargeNotice === 'function') {
+                    checkNightChargeNotice(firstSlotTime);
+                }
+                if (typeof _updateDateTimeUI === 'function' && typeof BookingStore !== 'undefined') {
+                    _updateDateTimeUI(BookingStore.getState());
+                }
+                if (typeof updatePickupUI === 'function') {
+                    updatePickupUI();
+                }
+                if (typeof updateBookingSummary === 'function') {
+                    updateBookingSummary();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         function generateTimeOptions(dateStr) {
             const timeDropdownList = document.getElementById('timeDropdownList');
             if (!timeDropdownList) return;
             timeDropdownList.innerHTML = '';
 
+            const now = getUKDate();
+            const yr = now.getFullYear();
+            const mo = String(now.getMonth() + 1).padStart(2, '0');
+            const da = String(now.getDate()).padStart(2, '0');
+            const todayStr = `${yr}-${mo}-${da}`;
+
             let selectedDate = getUKDate();
             if (dateStr && typeof dateStr === 'string') {
+                if (dateStr < todayStr) {
+                    dateStr = todayStr;
+                    const dateInput = document.getElementById('date');
+                    if (dateInput && dateInput._flatpickr) {
+                        dateInput._flatpickr.setDate(todayStr, false);
+                    } else if (dateInput) {
+                        dateInput.value = todayStr;
+                    }
+                    if (typeof BookingStore !== 'undefined') {
+                        BookingStore.setState({ date: todayStr, bookingType: 'schedule' });
+                    }
+                }
                 const parts = dateStr.split('-');
                 if (parts.length === 3) {
                     selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
                 }
             }
-            const now = getUKDate();
             const isToday = selectedDate.toDateString() === now.toDateString();
 
             let firstOptionTime = null;
             let firstOptionFormatted = null;
-            const currentSelectedTime = BookingStore.getState().time;
+            const currentSelectedTime = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState().time : '';
             let foundCurrentTime = false;
 
             // Generate times every 30 minutes from 00:00 to 23:30
@@ -9778,7 +10303,9 @@
                     } else if (dateInput) {
                         dateInput.value = tomorrowStr;
                     }
-                    BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
+                    if (typeof BookingStore !== 'undefined') {
+                        BookingStore.setState({ date: tomorrowStr, bookingType: 'schedule' });
+                    }
                     generateTimeOptions(tomorrowStr);
                     return;
                 }
@@ -10174,15 +10701,10 @@
                 $('#dropoffInput').focus();
                 return;
             }
-            // ---- AUTH GATE ----
-            if (!isAuthenticated()) {
-                _pendingAfterAuth = _doTripDetails;
-                openAuthModal();
-                return;
-            }
             _doTripDetails();
         }
         function _doTripDetails() {
+            checkAndAutoSetIfPastTime();
             const pickup = $('#pickupInput').val();
             const dropoff = $('#dropoffInput').val();
             // Batch update pickup + dropoff in one store call (fires subscribers once)
@@ -10214,8 +10736,10 @@
 
         // ===== FETCH FARES FROM API =====
         async function fetchFaresFromAPI() {
+            // Check if selected time is in the past, and auto-set if needed before calling API
+            checkAndAutoSetIfPastTime();
+
             const token = getCookieValue('auth_token');
-            if (!token) return null;
 
             // Build pickup datetime string (Y-m-d H:i:s)
             let pickupDate = bookingData.date;
@@ -10224,12 +10748,14 @@
             // Fallback to today + now if not set
             if (!pickupDate) {
                 const now = getUKDate();
-                pickupDate = now.toISOString().slice(0, 10);
+                const yr = now.getFullYear();
+                const mo = String(now.getMonth() + 1).padStart(2, '0');
+                const da = String(now.getDate()).padStart(2, '0');
+                pickupDate = `${yr}-${mo}-${da}`;
             }
             if (!pickupTime) {
-                // Use current time rounded to the next 90 mins
+                // Use current time
                 const now = getUKDate();
-                now.setMinutes(now.getMinutes() + 90);
                 pickupTime = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0') + ':00';
             } else {
                 // Convert "07:00 AM" → "07:00:00"
@@ -10242,7 +10768,12 @@
                     if (meridiem === 'AM' && hours === 12) hours = 0;
                     pickupTime = hours.toString().padStart(2, '0') + ':' + mins + ':00';
                 } else {
-                    pickupTime = pickupTime + ':00';
+                    const timeParts24 = pickupTime.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+                    if (timeParts24) {
+                        pickupTime = timeParts24[1].padStart(2, '0') + ':' + timeParts24[2] + ':00';
+                    } else {
+                        pickupTime = pickupTime + ':00';
+                    }
                 }
             }
 
@@ -10255,13 +10786,17 @@
                 way_type: bookingData.returnTrip ? 'roundtrip' : 'oneway',
             });
 
+            const headers = {
+                'Accept': 'application/json'
+            };
+            if (token) {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+
             try {
                 const response = await fetch(API_BASE_URL + '/w-get-fares?' + params.toString(), {
                     method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    }
+                    headers: headers
                 });
 
                 if (!response.ok) {
@@ -10305,6 +10840,13 @@
             }
         }
         function goBackToLocations() {
+            if (window._routeMapTimer) {
+                clearTimeout(window._routeMapTimer);
+                window._routeMapTimer = null;
+            }
+            $('#bookingMap').hide();
+            $('#mapRouteBadge').hide();
+            $('#bookingImage').show();
             $('#vehicleGrid').removeClass('single-col');
             $('section').each(function () {
                 if (!$(this).hasClass('hero-container')) {
@@ -10312,7 +10854,6 @@
                 }
             });
             $('footer').removeClass('sections-hidden');
-            $('#mapRouteBadge').hide();
             showStep(1);
         }
         function hidePickupTimePanel() {
@@ -10386,6 +10927,7 @@
             );
         }
         function saveSchedule() {
+            checkAndAutoSetIfPastTime();
             const date = BookingStore.getState().date;
             $("#date").val(date);
             const currentTime = BookingStore.getState().time;
@@ -10487,6 +11029,11 @@
                 ? faresResult.data : null;
 
             if (fareDataObj && Object.keys(fareDataObj).length > 0) {
+                // Extract and update extra charges whenever carlist API is called
+                const extraChargeData = extractExtraCharges(faresResult, fareDataObj);
+                bookingData.extra_charge = extraChargeData;
+                BookingStore.setState({ extraCharge: extraChargeData });
+
                 // Store trip meta + polyline from first vehicle fare
                 const firstFare = Object.values(fareDataObj)[0];
                 bookingData.apiDistance = firstFare.distance || null;
@@ -10496,13 +11043,27 @@
                 bookingData.fareDataObj = fareDataObj;  // keep full object for map markers
                 bookingData.nearby_drivers = faresResult.nearby_drivers || [];
 
+                BookingStore.setState({
+                    apiDistance: firstFare.distance || null,
+                    apiDuration: firstFare.duration || null,
+                    apiDistanceMiles: bookingData.apiDistanceMiles,
+                    fareDataObj: fareDataObj,
+                    nearby_drivers: faresResult.nearby_drivers || []
+                });
+
                 if (typeof updateDistanceDurationUI === 'function') {
                     updateDistanceDurationUI(firstFare.distance, firstFare.duration);
                 }
                 renderVehicles(fareDataObj);
                 // Draw route on map from the fare polyline
                 if (typeof initRouteMapFromFare === 'function') {
-                    setTimeout(initRouteMapFromFare, 300);
+                    if (window._routeMapTimer) clearTimeout(window._routeMapTimer);
+                    window._routeMapTimer = setTimeout(function () {
+                        const stepNow = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? (BookingStore.getState().currentStep || 1) : 1;
+                        if (stepNow >= 3) {
+                            initRouteMapFromFare();
+                        }
+                    }, 300);
                 }
             } else {
                 // No fares — show unavailable message
@@ -10529,6 +11090,23 @@
             }
         }
 
+        function getInclusionIcon(text) {
+            const t = (text || '').toLowerCase();
+            if (t.includes('park')) return 'fa-parking';
+            if (t.includes('congestion') || t.includes('toll') || t.includes('road')) return 'fa-road';
+            if (t.includes('night')) return 'fa-moon';
+            if (t.includes('special') || t.includes('day') || t.includes('holiday') || t.includes('event')) return 'fa-calendar-day';
+            if (t.includes('wait') || t.includes('delay') || t.includes('time')) return 'fa-clock';
+            if (t.includes('child') || t.includes('baby') || t.includes('seat')) return 'fa-baby-carriage';
+            if (t.includes('meet') || t.includes('greet')) return 'fa-user-check';
+            if (t.includes('fuel') || t.includes('gas') || t.includes('petrol')) return 'fa-gas-pump';
+            if (t.includes('flight') || t.includes('airport')) return 'fa-plane-arrival';
+            if (t.includes('wifi') || t.includes('wi-fi') || t.includes('internet')) return 'fa-wifi';
+            if (t.includes('air') || t.includes('ac') || t.includes('climate')) return 'fa-snowflake';
+            if (t.includes('charge') || t.includes('tax') || t.includes('vat') || t.includes('fee')) return 'fa-file-invoice-dollar';
+            return 'fa-check-circle';
+        }
+
         function renderVehicles(fareData) {
             const grid = $('#vehicleGrid');
             grid.html('');
@@ -10549,7 +11127,7 @@
                 }
                 // If fare doesn't have a name, default to capitalizing the key
                 const vehicleName = fare.name || (vKey.charAt(0).toUpperCase() + vKey.slice(1));
-                const vehicleImage = `/goride/img/${vKey}.webp`;
+                const vehicleImage = `${GORIDE_IMG_PREFIX}${vKey}.webp`;
 
                 // Try to find if we have static data for amenities/inclusions
                 const staticV = vehicles.find(v => v.name.toLowerCase().trim() === vKey) || {};
@@ -10611,25 +11189,30 @@
                 // Distance/duration badge if available
                 const tripInfoHtml = '';
 
-                const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                    fare.inclusions.map((inc, i) => {
-                        const icons = ['fa-parking', 'fa-road', 'fa-moon', 'fa-calendar-day', 'fa-clock', 'fa-file-invoice-dollar', 'fa-user-check', 'fa-gas-pump'];
-                        const icon = icons[i % icons.length];
-                        return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${inc}</div></li>`;
-                    }).join('') :
-                    `<li class="tab-point-item"><i class="fas fa-parking point-icon point-icon-check"></i><div>Parking Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-road point-icon point-icon-check"></i><div>Congestion Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-moon point-icon point-icon-check"></i><div>Night Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-calendar-day point-icon point-icon-check"></i><div>Special Day Charges</div></li>
-                     <li class="tab-point-item"><i class="fas fa-clock point-icon point-icon-check"></i><div>Waiting Charges</div></li> 
-                     <li class="tab-point-item"><i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i><div>Child Seat is Included</div></li>
-                     <li class="tab-point-item"><i class="fas fa-user-check point-icon point-icon-check"></i><div>Meet & Greet</div></li>
-                     <li class="tab-point-item"><i class="fas fa-gas-pump point-icon point-icon-check"></i><div>Fuel charges included.</div></li>`;
+                const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
+                const inclusionsList = Array.isArray(rawInclusions)
+                    ? rawInclusions
+                    : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
-                const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                    fare.exclusions.map(exc => `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${exc}</div></li>`).join('') :
-                    `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Any government or local authority charges, if applicable.</div></li>
-                     <li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>Additional mileage and waiting charges beyond the included limits.</div></li>`;
+                const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                    inclusionsList.map((inc) => {
+                        const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                        const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                        return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
+                    }).join('') :
+                    `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
+
+                const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
+                const exclusionsList = Array.isArray(rawExclusions)
+                    ? rawExclusions
+                    : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
+
+                const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                    exclusionsList.map((exc) => {
+                        const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                        return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                    }).join('') :
+                    `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
                 const stateVehicle = typeof BookingStore !== 'undefined' ? BookingStore.getState().vehicle : null;
                 const isSelected = stateVehicle && (stateVehicle.id === vData.id || stateVehicle.key === vData.key);
@@ -10765,21 +11348,76 @@
             $(el).find('.btn-v-select').html('<i class="fas fa-check"></i> Selected');
             console.log('Vehicle selected:', vehicle.name, '- Price: £' + vehicle.price);
         }
+        function _autoFillPassengerDetailsFromAuth() {
+            const userStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+            if (!userStr) return;
+            try {
+                const user = JSON.parse(decodeURIComponent(userStr));
+                if (!user) return;
+
+                let nameParts = (user.name || '').trim().split(' ');
+                let fname = nameParts[0] || '';
+                let lname = nameParts.slice(1).join(' ') || '';
+                let email = user.email || '';
+                let phone = user.mobile || user.mobile_number || user.phone || '';
+
+                const updates = {};
+                if (fname && !$('#passengerFirstName').val()) {
+                    $('#passengerFirstName').val(fname);
+                    updates.passengerFirstName = fname;
+                }
+                if (lname && !$('#passengerLastName').val()) {
+                    $('#passengerLastName').val(lname);
+                    updates.passengerLastName = lname;
+                }
+                if (email && !$('#passengerEmail').val()) {
+                    $('#passengerEmail').val(email);
+                    updates.passengerEmail = email;
+                }
+                if (phone && !$('#passengerPhone').val()) {
+                    if (window.passengerPhoneIti) {
+                        window.passengerPhoneIti.setNumber(phone);
+                    } else {
+                        $('#passengerPhone').val(phone);
+                    }
+                    updates.passengerPhone = phone;
+                }
+
+                if (Object.keys(updates).length > 0) {
+                    BookingStore.setState(updates);
+                }
+            } catch (e) {
+                console.error('Error autofilling passenger data from auth', e);
+            }
+        }
+
         function proceedToPassengerDetails() {
             const vehicle = BookingStore.getState().vehicle;
             if (!vehicle) {
                 showToast('Please select a vehicle first', 'error');
                 return;
             }
-            // _updateVehicleSummaryUI subscriber already keeps sidebar in sync;
-            // call it explicitly here just to be sure summary is visible
+
+            // ---- AUTH GATE ON CONTINUE BUTTON (AFTER CAR LIST SELECTION) ----
+            if (!isAuthenticated()) {
+                _pendingAfterAuth = _doProceedToPassengerDetails;
+                openAuthModal();
+                return;
+            }
+
+            _doProceedToPassengerDetails();
+        }
+
+        function _doProceedToPassengerDetails() {
+            _autoFillPassengerDetailsFromAuth();
             _updateVehicleSummaryUI(BookingStore.getState());
-            // Step 3: Move to next screen (Booking Details)
             updatePassengerForm();
             updateBookingSummary();
             showStep(4);
-            // Optional: Log for debugging
-            console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
+            const vehicle = BookingStore.getState().vehicle;
+            if (vehicle) {
+                console.log('Proceeding with vehicle:', vehicle.name, 'Price:', vehicle.price);
+            }
         }
         function adjustBookingFormGrids() {
             $('.booking-form-grid').each(function () {
@@ -11065,17 +11703,38 @@
                         return;
                     }
                 } else {
-                    if (!_firebaseAuthObj && result.firebase) {
-                        firebase.initializeApp(result.firebase);
+                    if (result.firebase) {
+                        if (!firebase.apps || !firebase.apps.length) {
+                            firebase.initializeApp(result.firebase);
+                        }
+                        _firebaseAuthObj = firebase.auth();
+                    } else if (firebase.apps && firebase.apps.length) {
                         _firebaseAuthObj = firebase.auth();
                     }
+
+                    if (!_firebaseAuthObj) {
+                        throw new Error('Firebase configuration missing.');
+                    }
+                    _firebaseAuthObj.languageCode = 'en';
 
                     if (btn) btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP...`;
 
                     // Recaptcha
-                    const recapContainer = document.createElement('div');
-                    recapContainer.id = 'booking-recaptcha-container';
-                    document.body.appendChild(recapContainer);
+                    if (window.recaptchaVerifier) {
+                        try {
+                            window.recaptchaVerifier.clear();
+                        } catch (e) { }
+                        window.recaptchaVerifier = null;
+                    }
+
+                    let recapContainer = document.getElementById('booking-recaptcha-container');
+                    if (!recapContainer) {
+                        recapContainer = document.createElement('div');
+                        recapContainer.id = 'booking-recaptcha-container';
+                        document.body.appendChild(recapContainer);
+                    } else {
+                        recapContainer.innerHTML = '';
+                    }
 
                     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('booking-recaptcha-container', {
                         'size': 'invisible'
@@ -11097,6 +11756,7 @@
                 document.getElementById('authStep1').style.display = 'none';
                 document.getElementById('authOtpSection').style.display = 'block';
                 document.getElementById('authOtpTarget').textContent = _currentMobile;
+                _startResendTimer(30);
 
                 const changeBtn = document.getElementById('authChangeNumberBtn');
                 if (changeBtn) changeBtn.style.display = 'none';
@@ -11194,8 +11854,9 @@
             const email = document.getElementById('passengerEmail')?.value.trim() || bookingData.passengerEmail || '';
             const name = document.getElementById('passengerFirstName')?.value.trim() || bookingData.passengerFirstName || '';
             const phone = document.getElementById('passengerPhone')?.value.trim() || bookingData.passengerPhone || '';
-            const jobId = bookingData.jobId || bookingData.bookingId || bookingData.pay_no || '';
-            const currentPaymentId = parseInt(window.paymentId || state.paymentId || 0);
+            const jobId = bookingData.jobId || bookingData.job_id || '';
+            const jobNo = bookingData.job_no || bookingData.bookingId || '';
+            const currentPaymentId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
 
             try {
                 const response = await fetch(API_BASE_URL + '/stripe/payment-intent', {
@@ -11206,10 +11867,11 @@
                         'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
                     },
                     body: JSON.stringify({
-                        job_id: jobId,
-                        pay_no: jobId,
-                        job_no: jobId,
+                        id: currentPaymentId,
                         payment_id: currentPaymentId,
+                        job_id: jobId,
+                        job_no: jobNo,
+                        pay_no: jobNo,
                         payment_type: payType,
                         amount: payAmount,
                         currency: 'gbp',
@@ -11229,16 +11891,24 @@
                     return false;
                 }
 
-                if (data.payment_id || data.id || data.data?.payment_id || data.data?.id) {
-                    window.paymentId = parseInt(data.payment_id || data.id || data.data?.payment_id || data.data?.id);
-                    if (typeof BookingStore !== 'undefined') {
-                        BookingStore.setState({
-                            paymentId: window.paymentId,
-                            selectedStripePaymentType: payType,
-                            jobId: jobId,
-                            bookingId: jobId
-                        });
-                    }
+                const resolvedPaymentId = parseInt(data.payment_id || data.id || data.data?.payment_id || data.data?.id || 0);
+                const resolvedTxnId = data.transaction_id || data.data?.transaction_id || '';
+
+                if (resolvedPaymentId) {
+                    window.paymentId = resolvedPaymentId;
+                }
+                if (resolvedTxnId) {
+                    window.transactionId = resolvedTxnId;
+                }
+
+                if (typeof BookingStore !== 'undefined') {
+                    BookingStore.setState({
+                        id: resolvedPaymentId || window.paymentId,
+                        payment_id: resolvedPaymentId || window.paymentId,
+                        paymentId: resolvedPaymentId || window.paymentId,
+                        transaction_id: resolvedTxnId || window.transactionId || '',
+                        selectedStripePaymentType: payType
+                    });
                 }
 
                 const clientSecret = data.client_secret || data.clientSecret || data.data?.client_secret;
@@ -11407,7 +12077,11 @@
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
                 btn.disabled = true;
 
-                const pId = parseInt(window.paymentId || state.paymentId || 0);
+                const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
+                const txnId = window.transactionId || state.transaction_id || '';
+                const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
+                const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
+
                 fetch(API_BASE_URL + '/stripe/payment-confirm', {
                     method: 'POST',
                     headers: {
@@ -11416,7 +12090,12 @@
                         'Authorization': 'Bearer ' + getCookieValue('auth_token')
                     },
                     body: JSON.stringify({
+                        id: pId,
                         payment_id: pId,
+                        transaction_id: txnId,
+                        job_id: cleanJobId,
+                        job_no: cleanJobNo,
+                        pay_no: cleanJobNo,
                         payment_type: window.selectedStripePaymentType || 'full'
                     })
                 })
@@ -11504,7 +12183,10 @@
                     btn.disabled = false;
                 } else if (result.paymentIntent && (result.paymentIntent.status === 'succeeded' || result.paymentIntent.status === 'processing')) {
                     try {
-                        const pId = parseInt(window.paymentId || state.paymentId || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+                        const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+                        const txnId = window.transactionId || state.transaction_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.transaction_id : '') || '';
+                        const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
+                        const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
 
                         const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
                             method: 'POST',
@@ -11514,11 +12196,13 @@
                                 'Authorization': 'Bearer ' + getCookieValue('auth_token')
                             },
                             body: JSON.stringify({
+                                id: pId,
                                 payment_id: pId,
+                                transaction_id: txnId,
                                 payment_intent_id: result.paymentIntent.id,
-                                job_id: bookingData.jobId || bookingData.bookingId,
-                                pay_no: bookingData.bookingId || bookingData.jobId,
-                                job_no: bookingData.bookingId || bookingData.jobId,
+                                job_id: cleanJobId,
+                                job_no: cleanJobNo,
+                                pay_no: cleanJobNo,
                                 status: result.paymentIntent.status,
                                 credit_pay: (result.paymentIntent.amount / 100).toFixed(2),
                                 payment_type: window.selectedStripePaymentType || 'full'
@@ -11583,7 +12267,7 @@
                 <div style="background: radial-gradient(circle, rgba(243, 156, 18, 0.15) 0%, rgba(10, 15, 29, 0) 70%); position: absolute; inset: 0; pointer-events: none;"></div>
                 <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; max-width: 480px; width: 100%;">
                     <div style="margin-bottom: 32px;">
-                        <img src="/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
+                        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide" style="height: 48px; max-width: 200px; object-fit: contain;" onerror="this.src='https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp'">
                     </div>
                     <div style="position: relative; width: 84px; height: 84px; margin-bottom: 28px;">
                         <div style="position: absolute; inset: 0; border-radius: 50%; border: 4px solid rgba(243, 156, 18, 0.15);"></div>
@@ -11616,8 +12300,10 @@
                 BookingStore.restore();
             }
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
-            const pId = parseInt(state.paymentId || window.paymentId || 0);
-            const jobId = state.jobId || state.bookingId || (typeof bookingData !== 'undefined' ? bookingData.jobId || bookingData.bookingId : '');
+            const pId = parseInt(state.id || state.payment_id || state.paymentId || window.paymentId || 0);
+            const txnId = state.transaction_id || window.transactionId || '';
+            const cleanJobId = state.jobId || state.job_id || (typeof bookingData !== 'undefined' ? bookingData.jobId || bookingData.job_id : '');
+            const cleanJobNo = state.job_no || state.bookingId || (typeof bookingData !== 'undefined' ? bookingData.job_no || bookingData.bookingId : '') || '';
 
             // Clean up the URL query params without reloading the page
             window.history.replaceState({}, document.title, window.location.pathname);
@@ -11655,19 +12341,21 @@
                         'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
                     },
                     body: JSON.stringify({
+                        id: pId,
                         payment_id: pId,
+                        transaction_id: txnId,
                         payment_intent_id: paymentIntentId,
-                        job_id: jobId,
-                        pay_no: jobId,
-                        job_no: jobId,
+                        job_id: cleanJobId,
+                        job_no: cleanJobNo,
+                        pay_no: cleanJobNo,
                         status: redirectStatus,
                         payment_type: state.selectedStripePaymentType || window.selectedStripePaymentType || 'full'
                     })
                 });
 
                 const data = await confirmResp.json();
-                if (data.status || data.success) {
-                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobId;
+                if (data.status === true || data.success === true) {
+                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobNo;
                     $('#confirmNum').text(confirmedJobNo);
 
                     const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || state.job_no || state.bookingId;
@@ -11704,38 +12392,77 @@
                     // Remove/Fade out the black loading overlay
                     const $overlay = $('#paymentRedirectOverlay');
                     if ($overlay.length) {
-                        $overlay.fadeOut(400, function () {
+                        $overlay.fadeOut(300, function () {
                             $(this).remove();
                         });
                     }
 
                     showToast('Payment successful! Your booking is confirmed.', 'success');
                 } else {
+                    // Payment failed or was canceled - redirect back to Payment step (Step 5)
                     const $overlay = $('#paymentRedirectOverlay');
                     if ($overlay.length) {
-                        $overlay.fadeOut(400, function () {
+                        $overlay.fadeOut(300, function () {
                             $(this).remove();
                         });
                     }
-                    showStep(8);
-                    showToast('Payment Confirmation: ' + (data.message || 'Processing in background'), 'info');
+
+                    // Bring user to Payment step
+                    showStep(5);
+                    if (typeof selectPaymentMethod === 'function') {
+                        selectPaymentMethod('stripe');
+                    }
+                    if (typeof renderPaymentBreakdownUI === 'function') {
+                        renderPaymentBreakdownUI(state.paymentBreakdown);
+                    }
+                    $('#stripePaymentContainer').show();
+                    if (typeof initStripePaymentElement === 'function') {
+                        initStripePaymentElement();
+                    }
+
+                    const failMessage = data.message || (typeof data.data === 'string' ? data.data : 'Payment failed. Please try again or choose another payment method.');
+                    const msgBox = document.getElementById('payment-message');
+                    if (msgBox) {
+                        msgBox.textContent = failMessage;
+                        msgBox.style.display = 'block';
+                    }
+
+                    showToast(failMessage, 'error');
                 }
             } catch (err) {
                 console.error('Error confirming redirected payment:', err);
                 const $overlay = $('#paymentRedirectOverlay');
                 if ($overlay.length) {
-                    $overlay.fadeOut(400, function () {
+                    $overlay.fadeOut(300, function () {
                         $(this).remove();
                     });
                 }
-                showStep(8);
-                showToast('Payment received! Finalizing booking details.', 'success');
+                showStep(5);
+                if (typeof selectPaymentMethod === 'function') {
+                    selectPaymentMethod('stripe');
+                }
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI(state.paymentBreakdown);
+                }
+                $('#stripePaymentContainer').show();
+                if (typeof initStripePaymentElement === 'function') {
+                    initStripePaymentElement();
+                }
+
+                const errMsg = 'Payment verification failed. Please try again.';
+                const msgBox = document.getElementById('payment-message');
+                if (msgBox) {
+                    msgBox.textContent = errMsg;
+                    msgBox.style.display = 'block';
+                }
+                showToast(errMsg, 'error');
             }
         }
 
 
         function updateBookingSummary() {
             const bData = BookingStore.getState();
+            if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(bData);
             if (typeof updateStripeTypeAmounts === 'function') updateStripeTypeAmounts();
 
             // 1. Passenger Name
@@ -12011,7 +12738,7 @@
                     flightArrivingTime: BookingStore.getState().time || $('#flightArrivingTime').val(),
                     comingFrom: $('#comingFrom').val(),
                     dropoffAddress: $('#dropoffAddress').val(),
-                    pickAfterTime: $('#pickupAfterLanding').val(),
+                    pickAfterTime: $('#pickupAfterLandingSelect').val() || $('#pickupAfterLanding').val() || BookingStore.getState().pickAfterTime || '45',
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
                 };
@@ -12023,7 +12750,7 @@
                     dropoffAddressSeaport: $('#dropoffAddressSeaport').val(),
                     meetAndGreet: isMeetGreet ? '1' : '0',
                     wheelchairOption: isWheelchair ? '1' : '0',
-                    pickAfterTime: $('#pickupAfterDockingSelect').val(),
+                    pickAfterTime: $('#pickupAfterDockingSelect').val() || BookingStore.getState().pickAfterTime || '45',
                 };
             } else {
                 journeyFields = {
@@ -12114,7 +12841,9 @@
             // --- Journey specific validation ---
             if (bookingData.pickupType === 'airport') {
                 if (!bookingData.flightNumber) { showToast('Flight Number is required.', 'error'); return; }
-                if (!bookingData.pickAfterTime) { showToast('Pick Up Time After Landing is required.', 'error'); return; }
+                if (!bookingData.pickAfterTime) {
+                    BookingStore.setState({ pickAfterTime: $('#pickupAfterLandingSelect').val() || $('#pickupAfterLanding').val() || '45' });
+                }
                 if (!bookingData.comingFrom) { showToast('Coming From is required.', 'error'); return; }
                 // Dropoff Address validation removed as requested
             } else if (bookingData.pickupType !== 'seaport') {
@@ -12218,14 +12947,17 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === true) {
-                        const jobNo = data.job_no || data.booking_no || data.data?.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : (data.jobNo || data.data));
-                        const jobId = data.jd || data.job_id || data.id || data.data?.job_id || (typeof data.data === 'number' || /^\d+$/.test(data.data) ? data.data : null);
+                        const jobNo = data.job_no || data.booking_no || data.data?.job_no || data.data?.booking_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : '') || (typeof data.jobNo === 'string' ? data.jobNo : '');
+                        const jobId = data.jd || data.job_id || data.id || data.data?.job_id || data.data?.jd || (typeof data.data === 'number' || /^\d+$/.test(data.data) ? data.data : '') || '';
+
+                        const cleanJobNo = String(jobNo || '').trim();
+                        const cleanJobId = jobId || '';
 
                         BookingStore.setState({
-                            bookingId: jobNo || data.data, // job_no
-                            jobId: jobId || data.jd, // DB ID
-                            job_no: jobNo,
-                            job_id: jobId,
+                            bookingId: cleanJobNo || (cleanJobId ? String(cleanJobId) : ''),
+                            job_no: cleanJobNo,
+                            jobId: cleanJobId,     // DB numeric ID
+                            job_id: cleanJobId,
                             firebaseConfig: data.firebase || null,
                             firebaseCustomToken: data.firebase_custom_token || null
                         });
@@ -12437,6 +13169,10 @@
             $('#findingDriversLoader').show();
             $('#step6CancelBtnWrapper').show();
 
+            const state = BookingStore.getState();
+            firebaseConfig = firebaseConfig || state.firebaseConfig || window.firebaseConfig;
+            firebaseCustomToken = firebaseCustomToken || state.firebaseCustomToken || window.firebaseCustomToken;
+
             // Check if pickup time is expired FIRST
             if (checkBookingExpiration()) {
                 console.log("Pickup time has expired. Stopping Firebase listening.");
@@ -12554,8 +13290,9 @@
 
             // Helper: attach the Firestore listener once authenticated
             function attachFirestoreListener() {
-                if (!bookingData.bookingId) {
-                    console.error("No booking ID found to listen for bids.");
+                const targetJobNo = String(bookingData.job_no || bookingData.bookingId || bookingData.jobId || bookingData.job_id || BookingStore.getState().job_no || BookingStore.getState().bookingId || '').trim();
+                if (!targetJobNo) {
+                    console.error("No valid booking job_no found to listen for bids.");
                     return;
                 }
 
@@ -12565,10 +13302,32 @@
                     driversListener(); // Unsubscribe previous snapshot
                 }
 
-                driversListener = db.collection('{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}').doc(bookingData.bookingId)
+                const collectionName = '{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}';
+                console.log(`[Firebase] Attaching listener to collection: "${collectionName}", doc: "${targetJobNo}"`);
+
+                driversListener = db.collection(collectionName).doc(targetJobNo)
                     .onSnapshot((doc) => {
+                        console.log(`[Firebase] Snapshot received for doc: "${doc.id}", exists: ${doc.exists}`);
                         if (doc.exists) {
-                            const data = doc.data();
+                            const data = doc.data() || {};
+                            console.log('[Firebase] Document data:', data);
+
+                            const realJobNo = data.job_no || data.booking_no || doc.id || bookingData.job_no;
+                            const realJobId = data.job_id || data.jd || bookingData.jobId;
+
+                            if (realJobNo && typeof realJobNo === 'string') {
+                                BookingStore.setState({
+                                    job_no: realJobNo,
+                                    bookingId: realJobNo
+                                });
+                            }
+                            if (realJobId) {
+                                BookingStore.setState({
+                                    jobId: realJobId,
+                                    job_id: realJobId
+                                });
+                            }
+
                             if (data.status === 'cancel' || data.status === 'cancelled') {
                                 if (BookingStore.getState().currentStep < 5) {
                                     showToast('Booking already cancelled or no more', 'error');
@@ -12578,6 +13337,7 @@
                             }
                             renderRealtimeDrivers(data.bids_details || {});
                         } else {
+                            console.warn(`[Firebase] Document "${targetJobNo}" does not exist in collection "${collectionName}".`);
                             renderRealtimeDrivers({});
                             if (BookingStore.getState().currentStep < 5) {
                                 showToast('Booking already cancelled or no more', 'error');
@@ -12585,7 +13345,7 @@
                             }
                         }
                     }, (error) => {
-                        console.error("Error listening to bids: ", error);
+                        console.error("[Firebase] Error listening to bids: ", error);
                     });
             }
 
@@ -12702,7 +13462,7 @@
                     let vehicleName = bid.b_cab || bookingData.vehicle?.name || 'Standard';
                     const vehicleCapacity = bid.b_seater || bookingData.vehicle?.capacity || 4;
                     const vehicleLuggage = bid.b_luggage || bookingData.vehicle?.luggage || 2;
-                    let vehicleImg = bookingData.vehicle?.image || '/goride/img/saloon.png';
+                    let vehicleImg = bookingData.vehicle?.image || `${GORIDE_IMG_PREFIX}saloon.png`;
 
                     if (bid.b_cab) {
                         const vKey = bid.b_cab.toLowerCase().replace(/\s+/g, '');
@@ -12724,22 +13484,36 @@
                         } else {
                             vehicleName = bid.b_cab.charAt(0).toUpperCase() + bid.b_cab.slice(1);
                         }
-                        vehicleImg = `/goride/img/${vKey}.webp`;
+                        vehicleImg = `${GORIDE_IMG_PREFIX}${vKey}.webp`;
                     }
 
                     const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
 
                     const fare = bookingData.vehicle?.fareBreakdown || {};
-                    const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                        fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
-                        `<li>Meet & Greet included</li>
-                         <li>Free waiting time (up to 45 mins at airports)</li>
-                         <li>Flight tracking included</li>`;
+                    const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
+                    const inclusionsList = Array.isArray(rawInclusions)
+                        ? rawInclusions
+                        : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
-                    const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                        fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
-                        `<li>Any government or local authority charges, if applicable.</li>
-                         <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+                    const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                        inclusionsList.map(inc => {
+                            const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                            const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                            return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
+                        }).join('') :
+                        `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
+
+                    const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
+                    const exclusionsList = Array.isArray(rawExclusions)
+                        ? rawExclusions
+                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
+
+                    const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                        exclusionsList.map(exc => {
+                            const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                            return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                        }).join('') :
+                        `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
                     const taxHtml = d.isTax ? `
             <div class="tax-ribbon-wrapper">
@@ -12913,7 +13687,7 @@
             const grid = $('#driverList');
             grid.html('');
             const vehicle = bookingData.vehicle;
-            const vehicleImg = vehicle?.image || '/goride/img/saloon.png';
+            const vehicleImg = vehicle?.image || `${GORIDE_IMG_PREFIX}saloon.png`;
             const vehicleName = vehicle?.name || 'Standard';
             const vehicleCapacity = vehicle?.capacity || 4;
             const vehicleLuggage = vehicle?.luggage || 2;
@@ -12921,16 +13695,30 @@
             const vehiclePriceMax = vehicle?.priceMax || '';
             const priceDisplay = vehiclePriceMax ? `£${vehiclePrice} – £${vehiclePriceMax}` : `£${vehiclePrice}`;
             const fare = bookingData.vehicle?.fareBreakdown || {};
-            const inclusionsHtml = (fare.inclusions && fare.inclusions.length > 0) ?
-                fare.inclusions.map(inc => `<li>${inc}</li>`).join('') :
-                `<li>Meet & Greet included</li>
-                 <li>Free waiting time (up to 45 mins at airports)</li>
-                 <li>Flight tracking included</li>`;
+            const rawInclusions = fare.included_list || fare.inclusions || fare.included || [];
+            const inclusionsList = Array.isArray(rawInclusions)
+                ? rawInclusions
+                : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
-            const exclusionsHtml = (fare.exclusions && fare.exclusions.length > 0) ?
-                fare.exclusions.map(exc => `<li>${exc}</li>`).join('') :
-                `<li>Any government or local authority charges, if applicable.</li>
-                 <li>Additional mileage and waiting charges beyond the included limits.</li>`;
+            const inclusionsHtml = (inclusionsList && inclusionsList.length > 0) ?
+                inclusionsList.map(inc => {
+                    const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                    const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                    return `<li class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></li>`;
+                }).join('') :
+                `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></li>`;
+
+            const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
+            const exclusionsList = Array.isArray(rawExclusions)
+                ? rawExclusions
+                : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawInclusions]; } })() : []);
+
+            const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
+                exclusionsList.map(exc => {
+                    const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                    return `<li class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></li>`;
+                }).join('') :
+                `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
@@ -13024,7 +13812,7 @@
         function openDriverReview(driver) {
             bookingData.selectedDriver = driver;
             const vehicle = bookingData.vehicle;
-            const vehicleImg = bookingData.vehicle?.image || 'goride/img/fleet1.png';
+            const vehicleImg = bookingData.vehicle?.image || `${GORIDE_IMG_PREFIX}fleet1.png`;
             let vehicleName = driver.carName || bookingData.vehicle?.name || '-';
             if (driver.carName) {
                 const vKey = driver.carName.toLowerCase().replace(/\s+/g, '');
@@ -13188,6 +13976,76 @@
             showStep(7);
             startRcCarCarousel();
         }
+        window.renderPaymentBreakdownUI = function (breakdownData) {
+            const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
+            const bd = breakdownData || state.paymentBreakdown || {};
+
+            const baseFare = parseFloat(bd.base_fare !== undefined && bd.base_fare !== null ? bd.base_fare : (state.base_fare !== undefined && state.base_fare !== null ? state.base_fare : (state.vehicle ? state.vehicle.price || state.vehicle.fare || 0 : 0)));
+            const tax = parseFloat(bd.tax !== undefined && bd.tax !== null ? bd.tax : (state.tax !== undefined && state.tax !== null ? state.tax : 0));
+            const firstAmt = parseFloat(bd.firstAmt !== undefined && bd.firstAmt !== null ? bd.firstAmt : (state.firstAmt !== undefined && state.firstAmt !== null ? state.firstAmt : 0));
+            const totalFare = parseFloat(bd.total_fare !== undefined && bd.total_fare !== null ? bd.total_fare : (bd.actual_total_fare !== undefined && bd.actual_total_fare !== null ? bd.actual_total_fare : (state.total_fare !== undefined && state.total_fare !== null ? state.total_fare : (baseFare + tax - firstAmt))));
+            const partFare = parseFloat(bd.part_pay_fare !== undefined && bd.part_pay_fare !== null ? bd.part_pay_fare : (state.part_pay_fare !== undefined && state.part_pay_fare !== null ? state.part_pay_fare : (totalFare * 0.20)));
+
+            if (totalFare > 0) window.paymentTotalFare = totalFare;
+            if (partFare > 0) window.paymentPartPayFare = partFare;
+
+            $('#pbBaseFare').text('£' + baseFare.toFixed(2));
+            $('#pbTax').text('£' + tax.toFixed(2));
+
+            // Meet & greet is removed from the fare breakdown UI per updated logic
+            $('#pbMeetGreetRow').hide();
+
+            if (firstAmt > 0) {
+                $('#pbFirstDiscount').text('-£' + firstAmt.toFixed(2));
+                $('#pbFirstDiscountRow').show();
+            } else {
+                $('#pbFirstDiscountRow').hide();
+            }
+
+            $('#pbTotalFare').text('£' + totalFare.toFixed(2));
+            $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || state.apiDistance || 360} miles`);
+
+            if (typeof updateStripeTypeAmounts === 'function') {
+                updateStripeTypeAmounts();
+            }
+
+            // Dynamically render Inclusions & Exclusions from fare breakdown response
+            try {
+                const rawInclusions = bd.inclusion || bd.inclusions || bd.included_list || bd.included || [];
+                const inclusionsList = Array.isArray(rawInclusions) ? rawInclusions : (typeof rawInclusions === 'string' ? (() => { try { return JSON.parse(rawInclusions); } catch (e) { return [rawInclusions]; } })() : []);
+                if (inclusionsList && inclusionsList.length > 0 && typeof getInclusionIcon === 'function') {
+                    const incHtml = inclusionsList.map(inc => {
+                        const text = typeof inc === 'object' && inc !== null ? (inc.name || inc.text || inc.title || inc.value || JSON.stringify(inc)) : String(inc || '');
+                        const icon = (typeof inc === 'object' && inc !== null && inc.icon) ? inc.icon : getInclusionIcon(text);
+                        return `<div class="tab-point-item"><i class="fas ${icon} point-icon point-icon-check"></i><div>${text}</div></div>`;
+                    }).join('');
+                    $('#paymentInclusionsList, #step6 .inclusions-pane .tab-points-list').html(incHtml);
+                } else {
+                    $('#paymentInclusionsList, #step6 .inclusions-pane .tab-points-list').html(
+                        `<div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No additional inclusions are included in this fare.</div></div>`
+                    );
+                }
+
+                const rawExclusions = bd.exclusion || bd.exclusions || bd.excluded_list || bd.excluded || [];
+                const exclusionsList = Array.isArray(rawExclusions) ? rawExclusions : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
+                if (exclusionsList && exclusionsList.length > 0) {
+                    const excHtml = exclusionsList.map(exc => {
+                        const text = typeof exc === 'object' && exc !== null ? (exc.name || exc.text || exc.title || exc.value || JSON.stringify(exc)) : String(exc || '');
+                        return `<div class="tab-point-item"><i class="fas fa-times point-icon point-icon-cross"></i><div>${text}</div></div>`;
+                    }).join('');
+                    $('#paymentExclusionsList, #step6 .exclusions-pane .tab-points-list').html(excHtml);
+                } else {
+                    $('#paymentExclusionsList, #step6 .exclusions-pane .tab-points-list').html(
+                        `<div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></div>`
+                    );
+                }
+            } catch (err) {
+                console.error('Error rendering payment breakdown inclusions:', err);
+            }
+
+            $('#dynamicPaymentSummary').show();
+        };
+
         async function proceedToPaymentWithDriver(driver, btnElement) {
             bookingData.selectedDriver = driver;
 
@@ -13201,8 +14059,8 @@
             }
 
             const payload = {
-                job_id: bookingData.jobId || '',
-                job_no: bookingData.bookingId || '',
+                job_id: bookingData.jobId || bookingData.job_id || '',
+                job_no: bookingData.job_no || bookingData.bookingId || '',
                 user_id: driver.id || '',
                 date: bookingData.date || '',
                 isCredit: 'no',
@@ -13229,34 +14087,20 @@
                     if (pId) window.paymentId = parseInt(pId);
 
                     BookingStore.setState({
+                        paymentBreakdown: data.data,
+                        base_fare: data.data.base_fare,
+                        tax: data.data.tax,
+                        firstAmt: data.data.firstAmt,
                         total_fare: data.data.total_fare,
                         part_pay_fare: data.data.part_pay_fare,
+                        id: window.paymentId,
+                        payment_id: window.paymentId,
                         paymentId: window.paymentId,
                         job_no: data.data.job_no || data.job_no || bookingData.job_no || bookingData.bookingId,
                         job_id: data.data.job_id || data.job_id || bookingData.jobId
                     });
 
-                    if (typeof updateStripeTypeAmounts === 'function') updateStripeTypeAmounts();
-
-                    $('#pbBaseFare').text('£' + parseFloat(data.data.base_fare || 0).toFixed(2));
-                    $('#pbTax').text('£' + parseFloat(data.data.tax || 0).toFixed(2));
-
-                    // Meet & greet is removed from the fare breakdown UI per updated logic
-                    $('#pbMeetGreetRow').hide();
-
-                    if (data.data.firstAmt && data.data.firstAmt !== "0" && parseFloat(data.data.firstAmt) > 0) {
-                        $('#pbFirstDiscount').text('-£' + parseFloat(data.data.firstAmt).toFixed(2));
-                        $('#pbFirstDiscountRow').show();
-                    } else {
-                        $('#pbFirstDiscountRow').hide();
-                    }
-
-                    $('#pbTotalFare').text('£' + parseFloat(data.data.total_fare || data.data.actual_total_fare || 0).toFixed(2));
-
-                    $('#dynamicIncludedMiles').text(`${bookingData.apiDistance || 360} miles`);
-
-                    $('#dynamicPaymentSummary').show();
-
+                    renderPaymentBreakdownUI(data.data);
                     showStep(5);
                 } else {
                     showToast(data.message || 'Failed to fetch payment breakdown.', 'error');
@@ -13279,7 +14123,7 @@
             if (dynamicCarImages && dynamicCarImages.length > 0) {
                 return dynamicCarImages[index - 1];
             }
-            return `goride/img/fleet${index}.png`;
+            return `${GORIDE_IMG_PREFIX}fleet${index}.png`;
         }
 
         function showCarDetailsModal(driver) {
@@ -13549,6 +14393,12 @@
         }
 
         function showStep(stepNumber) {
+            // Cancel any pending map initialization timer immediately
+            if (window._routeMapTimer) {
+                clearTimeout(window._routeMapTimer);
+                window._routeMapTimer = null;
+            }
+
             const currentStep = BookingStore.getState().currentStep || 1;
 
             // Close mobile summary if it is open (so it doesn't block the screen)
@@ -13580,18 +14430,17 @@
                     $('#mapRouteBadge').show();
                 }
                 $('#vehicleGrid').addClass('single-col');
-                setTimeout(function () {
-                    if (typeof initSingleRouteMap === 'function') {
+                window._routeMapTimer = setTimeout(function () {
+                    const stepNow = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? (BookingStore.getState().currentStep || 1) : 1;
+                    if (stepNow >= 3 && typeof initSingleRouteMap === 'function') {
                         initSingleRouteMap();
                     }
                 }, 300);
             } else {
                 sections.removeClass('active side-by-side');
                 $(`#step${stepNumber}`).addClass('active');
-                if (window.innerWidth > 768 && stepNumber < 3) {
+                if (stepNumber < 3) {
                     const formSection = $('.hero-form-section');
-
-
                     const mapSection = $('.hero-map-section');
                     formSection.removeClass('col-md-8 three-column-mode').addClass('col-md-5');
                     mapSection.removeClass('col-md-4').addClass('col-md-7');
@@ -13684,9 +14533,28 @@
                     $(`#step${stepNumber}`).css('padding-top', '80px');
                 }
             }
+
+            if (stepNumber === 6) {
+                if (typeof startDynamicDriverSearch === 'function') {
+                    startDynamicDriverSearch();
+                }
+            } else if (stepNumber === 5) {
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI();
+                }
+            }
         }
         function goBack(step) {
             showStep(step);
+            if (step === 6) {
+                if (typeof startDynamicDriverSearch === 'function') {
+                    startDynamicDriverSearch();
+                }
+            } else if (step === 5) {
+                if (typeof renderPaymentBreakdownUI === 'function') {
+                    renderPaymentBreakdownUI();
+                }
+            }
         }
         function closeModal(id) {
             $(`#${id}`).removeClass('show');
@@ -13812,6 +14680,9 @@
             const options = $('#childSeatOptions');
             if (!checkbox.length || !options.length) return;
             if (checkbox.is(':checked')) {
+                if (typeof showToast === 'function') {
+                    showToast('Child seat may have additional payments', 'info');
+                }
                 options.show();
                 let count = parseInt($('#childSeatCount').val()) || 0;
                 if (count === 0) count = 1;
@@ -13823,6 +14694,12 @@
                 $('#childSeatCount').val(0);
                 $('#childSeatCountDisplay').text(0);
                 $('#carSeatDropdownsContainer').html('');
+            }
+            if (typeof gatherAllBookingData === 'function') {
+                gatherAllBookingData();
+            }
+            if (typeof updateBookingSummary === 'function') {
+                updateBookingSummary();
             }
         }
         let currentModalVehicleData = null;
@@ -14000,6 +14877,12 @@
             input.val(val);
             display.text(val);
             renderCarSeatDropdowns(val);
+            if (typeof gatherAllBookingData === 'function') {
+                gatherAllBookingData();
+            }
+            if (typeof updateBookingSummary === 'function') {
+                updateBookingSummary();
+            }
         }
         // ===== RENDER CAR SEAT DROPDOWNS DYNAMICALLY =====
         function renderCarSeatDropdowns(count) {
@@ -14064,6 +14947,9 @@
                 $('.mobile-from, .mobile-to').removeClass('expanded-text');
                 $('#mcsPickup, #mcsDropoff').addClass('text-truncate');
             } else {
+                if (typeof _updateDistanceDurationUI === 'function') {
+                    _updateDistanceDurationUI(BookingStore.getState());
+                }
                 body.slideDown(300);
                 backdrop.fadeIn(300);
                 arrow.addClass('rotate');
@@ -14080,24 +14966,25 @@
         // (called on every BookingStore.setState and on page load restore)
 
         const phoneInput = document.querySelector("#passengerPhone");
-
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "auto",
-            geoIpLookup: function (success, failure) {
-                fetch("https://get.geojs.io/v1/ip/geo.json")
-                    .then(function (res) { return res.json(); })
-                    .then(function (data) { success(data && data.country_code ? data.country_code.toLowerCase() : "gb"); })
-                    .catch(function () { success("gb"); });
-            },
-            preferredCountries: ["gb", "us", "in", "ae", "au"],
-            separateDialCode: true,
-            nationalMode: true,
-            autoPlaceholder: "polite",
-            strictMode: true,
-            loadUtils: () =>
-                import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
-        });
-        window.passengerPhoneIti = iti;
+        if (phoneInput && typeof window.intlTelInput === 'function') {
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "auto",
+                geoIpLookup: function (success, failure) {
+                    fetch("https://get.geojs.io/v1/ip/geo.json")
+                        .then(function (res) { return res.json(); })
+                        .then(function (data) { success(data && data.country_code ? data.country_code.toLowerCase() : "gb"); })
+                        .catch(function () { success("gb"); });
+                },
+                preferredCountries: ["gb", "us", "in", "ae", "au"],
+                separateDialCode: true,
+                nationalMode: true,
+                autoPlaceholder: "polite",
+                strictMode: true,
+                loadUtils: () =>
+                    import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
+            });
+            window.passengerPhoneIti = iti;
+        }
     </script>
 
 
@@ -14111,7 +14998,8 @@
 
             <!-- Logo -->
             <div class="auth-modal-logo">
-                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png"
+                    alt="GoRide Logo">
             </div>
 
             <h2 class="auth-modal-headline" id="authModalHeadline">Sign in to continue</h2>
@@ -14212,7 +15100,14 @@
                     Verify &amp; Continue <i class="fas fa-arrow-right" style="font-size: 14px;"></i>
                 </button>
 
-
+                <div
+                    style="display: flex; align-items: center; justify-content: center; margin-top: 14px; font-size: 13px; color: #666; gap: 6px;">
+                    <span>Didn't receive the code?</span>
+                    <button type="button" id="authResendOtpBtn" onclick="handleResendOtp()"
+                        style="background: none; border: none; padding: 0; color: #111; font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13px;">Resend
+                        OTP</button>
+                    <span id="authResendTimer" style="font-size: 12px; color: #888; display: none;"></span>
+                </div>
             </div>
 
             <!-- Firebase Recaptcha Container -->
@@ -14220,8 +15115,10 @@
 
             <p class="auth-modal-terms">
                 By continuing, you agree to our
-                <a href="/terms" target="_blank">Terms of Service</a> &amp;
-                <a href="/privacy" target="_blank">Privacy Policy</a>.
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}terms" target="_blank">Terms of
+                    Service</a> &amp;
+                <a href="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}privacy" target="_blank">Privacy
+                    Policy</a>.
             </p>
         </div>
     </div>
@@ -14280,6 +15177,23 @@
                 inputEl.value = inputEl.value.replace(/\D/g, '');
                 setTimeout(updateAuthInputMaxLength, 100);
             });
+
+            inputEl.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAuthContinue();
+                }
+            });
+
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleVerifyOtp();
+                    }
+                });
+            }
 
             setTimeout(updateAuthInputMaxLength, 600);
         })();
@@ -14415,6 +15329,13 @@
 
                     // Close the modal
                     closeAuthModal();
+
+                    // If on dashboard or profile page, reload the page to load user data
+                    const currentPath = window.location.pathname.toLowerCase();
+                    if (currentPath.includes('/dashboard') || currentPath.includes('/profile') || currentPath.endsWith('dashboard') || currentPath.endsWith('profile')) {
+                        window.location.reload();
+                        return;
+                    }
 
                     // Resume any pending action (e.g., "See prices")
                     if (typeof _pendingAfterAuth === 'function') {
@@ -14646,11 +15567,166 @@
         let _confirmationResult = null;
         let _isNewUser = false;
         let _currentMobile = '';
+        let _currentDialCode = '';
         let _isIndiaFlow = false;
         let _indiaOtpEnc = null;
+        let _isSendingAuthOtp = false;
+        let _isVerifyingOtp = false;
+        let _resendTimerInterval = null;
+        let _resendCountdown = 0;
+
+        function _startResendTimer(seconds = 30) {
+            _resendCountdown = seconds;
+            const btn = document.getElementById('authResendOtpBtn');
+            const timerEl = document.getElementById('authResendTimer');
+            if (!btn) return;
+
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+            btn.style.textDecoration = 'none';
+
+            if (timerEl) {
+                timerEl.style.display = 'inline';
+                timerEl.textContent = `(${_resendCountdown}s)`;
+            }
+
+            if (_resendTimerInterval) clearInterval(_resendTimerInterval);
+            _resendTimerInterval = setInterval(() => {
+                _resendCountdown--;
+                if (_resendCountdown <= 0) {
+                    clearInterval(_resendTimerInterval);
+                    _resendTimerInterval = null;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.style.textDecoration = 'underline';
+                    if (timerEl) timerEl.style.display = 'none';
+                } else {
+                    if (timerEl) timerEl.textContent = `(${_resendCountdown}s)`;
+                }
+            }, 1000);
+        }
+
+        async function _sendOtpProcess(isResend = false) {
+            if (_isSendingAuthOtp) return;
+            _isSendingAuthOtp = true;
+
+            const continueBtn = document.getElementById('authContinueBtn');
+            const resendBtn = document.getElementById('authResendOtpBtn');
+
+            if (isResend) {
+                if (resendBtn) {
+                    resendBtn.disabled = true;
+                    resendBtn.textContent = 'Sending...';
+                }
+            } else {
+                if (continueBtn) {
+                    continueBtn.disabled = true;
+                    continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
+                }
+            }
+
+            try {
+                // 1. Check User
+                const response = await fetch(API_BASE_URL + '/auth/check-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ login: 'mobile', value: _currentMobile }),
+                });
+
+                const result = await response.json();
+
+                if (result.status === false) {
+                    _showAuthError(result.message || 'Failed to verify number.');
+                    if (!isResend) _resetContinueBtn();
+                    return;
+                }
+
+                _isNewUser = !result.exists;
+
+                if (_isIndiaFlow) {
+                    // India Flow: Call POST /send-otp
+                    if (!isResend && continueBtn) continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: _currentMobile,
+                            dialCode: _currentDialCode || '91'
+                        }),
+                    });
+
+                    const sendOtpResult = await sendOtpResponse.json();
+
+                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
+                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
+                        _showOtpUI();
+                        _startResendTimer(30);
+                    } else {
+                        _showAuthError(sendOtpResult.message || 'Failed to send OTP.');
+                        if (!isResend) _resetContinueBtn();
+                        return;
+                    }
+                } else {
+                    // Non-India Flow: Initialize Firebase and send SMS OTP
+                    if (result.firebase) {
+                        if (!firebase.apps || !firebase.apps.length) {
+                            firebase.initializeApp(result.firebase);
+                        }
+                        _firebaseAuthObj = firebase.auth();
+                    } else if (firebase.apps && firebase.apps.length) {
+                        _firebaseAuthObj = firebase.auth();
+                    }
+
+                    if (!_firebaseAuthObj) {
+                        throw new Error('Firebase configuration missing.');
+                    }
+                    _firebaseAuthObj.languageCode = 'en';
+
+                    if (!isResend && continueBtn) continueBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
+
+                    // Safely clear old recaptchaVerifier
+                    if (window.recaptchaVerifier) {
+                        try {
+                            window.recaptchaVerifier.clear();
+                        } catch (e) {
+                            console.warn('Recaptcha clear warning:', e);
+                        }
+                        window.recaptchaVerifier = null;
+                    }
+
+                    const recapContainer = document.getElementById('recaptcha-container');
+                    if (recapContainer) {
+                        recapContainer.innerHTML = '';
+                    }
+
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                        'size': 'invisible'
+                    });
+
+                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(_currentMobile, window.recaptchaVerifier);
+
+                    // Show OTP UI & start countdown
+                    _showOtpUI();
+                    _startResendTimer(30);
+                }
+
+            } catch (err) {
+                console.error('Check user / OTP Error:', err);
+                _showAuthError(err.message || 'Failed to send OTP. Please try again.');
+                if (!isResend) _resetContinueBtn();
+            } finally {
+                _isSendingAuthOtp = false;
+                if (isResend && resendBtn) {
+                    resendBtn.textContent = 'Resend OTP';
+                }
+            }
+        }
 
         async function handleAuthContinue() {
-            if (!_itiInstance) return;
+            if (!_itiInstance || _isSendingAuthOtp) return;
 
             const inputEl = document.getElementById('authContactInput');
             const countryData = _itiInstance.getSelectedCountryData();
@@ -14679,80 +15755,23 @@
                 mobileNumber = '+' + dialCode + rawVal;
             }
             _currentMobile = mobileNumber;
-
+            _currentDialCode = dialCode;
             _isIndiaFlow = (dialCode === '91' || mobileNumber.startsWith('+91'));
             _indiaOtpEnc = null;
 
-            const btn = document.getElementById('authContinueBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Checking…`;
+            await _sendOtpProcess(false);
+        }
 
-            try {
-                // 1. Check User
-                const response = await fetch(API_BASE_URL + '/auth/check-user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                    body: JSON.stringify({ login: 'mobile', value: mobileNumber }),
-                });
-
-                const result = await response.json();
-
-                if (result.status === false) {
-                    _showAuthError(result.message || 'Failed to verify number.');
-                    _resetContinueBtn();
-                    return;
-                }
-
-                _isNewUser = !result.exists;
-
-                if (_isIndiaFlow) {
-                    // India Flow: Call POST /send-otp
-                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-
-                    const sendOtpResponse = await fetch(API_BASE_URL + '/auth/send-otp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                        body: JSON.stringify({
-                            mobile: mobileNumber,
-                            dialCode: dialCode || '91'
-                        }),
-                    });
-
-                    const sendOtpResult = await sendOtpResponse.json();
-
-                    if (sendOtpResult.status === 'success' || sendOtpResult.status === true) {
-                        _indiaOtpEnc = (sendOtpResult.data && sendOtpResult.data.enc) ? sendOtpResult.data.enc : (sendOtpResult.enc || null);
-                        _showOtpUI();
-                    } else {
-                        _showAuthError(sendOtpResult.message || 'Failed to send OTP.');
-                        _resetContinueBtn();
-                        return;
-                    }
-                } else {
-                    // Non-India Flow: Initialize Firebase and send SMS OTP
-                    if (!_firebaseAuthObj && result.firebase) {
-                        firebase.initializeApp(result.firebase);
-                        _firebaseAuthObj = firebase.auth();
-                    }
-
-                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Sending OTP…`;
-
-                    // Clear old recaptcha
-                    document.getElementById('recaptcha-container').innerHTML = '';
-                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                        'size': 'invisible'
-                    });
-
-                    _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
-
-                    // Show OTP UI
-                    _showOtpUI();
-                }
-
-            } catch (err) {
-                console.error('Check user / OTP Error:', err);
-                _showAuthError('Failed to send OTP. Please try again.');
-                _resetContinueBtn();
+        async function handleResendOtp() {
+            if (_resendCountdown > 0 || _isSendingAuthOtp || !_currentMobile) return;
+            await _sendOtpProcess(true);
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.value = '';
+                otpInput.focus();
+            }
+            if (typeof showToast === 'function') {
+                showToast('A new 6-digit OTP has been sent.', 'success');
             }
         }
 
@@ -14787,6 +15806,12 @@
             } else {
                 document.getElementById('authNewUserFields').style.display = 'none';
             }
+
+            const otpInput = document.getElementById('authOtpInput');
+            if (otpInput) {
+                otpInput.value = '';
+                setTimeout(() => otpInput.focus(), 150);
+            }
         }
 
         function _showPhoneUI() {
@@ -14796,13 +15821,22 @@
             // Hide OTP section
             document.getElementById('authOtpSection').style.display = 'none';
             document.getElementById('authOtpInput').value = '';
+            if (_resendTimerInterval) {
+                clearInterval(_resendTimerInterval);
+                _resendTimerInterval = null;
+            }
+            _resendCountdown = 0;
             _resetContinueBtn();
         }
 
         async function handleVerifyOtp() {
-            const otp = document.getElementById('authOtpInput').value.trim();
-            if (!otp) {
-                _showAuthError('Please enter a valid OTP.');
+            if (_isVerifyingOtp) return;
+
+            const otpInput = document.getElementById('authOtpInput');
+            let otp = otpInput ? otpInput.value.trim().replace(/\D/g, '') : '';
+            if (!otp || otp.length < 4) {
+                _showAuthError('Please enter a valid 6-digit OTP.');
+                if (otpInput) otpInput.focus();
                 return;
             }
 
@@ -14832,6 +15866,7 @@
             const oldHtml = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>&nbsp; Verifying…`;
+            _isVerifyingOtp = true;
 
             try {
                 const verifyPayload = {
@@ -14847,7 +15882,7 @@
                 } else {
                     // Non-India Flow: Verify OTP with Firebase
                     if (!_confirmationResult) {
-                        throw new Error('Firebase confirmation result missing.');
+                        throw new Error('SESSION_EXPIRED');
                     }
                     const result = await _confirmationResult.confirm(otp);
                     const idToken = await result.user.getIdToken();
@@ -14872,6 +15907,13 @@
                     _updateNavbarAfterLogin(verifyRes.user);
                     closeAuthModal();
 
+                    // If on dashboard or profile page, reload the page to load user data
+                    const currentPath = window.location.pathname.toLowerCase();
+                    if (currentPath.includes('/dashboard') || currentPath.includes('/profile') || currentPath.endsWith('dashboard') || currentPath.endsWith('profile')) {
+                        window.location.reload();
+                        return;
+                    }
+
                     if (typeof _pendingAfterAuth === 'function') {
                         const fn = _pendingAfterAuth;
                         _pendingAfterAuth = null;
@@ -14885,9 +15927,41 @@
 
             } catch (error) {
                 console.error('OTP Verify Error:', error);
-                _showAuthError('Invalid OTP. Please check and try again.');
+                let errorMsg = 'Invalid OTP. Please check and try again.';
+
+                const errCode = (error && error.code) ? String(error.code).toLowerCase() : '';
+                const errMsg = (error && error.message) ? String(error.message) : '';
+
+                if (errCode === 'auth/session-expired' || errCode === 'auth/code-expired' || errMsg.includes('SESSION_EXPIRED') || errMsg.includes('session-expired') || errMsg.includes('code-expired')) {
+                    errorMsg = 'OTP session has expired. Please click "Resend OTP" to receive a new code.';
+                    // Immediately enable Resend OTP button
+                    if (_resendTimerInterval) {
+                        clearInterval(_resendTimerInterval);
+                        _resendTimerInterval = null;
+                    }
+                    _resendCountdown = 0;
+                    const resendBtn = document.getElementById('authResendOtpBtn');
+                    const timerEl = document.getElementById('authResendTimer');
+                    if (resendBtn) {
+                        resendBtn.disabled = false;
+                        resendBtn.style.opacity = '1';
+                        resendBtn.style.cursor = 'pointer';
+                        resendBtn.style.textDecoration = 'underline';
+                    }
+                    if (timerEl) timerEl.style.display = 'none';
+                } else if (errCode === 'auth/invalid-verification-code' || errMsg.includes('invalid-verification-code')) {
+                    errorMsg = 'The 6-digit OTP you entered is incorrect. Please check and try again.';
+                } else if (errCode === 'auth/too-many-requests') {
+                    errorMsg = 'Too many attempts. Please wait a moment before trying again.';
+                } else if (errMsg && errMsg !== 'SESSION_EXPIRED') {
+                    errorMsg = errMsg;
+                }
+
+                _showAuthError(errorMsg);
                 btn.disabled = false;
                 btn.innerHTML = oldHtml;
+            } finally {
+                _isVerifyingOtp = false;
             }
         }
 
@@ -14927,8 +16001,16 @@
             <div class="track-status-header">
                 <div class="track-header-badges">
                     <div class="booking-id-badge" id="displayBookingNo">BKG-12345</div>
-                    <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span
-                            id="displayOtpValue">--</span></div>
+                    <div class="track-header-right-actions">
+                        <button type="button" class="track-refresh-btn" id="trackRefreshBtn"
+                            onclick="refreshTrackingData(event)" title="Refresh tracking status"
+                            aria-label="Refresh tracking">
+                            <i class="fas fa-rotate-right"></i>
+                            <span class="refresh-text">Refresh</span>
+                        </button>
+                        <div class="track-otp-badge" id="displayOtpBadge" style="display: none;">OTP: <span
+                                id="displayOtpValue">--</span></div>
+                    </div>
                 </div>
                 <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                 <div id="trackingBookingDetails" style="display: none;"></div>
@@ -15176,6 +16258,64 @@
             margin-bottom: 0;
         }
 
+        .track-header-right-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .track-refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            color: #111827;
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            user-select: none;
+            line-height: 1.2;
+        }
+
+        .track-refresh-btn:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .track-refresh-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .track-refresh-btn.is-refreshing {
+            pointer-events: none;
+            opacity: 0.85;
+            background: #f9fafb;
+        }
+
+        .track-refresh-btn.is-refreshing i {
+            animation: spin-refresh 0.75s linear infinite;
+        }
+
+        @keyframes spin-refresh {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .track-otp-badge {
             display: inline-flex;
             align-items: center;
@@ -15329,6 +16469,14 @@
             .track-header-badges {
                 flex-direction: column;
                 align-items: start;
+                gap: 8px;
+            }
+
+            .track-header-right-actions {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 8px;
+                flex-wrap: wrap;
             }
 
             .mobile-only {
@@ -16089,9 +17237,11 @@
         }
     </style>
 
-    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
+    <script id="socketIoScript" src="{{ asset('js/socket.io.min.js') }}" data-cfasync="false"></script>
     <script>
         let liveTrackingSocket = null;
+        let currentLiveTrackingId = null;
+        let currentTrackedBookingNo = '';
         let driverMarker = null;
         let trackingMap = null;
 
@@ -16100,37 +17250,40 @@
                 if (callback) callback();
                 return;
             }
-            let s = document.getElementById('socketIoScript');
-            if (s) {
-                let attempts = 0;
-                const interval = setInterval(() => {
-                    attempts++;
-                    if (typeof io !== 'undefined') {
-                        clearInterval(interval);
-                        if (callback) callback();
-                    } else if (attempts > 30) {
-                        clearInterval(interval);
-                        console.warn("Socket.io load timeout, continuing...");
-                    }
-                }, 100);
-                return;
-            }
-            s = document.createElement('script');
-            s.id = 'socketIoScript';
-            s.setAttribute('data-cfasync', 'false');
-            s.src = '/js/socket.io.min.js';
-            s.onload = function () {
-                if (callback) callback();
-            };
-            s.onerror = function () {
-                console.warn("Local socket.io.min.js failed, trying CDN fallback...");
+
+            function loadCdnFallback() {
+                if (typeof io !== 'undefined') {
+                    if (callback) callback();
+                    return;
+                }
+                const existingCdn = document.getElementById('socketIoCdnScript');
+                if (existingCdn) return;
                 const cdnS = document.createElement('script');
+                cdnS.id = 'socketIoCdnScript';
                 cdnS.setAttribute('data-cfasync', 'false');
                 cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-                cdnS.onload = function () { if (callback) callback(); };
+                cdnS.onload = function () {
+                    console.log('Socket.io loaded from CDN.');
+                    if (callback) callback();
+                };
+                cdnS.onerror = function () {
+                    console.error('Failed to load Socket.io from CDN fallback.');
+                };
                 document.head.appendChild(cdnS);
-            };
-            document.head.appendChild(s);
+            }
+
+            let attempts = 0;
+            const interval = setInterval(() => {
+                attempts++;
+                if (typeof io !== 'undefined') {
+                    clearInterval(interval);
+                    if (callback) callback();
+                } else if (attempts > 15) { // after 1.5 seconds, load CDN fallback
+                    clearInterval(interval);
+                    console.warn("Local Socket.io not detected, falling back to CDN...");
+                    loadCdnFallback();
+                }
+            }, 100);
         }
 
         function toggleTrackRideOverlay(e) {
@@ -16145,7 +17298,11 @@
                     document.getElementById('trackSearchContainer').style.display = 'block';
                     document.getElementById('trackResultContainer').style.display = 'none';
                     document.getElementById('trackBookingNumber').value = '';
-                    if (liveTrackingSocket) liveTrackingSocket.close();
+                    currentTrackedBookingNo = '';
+                    currentLiveTrackingId = null;
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
                 }, 400);
 
             } else {
@@ -16163,7 +17320,9 @@
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
             const key = window.currentBookingPreviewHash || state.preview_hash || bookingData.preview_hash || state.job_no || bookingData.job_no || (currentNum && currentNum !== '—' && currentNum !== 'GR-2026-14851' ? currentNum : (bookingData.bookingId || state.bookingId || ''));
             if (key) {
-                window.open('/booking-preview/' + encodeURIComponent(key), '_blank');
+                const bookingKey = encodeURIComponent(key);
+                const url = '{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/booking-preview/' + bookingKey;
+                window.open(url, '_blank');
             } else {
                 showToast('Booking preview will be available shortly.', 'info');
             }
@@ -16217,6 +17376,7 @@
                 const res = await response.json();
 
                 if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
                     renderTrackingResult(num, res.data);
                 } else {
                     showGlobalToast(res.message || 'Booking not found', false);
@@ -16227,6 +17387,57 @@
             } finally {
                 btn.innerHTML = originalHtml;
                 btn.disabled = false;
+            }
+        }
+
+        async function refreshTrackingData(e) {
+            if (e) e.preventDefault();
+            const num = currentTrackedBookingNo ||
+                (document.getElementById('displayBookingNo') ? document.getElementById('displayBookingNo').innerText.trim() : '') ||
+                (document.getElementById('trackBookingNumber') ? document.getElementById('trackBookingNumber').value.trim() : '');
+
+            if (!num) {
+                showGlobalToast('No active booking to refresh', false);
+                return;
+            }
+
+            const refreshBtn = document.getElementById('trackRefreshBtn');
+            let originalHtml = '';
+            if (refreshBtn) {
+                originalHtml = refreshBtn.innerHTML;
+                refreshBtn.disabled = true;
+                refreshBtn.classList.add('is-refreshing');
+                refreshBtn.innerHTML = '<i class="fas fa-rotate-right fa-spin"></i> <span class="refresh-text">Refreshing...</span>';
+            }
+
+            try {
+                let apiUrl = '{{ env("API_URL") }}';
+                if (!apiUrl || apiUrl.includes('env(')) apiUrl = window.location.origin + '/api';
+
+                const response = await fetch(apiUrl + '/tracking/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ job_no: num })
+                });
+
+                const res = await response.json();
+
+                if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
+                    renderTrackingResult(num, res.data);
+                    showGlobalToast('Tracking status refreshed', true);
+                } else {
+                    showGlobalToast(res.message || 'Failed to refresh tracking data', false);
+                }
+            } catch (error) {
+                console.error('Refresh Tracking Error:', error);
+                showGlobalToast('Failed to refresh tracking. Please try again.', false);
+            } finally {
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.classList.remove('is-refreshing');
+                    refreshBtn.innerHTML = originalHtml;
+                }
             }
         }
 
@@ -16526,6 +17737,15 @@
         }
 
         function setupMap() {
+            if (trackingMap) {
+                if (google.maps.event && google.maps.event.trigger) {
+                    google.maps.event.trigger(trackingMap, 'resize');
+                }
+                return;
+            }
+            const mapEl = document.getElementById('liveTrackingMap');
+            if (!mapEl) return;
+
             const mapOptions = {
                 zoom: 15,
                 center: { lat: 51.5074, lng: -0.1278 }, // Default to London initially
@@ -16550,7 +17770,7 @@
                     { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
                 ]
             };
-            trackingMap = new google.maps.Map(document.getElementById('liveTrackingMap'), mapOptions);
+            trackingMap = new google.maps.Map(mapEl, mapOptions);
 
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
@@ -16566,6 +17786,15 @@
                         return;
                     }
 
+                    if (liveTrackingSocket && currentLiveTrackingId === trackingId && liveTrackingSocket.connected) {
+                        return;
+                    }
+
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
+                    currentLiveTrackingId = trackingId;
+
                     // 1. Connect Customer to Socket Server
                     let token = '';
                     if (typeof getCookieValue === 'function') {
@@ -16575,11 +17804,11 @@
                     }
 
                     liveTrackingSocket = io(url, {
-                        transports: ['websocket'],
+                        transports: ['websocket', 'polling'],
                         auth: {
                             token: token,
                             user_type: "customer",
-                            platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                            platform: "{{ env('SOCKET_PLATFORM', 'development') }}"
                         }
                     });
 
@@ -16594,7 +17823,7 @@
                     // 3. Listen for driver location updates
                     liveTrackingSocket.on("driver_location", (locationData) => {
                         try {
-                            console.log("New Driver Location Received:", locationData);
+                            // console.log("New Driver Location Received:", locationData);
                             if (locationData && locationData.lat && locationData.lng) {
                                 const newPos = new google.maps.LatLng(locationData.lat, locationData.lng);
 

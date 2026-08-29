@@ -162,7 +162,7 @@
 }
 
 .blog-section-banner {
-    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ asset('goride/img/main-banner.webp') }}'), #141c28;
+    background: linear-gradient(rgba(20, 28, 40, 0.75), rgba(20, 28, 40, 0.75)), url('{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/main-banner.webp'), #141c28;
     background-color: #141c28;
     background-size: cover;
     background-position: center;

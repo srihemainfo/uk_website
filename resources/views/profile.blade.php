@@ -238,12 +238,131 @@
                 max-width: 400px;
             }
         }
+
+        /* Unauthorized State Styles */
+        .unauth-container {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .unauth-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 45px 35px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: unauthFadeIn 0.35s ease-out;
+        }
+
+        @keyframes unauthFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .unauth-icon-box {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .unauth-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .unauth-desc {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .unauth-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-unauth-primary {
+            background: #111;
+            color: #fff !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .btn-unauth-primary:hover {
+            background: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .btn-unauth-secondary {
+            background: #f3f4f6;
+            color: #111 !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-unauth-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
     </style>
 
 
 
     <!-- Profile Content -->
-    <div class="container profile-wrapper">
+    <div class="container profile-wrapper" id="profileMainContent">
         <div class="profile-header">
             <div class="profile-header-text">
                 <h1 class="profile-title">Edit Profile</h1>
@@ -299,11 +418,48 @@
         </div>
     </div>
 
+    <!-- Unauthorized State UI -->
+    <div class="unauth-container" id="profileUnauthorizedState" style="display: none;">
+        <div class="unauth-card">
+            <div class="unauth-icon-box">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h2 class="unauth-title">Authorization Required</h2>
+            <p class="unauth-desc">
+                You must be signed in to view and edit your profile details. Please sign in or return to the home page.
+            </p>
+            <div class="unauth-actions">
+                <a href="{{ url('/') }}" class="btn-unauth-primary">
+                    <i class="fas fa-home"></i> Go to Home Page
+                </a>
+                <button type="button" class="btn-unauth-secondary" onclick="openAuthModal()">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Sign In
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // ─── Helpers ────────────────────────────────────────────────────────────
             function getToken() {
                 return typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '';
+            }
+
+            function checkProfileAuth() {
+                const token = getToken();
+                const mainContent = document.getElementById('profileMainContent');
+                const unauthView = document.getElementById('profileUnauthorizedState');
+
+                if (!token || token === 'null' || token === 'undefined' || token.trim() === '') {
+                    if (mainContent) mainContent.style.display = 'none';
+                    if (unauthView) unauthView.style.display = 'flex';
+                    return false;
+                } else {
+                    if (mainContent) mainContent.style.display = 'block';
+                    if (unauthView) unauthView.style.display = 'none';
+                    return true;
+                }
             }
 
 
@@ -441,34 +597,34 @@
                                 if (newImage) {
                                     document.getElementById('profileImagePreview').src = newImage;
                                 }
-                                
+
                                 // Update cookie and navbar UI
                                 try {
                                     const storedStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
                                     let storedUser = storedStr ? JSON.parse(storedStr) : {};
-                                    
+
                                     // Map the updated name
                                     const newName = user.c_name || user.name || user.first_name;
                                     if (newName) {
                                         storedUser.first_name = newName;
                                         storedUser.last_name = ''; // GoRide primarily uses first_name or combines them
                                     }
-                                    
+
                                     // Map the updated image
                                     if (newImage) {
                                         storedUser.profile_image = newImage;
                                     }
-                                    
+
                                     // Save back to cookie
                                     const expires = new Date();
                                     expires.setTime(expires.getTime() + 7 * 24 * 60 * 60 * 1000);
                                     document.cookie = 'auth_user=' + encodeURIComponent(JSON.stringify(storedUser)) + '; expires=' + expires.toUTCString() + '; path=/; SameSite=Lax';
-                                    
+
                                     // Update navbar globally
                                     if (typeof _updateNavbarAfterLogin === 'function') {
                                         _updateNavbarAfterLogin(storedUser);
                                     }
-                                } catch(e) {
+                                } catch (e) {
                                     console.error('Failed to update navbar:', e);
                                 }
 
@@ -498,6 +654,9 @@
                 });
             }
 
+            if (!checkProfileAuth()) {
+                return;
+            }
             loadProfile();
         });
     </script>

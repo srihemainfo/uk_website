@@ -941,6 +941,15 @@
             border-bottom: 1px solid #eee;
         }
 
+        .track-header-badges {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-right: 45px;
+        }
+
         .booking-id-badge {
             display: inline-block;
             background: #f3f4f6;
@@ -949,7 +958,65 @@
             font-weight: 700;
             font-size: 14px;
             color: #374151;
-            margin-bottom: 8px;
+            margin-bottom: 0;
+        }
+
+        .track-header-right-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .track-refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            color: #111827;
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            user-select: none;
+            line-height: 1.2;
+        }
+
+        .track-refresh-btn:hover {
+            background: #f3f4f6;
+            border-color: #d1d5db;
+            color: #000;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .track-refresh-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .track-refresh-btn.is-refreshing {
+            pointer-events: none;
+            opacity: 0.85;
+            background: #f9fafb;
+        }
+
+        .track-refresh-btn.is-refreshing i {
+            animation: spin-refresh 0.75s linear infinite;
+        }
+
+        @keyframes spin-refresh {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .track-status-header h4 {
@@ -1330,7 +1397,17 @@
             <!-- Result Container -->
             <div class="track-result-container" id="trackResultContainer" style="display: none;">
                 <div class="track-status-header">
-                    <div class="booking-id-badge" id="displayBookingNo">{{ $job_no ?? '' }}</div>
+                    <div class="track-header-badges">
+                        <div class="booking-id-badge" id="displayBookingNo">{{ $job_no ?? '' }}</div>
+                        <div class="track-header-right-actions">
+                            <button type="button" class="track-refresh-btn" id="trackRefreshBtn"
+                                onclick="refreshTrackingData(event)" title="Refresh tracking status"
+                                aria-label="Refresh tracking">
+                                <i class="fa-solid fa-rotate-right"></i>
+                                <span class="refresh-text">Refresh</span>
+                            </button>
+                        </div>
+                    </div>
                     <h4 id="displayTrackingMessage">Driver is on the way.</h4>
                     <div id="trackingBookingDetails" style="display: none;"></div>
                 </div>
@@ -1356,8 +1433,9 @@
         <!-- Top Brand Bar -->
         <div class="top-brand-bar">
             <a href="#" class="brand-logo text-decoration-none">
-                <img src="{{ asset('goride/img/logo-dark.png') }}" alt="GoRide Logo" style="height: 36px; width: auto;"
-                    onerror="this.src='{{ asset('goride/img/logo-darkk.png') }}'">
+                <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-dark.png"
+                    alt="GoRide Logo" style="height: 36px; width: auto;"
+                    onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png'">
             </a>
 
             <div class="top-brand-meta">
@@ -1390,9 +1468,6 @@
             <div class="brand-actions">
                 <button onclick="shareBooking()" class="btn-action-icon d-none" title="Share Booking">
                     <i class="fa-solid fa-share-nodes"></i>
-                </button>
-                <button onclick="window.print()" class="btn-action-icon" title="Print Booking">
-                    <i class="fa-solid fa-print"></i>
                 </button>
                 <a href="tel:+{{ env('SUPPORT_NO_I') }}" class="btn-action-icon" title="Call Support">
                     <i class="fa-solid fa-headset"></i>
@@ -1435,6 +1510,12 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="hero-security-fare-card">
 
+                        @php
+                            $statusClean = strtolower(trim($job_status ?? ''));
+                            $isJobCompletedOrCancelled = in_array($statusClean, ['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled']);
+                        @endphp
+
+                        @if(!$isJobCompletedOrCancelled)
                         <div class="row g-2 align-items-center pb-2 mb-2 border-bottom">
                             <div class="col-6">
                                 <div class="hero-sec-item-compact">
@@ -1444,7 +1525,8 @@
                                     <div>
                                         <div class="hero-sec-label">Ride OTP</div>
                                         <div class="hero-sec-otp">
-                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}</div>
+                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1465,21 +1547,22 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <div class="d-flex align-items-center justify-content-between pt-1">
                             <div class="d-flex align-items-center gap-2">
                                 <span class="text-uppercase text-secondary fw-bold"
                                     style="font-size: 11px; letter-spacing: 0.5px;">Total Fare</span>
-                                <button type="button" class="btn-fare-info" id="btnToggleFareBreakdown"
+                                <button type="button" class="btn-fare-info active" id="btnToggleFareBreakdown"
                                     onclick="toggleFareBreakdown()" title="View Fare Breakdown">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </button>
                             </div>
-                            <div class="fare-amount">£{{ $total_fare ?? 0 }}</div>
+                            <div class="fare-amount">£{{ number_format((float) ($total_fare ?? 0), 2) }}</div>
                         </div>
 
                         <!-- Collapsible Fare Breakdown -->
-                        <div class="fare-breakdown-collapse" id="fareBreakdownCollapse">
+                        <div class="fare-breakdown-collapse show" id="fareBreakdownCollapse">
                             <div class="fare-breakdown-inner">
                                 <div class="fare-breakdown-header">
                                     <i class="fa-solid fa-receipt"></i> Fare Breakdown
@@ -1499,7 +1582,7 @@
                                     @endif
                                 </div>
                                 <div class="fare-line-item">
-                                    <span>Tax and Other Charges</span>
+                                    <span> {{ $isTax ? 'Tax with Other Charges' : 'Other Charges' }}</span>
                                     <strong>£{{ $tax ?? 0 }}</strong>
                                 </div>
                                 @if(isset($meet_amt) && $meet_amt > 0)
@@ -1514,9 +1597,19 @@
                                         <strong>£{{ $govt_levy }}</strong>
                                     </div>
                                 @endif
+                                @if((isset($firstAmt) && (float) $firstAmt != 0) || (isset($user_details['firstAmt']) && (float) $user_details['firstAmt'] != 0))
+                                    @php
+                                        $firstDiscount = $firstAmt ?? $user_details['firstAmt'];
+                                    @endphp
+                                    <div class="fare-line-item">
+                                        <span>First Booking Discount</span>
+                                        <strong
+                                            style="color: #059669;">-£{{ number_format((float) $firstDiscount, 2) }}</strong>
+                                    </div>
+                                @endif
                                 <div class="fare-total-line">
                                     <span>Total Fare</span>
-                                    <strong>£{{ $total_fare ?? 0 }}</strong>
+                                    <strong>£{{ number_format((float) ($total_fare ?? 0), 2) }}</strong>
                                 </div>
 
                                 @if(isset($isPayment) && $isPayment)
@@ -1525,7 +1618,7 @@
                                     </div>
                                     @if(isset($deductAmt) && $deductAmt == 0)
                                         <div class="fare-line-item">
-                                            <span>Paid via Online (UPI / Card)</span>
+                                            <span>Paid via Online</span>
                                             <strong style="color:#059669;">£{{ $paid_amt ?? 0 }}</strong>
                                         </div>
                                     @endif
@@ -1535,9 +1628,9 @@
                                             <strong style="color:#4338ca;">£{{ $wallet_amt ?? 0 }}</strong>
                                         </div>
                                     @endif
-                                    <div class="fare-line-item">
-                                        <span>{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
-                                        <strong style="color:#c2410c;">£{{ $balance_amt ?? 0 }}</strong>
+                                    <div class="fare-line-item fare-balance-item" style="font-size: 13.5px; padding-top: 5px; margin-top: 3px; border-top: 1px dashed #e5e7eb;">
+                                        <span style="font-weight: 700; color: #111827;">{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
+                                        <strong style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ $balance_amt ?? 0 }}</strong>
                                     </div>
                                 @endif
                             </div>
@@ -1559,12 +1652,12 @@
                         </div>
                         <div class="person-info-item">
                             <span>Name</span>
-                            <strong>{{ $name ?? '' }}</strong>
+                            <strong>{{ !empty($name) ? ucwords(strtolower($name)) : '' }}</strong>
                         </div>
                         @if(!empty($user_details['c_booked_for']) || !empty($booked_for))
                             <div class="person-info-item">
                                 <span>Booked For</span>
-                                <strong>{{ $user_details['c_booked_for'] ?? $booked_for ?? '' }}</strong>
+                                <strong>{{ ucwords(strtolower($user_details['c_booked_for'] ?? $booked_for ?? '')) }}</strong>
                             </div>
                         @endif
                         <div class="person-info-item">
@@ -1588,20 +1681,25 @@
                         <div class="card-heading border-0 pb-0 mb-2">
                             <i class="fa-solid fa-id-card"></i> Driver Details
                         </div>
-                        @if(!empty($driver_name) && isset($job_status) && in_array(strtolower($job_status), ['confirmed', 'assign', 'assigned', 'accept', 'started', 'completed', 'onboarded', 'dispatched']))
+                        @php
+                            $currentStatus = strtolower(trim($job_status ?? ''));
+                            $isCompletedOrCancelled = in_array($currentStatus, ['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled']);
+                            $canShowDriver = !empty($driver_name) && !$isCompletedOrCancelled && in_array($currentStatus, ['confirmed', 'assign', 'assigned', 'accept', 'accepted', 'started', 'onboarded', 'dispatched']);
+                        @endphp
+                        @if($canShowDriver)
                             <div class="person-info-item">
                                 <span>Driver Name</span>
                                 <div class="d-flex align-items-center gap-2">
-                                    <img src="{{ !empty($driver_image) ? $driver_image : asset('goride/img/driver-dummy.png') }}"
+                                    <img src="{{ !empty($driver_image) ? $driver_image : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/driver-dummy.png' }}"
                                         style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
-                                        onerror="this.src='{{ asset('goride/img/driver-dummy.png') }}'">
-                                    <strong>{{ $driver_name }}</strong>
+                                        onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/driver-dummy.png'">
+                                    <strong>{{ !empty($driver_name) ? ucwords(strtolower($driver_name)) : '' }}</strong>
                                 </div>
                             </div>
                             @if(!empty($cab_type) || !empty($vehicle_model))
                                 <div class="person-info-item">
                                     <span>Vehicle Model</span>
-                                    <strong>{{ $cab_type ?? $vehicle_model ?? '' }}</strong>
+                                    <strong>{{ ucwords(strtolower($cab_type ?? $vehicle_model ?? '')) }}</strong>
                                 </div>
                             @endif
                             @if(!empty($vehicle_number))
@@ -1629,7 +1727,11 @@
                             @endif
                         @else
                             <div class="text-secondary py-2" style="font-size: 13px;">
-                                Driver details will be assigned prior to your pickup time.
+                                @if($isCompletedOrCancelled)
+                                    Driver details are not available for {{ strtolower($job_status ?? 'this') }} bookings.
+                                @else
+                                    Driver details will be assigned prior to your pickup time.
+                                @endif
                             </div>
                         @endif
                     </div>
@@ -1651,7 +1753,8 @@
                             <div>
                                 <div class="info-label mb-0">Pickup Time</div>
                                 <div class="info-value" style="font-size: 12px;">
-                                    {{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}</div>
+                                    {{ \Carbon\Carbon::parse($pickup_date)->format('jS M Y, g:i A') }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1675,7 +1778,7 @@
                             <i class="fa-solid fa-car text-dark fs-5"></i>
                             <div>
                                 <div class="info-label mb-0">Vehicle</div>
-                                <div class="info-value">{{ $cab_type }}</div>
+                                <div class="info-value">{{ ucwords(strtolower($cab_type)) }}</div>
                             </div>
                         </div>
                     </div>
@@ -1892,7 +1995,7 @@
                         <div class="col-md-3 col-6">
                             <div class="info-item-box">
                                 <div class="info-label"><i class="fa-solid fa-ship"></i> Cruise / Ferry Name</div>
-                                <div class="info-value">{{ $cruiseName }}</div>
+                                <div class="info-value">{{ ucwords(strtolower($cruiseName)) }}</div>
                             </div>
                         </div>
 
@@ -1930,7 +2033,7 @@
                             <div class="col-md-6 col-6">
                                 <div class="info-item-box">
                                     <div class="info-label"><i class="fa-solid fa-user"></i> Passenger Name</div>
-                                    <div class="info-value">{{ $user_details['c_pass_name'] }}</div>
+                                    <div class="info-value">{{ ucwords(strtolower($user_details['c_pass_name'])) }}</div>
                                 </div>
                             </div>
                         @endif
@@ -1947,22 +2050,22 @@
 
                     {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
                     <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                            <div class="info-value">Meet & Greet Included</div>
+                        <div class="col-md-3 col-6">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                                <div class="info-value">Meet & Greet Included</div>
+                            </div>
                         </div>
-                    </div>
-                    @endif
+                        @endif
 
-                    @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                    <div class="col-md-3 col-6">
-                        <div class="info-item-box">
-                            <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                            <div class="info-value">Wheelchair Required</div>
+                        @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                        <div class="col-md-3 col-6">
+                            <div class="info-item-box">
+                                <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                                <div class="info-value">Wheelchair Required</div>
+                            </div>
                         </div>
-                    </div>
-                    @endif -->
+                        @endif -->
 
                     @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
                         <div class="col-md-6 col-12">
@@ -2118,44 +2221,47 @@
     }
     </script>
 
-    <script id="socketIoScript" src="/js/socket.io.min.js" data-cfasync="false" async defer></script>
+    <script id="socketIoScript" src="{{ asset('js/socket.io.min.js') }}" data-cfasync="false"></script>
     <script>
         function ensureSocketIoLoaded(callback) {
             if (typeof io !== 'undefined') {
                 if (callback) callback();
                 return;
             }
-            let s = document.getElementById('socketIoScript');
-            if (s) {
-                let attempts = 0;
-                const interval = setInterval(() => {
-                    attempts++;
-                    if (typeof io !== 'undefined') {
-                        clearInterval(interval);
-                        if (callback) callback();
-                    } else if (attempts > 30) {
-                        clearInterval(interval);
-                        console.warn("Socket.io load timeout, continuing...");
-                    }
-                }, 100);
-                return;
-            }
-            s = document.createElement('script');
-            s.id = 'socketIoScript';
-            s.setAttribute('data-cfasync', 'false');
-            s.src = '/js/socket.io.min.js';
-            s.onload = function () {
-                if (callback) callback();
-            };
-            s.onerror = function () {
-                console.warn("Local socket.io.min.js failed, trying CDN fallback...");
+
+            function loadCdnFallback() {
+                if (typeof io !== 'undefined') {
+                    if (callback) callback();
+                    return;
+                }
+                const existingCdn = document.getElementById('socketIoCdnScript');
+                if (existingCdn) return;
                 const cdnS = document.createElement('script');
+                cdnS.id = 'socketIoCdnScript';
                 cdnS.setAttribute('data-cfasync', 'false');
                 cdnS.src = 'https://cdn.socket.io/4.7.5/socket.io.min.js';
-                cdnS.onload = function () { if (callback) callback(); };
+                cdnS.onload = function () {
+                    console.log('Socket.io loaded from CDN.');
+                    if (callback) callback();
+                };
+                cdnS.onerror = function () {
+                    console.error('Failed to load Socket.io from CDN fallback.');
+                };
                 document.head.appendChild(cdnS);
-            };
-            document.head.appendChild(s);
+            }
+
+            let attempts = 0;
+            const interval = setInterval(() => {
+                attempts++;
+                if (typeof io !== 'undefined') {
+                    clearInterval(interval);
+                    if (callback) callback();
+                } else if (attempts > 15) { // after 1.5 seconds, load CDN fallback
+                    clearInterval(interval);
+                    console.warn("Local Socket.io not detected, falling back to CDN...");
+                    loadCdnFallback();
+                }
+            }, 100);
         }
 
         function toggleFareBreakdown() {
@@ -2233,6 +2339,8 @@
 
         /* ================= LIVE TRACKING FUNCTIONS ================= */
         let liveTrackingSocket = null;
+        let currentLiveTrackingId = null;
+        let currentTrackedBookingNo = '';
         let driverMarker = null;
         let trackingMap = null;
 
@@ -2245,7 +2353,11 @@
                 setTimeout(() => {
                     document.getElementById('trackSearchContainer').style.display = 'block';
                     document.getElementById('trackResultContainer').style.display = 'none';
-                    if (liveTrackingSocket) liveTrackingSocket.close();
+                    currentTrackedBookingNo = '';
+                    currentLiveTrackingId = null;
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
                 }, 400);
             } else {
                 overlay.classList.add('show');
@@ -2295,6 +2407,7 @@
                 const res = await response.json();
 
                 if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
                     renderTrackingResult(num, res.data);
                 } else {
                     alert(res.message || 'Booking not found');
@@ -2306,6 +2419,56 @@
                 if (btn) {
                     btn.innerHTML = originalHtml;
                     btn.disabled = false;
+                }
+            }
+        }
+
+        async function refreshTrackingData(e) {
+            if (e) e.preventDefault();
+            const num = currentTrackedBookingNo ||
+                (document.getElementById('displayBookingNo') ? document.getElementById('displayBookingNo').innerText.trim() : '') ||
+                (document.getElementById('trackBookingNumber') ? document.getElementById('trackBookingNumber').value.trim() : '');
+
+            if (!num) {
+                alert('No active booking to refresh');
+                return;
+            }
+
+            const refreshBtn = document.getElementById('trackRefreshBtn');
+            let originalHtml = '';
+            if (refreshBtn) {
+                originalHtml = refreshBtn.innerHTML;
+                refreshBtn.disabled = true;
+                refreshBtn.classList.add('is-refreshing');
+                refreshBtn.innerHTML = '<i class="fa-solid fa-rotate-right fa-spin"></i> <span class="refresh-text">Refreshing...</span>';
+            }
+
+            try {
+                let apiUrl = '{{ env("API_URL") }}';
+                if (!apiUrl || apiUrl.includes('env(')) apiUrl = window.location.origin + '/api';
+
+                const response = await fetch(apiUrl + '/tracking/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ job_no: num })
+                });
+
+                const res = await response.json();
+
+                if (res.status === true && res.data) {
+                    currentTrackedBookingNo = num;
+                    renderTrackingResult(num, res.data);
+                } else {
+                    alert(res.message || 'Failed to refresh tracking data');
+                }
+            } catch (error) {
+                console.error('Refresh Tracking Error:', error);
+                alert('Failed to refresh tracking. Please try again.');
+            } finally {
+                if (refreshBtn) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.classList.remove('is-refreshing');
+                    refreshBtn.innerHTML = originalHtml;
                 }
             }
         }
@@ -2334,10 +2497,11 @@
                             <span class="detail-label">Pickup Time</span>
                             <span class="detail-value">${data.booking.pickup_date || '-'}</span>
                         </div>
+                        ${(['completed', 'complete', 'finished', 'cancelled', 'cancel', 'canceled'].includes((data.booking.status || data.status || '{{ strtolower($job_status ?? "") }}').toLowerCase())) ? '' : `
                         <div class="booking-detail-item">
                             <span class="detail-label">OTP</span>
                             <span class="detail-value otp-value">${data.booking.otp || '-'}</span>
-                        </div>
+                        </div>`}
                     </div>
                 `;
             } else {
@@ -2518,6 +2682,15 @@
         }
 
         function setupMap() {
+            if (trackingMap) {
+                if (google.maps.event && google.maps.event.trigger) {
+                    google.maps.event.trigger(trackingMap, 'resize');
+                }
+                return;
+            }
+            const mapEl = document.getElementById('liveTrackingMap');
+            if (!mapEl) return;
+
             const mapOptions = {
                 zoom: 15,
                 center: { lat: 51.5074, lng: -0.1278 },
@@ -2542,7 +2715,7 @@
                     { "featureType": "water", "elementType": "geometry.fill", "stylers": [{ "color": "#c8d7d4" }] }
                 ]
             };
-            trackingMap = new google.maps.Map(document.getElementById('liveTrackingMap'), mapOptions);
+            trackingMap = new google.maps.Map(mapEl, mapOptions);
 
             driverMarker = new google.maps.Marker({
                 map: trackingMap,
@@ -2558,13 +2731,22 @@
                         return;
                     }
 
+                    if (liveTrackingSocket && currentLiveTrackingId === trackingId && liveTrackingSocket.connected) {
+                        return;
+                    }
+
+                    if (liveTrackingSocket) {
+                        try { liveTrackingSocket.close(); } catch (e) { }
+                    }
+                    currentLiveTrackingId = trackingId;
+
                     liveTrackingSocket = io(url, {
-                        transports: ['websocket'],
+                        transports: ['websocket', 'polling'],
                         auth: {
                             token: {!! json_encode($auth_token ?? $token ?? null) !!},
                             user_type: "customer",
                             user_id: {!! json_encode($user_details['id'] ?? $user_details['user_id'] ?? $user_id ?? null) !!},
-                            platform: "{{ env('SOCKET_PLATFORM', 'app') }}"
+                            platform: "{{ env('SOCKET_PLATFORM', 'development') }}"
                         }
                     });
 

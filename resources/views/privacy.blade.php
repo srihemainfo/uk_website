@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - GoRide</title>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="shortcut icon" href="https://www.goride.net.in/goride/img/Go-Ride-fav-icon.webp" />
-
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+@section('content')
 
     <style>
         * {
@@ -375,8 +362,8 @@
         /* ===== CONTENT SECTIONS ===== */
         .page-header {
             position: relative;
-            background: url('{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG') }}/goride/img/main-banner.webp') center center/cover no-repeat;
-            padding: 120px 0;               
+            background: url('{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/main-banner.webp') center center/cover no-repeat;
+            padding: 120px 0;
             text-align: center;
             color: #fff;
             overflow: hidden;
@@ -561,21 +548,54 @@
         .help-modal .modal-body {
             padding: 28px 20px;
         }
-
-        .help-icon {
-            width: 70px;
-            height: 70px;
+ .help-icon {
+            width: 63px;
+            height: 63px;
             margin: 0 auto 18px;
             border-radius: 50%;
-            background: #f8be00;
-            color: #000;
+            background: #2aca19;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
         }
+        .contact-details {
+            width: 100%;
+        }
 
-        .help-modal a {
+        .contact-item {
+            width: 100%;
+            max-width: 260px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding: 4px 0;
+        }
+
+        .contact-item a {
+            color: #222;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .contact-item i {
+            flex-shrink: 0;
+        }
+
+        .phone-item {
+            white-space: nowrap;
+        }
+
+        .phone-separator {
+            margin: 0 4px;
+            color: #555;
+            font-size: 14px;
+        }
+                .help-modal a {
             color: #111;
             text-decoration: none;
             font-weight: 600;
@@ -592,8 +612,8 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             /* .navbar-menu {
-                display: none;
-            } */
+                    display: none;
+                } */
 
             .mobile-menu-btn {
                 display: flex;
@@ -695,102 +715,6 @@
             }
         }
     </style>
-</head>
-
-<body>
-    <!-- ===== NAVBAR ===== -->
-    <nav class="navbar-uber">
-        <div class="navbar-brand-uber">
-            <a href="/">
-                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
-            </a>
-        </div>
-        <ul class="navbar-menu">
-            <!-- <li><button onclick="toggleDropdown('language')">
-                <i class="fas fa-globe me-2"></i>EN
-            </button></li> -->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#helpModal">
-                Help
-            </a>
-            <!-- <li style="position:relative;">
-                <button class="user-btn" onclick="toggleDropdown('user')">
-                    <i class="fas fa-user-circle"></i>
-                    Mogana
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-            </li> -->
-        </ul>
-
-        <div id="language-dropdown" class="dropdown-menu-navbar">
-            <button onclick="selectLanguage('en')">English</button>
-            <button onclick="selectLanguage('hi')">हिंदी</button>
-            <button onclick="selectLanguage('ta')">தமிழ்</button>
-            <button onclick="selectLanguage('te')">తెలుగు</button>
-            <button onclick="selectLanguage('kn')">ಕನ್ನಡ</button>
-        </div>
-
-        <div id="user-dropdown" class="account-dropdown">
-            <div class="account-header">
-                <div class="account-avatar">MG</div>
-                <div class="account-info">
-                    <h5>Mogana Priya</h5>
-                    <span>mogana@email.com</span>
-                </div>
-            </div>
-            <div class="account-menu">
-                <a href="#"><i class="fas fa-user"></i><span>My Profile</span></a>
-                <a href="#"><i class="fas fa-car"></i><span>My Rides</span></a>
-                <a href="#"><i class="fas fa-map-marker-alt"></i><span>Saved Places</span></a>
-                <a href="#"><i class="fas fa-wallet"></i><span>Wallet</span></a>
-                <a href="#"><i class="fas fa-tag"></i><span>Offers</span></a>
-                <a href="#"><i class="fas fa-cog"></i><span>Settings</span></a>
-            </div>
-            <div class="account-footer">
-                <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
-            </div>
-        </div>
-
-        <!-- <button class="mobile-menu-btn" id="mobileHamburger" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-        </button> -->
-
-        <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
-
-        <div class="mobile-menu" id="mobileMenu">
-            <div class="mobile-menu-header">
-                <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo">
-                <button onclick="toggleMobileMenu()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-
-            <div class="mobile-user">
-                <div class="mobile-avatar">MG</div>
-                <div>
-                    <h5>Mogana Priya</h5>
-                    <span>mogana@email.com</span>
-                </div>
-            </div>
-
-            <div class="mobile-menu-links">
-                <a href="index.html"><i class="fas fa-home"></i>Home</a>
-                <a href="about.html"><i class="fas fa-info-circle"></i>About Us</a>
-                <a href="#"><i class="fas fa-user"></i>My Profile</a>
-                <a href="#"><i class="fas fa-car"></i>My Rides</a>
-                <a href="#"><i class="fas fa-map-marker-alt"></i>Saved Places</a>
-                <a href="#"><i class="fas fa-wallet"></i>Wallet</a>
-                <a href="#"><i class="fas fa-tag"></i>Offers</a>
-                <a href="#"><i class="fas fa-language"></i>Language</a>
-                <a href="terms.html"><i class="fas fa-file-contract"></i>Terms</a>
-                <a href="privacy.html"><i class="fas fa-shield-alt"></i>Privacy</a>
-                <a href="#"><i class="fas fa-gear"></i>Settings</a>
-            </div>
-
-            <div class="mobile-menu-footer">
-                <button><i class="fas fa-right-from-bracket"></i>Logout</button>
-            </div>
-        </div>
-    </nav>
 
     <!-- ===== PAGE HEADER ===== -->
     <section class="page-header">
@@ -911,103 +835,6 @@
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="container">
-            <div class="row d-flex justify-content-between">
-                <!-- Logo & Tagline -->
-                <div class="col-12 col-md-3">
-                    <div class="footer-logo-section">
-                        <div class="footer-logo">
-                            <a href="/">
-                                <img src="{{ asset('goride/img/logo-lightt.png') }}" alt="GoRide Logo">
-                            </a>
-                        </div>
-                        <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
-                    </div>
-
-                    <!-- Social Icons -->
-                    <div class="footer-section">
-                        <div class="footer-social-icons">
-                            <a href="#" class="social-icon" title="Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-icon" title="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-icon" title="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon" title="LinkedIn">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" class="social-icon" title="YouTube">
-                                <i class="fab fa-youtube"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Company Links -->
-                <div class="col-6 col-md-2">
-                    <div class="footer-section">
-                        <div class="footer-section-title">Company</div>
-                        <div class="footer-links-list">
-                            <a href="about">About Us</a>
-                            <a href="contact">Contact</a>
-                            <a href="#">Blogs</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Legal Links -->
-                <div class="col-6 col-md-2">
-                    <div class="footer-section">
-                        <div class="footer-section-title">Legal</div>
-                        <div class="footer-links-list">
-                            <a href="privacy">Privacy Policy</a>
-                            <a href="terms">Terms & Conditions</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact -->
-                <div class="col-12 col-md-4">
-                    <div class="footer-section">
-                        <div class="footer-section-title">Contact</div>
-                        <div class="footer-links-list">
-                            <div class="footer-phone">
-                                <i class="fas fa-phone footer-contact-icon"></i>
-
-                                <a href="tel:+442083373777">+44 208 337 3777</a>
-
-                                <span>/</span>
-
-                                <a href="tel:+447950323242">+44 7950 323242</a>
-                            </div>
-                            <a href="mailto:support.uk@goride.run">
-                                <i class="fas fa-envelope" style="margin-right: 8px;"></i>support.uk@goride.run
-                            </a>
-                            <a href="#">
-                                <i class="fas fa-location-dot" style="margin-right:8px;"></i>
-                                83 1st Floor,<br>
-                                Surbiton Road,<br>
-                                Kingston Upon Thames,<br>
-                                KT1 2HW,<br>
-                                United Kingdom
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="mb-0">&copy; 2026 Operated by Goride Plus Ltd. All rights reserved. | Privacy • Terms •
-                    Cookies</p>
-            </div>
-        </div>
-    </footer>
-
     <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content help-modal">
@@ -1021,7 +848,7 @@
                 <div class="modal-body text-center">
 
                     <div class="help-icon">
-                        <i class="fas fa-headset"></i>
+                     <i class="fab fa-whatsapp"></i>
                     </div>
 
                     <h6>Need Assistance?</h6>
@@ -1029,16 +856,23 @@
                     <p class="mb-3 text-muted">
                         Our support team is here to help.
                     </p>
+                    <div class="contact-details">
 
-                    <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"></i>
-                        <a href="tel:+442083373777">+44 208 337 3777</a>
-                    </p>
+                        <p class="mb-2 contact-item phone-item">
+                            <i class="fas fa-phone-alt me-2 text-warning"
+                            style="transform: rotate(90deg);"></i>
 
-                    <p class="mb-0">
-                        <i class="fas fa-envelope me-2 text-warning"></i>
-                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                    </p>
+                            <a href="tel:+442083373777">+44 208 337 3777</a>
+                            <span class="phone-separator"> / </span>
+                            <a href="tel:+447950323242">+44 7950 323242</a>
+                        </p>
+
+                        <p class="mb-0 contact-item">
+                            <i class="fas fa-envelope me-2 text-warning"></i>
+                            <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -1090,6 +924,5 @@
             AOS.refresh();
         });
     </script>
-</body>
 
-</html>
+@endsection

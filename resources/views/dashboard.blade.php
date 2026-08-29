@@ -430,14 +430,65 @@
         .help-modal .modal-body {
             padding: 28px 20px;
         }
+ .help-icon {
+            width: 63px;
+            height: 63px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #2aca19;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+        .contact-details {
+            width: 100%;
+        }
 
+        .contact-item {
+            width: 100%;
+            max-width: 260px;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding: 4px 0;
+        }
+
+        .contact-item a {
+            color: #222;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .contact-item i {
+            flex-shrink: 0;
+        }
+
+        .phone-item {
+            white-space: nowrap;
+        }
+
+        .phone-separator {
+            margin: 0 4px;
+            color: #555;
+            font-size: 14px;
+        }
+        .help-modal a {
+            color: #111;
+            text-decoration: none;
+            font-weight: 600;
+        }
         .help-icon {
             width: 70px;
             height: 70px;
             margin: 0 auto 18px;
             border-radius: 50%;
-            background: #f8be00;
-            color: #000;
+            background: #2aca19;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -690,7 +741,7 @@
         }
 
         .driver-img {
-            width:65px;
+            width: 65px;
             height: 65px;
             border-radius: 50%;
             object-fit: cover;
@@ -973,10 +1024,11 @@
         }
 
         @media (max-width: 768px) {
-            .driver-img{
-              width: 60px;
-              top: ; height: 60px;
+            .driver-img {
+                width: 60px;
+                height: 60px;
             }
+
             .car-image-container {
                 flex-direction: column;
             }
@@ -1005,16 +1057,17 @@
 
             .stat-info {
                 text-align: center;
-                   
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 11px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 11px;
             }
+
             .stat-icon {
                 width: 30px;
-    height: 30px;   
-     font-size: 12px;
+                height: 30px;
+                font-size: 12px;
             }
 
             .driver-card {
@@ -1041,9 +1094,128 @@
                 justify-content: space-between;
             }
         }
+
+        /* Unauthorized State Styles */
+        .unauth-container {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .unauth-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            padding: 45px 35px;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            animation: unauthFadeIn 0.35s ease-out;
+        }
+
+        @keyframes unauthFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .unauth-icon-box {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #111;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .unauth-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .unauth-desc {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .unauth-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-unauth-primary {
+            background: #111;
+            color: #fff !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .btn-unauth-primary:hover {
+            background: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18);
+        }
+
+        .btn-unauth-secondary {
+            background: #f3f4f6;
+            color: #111 !important;
+            padding: 13px 26px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .btn-unauth-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+        }
     </style>
     <!-- Dashboard Content -->
-    <div class="container">
+    <div class="container" id="dashboardMainContent">
 
         <div class="dashboard-header-flex">
             <div class="welcome-section">
@@ -1066,7 +1238,8 @@
                             <div class="skeleton skeleton-text" style="width: 80%; height: 16px; margin-bottom: 0;"></div>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}" class="btn-book-now skeleton" style="pointer-events: none; opacity: 0.5; min-width: 140px;">
+                    <a href="{{ url('/') }}" class="btn-book-now skeleton"
+                        style="pointer-events: none; opacity: 0.5; min-width: 140px;">
                         <i class="fas fa-arrow-left"></i> Book Now
                     </a>
                 </div>
@@ -1307,6 +1480,26 @@
         </div>
 
     </div>
+
+    <!-- Unauthorized State UI -->
+    <div class="unauth-container" id="dashboardUnauthorizedState" style="display: none;">
+        <div class="unauth-card">
+            <div class="unauth-icon-box">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h2 class="unauth-title">Authorization Required</h2>
+            <p class="unauth-desc">
+                You must be logged in to view your dashboard, manage active rides, and check your trip history.
+            </p>
+            <div class="unauth-actions">
+                <a href="{{ url('/') }}" class="btn-unauth-primary">
+                    <i class="fas fa-home"></i> Go to Home Page
+                </a>
+                <button type="button" class="btn-unauth-secondary" onclick="openAuthModal()">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Sign In
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Cancel Trip Modal -->
@@ -1402,10 +1595,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body text-center">
+                 <div class="modal-body text-center">
 
                     <div class="help-icon">
-                        <i class="fas fa-headset"></i>
+                     <i class="fab fa-whatsapp"></i>
                     </div>
 
                     <h6>Need Assistance?</h6>
@@ -1413,16 +1606,23 @@
                     <p class="mb-3 text-muted">
                         Our support team is here to help.
                     </p>
+                    <div class="contact-details">
 
-                    <p class="mb-2">
-                        <i class="fas fa-phone-alt me-2 text-warning" style=" transform: rotate(90deg);"></i>
-                        <a href="tel:+442083373777">+44 208 337 3777</a>
-                    </p>
+                        <p class="mb-2 contact-item phone-item">
+                            <i class="fas fa-phone-alt me-2 text-warning"
+                            style="transform: rotate(90deg);"></i>
 
-                    <p class="mb-0">
-                        <i class="fas fa-envelope me-2 text-warning"></i>
-                        <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
-                    </p>
+                            <a href="tel:+442083373777">+44 208 337 3777</a>
+                            <span class="phone-separator"> / </span>
+                            <a href="tel:+447950323242">+44 7950 323242</a>
+                        </p>
+
+                        <p class="mb-0 contact-item">
+                            <i class="fas fa-envelope me-2 text-warning"></i>
+                            <a href="mailto:support.uk@goride.run">support.uk@goride.run</a>
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -1439,15 +1639,33 @@
     </div>
 
     <script>
+        const DASH_API_URL = "{{ env('API_URL') }}";
+        const DASH_IMG_PREFIX = "{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/";
 
         function getToken() {
             return typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '';
         }
 
+        function checkDashboardAuth() {
+            const token = getToken();
+            const mainContent = document.getElementById('dashboardMainContent');
+            const unauthView = document.getElementById('dashboardUnauthorizedState');
+
+            if (!token || token === 'null' || token === 'undefined' || token.trim() === '') {
+                if (mainContent) mainContent.style.display = 'none';
+                if (unauthView) unauthView.style.display = 'flex';
+                return false;
+            } else {
+                if (mainContent) mainContent.style.display = 'block';
+                if (unauthView) unauthView.style.display = 'none';
+                return true;
+            }
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.custom-tab').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
+
             // Safely find the tab to make active
             if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('custom-tab')) {
                 window.event.currentTarget.classList.add('active');
@@ -1458,9 +1676,9 @@
                     }
                 });
             }
-            
+
             const tabContent = document.getElementById('tab-' + tabId);
-            if(tabContent) tabContent.classList.add('active');
+            if (tabContent) tabContent.classList.add('active');
         }
 
         function setAmount(amount) {
@@ -1506,7 +1724,7 @@
 
         async function fetchDashboardSummary() {
             try {
-                const response = await fetch(`${API_BASE_URL}/customer-dashboard/summary`, {
+                const response = await fetch(`${DASH_API_URL}/customer-dashboard/summary`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
@@ -1515,20 +1733,18 @@
                     document.getElementById('welcomeTitle').innerHTML = `Hello, ${data.customer_name}`;
                     document.getElementById('welcomeSubtitle').innerHTML = `Here is what's happening with your rides today.`;
 
-
-
                     document.getElementById('summaryStatsGrid').innerHTML = `
-                            <div class="stat-card">
-                                <div class="stat-icon"><i class="fas fa-car"></i></div>
-                                <div class="stat-info">
-                                    <div class="stat-value">${data.total_rides}</div>
-                                    <div class="stat-label">Total Rides</div>
+                                <div class="stat-card">
+                                    <div class="stat-icon"><i class="fas fa-car"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-value">${data.total_rides}</div>
+                                        <div class="stat-label">Total Rides</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <a href="{{ url('/') }}" class="btn-book-now">
-                                <i class="fas fa-arrow-left"></i> Book Now
-                            </a>
-                        `;
+                                <a href="{{ url('/') }}" class="btn-book-now">
+                                    <i class="fas fa-arrow-left"></i> Book Now
+                                </a>
+                            `;
                 }
             } catch (error) {
                 console.error("Error fetching summary", error);
@@ -1537,143 +1753,144 @@
 
         async function fetchCurrentRides() {
             try {
-                const response = await fetch(`${API_BASE_URL}/customer-dashboard/current-rides`, {
+                const response = await fetch(`${DASH_API_URL}/customer-dashboard/current-rides`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
                 const container = document.getElementById('currentRidesContainer');
+                var prefixUrl = "{{env('WEBSITE_APP_URL')}}{{env('COUNTRY_SLUG_II')}}";
                 if (res.status && res.data && res.data.length > 0) {
                     let html = '';
                     res.data.forEach(trip => {
                         html += `
-                            <div class="trip-card mb-4">
-                                <div class="trip-header">
-                                    <div class="trip-id">
-                                        <div class="trip-status-dot"></div>
-                                        Trip #${trip.job_no}
+                                <div class="trip-card mb-4">
+                                    <div class="trip-header">
+                                        <div class="trip-id">
+                                            <div class="trip-status-dot"></div>
+                                            Trip #${trip.job_no}
+                                        </div>
+                                        <div class="trip-actions">
+                                            ${trip.buttons && trip.buttons.preview ? `<button class="btn-action-sm" onclick="window.open('${typeof trip.buttons.preview === 'string' ? trip.buttons.preview : prefixUrl + '/booking-preview/' + (trip.preview_hash || trip.booking_key || trip.job_no)}', '_blank')"><i class="fas fa-file-alt"></i> Booking Preview</button>` : ''}
+                                            ${trip.buttons && trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
+                                            ${trip.buttons && trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
+                                        </div>
                                     </div>
-                                    <div class="trip-actions">
-                                        ${trip.buttons && trip.buttons.preview ? `<button class="btn-action-sm" onclick="window.open('${typeof trip.buttons.preview === 'string' ? trip.buttons.preview : '/booking-preview/' + (trip.preview_hash || trip.booking_key || trip.job_no)}', '_blank')"><i class="fas fa-file-alt"></i> Booking Preview</button>` : ''}
-                                        ${trip.buttons && trip.buttons.live_map ? `<button class="btn-action-sm" data-bs-toggle="modal" data-bs-target="#liveMapModal"><i class="fas fa-map-marked-alt"></i> Live Map</button>` : ''}
-                                        ${trip.buttons && trip.buttons.share_trip ? `<button class="btn-action-sm"><i class="fas fa-share-alt"></i> Share Trip</button>` : ''}
-                                    </div>
-                                </div>
 
-                                <div class="row g-4">
-                                    <div class="col-md-6">
-                                        <div class="car-image-container">
-                                            <img src="/goride/img/${trip.vehicle.image.toLowerCase()}.webp" alt="${trip.vehicle.name}" onerror="this.src='/goride/img/saloon.png'">
-                                            <div class="car-details mb-2">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <div class="car-image-container">
+                                                <img src="${DASH_IMG_PREFIX}${trip.vehicle.image.toLowerCase()}.webp" alt="${trip.vehicle.name}" onerror="this.src='${DASH_IMG_PREFIX}standard.webp'">
+                                                <div class="car-details mb-2">
+                                                    <div>
+                                                        <div class="car-name">${trip.vehicle.name}</div>
+                                                        <div class="car-number">${trip.vehicle.number}</div>
+                                                    </div>
+                                                    <div class="car-amenities">
+                                                        <span><i class="fas fa-user-friends"></i> ${trip.vehicle.seats} Seats</span>
+                                                        <span><i class="fas fa-cog"></i> ${trip.vehicle.transmission}</span>
+                                                        <span><i class="fas fa-suitcase"></i> ${trip.vehicle.bags} Bags</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="fare-breakdown mt-3">
+                                                <div class="fare-breakdown-title">FARE BREAKDOWN</div>
+                                                <div class="d-flex justify-content-between mb-2 fs-13">
+                                                    <span>Base Fare</span>
+                                                    <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2 fs-13">
+                                                    <span>Tax and Other charges</span>
+                                                    <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
+                                                    <span>Total</span>
+                                                    <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="otp-banner">
                                                 <div>
-                                                    <div class="car-name">${trip.vehicle.name}</div>
-                                                    <div class="car-number">${trip.vehicle.number}</div>
+                                                    <div class="otp-label">TRIP OTP</div>
+                                                    <div class="otp-value">${trip.trip_otp}</div>
                                                 </div>
-                                                <div class="car-amenities">
-                                                    <span><i class="fas fa-user-friends"></i> ${trip.vehicle.seats} Seats</span>
-                                                    <span><i class="fas fa-cog"></i> ${trip.vehicle.transmission}</span>
-                                                    <span><i class="fas fa-suitcase"></i> ${trip.vehicle.bags} Bags</span>
+                                                <div class="otp-icon">
+                                                    <i class="fas fa-shield-alt"></i>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="fare-breakdown mt-3">
-                                            <div class="fare-breakdown-title">FARE BREAKDOWN</div>
-                                            <div class="d-flex justify-content-between mb-2 fs-13">
-                                                <span>Base Fare</span>
-                                                <span>£${parseFloat(trip.fare.base).toFixed(2)}</span>
+                                            <div class="route-timeline mt-4">
+                                                <div class="route-point">
+                                                    <div class="point-icon"></div>
+                                                    <div class="point-details">
+                                                        <div class="point-label">PICKUP</div>
+                                                        <div class="point-address">${trip.pickup}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="route-point">
+                                                    <div class="point-icon drop"></div>
+                                                    <div class="point-details">
+                                                        <div class="point-label">DROP</div>
+                                                        <div class="point-address">${trip.drop}</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="d-flex justify-content-between mb-2 fs-13">
-                                                <span>Tax and Other charges</span>
-                                                <span>£${parseFloat(trip.fare.tax).toFixed(2)}</span>
+
+                                            <div class="row g-3 mb-4 mt-3">
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-block-title">DATE</div>
+                                                    <div class="info-block-value">${trip.pickup_date}</div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-block-title">PICKUP TIME</div>
+                                                    <div class="info-block-value">${trip.pickup_time}</div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-block-title">PAYMENT STATUS</div>
+                                                    <div class="info-block-value text-dark d-flex align-items-center gap-2">
+                                                        <i class="far fa-clock"></i> ${trip.payment_status}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-block-title">PAYMENT MODE</div>
+                                                    <div class="info-block-value"><i class="far fa-money-bill-alt"></i> ${trip.payment_mode}</div>
+                                                </div>
                                             </div>
-                                            <div class="d-flex justify-content-between mt-3 fw-bold fs-6 text-dark">
-                                                <span>Total</span>
-                                                <span>£${parseFloat(trip.fare.total).toFixed(2)}</span>
+
+                                            <div class="driver-details-heading mt-2">
+                                                <i class="fas fa-id-badge me-2"></i>
+                                                DRIVER DETAILS
+                                            </div>
+
+                                            <div class="driver-card">
+                                                <div class="driver-img-wrapper">
+                                                    <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
+                                                </div>
+                                                <div class="driver-info">
+                                                    <div class="driver-name">${trip.driver.name}</div>
+                                                    <div class="driver-trips d-none">${trip.driver.completed_trips} trips completed</div>
+                                                </div>
+                                                <div class="driver-contact-btns">
+                                                    ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
+                                                    ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
+                                                </div>
+                                                ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2" onclick="showDashboardCancelModal('${trip.booking_id || trip.job_id || ''}', '${trip.job_no || trip.job_no || ''}')">CANCEL TRIP</button>` : ''}
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-6">
-                                        <div class="otp-banner">
-                                            <div>
-                                                <div class="otp-label">TRIP OTP</div>
-                                                <div class="otp-value">${trip.trip_otp}</div>
-                                            </div>
-                                            <div class="otp-icon">
-                                                <i class="fas fa-shield-alt"></i>
-                                            </div>
-                                        </div>
-
-                                        <div class="route-timeline mt-4">
-                                            <div class="route-point">
-                                                <div class="point-icon"></div>
-                                                <div class="point-details">
-                                                    <div class="point-label">PICKUP</div>
-                                                    <div class="point-address">${trip.pickup}</div>
-                                                </div>
-                                            </div>
-                                            <div class="route-point">
-                                                <div class="point-icon drop"></div>
-                                                <div class="point-details">
-                                                    <div class="point-label">DROP</div>
-                                                    <div class="point-address">${trip.drop}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row g-3 mb-4 mt-3">
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-block-title">DATE</div>
-                                                <div class="info-block-value">${trip.pickup_date}</div>
-                                            </div>
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-block-title">PICKUP TIME</div>
-                                                <div class="info-block-value">${trip.pickup_time}</div>
-                                            </div>
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-block-title">PAYMENT STATUS</div>
-                                                <div class="info-block-value text-dark d-flex align-items-center gap-2">
-                                                    <i class="far fa-clock"></i> ${trip.payment_status}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-block-title">PAYMENT MODE</div>
-                                                <div class="info-block-value"><i class="far fa-money-bill-alt"></i> ${trip.payment_mode}</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="driver-details-heading mt-2">
-                                            <i class="fas fa-id-badge me-2"></i>
-                                            DRIVER DETAILS
-                                        </div>
-
-                                        <div class="driver-card">
-                                            <div class="driver-img-wrapper">
-                                                <img src="${trip.driver.image}" class="driver-img" onerror="this.src='https://ui-avatars.com/?name=${trip.driver.name.replace(/ /g, '+')}&background=random'">
-                                            </div>
-                                            <div class="driver-info">
-                                                <div class="driver-name">${trip.driver.name}</div>
-                                                <div class="driver-trips d-none">${trip.driver.completed_trips} trips completed</div>
-                                            </div>
-                                            <div class="driver-contact-btns">
-                                                ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
-                                                ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
-                                            </div>
-                                            ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2" onclick="showDashboardCancelModal('${trip.booking_id || trip.job_id || ''}', '${trip.job_no || trip.job_no || ''}')">CANCEL TRIP</button>` : ''}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
+                                </div>`;
                     });
                     container.innerHTML = html;
                 } else {
                     container.innerHTML = `
-                            <div class="empty-state">
-                                <i class="fas fa-car-side"></i>
-                                <h5>No active rides</h5>
-                                <p>You don't have any ongoing trips right now.</p>
-                            </div>
-                        `;
+                                <div class="empty-state">
+                                    <i class="fas fa-car-side"></i>
+                                    <h5>No active rides</h5>
+                                    <p>You don't have any ongoing trips right now.</p>
+                                </div>
+                            `;
                 }
             } catch (error) {
                 console.error("Error fetching current rides", error);
@@ -1684,12 +1901,12 @@
             try {
                 const container = document.getElementById('completedRidesContainer');
                 container.innerHTML = `
-                        <div class="row g-4">
-                            ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
-                        </div>
-                    `;
+                            <div class="row g-4">
+                                ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
+                            </div>
+                        `;
 
-                const response = await fetch(`${API_BASE_URL}/customer-dashboard/completed-rides?page=${page}&limit=10`, {
+                const response = await fetch(`${DASH_API_URL}/customer-dashboard/completed-rides?page=${page}&limit=10`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
@@ -1697,33 +1914,33 @@
                     let html = '<div class="row g-4">';
                     res.data.forEach(trip => {
                         html += `
-                            <div class="col-md-6">
-                                <div class="compact-trip-card">
-                                    <div class="compact-car-img-wrapper">
-                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img" onerror="this.src='/goride/img/saloon.png'">
-                                    </div>
-                                    <div class="compact-trip-details">
-                                        <div class="compact-trip-title">${trip.drop}</div>
-                                        <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
-                                        <div class="compact-trip-price-status">£${parseFloat(trip.amount).toFixed(2)} ${trip.currency} • Completed</div>
-                                        <div class="compact-trip-actions">
-                                            ${trip.receipt_available ? `<a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>` : ''}
+                                <div class="col-md-6">
+                                    <div class="compact-trip-card">
+                                        <div class="compact-car-img-wrapper">
+                                            <img src="${DASH_IMG_PREFIX}${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img" onerror="this.src='${DASH_IMG_PREFIX}standard.webp'">
+                                        </div>
+                                        <div class="compact-trip-details">
+                                            <div class="compact-trip-title">${trip.drop}</div>
+                                            <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                            <div class="compact-trip-price-status">£${parseFloat(trip.amount).toFixed(2)} ${trip.currency} • Completed</div>
+                                            <div class="compact-trip-actions">
+                                                ${trip.receipt_available ? `<a href="#" class="btn-compact-action"><i class="fas fa-file-invoice"></i> Receipt</a>` : ''}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>`;
+                                </div>`;
                     });
                     html += '</div>';
                     container.innerHTML = html;
                     buildPagination(res.pagination, 'completedPagination', 'fetchCompletedRides');
                 } else {
                     container.innerHTML = `
-                            <div class="empty-state">
-                                <i class="fas fa-history"></i>
-                                <h5>No completed rides</h5>
-                                <p>You haven't completed any trips yet.</p>
-                            </div>
-                        `;
+                                <div class="empty-state">
+                                    <i class="fas fa-history"></i>
+                                    <h5>No completed rides</h5>
+                                    <p>You haven't completed any trips yet.</p>
+                                </div>
+                            `;
                     document.getElementById('completedPagination').innerHTML = '';
                 }
             } catch (error) {
@@ -1735,12 +1952,12 @@
             try {
                 const container = document.getElementById('cancelledRidesContainer');
                 container.innerHTML = `
-                        <div class="row g-4">
-                            ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
-                        </div>
-                    `;
+                            <div class="row g-4">
+                                ${[1, 2, 3, 4, 5, 6].map(() => '<div class="col-md-6"><div class="compact-trip-card" style="cursor: default; pointer-events: none;"><div class="compact-car-img-wrapper skeleton skeleton-rect" style="height: 90px; border: none;"></div><div class="compact-trip-details w-100"><div class="skeleton skeleton-text" style="width: 60%; height: 16px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 40%; height: 13px; margin-bottom: 6px;"></div><div class="skeleton skeleton-text" style="width: 50%; height: 14px;"></div></div></div></div>').join('')}
+                            </div>
+                        `;
 
-                const response = await fetch(`${API_BASE_URL}/customer-dashboard/cancelled-rides?page=${page}&limit=10`, {
+                const response = await fetch(`${DASH_API_URL}/customer-dashboard/cancelled-rides?page=${page}&limit=10`, {
                     headers: { 'Authorization': `Bearer ${getToken()}` }
                 });
                 const res = await response.json();
@@ -1748,30 +1965,30 @@
                     let html = '<div class="row g-4">';
                     res.data.forEach(trip => {
                         html += `
-                            <div class="col-md-6">
-                                <div class="compact-trip-card">
-                                    <div class="compact-car-img-wrapper">
-                                        <img src="/goride/img/${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img img-grayscale" onerror="this.src='/goride/img/saloon.png'">
+                                <div class="col-md-6">
+                                    <div class="compact-trip-card">
+                                        <div class="compact-car-img-wrapper">
+                                            <img src="${DASH_IMG_PREFIX}${trip.vehicle_image.toLowerCase()}.webp" class="compact-car-img img-grayscale" onerror="this.src='${DASH_IMG_PREFIX}standard.webp'">
+                                        </div>
+                                        <div class="compact-trip-details">
+                                            <div class="compact-trip-title">${trip.drop}</div>
+                                            <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
+                                            <div class="compact-trip-price-status text-danger">${trip.cancel_reason || 'Cancelled'}</div>
+                                        </div>
                                     </div>
-                                    <div class="compact-trip-details">
-                                        <div class="compact-trip-title">${trip.drop}</div>
-                                        <div class="compact-trip-meta">${trip.pickup_date} • ${trip.pickup_time}</div>
-                                        <div class="compact-trip-price-status text-danger">${trip.cancel_reason || 'Cancelled'}</div>
-                                    </div>
-                                </div>
-                            </div>`;
+                                </div>`;
                     });
                     html += '</div>';
                     container.innerHTML = html;
                     buildPagination(res.pagination, 'cancelledPagination', 'fetchCancelledRides');
                 } else {
                     container.innerHTML = `
-                            <div class="empty-state">
-                                <i class="fas fa-ban"></i>
-                                <h5>No cancelled rides</h5>
-                                <p>You don't have any cancelled trips.</p>
-                            </div>
-                        `;
+                                <div class="empty-state">
+                                    <i class="fas fa-ban"></i>
+                                    <h5>No cancelled rides</h5>
+                                    <p>You don't have any cancelled trips.</p>
+                                </div>
+                            `;
                     document.getElementById('cancelledPagination').innerHTML = '';
                 }
             } catch (error) {
@@ -1811,7 +2028,7 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
             btn.disabled = true;
 
-            fetch('{{ env("API_URL") }}' + '/cancel-job', {
+            fetch(DASH_API_URL + '/cancel-job', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -1819,42 +2036,45 @@
                 },
                 body: JSON.stringify(payload)
             })
-            .then(res => res.json())
-            .then(data => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                .then(res => res.json())
+                .then(data => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
 
-                if (data.status) {
-                    hideDashboardCancelModal();
-                    if(typeof showToast === 'function') {
-                        showToast(data.message || 'Job cancelled successfully.', 'success');
+                    if (data.status) {
+                        hideDashboardCancelModal();
+                        if (typeof showToast === 'function') {
+                            showToast(data.message || 'Job cancelled successfully.', 'success');
+                        } else {
+                            alert(data.message || 'Job cancelled successfully.');
+                        }
+
+                        fetchCurrentRides();
+                        fetchCancelledRides(1);
+                        fetchDashboardSummary();
                     } else {
-                        alert(data.message || 'Job cancelled successfully.');
+                        if (typeof showToast === 'function') {
+                            showToast(data.message || 'Failed to cancel job.', 'error');
+                        } else {
+                            alert(data.message || 'Failed to cancel job.');
+                        }
                     }
-                    
-                    fetchCurrentRides();
-                    fetchCancelledRides(1);
-                    fetchDashboardSummary();
-                } else {
-                    if(typeof showToast === 'function') {
-                        showToast(data.message || 'Failed to cancel job.', 'error');
+                })
+                .catch(err => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    if (typeof showToast === 'function') {
+                        showToast('An error occurred while cancelling the job.', 'error');
                     } else {
-                        alert(data.message || 'Failed to cancel job.');
+                        alert('An error occurred while cancelling the job.');
                     }
-                }
-            })
-            .catch(err => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                if(typeof showToast === 'function') {
-                    showToast('An error occurred while cancelling the job.', 'error');
-                } else {
-                    alert('An error occurred while cancelling the job.');
-                }
-            });
+                });
         }
 
         document.addEventListener('DOMContentLoaded', function () {
+            if (!checkDashboardAuth()) {
+                return;
+            }
             fetchDashboardSummary();
             fetchCurrentRides();
             fetchCompletedRides(1);

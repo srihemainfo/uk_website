@@ -46,10 +46,10 @@
         }
 
         /* .passenger-booked-for-container {
-                margin-top: 6px;
-                padding-top: 6px;
-                border-top: 1px dashed #e2e8f0;
-            } */
+                    margin-top: 6px;
+                    padding-top: 6px;
+                    border-top: 1px dashed #e2e8f0;
+                } */
 
         .passenger-booked-for-name {
             font-size: 16px;
@@ -143,7 +143,7 @@
                 justify-content: space-between !important;
                 gap: 12px !important;
                 width: 100% !important;
-           
+
                 margin-bottom: 0px !important;
             }
 
@@ -154,7 +154,7 @@
                 text-align: center !important;
                 flex-shrink: 0 !important;
                 margin-bottom: 0 !important;
-                 /* flex: 1 !important; */
+                /* flex: 1 !important; */
             }
 
             .driver-item.driver-card .driver-car-banner img {
@@ -163,7 +163,7 @@
                 max-height: 55px !important;
                 object-fit: cover !important;
                 margin-bottom: 7px;
-         
+
             }
 
             .driver-item.driver-card .driver-car-banner-details {
@@ -251,13 +251,13 @@
             }
 
             .driver-item.driver-card .driver-bid-box {
-               display: flex !important;
-        flex-direction: row !important;
-        justify-content: end !important;
-        align-items: center !important;
-        width: 100% !important;
-        margin-top: 0 !important;
-        gap: 26px !important;
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: end !important;
+                align-items: center !important;
+                width: 100% !important;
+                margin-top: 0 !important;
+                gap: 26px !important;
             }
 
             .driver-item.driver-card .driver-price-row {
@@ -273,7 +273,7 @@
             }
 
             .driver-item.driver-card .driver-accept-btn {
-               margin-top:0px !important;
+                margin-top: 0px !important;
             }
 
             .driver-item.driver-card .driver-accept-btn:hover {
@@ -285,7 +285,7 @@
             position: relative !important;
         }
 
-      
+
 
         .tax-ribbon-fold {
             position: relative !important;
@@ -318,6 +318,444 @@
 
         .tax-ribbon-body.not-included {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        }
+
+        /* Driver App / Mobile App Promo Section */
+        .driver-app-section {
+            padding: 0px 0 20px 0;
+        }
+
+        .driver-app-card {
+            background: #f7f8fa;
+            border-radius: 24px;
+            padding: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #eef0f4;
+        }
+
+        .driver-app-content {
+            flex: 1 1 55%;
+            max-width: 620px;
+            z-index: 2;
+        }
+
+        .driver-app-badge {
+            display: inline-block;
+            background: black;
+            color: white;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .driver-app-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .driver-app-subtitle {
+
+            line-height: 1.5;
+
+            margin-bottom: 32px;
+        }
+
+        .driver-app-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px 24px;
+            margin-bottom: 36px;
+        }
+
+        .driver-app-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .driver-app-feature-icon {
+            width: 36px;
+            height: 36px;
+            /* min-width: 44px; */
+            border-radius: 50%;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+
+        .driver-app-feature-text h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 2px 0;
+            line-height: 1.2;
+        }
+
+        .driver-app-feature-text p {
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .driver-app-store-btns {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #000000;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .store-btn:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .store-btn i {
+            font-size: 26px;
+        }
+
+        .store-btn-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .store-btn-sub {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .store-btn-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .driver-app-media {
+            flex: 1 1 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .driver-app-circle-bg {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: #fde047;
+            border-radius: 50%;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        .driver-app-img {
+            position: relative;
+            z-index: 2;
+            max-width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+        }
+
+        @media (max-width: 991px) {
+            .driver-app-card {
+                flex-direction: column;
+                padding: 32px 24px;
+                gap: 32px;
+            }
+
+            .driver-app-content {
+                max-width: 100%;
+            }
+
+            .driver-app-title {
+                font-size: 26px;
+            }
+
+            .driver-app-circle-bg {
+                width: 260px;
+                height: 260px;
+            }
+
+            .driver-app-img {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .driver-app-card {
+                padding: 24px 16px;
+                border-radius: 16px;
+                z-index: 0;
+            }
+
+            .driver-app-title {
+                font-size: 22px;
+            }
+
+            .driver-app-subtitle {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .driver-app-features {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-bottom: 28px;
+            }
+
+            .driver-app-store-btns {
+                flex-wrap: nowrap;
+            }
+
+            .store-btn {
+                justify-content: center;
+                padding: 10px 10px;
+            }
+
+            .driver-app-circle-bg {
+                width: 220px;
+                height: 220px;
+            }
+
+            .driver-app-img {
+                max-height: 250px;
+            }
+        }
+
+        /* Offer Banner below See Prices */
+        .offer-banner-wrapper {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .offer-banner-img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            object-fit: cover;
+        }
+
+        .offer-banner-img:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 576px) {
+            .offer-banner-wrapper {
+                margin-top: 16px;
+            }
+            .offer-banner-img {
+                border-radius: 12px;
+            }
+        }
+
+        /* Mobile Spacing Optimization - Step 1 Only */
+        @media (max-width: 768px) {
+            .hero-container:has(#step1.active),
+            .hero-form-section:has(#step1.active) {
+                min-height: auto !important;
+                height: auto !important;
+            }
+
+            #step1.form-section.active {
+                min-height: auto !important;
+                flex: none !important;
+            }
+
+            #step1 .container {
+                padding-top: 0px !important;
+                padding-bottom: 0px !important;
+            }
+
+            #step1 .booking-title-group {
+                margin-bottom: 6px !important;
+                flex-direction: column-reverse;
+                align-items: start;
+            }
+
+            /* #step1 .form-group-uber {
+                margin-bottom: 8px !important;
+            } */
+
+            #step1 .m-2 {
+                margin: 6px 0 !important;
+            }
+
+            #step1 .btn-search-uber {
+                margin-top: 8px !important;
+            }
+
+            #step1 .offer-banner-wrapper {
+                margin-top: 10px !important;
+            }
+        }
+
+        /* Vibrant Gold Animated Promo Header Badge next to 'Where to?' */
+        .booking-title-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .promo-header-badge {
+          position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #f1eee6 0%, #f1eee6 100%);
+        color: #000000;
+        /* border: 0px solid #000000; */
+        padding: 7px 14px;
+        border-radius: 30px;
+        /* box-shadow: 0 4px 14px rgba(249, 193, 6, 0.45); */
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        animation: promoWiggleGlow 4s infinite ease-in-out;
+    }
+
+        .promo-header-badge:hover {
+            transform: scale(1.05) translateY(-2px);
+            /* box-shadow: 0 6px 20px rgba(249, 193, 6, 0.65); */
+             background: linear-gradient(135deg, #f1eee6 0%, #f1eee6 100%);
+        }
+
+        @keyframes promoWiggleGlow {
+            0%, 80%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            85% {
+                transform: rotate(-3deg) scale(1.03);
+            }
+            90% {
+                transform: rotate(3deg) scale(1.03);
+            }
+            95% {
+                transform: rotate(-2deg) scale(1.02);
+            }
+        }
+
+        .promo-badge-tag {
+           background: #000000;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .promo-badge-tag i {
+          font-size: 12px;
+          color: white;
+          /* animation: promoGiftSpin 2.5s infinite ease-in-out; */
+        }
+
+        @keyframes promoGiftSpin {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(12deg); }
+        }
+
+        .promo-badge-text-wrap {
+            display: inline-flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .promo-badge-marquee-text {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            animation: promoTextPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes promoTextPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
+        }
+
+        /* Bright Light Beam Sweep across Gold Background */
+        .promo-header-badge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.65) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg);
+            animation: promoGoldShimmer 2.8s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes promoGoldShimmer {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        @media (max-width: 576px) {
+          
+            /* .promo-badge-tag {
+                font-size: 11px;
+                padding: 2px 7px;
+            }
+            .promo-badge-marquee-text {
+                font-size: 11px;
+            } */
         }
     </style>
     <div id="mobileActionBar">
@@ -375,7 +813,8 @@
                         </div>
                     </div>
                     <div class="mobile-trip-header-actions">
-                        <button type="button" class="edit-icon-btn" onclick="event.stopPropagation(); goBackToLocations()" title="Edit trip">
+                        <button type="button" class="edit-icon-btn" onclick="event.stopPropagation(); goBackToLocations()"
+                            title="Edit trip">
                             <i class="fas fa-pencil"></i>
                         </button>
                         <i class="fas fa-chevron-down" id="tripSummaryArrow"></i>
@@ -484,21 +923,29 @@
                             </div>
 
                             <div class="passenger-details-right">
-                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsPassengerCountContainer" title="Passenger Count" data-tooltip="Passenger Count">
-                                    <span class="summary-label"><i class="fas fa-user text-navy" title="Passenger Count"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                    id="mcsPassengerCountContainer" title="Passenger Count" data-tooltip="Passenger Count">
+                                    <span class="summary-label"><i class="fas fa-user text-navy"
+                                            title="Passenger Count"></i></span>
                                     <span class="summary-value" id="mcsPassengerCount">1</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsLuggageContainer" title="Luggage" data-tooltip="Luggage">
-                                    <span class="summary-label"><i class="fas fa-suitcase text-navy" title="Luggage"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                    id="mcsLuggageContainer" title="Luggage" data-tooltip="Luggage">
+                                    <span class="summary-label"><i class="fas fa-suitcase text-navy"
+                                            title="Luggage"></i></span>
                                     <span class="summary-value" id="mcsLuggageCount">0</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsHandLuggageContainer" title="Hand Luggage" data-tooltip="Hand Luggage">
-                                    <span class="summary-label"><i class="fas fa-briefcase text-navy" title="Hand Luggage"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                    id="mcsHandLuggageContainer" title="Hand Luggage" data-tooltip="Hand Luggage">
+                                    <span class="summary-label"><i class="fas fa-briefcase text-navy"
+                                            title="Hand Luggage"></i></span>
                                     <span class="summary-value" id="mcsHandLuggageCount">0</span>
                                 </div>
-                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip" id="mcsBabySeatContainer"
-                                    style="display:none;" title="Baby Seats" data-tooltip="Baby Seats">
-                                    <span class="summary-label"><i class="fas fa-baby-carriage text-navy" title="Baby Seats"></i></span>
+                                <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
+                                    id="mcsBabySeatContainer" style="display:none;" title="Baby Seats"
+                                    data-tooltip="Baby Seats">
+                                    <span class="summary-label"><i class="fas fa-baby-carriage text-navy"
+                                            title="Baby Seats"></i></span>
                                     <span class="summary-value" id="mcsBabySeats">0</span>
                                 </div>
                             </div>
@@ -524,12 +971,17 @@
                                     class="fas fa-map-marker-alt text-navy"></i> Dropoff Address</span>
                             <span id="mcsDropoffAddress" class="summary-value">–</span>
                         </div>
-                        <div class="booking-summary-item booking-summary-span2-item" id="mcsOptionsInlineRow" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
-                            <div id="mcsMeetGreetContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Meet &amp; Greet Included" data-tooltip="Meet &amp; Greet Included">
+                        <div class="booking-summary-item booking-summary-span2-item" id="mcsOptionsInlineRow"
+                            style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
+                            <div id="mcsMeetGreetContainer" class="summary-inline-item summary-icon-tooltip summary-label"
+                                style="display:none;" title="Meet &amp; Greet Included"
+                                data-tooltip="Meet &amp; Greet Included">
                                 <i class="fas fa-user-check text-navy"></i>
                                 <span>Meet &amp; Greet</span>
                             </div>
-                            <div id="mcsWheelchairContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Wheelchair Access Requested" data-tooltip="Wheelchair Access Requested">
+                            <div id="mcsWheelchairContainer" class="summary-inline-item summary-icon-tooltip summary-label"
+                                style="display:none;" title="Wheelchair Access Requested"
+                                data-tooltip="Wheelchair Access Requested">
                                 <i class="fas fa-wheelchair text-navy"></i>
                                 <span>Wheelchair</span>
                             </div>
@@ -692,8 +1144,8 @@
                     </div>
                 </div>
                 <!-- <p class="time-hint">
-                                    <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
-                                </p> -->
+                                        <i class="far fa-calendar-alt"></i> Choose your pick-up time up to 90 days in advance
+                                    </p> -->
                 <button id="timePanelDoneBtn" class="btn-search-uber mt-3 mt-md-5" onclick="saveSchedule()">
                     See Prices
                 </button>
@@ -703,9 +1155,12 @@
                 <div class="container">
                     <div class="booking-title-group">
                         <h3 class="booking-title">Where to?</h3>
-                        <!--<button type="button" id="addViaBtn" class="btn-add-via" onclick="addViaPoint()">-->
-                        <!--    + Add Via-->
-                        <!--</button>-->
+                        <div class="promo-header-badge" title="Click for offer details">
+                        <div class="promo-badge-tag"><i class="fas fa-gift"></i> £10 OFF</div>
+                        <div class="promo-badge-text-wrap">
+                            <span class="promo-badge-marquee-text">YOUR FIRST RIDE!</span>
+                        </div>
+                    </div>
                     </div>
                     <!-- <div id="selectedDateTime" class="selectdate"></div> -->
                     <div class="location-group-wrapper">
@@ -747,7 +1202,7 @@
                             <i class="fas fa-exchange-alt" style="transform: rotate(90deg);"></i>
                         </button>
                     </div>
-                    <div class="m-3">
+                    <div class="m-2">
                         <button class="pickup-now-btn" id="pickupNowBtn" onclick="showSchedulePanelFromStep1()">
                             <i class="fas fa-clock"></i>
                             Pickup Now
@@ -755,9 +1210,14 @@
                         </button>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
-                        <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 20px;">
+                        <button class="btn-search-uber" onclick="proceedToTripDetails()" style="margin-top: 10px;">
                             <i class="fas fa-arrow-right me-2"></i> See prices
                         </button>
+                    </div>
+
+                    <!-- OFFER BANNER IMAGE -->
+                    <div class="offer-banner-wrapper">
+                        <img src="{{ asset('goride/img/off-img2.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->
@@ -1009,18 +1469,23 @@
 
                                     <div class="passenger-details-right">
                                         <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
-                                            id="summaryPassengersCountContainer" title="Passenger Count" data-tooltip="Passenger Count">
-                                            <span class="summary-label"><i class="fas fa-user text-navy" title="Passenger Count"></i></span>
+                                            id="summaryPassengersCountContainer" title="Passenger Count"
+                                            data-tooltip="Passenger Count">
+                                            <span class="summary-label"><i class="fas fa-user text-navy"
+                                                    title="Passenger Count"></i></span>
                                             <span id="summaryPassengerCount" class="summary-value">1</span>
                                         </div>
                                         <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
                                             id="summaryLuggageCountContainer" title="Luggage" data-tooltip="Luggage">
-                                            <span class="summary-label"><i class="fas fa-suitcase text-navy" title="Luggage"></i></span>
+                                            <span class="summary-label"><i class="fas fa-suitcase text-navy"
+                                                    title="Luggage"></i></span>
                                             <span id="summaryLuggageCount" class="summary-value">0</span>
                                         </div>
                                         <div class="booking-summary-item passenger-details-item summary-icon-tooltip"
-                                            id="summaryHandLuggageContainer" title="Hand Luggage" data-tooltip="Hand Luggage">
-                                            <span class="summary-label"><i class="fas fa-briefcase text-navy" title="Hand Luggage"></i></span>
+                                            id="summaryHandLuggageContainer" title="Hand Luggage"
+                                            data-tooltip="Hand Luggage">
+                                            <span class="summary-label"><i class="fas fa-briefcase text-navy"
+                                                    title="Hand Luggage"></i></span>
                                             <span id="summaryHandLuggageCount" class="summary-value">0</span>
                                         </div>
                                     </div>
@@ -1055,12 +1520,17 @@
                                     <span id="summaryDropoffAddress" class="summary-value">–</span>
                                 </div>
 
-                                <div id="summaryOptionsInlineRow" class="summary-options-inline-row" style="display: flex; align-items: center; gap: 23px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
-                                    <div id="summaryMeetGreetContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Meet &amp; Greet Included" data-tooltip="Meet &amp; Greet Included">
+                                <div id="summaryOptionsInlineRow" class="summary-options-inline-row"
+                                    style="display: flex; align-items: center; gap: 23px; flex-wrap: wrap; margin-top: 4px; margin-bottom: 4px;">
+                                    <div id="summaryMeetGreetContainer"
+                                        class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;"
+                                        title="Meet &amp; Greet Included" data-tooltip="Meet &amp; Greet Included">
                                         <i class="fas fa-user-check text-navy"></i>
                                         <span>Meet &amp; Greet</span>
                                     </div>
-                                    <div id="summaryWheelchairContainer" class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;" title="Wheelchair Access Requested" data-tooltip="Wheelchair Access Requested">
+                                    <div id="summaryWheelchairContainer"
+                                        class="summary-inline-item summary-icon-tooltip summary-label" style="display:none;"
+                                        title="Wheelchair Access Requested" data-tooltip="Wheelchair Access Requested">
                                         <i class="fas fa-wheelchair text-navy"></i>
                                         <span>Wheelchair</span>
                                     </div>
@@ -1234,11 +1704,12 @@
                         }
 
                         @media (max-width: 768px) {
-                            .rc-stat-icon-circle{
+                            .rc-stat-icon-circle {
                                 width: 38px;
-    height: 38px;
-    font-size: 16px;
+                                height: 38px;
+                                font-size: 16px;
                             }
+
                             .premium-tooltip-content {
                                 left: -10px;
                                 right: auto;
@@ -1301,7 +1772,8 @@
                         </div>
                         <div class="payment-item" id="pbFirstDiscountRow" style="display:none;">
                             <span style="display: flex; align-items: center; gap: 8px;">
-                                <span style="background-color: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Offer</span>
+                                <span
+                                    style="background-color: #e8f5e9; color: #2e7d32; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Offer</span>
                                 First Booking Discount
                             </span>
                             <span id="pbFirstDiscount" style="color: #2e7d32; font-weight: 600;">-£0.00</span>
@@ -1322,6 +1794,7 @@
                             margin-top: 20px;
                             margin-bottom: 25px;
                         }
+
                         .payment-group-label {
                             font-weight: 700;
                             font-size: 15px;
@@ -1331,12 +1804,14 @@
                             align-items: center;
                             gap: 8px;
                         }
+
                         .payment-methods-grid {
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
                             gap: 14px;
                             margin-bottom: 15px;
                         }
+
                         .payment-method-card {
                             background: #ffffff;
                             border: 2px solid #e2e8f0;
@@ -1350,16 +1825,19 @@
                             position: relative;
                             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
                         }
+
                         .payment-method-card:hover {
                             border-color: #cbd5e1;
                             transform: translateY(-2px);
                             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
                         }
+
                         .payment-method-card.active {
                             border-color: #f39c12;
                             background: #fffdf5;
                             box-shadow: 0 4px 14px rgba(243, 156, 18, 0.18);
                         }
+
                         .pm-card-icon {
                             width: 44px;
                             height: 44px;
@@ -1373,23 +1851,28 @@
                             flex-shrink: 0;
                             transition: all 0.25s ease;
                         }
+
                         .payment-method-card.active .pm-card-icon {
                             background: #f39c12;
                             color: #ffffff;
                         }
+
                         .pm-card-info {
                             flex-grow: 1;
                         }
+
                         .pm-card-title {
                             font-weight: 700;
                             font-size: 14px;
                             color: #0f172a;
                         }
+
                         .pm-card-desc {
                             font-size: 12px;
                             color: #64748b;
                             margin-top: 2px;
                         }
+
                         .pm-card-badge {
                             width: 22px;
                             height: 22px;
@@ -1402,11 +1885,13 @@
                             color: transparent;
                             transition: all 0.2s ease;
                         }
+
                         .payment-method-card.active .pm-card-badge {
                             background: #f39c12;
                             border-color: #f39c12;
                             color: #ffffff;
                         }
+
                         .stripe-payment-box {
                             background: #0f172a;
                             color: #f8fafc;
@@ -1417,10 +1902,19 @@
                             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
                             animation: fadeInStripe 0.3s ease-out;
                         }
+
                         @keyframes fadeInStripe {
-                            from { opacity: 0; transform: translateY(-8px); }
-                            to { opacity: 1; transform: translateY(0); }
+                            from {
+                                opacity: 0;
+                                transform: translateY(-8px);
+                            }
+
+                            to {
+                                opacity: 1;
+                                transform: translateY(0);
+                            }
                         }
+
                         .stripe-box-header {
                             display: flex;
                             justify-content: space-between;
@@ -1431,6 +1925,7 @@
                             flex-wrap: wrap;
                             gap: 10px;
                         }
+
                         .stripe-box-title {
                             font-weight: 700;
                             font-size: 14px;
@@ -1439,18 +1934,21 @@
                             align-items: center;
                             gap: 8px;
                         }
+
                         .stripe-accepted-icons {
                             display: flex;
                             gap: 10px;
                             font-size: 22px;
                             color: #94a3b8;
                         }
+
                         .stripe-loading-state {
                             padding: 20px;
                             text-align: center;
                             color: #94a3b8;
                             font-size: 14px;
                         }
+
                         .stripe-payment-alert {
                             background: #450a0a;
                             border: 1px solid #991b1b;
@@ -1460,6 +1958,7 @@
                             font-size: 13px;
                             margin-top: 15px;
                         }
+
                         .stripe-security-footer {
                             display: flex;
                             justify-content: space-around;
@@ -1472,11 +1971,13 @@
                             flex-wrap: wrap;
                             gap: 10px;
                         }
+
                         .stripe-type-container {
                             margin-top: 15px;
                             margin-bottom: 15px;
                             animation: fadeInStripe 0.25s ease-out;
                         }
+
                         .payment-subgroup-label {
                             font-weight: 600;
                             font-size: 13px;
@@ -1486,11 +1987,13 @@
                             align-items: center;
                             gap: 6px;
                         }
+
                         .stripe-type-grid {
                             display: grid;
                             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                             gap: 12px;
                         }
+
                         .stripe-type-card {
                             background: #ffffff;
                             border: 2px solid #e2e8f0;
@@ -1498,27 +2001,32 @@
                             padding: 14px;
                             cursor: pointer;
                             transition: all 0.2s ease;
-                            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+                            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
                         }
+
                         .stripe-type-card:hover {
                             border-color: #cbd5e1;
                             transform: translateY(-1px);
                         }
+
                         .stripe-type-card.active {
                             border-color: #f39c12;
                             background: #fffdf5;
                             box-shadow: 0 3px 10px rgba(243, 156, 18, 0.15);
                         }
+
                         .st-card-header {
                             display: flex;
                             justify-content: space-between;
                             align-items: center;
                         }
+
                         .st-card-title {
                             font-weight: 700;
                             font-size: 13px;
                             color: #0f172a;
                         }
+
                         .st-card-badge {
                             width: 18px;
                             height: 18px;
@@ -1530,17 +2038,20 @@
                             font-size: 9px;
                             color: transparent;
                         }
+
                         .stripe-type-card.active .st-card-badge {
                             background: #f39c12;
                             border-color: #f39c12;
                             color: #ffffff;
                         }
+
                         .st-card-amount {
                             font-weight: 800;
                             font-size: 17px;
                             color: #f39c12;
                             margin-top: 5px;
                         }
+
                         .st-card-desc {
                             font-size: 11px;
                             color: #64748b;
@@ -1550,7 +2061,7 @@
 
                     <div class="form-group-uber payment-selection-wrapper">
                         <label class="payment-group-label"><i class="fas fa-credit-card"></i> Payment Method *</label>
-                        
+
                         <!-- Hidden select element for backwards compatibility -->
                         <select id="paymentMethod" required style="display:none;">
                             <option value="stripe" selected>Pay via Credit / Debit Card (Stripe)</option>
@@ -1558,7 +2069,8 @@
 
                         <!-- Executive Payment Option Cards -->
                         <div class="payment-methods-grid">
-                            <div class="payment-method-card active" id="payMethodCardStripe" onclick="selectPaymentMethod('stripe')">
+                            <div class="payment-method-card active" id="payMethodCardStripe"
+                                onclick="selectPaymentMethod('stripe')">
                                 <div class="pm-card-icon stripe-icon"><i class="fas fa-credit-card"></i></div>
                                 <div class="pm-card-info">
                                     <div class="pm-card-title">Card / Apple Pay / Google Pay</div>
@@ -1572,7 +2084,8 @@
                         <div id="stripePaymentTypeWrapper" class="stripe-type-container" style="display: block;">
                             <label class="payment-subgroup-label"><i class="fas fa-coins"></i> Select Payment Type *</label>
                             <div class="stripe-type-grid">
-                                <div class="stripe-type-card active" id="stripeTypeFull" onclick="selectStripePaymentType('full')">
+                                <div class="stripe-type-card active" id="stripeTypeFull"
+                                    onclick="selectStripePaymentType('full')">
                                     <div class="st-card-header">
                                         <span class="st-card-title">Full Payment</span>
                                         <span class="st-card-badge"><i class="fas fa-check"></i></span>
@@ -1609,12 +2122,12 @@
                             <div id="stripe-element-loading" class="stripe-loading-state">
                                 <i class="fas fa-spinner fa-spin"></i> Initializing secure payment session...
                             </div>
-                            
+
                             <!-- Stripe Elements mounts here -->
                             <div id="payment-element"></div>
-                            
+
                             <div id="payment-message" class="stripe-payment-alert" style="display: none;"></div>
-                            
+
                             <div class="stripe-security-footer">
                                 <span><i class="fas fa-lock"></i> 256-Bit SSL Encrypted</span>
                                 <span><i class="fas fa-check-circle"></i> PCI-DSS Compliant</span>
@@ -1635,50 +2148,18 @@
                                 </button>
                             </div>
                             <div class="tab-pane inclusions-pane active">
-                                <div class="tab-points-list mt-2">
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-parking point-icon point-icon-check"></i>
-                                        <div>Parking Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-road point-icon point-icon-check"></i>
-                                        <div>Congestion Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-moon point-icon point-icon-check"></i>
-                                        <div>Night Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-calendar-day point-icon point-icon-check"></i>
-                                        <div>Special Day Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-clock point-icon point-icon-check"></i>
-                                        <div>Waiting Charges</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-file-invoice-dollar point-icon point-icon-check"></i>
-                                        <div>Child Seat is Included</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-user-check point-icon point-icon-check"></i>
-                                        <div>Meet & Greet</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-gas-pump point-icon point-icon-check"></i>
-                                        <div>Fuel charges included.</div>
+                                <div class="tab-points-list mt-2" id="paymentInclusionsList">
+                                    <div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;">
+                                        <i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i>
+                                        <div>No additional inclusions are included in this fare.</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane exclusions-pane" style="display: none;">
-                                <div class="tab-points-list">
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-times point-icon point-icon-cross"></i>
-                                        <div>Any government or local authority charges, if applicable.</div>
-                                    </div>
-                                    <div class="tab-point-item">
-                                        <i class="fas fa-times point-icon point-icon-cross"></i>
-                                        <div>Additional mileage and waiting charges beyond the included limits.</div>
+                                <div class="tab-points-list" id="paymentExclusionsList">
+                                    <div class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;">
+                                        <i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i>
+                                        <div>No extra exclusions specified for this fare.</div>
                                     </div>
                                 </div>
                             </div>
@@ -1732,8 +2213,8 @@
                         </div>
                     </div>
                     <!-- =======================
-                     SECTION 1 : PERSONAL INFO
-                ======================== -->
+                         SECTION 1 : PERSONAL INFO
+                    ======================== -->
                     <div class="booking-form-section" id="personalInfoSection">
                         <div class="booking-section-title">
                             Personal Info
@@ -1741,7 +2222,8 @@
                         <div class="booking-form-grid">
                             <div class="form-group-uber booking-form-group">
                                 <label>Full Name</label>
-                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="75" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
+                                <input type="text" id="passengerFirstName" placeholder="Full name" maxlength="75"
+                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').slice(0, 75)">
                             </div>
                             <div class="form-group-uber booking-form-group">
                                 <label>Contact Number</label>
@@ -1765,8 +2247,8 @@
                     </div>
                     <div id="additionalBookingDetails" style="display: none;">
                         <!-- =======================
-                     SECTION 2 : PASSENGERS & LUGGAGE
-                ======================== -->
+                         SECTION 2 : PASSENGERS & LUGGAGE
+                    ======================== -->
                         <div class="passenger-luggage-card">
                             <div class="passenger-card-title">
                                 Passengers & Luggage
@@ -1809,10 +2291,15 @@
                             </div>
                             <!-- Car Seat -->
                             <div class="car-seat-toggle" id="carSeatToggleContainer">
-                                <label class="car-seat-label">
+                                <label class="car-seat-label" style="display: inline-flex; align-items: center; gap: 8px;">
                                     <input type="checkbox" id="carSeatCheckbox" class="booking-checkbox"
                                         onchange="toggleChildSeatOptions()">
-                                    Baby Seat Required?
+                                    <span>Baby Seat Required?</span>
+                                    <div class="meet-greet-tooltip">
+                                        <i class="fas fa-info-circle text-dark"
+                                            style="cursor: pointer; font-size: 15px;"></i>
+                                        <span class="tooltip-text">Child seat may have additional payments</span>
+                                    </div>
                                 </label>
                             </div>
                             <!-- Child Seat Options -->
@@ -1842,68 +2329,71 @@
                                         <i class="fas fa-plane-departure"></i>
                                         Flight Number *
                                     </label>
-                                    <input type="text" id="flightNumber" placeholder="Flight Number" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="flightNumber" placeholder="Flight Number"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <!--<div class="form-group-uber booking-form-group">
-                                            <label>
-                                                <i class="fas fa-clock"></i>
-                                                Flight Arriving Time *
-                                            </label>
-                                            <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
-                                                <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
-                                                    onclick="toggleFlightTimeDropdown()">
-                                                    <span id="flightTimeDropdownValue"> <i
-                                                            class="fas fa-clock me-1"></i>11:00</span>
-                                                    <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
-                                                </button>
-                                                <div class="time-dropdown-list flight-time-dual-dropdown"
-                                                    id="flightTimeDropdownList">
-                                                    <div class="flight-time-col-header">
-                                                        <div>Hour</div>
-                                                        <div>Min</div>
-                                                    </div>
-                                                    <div class="flight-time-cols-container">
-                                                        <div class="flight-time-col flight-hours-col">
-                                                            @for ($h = 0; $h < 24; $h++)
-                                                                @php $val = sprintf('%02d', $h); @endphp
-                                                                <div class="flight-time-item hour-item" data-val="{{ $val }}"
-                                                                    onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
-                                                            @endfor
+                                                <label>
+                                                    <i class="fas fa-clock"></i>
+                                                    Flight Arriving Time *
+                                                </label>
+                                                <div class="time-dropdown-wrapper" id="flightTimeDropdownWrapper">
+                                                    <button type="button" class="time-dropdown-btn" id="flightTimeDropdownBtn"
+                                                        onclick="toggleFlightTimeDropdown()">
+                                                        <span id="flightTimeDropdownValue"> <i
+                                                                class="fas fa-clock me-1"></i>11:00</span>
+                                                        <span class="time-dropdown-icon"><i class="fas fa-chevron-down"></i></span>
+                                                    </button>
+                                                    <div class="time-dropdown-list flight-time-dual-dropdown"
+                                                        id="flightTimeDropdownList">
+                                                        <div class="flight-time-col-header">
+                                                            <div>Hour</div>
+                                                            <div>Min</div>
                                                         </div>
-                                                        <div class="flight-time-col flight-minutes-col">
-                                                            @for ($m = 0; $m < 60; $m++)
-                                                                @php $val = sprintf('%02d', $m); @endphp
-                                                                <div class="flight-time-item minute-item" data-val="{{ $val }}"
-                                                                    onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
-                                                            @endfor
+                                                        <div class="flight-time-cols-container">
+                                                            <div class="flight-time-col flight-hours-col">
+                                                                @for ($h = 0; $h < 24; $h++)
+                                                                    @php $val = sprintf('%02d', $h); @endphp
+                                                                    <div class="flight-time-item hour-item" data-val="{{ $val }}"
+                                                                        onclick="selectFlightHour('{{ $val }}')">{{ $val }}</div>
+                                                                @endfor
+                                                            </div>
+                                                            <div class="flight-time-col flight-minutes-col">
+                                                                @for ($m = 0; $m < 60; $m++)
+                                                                    @php $val = sprintf('%02d', $m); @endphp
+                                                                    <div class="flight-time-item minute-item" data-val="{{ $val }}"
+                                                                        onclick="selectFlightMinute('{{ $val }}')">{{ $val }}</div>
+                                                                @endfor
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <input type="hidden" id="flightArrivingTime" value="11:00">
-                                        </div>-->
+                                                <input type="hidden" id="flightArrivingTime" value="11:00">
+                                            </div>-->
                                 <!-- <div class="form-group-uber booking-form-group d-none">
-                                    <label>
-                                        <i class="fas fa-clock"></i>
-                                        PickUp  After Landing?
-                                    </label>
-                                    <select id="pickupAfterLandingSelect">
-                                        <option value="">Select</option>
-                                        <option value="15">15 Min After</option>
-                                        <option value="30">30 Min After</option>
-                                        <option value="45" selected>45 Min After</option>
-                                        <option value="60">60 Min After</option>
-                                        <option value="75">75 Min After</option>
-                                        <option value="90">90 Min After</option>
-                                    </select>
-                                </div> -->
+                                        <label>
+                                            <i class="fas fa-clock"></i>
+                                            PickUp  After Landing?
+                                        </label>
+                                        <select id="pickupAfterLandingSelect">
+                                            <option value="">Select</option>
+                                            <option value="15">15 Min After</option>
+                                            <option value="30">30 Min After</option>
+                                            <option value="45" selected>45 Min After</option>
+                                            <option value="60">60 Min After</option>
+                                            <option value="75">75 Min After</option>
+                                            <option value="90">90 Min After</option>
+                                        </select>
+                                    </div> -->
                                 <div class="form-group-uber booking-form-group">
                                     <label>Coming From *</label>
-                                    <input type="text" id="comingFrom" placeholder="Coming From" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="comingFrom" placeholder="Coming From"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddress" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="dropoffAddress" placeholder="Full address with postcode"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>
@@ -2008,7 +2498,8 @@
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
                                     <label><i class="fas fa-ship"></i> Cruise/Ferry Name</label>
-                                    <input type="text" id="ferryName" placeholder="Cruise or Ferry name" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="ferryName" placeholder="Cruise or Ferry name"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group d-none">
                                     <label><i class="fas fa-calendar-alt"></i> Docking Date</label>
@@ -2051,11 +2542,13 @@
                                 </div>
                                 <div class="form-group-uber booking-form-group d-none">
                                     <label><i class="fas fa-map-marker-alt"></i> Terminal</label>
-                                    <input type="text" id="comingFromPort" placeholder="Terminal name" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="comingFromPort" placeholder="Terminal name"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>
@@ -2100,12 +2593,14 @@
                                 <div class="form-group-uber booking-form-group">
                                     <label>Pickup Address</label>
                                     <input type="text" id="pickupAddressNormal"
-                                        placeholder="Full pickup address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                        placeholder="Full pickup address with postcode"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
                                     <label>Dropoff Address</label>
                                     <input type="text" id="dropoffAddressNormal"
-                                        placeholder="Full dropoff address with postcode" oninput="this.value = this.value.slice(0, 150)">
+                                        placeholder="Full dropoff address with postcode"
+                                        oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group"
                                     style="grid-column: 1 / -1; margin-top: 10px;">
@@ -2130,8 +2625,8 @@
                             </div>
                         </div>
                         <!-- =======================
-                     SECTION 5 : SPECIAL REQUIREMENTS
-                ======================== -->
+                         SECTION 5 : SPECIAL REQUIREMENTS
+                    ======================== -->
                         <div class="booking-form-section">
                             <div class="booking-section-title">
                                 Special Requirements
@@ -2220,26 +2715,33 @@
                     <div id="driverList" style="display:none;"></div>
 
                     <!-- BOOKING EXPIRED UI CARD -->
-                    <div id="bookingExpiredCard" class="booking-expired-card text-center p-4 rounded-4" style="display: none; background: #ffffff; border: 1px solid #fee2e2; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.08); margin: 20px 0;">
-                        <div class="expired-icon-wrapper mb-3" style="width: 70px; height: 70px; background: rgba(239, 68, 68, 0.1); color: #dc2626; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto;">
+                    <div id="bookingExpiredCard" class="booking-expired-card text-center p-4 rounded-4"
+                        style="display: none; background: #ffffff; border: 1px solid #fee2e2; box-shadow: 0 10px 25px rgba(239, 68, 68, 0.08); margin: 20px 0;">
+                        <div class="expired-icon-wrapper mb-3"
+                            style="width: 70px; height: 70px; background: rgba(239, 68, 68, 0.1); color: #dc2626; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin: 0 auto;">
                             <i class="fa-solid fa-clock-rotate-left"></i>
                         </div>
                         <h4 class="fw-bold text-dark mb-2">Booking Expired</h4>
-                        <p class="text-secondary mb-3" style="font-size: 14px; max-width: 420px; margin: 0 auto 15px; line-height: 1.5;">
+                        <p class="text-secondary mb-3"
+                            style="font-size: 14px; max-width: 420px; margin: 0 auto 15px; line-height: 1.5;">
                             Your scheduled pickup time has passed. Drivers can no longer bid on this ride request.
                         </p>
-                        <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light text-danger fw-semibold mb-4" style="font-size: 13px; border: 1px solid #fecaca;" id="expiredPickupTimeDetails">
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-light text-danger fw-semibold mb-4"
+                            style="font-size: 13px; border: 1px solid #fecaca;" id="expiredPickupTimeDetails">
                             <i class="fa-solid fa-calendar-xmark"></i> Exceeded Pickup Time
                         </div>
                         <div class="mt-2 d-flex justify-content-center">
-                            <button type="button" class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm" onclick="resetToNewBooking()" style="max-width: 320px; font-size: 15px; background: #000; color: #fff; border: none; cursor: pointer;">
+                            <button type="button" class="btn btn-dark btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm"
+                                onclick="resetToNewBooking()"
+                                style="max-width: 320px; font-size: 15px; background: #000; color: #fff; border: none; cursor: pointer;">
                                 <i class="fa-solid fa-plus me-2"></i> New Booking
                             </button>
                         </div>
                     </div>
 
-                    <div class="btn-group-uber step-bottom-btns" id="step6CancelBtnWrapper" style="margin-top: auto;">
-                        <button class="btn-search-uber" style="width: 100%;" onclick="showCancelJobModal()">
+                    <div class="btn-group-uber step-bottom-btns" id="step6CancelBtnWrapper"
+                        style="margin-top: auto; justify-content: flex-start;">
+                        <button type="button" class="btn-cancel-job-small" onclick="showCancelJobModal()">
                             <i class="fas fa-times"></i> Cancel Job
                         </button>
                     </div>
@@ -2341,19 +2843,19 @@
                                         </div>
                                     </div>
                                     <!-- <div class="rc-driver-stat-col border-left-right">
-                                                <i class="far fa-user"></i>
-                                                <div>
-                                                    <strong id="rcDriverTrips">2,145</strong>
+                                                    <i class="far fa-user"></i>
+                                                    <div>
+                                                        <strong id="rcDriverTrips">2,145</strong>
 
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="rc-driver-stat-col">
-                                                <i class="far fa-comment-dots"></i>
-                                                <div>
-                                                    <strong id="rcDriverReviewsPct">98%</strong>
+                                                <div class="rc-driver-stat-col">
+                                                    <i class="far fa-comment-dots"></i>
+                                                    <div>
+                                                        <strong id="rcDriverReviewsPct">98%</strong>
 
-                                                </div>
-                                            </div> -->
+                                                    </div>
+                                                </div> -->
                                 </div>
                             </div>
 
@@ -2424,8 +2926,8 @@
                     </div>
                     <div class="confirm-modal-content" style="padding: 0px 0;">
                         <!-- <div class="confirm-icon">
-                                        <i class="fas fa-check-circle"></i>
-                                    </div> -->
+                                            <i class="fas fa-check-circle"></i>
+                                        </div> -->
                         <h2 class="confirm-title" style="text-align: center; margin-top: 15px; margin-bottom: 12px;">
                             Booking Confirmed!</h2>
                         <div class="confirm-booking-id"
@@ -2481,11 +2983,15 @@
                             Your booking has been successfully confirmed.
                         </p>
                     </div>
-                    <div class="btn-group-uber step-bottom-btns" style="display: flex; gap: 12px; margin-top: auto; padding-top: 15px;">
-                        <a href="#" id="viewBookingPreviewBtn" onclick="openBookingPreviewFromConfirmation(event)" target="_blank" class="btn-search-uber text-decoration-none" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
+                    <div class="btn-group-uber step-bottom-btns"
+                        style="display: flex; gap: 12px; margin-top: auto; padding-top: 15px;">
+                        <a href="#" id="viewBookingPreviewBtn" onclick="openBookingPreviewFromConfirmation(event)"
+                            target="_blank" class="btn-search-uber text-decoration-none"
+                            style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
                             <i class="fas fa-file-invoice"></i> Booking Preview
                         </a>
-                        <button type="button" class="btn-search-uber" onclick="openTrackRideWithCurrentBooking()" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
+                        <button type="button" class="btn-search-uber" onclick="openTrackRideWithCurrentBooking()"
+                            style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 700; height: 48px; border-radius: 8px; background: #000; color: #fff;">
                             <i class="fas fa-map-marker-alt"></i> Track Driver
                         </button>
                     </div>
@@ -2589,7 +3095,23 @@
                 function initRouteMapFromFare() {
                     const mapContainer = document.getElementById('bookingMap');
                     if (!mapContainer) return;
+
+                    const curStep = (typeof BookingStore !== 'undefined' && BookingStore.getState)
+                        ? (BookingStore.getState().currentStep || 1)
+                        : (window.bookingData ? window.bookingData.currentStep || 1 : 1);
+
+                    // If user is on step 1 or 2 (home / schedule panel), ensure map stays hidden
+                    if (curStep < 3) {
+                        mapContainer.style.display = 'none';
+                        $('#bookingMap').hide();
+                        $('#mapRouteBadge').hide();
+                        $('#bookingImage').show();
+                        return;
+                    }
+
                     mapContainer.style.display = 'block';
+                    $('#bookingMap').show();
+                    $('#bookingImage').hide();
 
                     if (bookingData.apiDistance || bookingData.apiDuration) {
                         updateDistanceDurationUI(bookingData.apiDistance, bookingData.apiDuration);
@@ -2647,34 +3169,34 @@
 
                         // We create the SVG for this specific car with the rotation applied
                         const carSvg = `
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-                                            <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
-                                                <!-- Car Body -->
-                                                <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+                                                <g transform="translate(64,64) rotate(${angle}) translate(-32,-64)" filter="drop-shadow(0px 4px 6px rgba(0,0,0,0.4))">
+                                                    <!-- Car Body -->
+                                                    <rect x="12" y="8" width="40" height="104" rx="18" fill="#111111"/>
 
-                                                <!-- Windshield (dark tinted) -->
-                                                <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
+                                                    <!-- Windshield (dark tinted) -->
+                                                    <path d="M 17 42 Q 32 32 47 42 L 44 54 H 20 Z" fill="#ffffffff"/>
 
-                                                <!-- Rear Window (dark tinted) -->
-                                                <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
+                                                    <!-- Rear Window (dark tinted) -->
+                                                    <path d="M 19 86 Q 32 94 45 86 L 42 76 H 22 Z" fill="#ffffffff"/>
 
-                                                <!-- Side Mirrors -->
-                                                <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
-                                                <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                                    <!-- Side Mirrors -->
+                                                    <rect x="9" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
+                                                    <rect x="49" y="46" width="6" height="10" rx="3" fill="#ffffffff"/>
 
-                                                <!-- Subtle Metallic Highlights -->
-                                                <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
+                                                    <!-- Subtle Metallic Highlights -->
+                                                    <rect x="15" y="11" width="34" height="98" rx="15" fill="none" stroke="#333333" stroke-width="1.5"/>
 
-                                                <!-- Headlights -->
-                                                <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
-                                                <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                                    <!-- Headlights -->
+                                                    <rect x="18" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
+                                                    <rect x="38" y="10" width="8" height="4" rx="2" fill="#E8F0FF"/>
 
-                                                <!-- Taillights -->
-                                                <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                                <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
-                                            </g>
-                                        </svg>
-                                    `;
+                                                    <!-- Taillights -->
+                                                    <rect x="16" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                                    <rect x="38" y="108" width="10" height="3" rx="1.5" fill="#FF3B30"/>
+                                                </g>
+                                            </svg>
+                                        `;
                         const iconUrl = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(carSvg);
 
                         // Stagger animation for a smooth, organic feel
@@ -2716,7 +3238,7 @@
                         currentRoutePolyline.setMap(null);
                         currentRoutePolyline = null;
                     }
-                    
+
                     // Remove previous markers if any
                     if (_routePickupMarker) {
                         _routePickupMarker.setMap(null);
@@ -2842,46 +3364,46 @@
         </div>
     </div>
     <!-- <section class="fleet-section pt-5">
-                        <div class="container">
-                            <div class="section-head text-center mb-4">
-                                <h2 class="section-title">Available Fleets</h2>
-                                <p>Choose the perfect ride for your journey</p>
+                            <div class="container">
+                                <div class="section-head text-center mb-4">
+                                    <h2 class="section-title">Available Fleets</h2>
+                                    <p>Choose the perfect ride for your journey</p>
+                                </div>
+                                <div class="owl-carousel fleet-carousel">
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/saloon.png" alt="Saloon">
+                                        <h5>Saloon</h5>
+                                        <span>Up to 4 Passengers</span>
+                                    </div>
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/executive.png" alt="Executive">
+                                        <h5>Executive</h5>
+                                        <span>Luxury Business Ride</span>
+                                    </div>
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/executive mv5.png" alt="Executive MPV">
+                                        <h5>Executive MPV</h5>
+                                        <span>Up to 6 Passengers</span>
+                                    </div>
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/estate.png" alt="Estate">
+                                        <h5>Estate</h5>
+                                        <span>Extra Luggage Space</span>
+                                    </div>
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/8seater.png" alt="8 Seater">
+                                        <h5>8 Seater</h5>
+                                        <span>Up to 8 Passengers</span>
+                                    </div>
+                                    <div class="fleet-card">
+                                        <img src="/goride/img/mpv.png" alt="MPV">
+                                        <h5>MPV</h5>
+                                        <span>Family Friendly</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="owl-carousel fleet-carousel">
-                                <div class="fleet-card">
-                                    <img src="/goride/img/saloon.png" alt="Saloon">
-                                    <h5>Saloon</h5>
-                                    <span>Up to 4 Passengers</span>
-                                </div>
-                                <div class="fleet-card">
-                                    <img src="/goride/img/executive.png" alt="Executive">
-                                    <h5>Executive</h5>
-                                    <span>Luxury Business Ride</span>
-                                </div>
-                                <div class="fleet-card">
-                                    <img src="/goride/img/executive mv5.png" alt="Executive MPV">
-                                    <h5>Executive MPV</h5>
-                                    <span>Up to 6 Passengers</span>
-                                </div>
-                                <div class="fleet-card">
-                                    <img src="/goride/img/estate.png" alt="Estate">
-                                    <h5>Estate</h5>
-                                    <span>Extra Luggage Space</span>
-                                </div>
-                                <div class="fleet-card">
-                                    <img src="/goride/img/8seater.png" alt="8 Seater">
-                                    <h5>8 Seater</h5>
-                                    <span>Up to 8 Passengers</span>
-                                </div>
-                                <div class="fleet-card">
-                                    <img src="/goride/img/mpv.png" alt="MPV">
-                                    <h5>MPV</h5>
-                                    <span>Family Friendly</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section> -->
-    <section class="reviews-section section-padding mt-5" id="reviews">
+                        </section> -->
+    <section class="reviews-section section-padding mt-2 mt-md-5" id="reviews">
         <div class="container">
             <h2 class="section-title">What Customers Say</h2>
             <div class="review-grid">
@@ -2990,6 +3512,84 @@
             </div>
         </div>
     </section>
+    <section class="driver-app-section">
+        <div class="container">
+            <div class="driver-app-card">
+                <div class="driver-app-content">
+                    <span class="driver-app-badge">PARTNER APP</span>
+                    <h2 class="driver-app-title">Take Every Ride Further.<br>Download the GoRide Partner App</h2>
+                    <p class="driver-app-subtitle">Manage rides, track earnings, navigate smoothly and grow your business —
+                        all from your phone.</p>
+
+                    <div class="driver-app-features">
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>More Earnings</h3>
+                                <p>Get more rides &amp; increase income</p>
+                            </div>
+                        </div>
+
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-location-arrow"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Smart Navigation</h3>
+                                <p>Real-time routes &amp; updates</p>
+                            </div>
+                        </div>
+
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Performance Stats</h3>
+                                <p>Track your trips &amp; earnings</p>
+                            </div>
+                        </div>
+
+                        <div class="driver-app-feature-item">
+                            <div class="driver-app-feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="driver-app-feature-text">
+                                <h3>Safe &amp; Secure</h3>
+                                <p>Your safety is our priority</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="driver-app-store-btns">
+                        <a href="https://play.google.com/store/apps/details?id=com.goride.ukpartner"
+                            class="store-btn google-play">
+                            <i class="fab fa-google-play"></i>
+                            <div class="store-btn-text">
+                                <span class="store-btn-sub">GET IT ON</span>
+                                <span class="store-btn-title">Google Play</span>
+                            </div>
+                        </a>
+                        <a href="https://apps.apple.com/gb/app/goride-partner/id6791834578" class="store-btn app-store">
+                            <i class="fab fa-apple"></i>
+                            <div class="store-btn-text">
+                                <span class="store-btn-sub">Download on the</span>
+                                <span class="store-btn-title">App Store</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="driver-app-media">
+                    <div class="driver-app-circle-bg"></div>
+                    <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/mobile-app.webp"
+                        alt="GoRide Driver App" class="driver-app-img">
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="faq-section section-padding" id="faq">
         <div class="container" style="max-width: 700px;">
             <h2 class="section-title">Frequently Asked Questions</h2>
@@ -3006,7 +3606,9 @@
                     What payment methods do you accept?
                     <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                 </button>
-                <div class="faq-answer">We accept all major credit/debit cards (Visa, MasterCard, American Express), Apple Pay, and Google Pay securely processed via Stripe. Choose full payment or part payment at checkout.</div>
+                <div class="faq-answer">We accept all major credit/debit cards (Visa, MasterCard, American Express), Apple
+                    Pay, and Google Pay securely processed via Stripe. Choose full payment or part payment at checkout.
+                </div>
             </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">

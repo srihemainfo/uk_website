@@ -164,9 +164,12 @@ class UtilityController extends Controller
             $token = $request->bearerToken();
             $apiUrl = env('API_URL') . '/web-get-location';
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $request->all());
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $request->all());
 
             return response()->json($response->json(), $response->status());
 
@@ -292,7 +295,7 @@ class UtilityController extends Controller
         $validator = Validator::make($request->all(), [
             'fullName' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|regex:/^\+?[0-9]+$/',
             'subject' => 'required|string|max:255',
             'message' => 'required|string'
         ]);

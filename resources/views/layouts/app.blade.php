@@ -10738,15 +10738,15 @@
                         const tMo = String(tomorrow.getMonth() + 1).padStart(2, '0');
                         const tDa = String(tomorrow.getDate()).padStart(2, '0');
                         targetDate = `${tYr}-${tMo}-${tDa}`;
-                        // For tomorrow, select the second slot (12:30 AM)
-                        autoSelectedSlot = '12:30 AM';
+                        // For tomorrow, select the first slot (12:00 AM)
+                        autoSelectedSlot = '12:00 AM';
                     } else {
                         // Select the second slot for today
                         autoSelectedSlot = futureSlots[1];
                     }
                 } else {
-                    // For future dates, select the second slot
-                    autoSelectedSlot = futureSlots.length >= 2 ? futureSlots[1] : (futureSlots[0] || '12:30 AM');
+                    // For future dates, select the first slot
+                    autoSelectedSlot = futureSlots.length >= 1 ? futureSlots[0] : '12:00 AM';
                 }
 
                 // Sync flatpickr input if present
@@ -10899,7 +10899,15 @@
                 return;
             }
 
-            // Build all dropdown items so the user can still manually select the 1st slot or any other slot
+            // For today: Hide the 1st slot when 2nd slot is available, so options start directly from the 2nd slot
+            if (isToday && availableSlots.length >= 2) {
+                const hiddenFirstSlot = availableSlots.shift();
+                if (hiddenFirstSlot && hiddenFirstSlot.isCurrentSelected) {
+                    foundCurrentTime = false;
+                }
+            }
+
+            // Build dropdown items
             availableSlots.forEach(slot => {
                 const isNightSlot = (slot.hour === 23 || (slot.hour >= 0 && slot.hour < 5) || (slot.hour === 5 && slot.minute === 0));
 
@@ -10919,10 +10927,8 @@
             if (foundCurrentTime && currentSelectedTime && currentSelectedTime.trim() !== '') {
                 // Keep existing user-selected valid future time
                 selectTime(currentSelectedTime);
-            } else if (availableSlots.length >= 2) {
-                // Default auto-select to the SECOND slot (index 1)
-                selectTime(availableSlots[1].timeValue);
-            } else if (availableSlots.length === 1) {
+            } else if (availableSlots.length > 0) {
+                // Default auto-select to the first visible slot (which is the 2nd slot for today)
                 selectTime(availableSlots[0].timeValue);
             } else {
                 const item = document.createElement('div');

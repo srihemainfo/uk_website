@@ -1058,7 +1058,7 @@
                     <div class="contact-form-box">
                         <h3>Contact With Us!</h3>
                         <p class="form-subtitle">Fill in the details below and we'll get back to you shortly.</p>
-                        <form id="contactForm" onsubmit="handleSubmit(event)">
+                        <form id="contactForm" onsubmit="handleSubmit(event)" novalidate>
                             <div class="form-row">
                                 <div class="mb-3">
                                     <label class="form-label-custom">Full Name</label>
@@ -1340,7 +1340,7 @@
 
         const emailInput = document.getElementById('email');
         emailInput.addEventListener('input', function () {
-            this.value = this.value.replace(/\s/g, '');
+            this.value = this.value.replace(/\s/g, '').toLowerCase();
         });
 
         const phoneInput = document.getElementById('phone');
@@ -1380,27 +1380,69 @@
             event.preventDefault();
 
             const name = document.getElementById('fullName').value.trim();
-            const email = document.getElementById('email').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
             const countryCode = document.getElementById('countryCodeVal').value;
             const phone = document.getElementById('phone').value.trim();
             const subject = document.getElementById('subject').value.trim();
             const message = document.getElementById('message').value.trim();
 
-            if (!name || !email || !phone || !subject || !message) {
-                showToast('Please fill in all required fields.', 'error');
+            if (!name) {
+                showToast('Full name is required.', 'error');
+                document.getElementById('fullName').focus();
+                return;
+            }
+            if (name.length < 2) {
+                showToast('Full name must be at least 2 characters long.', 'error');
+                document.getElementById('fullName').focus();
                 return;
             }
 
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email) {
+                showToast('Email address is required.', 'error');
+                document.getElementById('email').focus();
+                return;
+            }
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailPattern.test(email)) {
                 showToast('Please enter a valid email address.', 'error');
+                document.getElementById('email').focus();
                 return;
             }
 
-            // if (phone.length !== 10) {
-            //     showToast('Mobile number must be exactly 10 digits.', 'error');
-            //     return;
-            // }
+            if (!phone) {
+                showToast('Mobile number is required.', 'error');
+                document.getElementById('phone').focus();
+                return;
+            }
+
+            if (phone.length < 7 || phone.length > 15) {
+                showToast('Please enter a valid mobile number (7-15 digits).', 'error');
+                document.getElementById('phone').focus();
+                return;
+            }
+
+            if (!subject) {
+                showToast('Subject is required.', 'error');
+                document.getElementById('subject').focus();
+                return;
+            }
+            if (subject.length < 3) {
+                showToast('Subject must be at least 3 characters long.', 'error');
+                document.getElementById('subject').focus();
+                return;
+            }
+
+            if (!message) {
+                showToast('Message is required.', 'error');
+                document.getElementById('message').focus();
+                return;
+            }
+            if (message.length < 10) {
+                showToast('Message must be at least 10 characters long.', 'error');
+                document.getElementById('message').focus();
+                return;
+            }
 
             const fullPhoneNumber = countryCode + phone;
             const submitBtn = document.getElementById('submitBtn');

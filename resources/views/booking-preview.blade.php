@@ -1996,7 +1996,7 @@
                     @if(!empty($user_details['c_pick_address']) && strtolower($user_details['c_pick_address']) !== 'none')
                         <div class="col-md-6 col-12">
                             <div class="info-item-box">
-                                <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Address</div>
+                                <div class="info-label"><i class="fa-solid fa-location-dot"></i> Pickup Place / Landmark</div>
                                 <div class="info-value">{{ $user_details['c_pick_address'] }}</div>
                             </div>
                         </div>
@@ -2005,7 +2005,7 @@
                     @if(!empty($user_details['c_drop_address']) && strtolower($user_details['c_drop_address']) !== 'none')
                         <div class="col-md-6 col-12">
                             <div class="info-item-box">
-                                <div class="info-label"><i class="fa-solid fa-location-pin"></i> Dropoff Address</div>
+                                <div class="info-label"><i class="fa-solid fa-location-pin"></i>Destination Landmark</div>
                                 <div class="info-value">{{ $user_details['c_drop_address'] }}</div>
                             </div>
                         </div>

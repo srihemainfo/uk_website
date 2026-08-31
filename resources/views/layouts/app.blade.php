@@ -12405,6 +12405,24 @@
                     });
 
                     _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(mobileNumber, window.recaptchaVerifier);
+
+                    // Non-blocking fire-and-forget temp user insertion with Firebase OTP payload
+                    const _verificationId = (_confirmationResult && _confirmationResult.verificationId) ? _confirmationResult.verificationId : '';
+                    fetch(API_BASE_URL + '/auth/firebase-temp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: mobileNumber,
+                            dialCode: dialCode,
+                            first_name: name || '',
+                            email: email || '',
+                            verification_id: _verificationId,
+                            verificationId: _verificationId,
+                            auth_type: 'firebase',
+                            deviceType: 'web',
+                            isResend: 'false'
+                        })
+                    }).catch(e => console.warn('Firebase temp user error:', e));
                 }
 
                 // Setup callback for after OTP is successful
@@ -16656,6 +16674,22 @@
                     });
 
                     _confirmationResult = await _firebaseAuthObj.signInWithPhoneNumber(_currentMobile, window.recaptchaVerifier);
+
+                    // Non-blocking fire-and-forget temp user insertion with Firebase OTP payload
+                    const _modalVerificationId = (_confirmationResult && _confirmationResult.verificationId) ? _confirmationResult.verificationId : '';
+                    fetch(API_BASE_URL + '/auth/firebase-temp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            mobile: _currentMobile,
+                            dialCode: _currentDialCode || '44',
+                            verification_id: _modalVerificationId,
+                            verificationId: _modalVerificationId,
+                            auth_type: 'firebase',
+                            deviceType: 'web',
+                            isResend: isResend ? 'true' : 'false'
+                        })
+                    }).catch(e => console.warn('Firebase temp user error:', e));
 
                     // Show OTP UI & start countdown
                     _showOtpUI();

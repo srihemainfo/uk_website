@@ -2605,15 +2605,15 @@
                         <div id="journeyNormal">
                             <div class="booking-form-grid">
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Pickup Address</label>
+                                    <label>Pickup Place / Landmark</label>
                                     <input type="text" id="pickupAddressNormal"
-                                        placeholder="Full pickup address with postcode"
+                                        placeholder="Full pickup Place / Landmark with postcode"
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Dropoff Address</label>
+                                    <label>Destination Landmark</label>
                                     <input type="text" id="dropoffAddressNormal"
-                                        placeholder="Full dropoff address with postcode"
+                                        placeholder="Full destination landmark with postcode"
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group"

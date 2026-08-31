@@ -2405,8 +2405,8 @@
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddress" placeholder="Full address with postcode"
+                                    <label>Destination Landmark</label>
+                                    <input type="text" id="dropoffAddress" placeholder="Full destination landmark with postcode"
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
@@ -2560,8 +2560,8 @@
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">
-                                    <label>Drop off Address</label>
-                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full address with postcode"
+                                    <label>Destination Landmark</label>
+                                    <input type="text" id="dropoffAddressSeaport" placeholder="Full destination landmark with postcode"
                                         oninput="this.value = this.value.slice(0, 150)">
                                 </div>
                                 <div class="form-group-uber booking-form-group">

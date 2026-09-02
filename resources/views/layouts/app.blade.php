@@ -4,12 +4,20 @@
 <head>
     @php
         // Checks the original domain requested by the browser
-        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
-        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
-        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
-        $loadUkTracking = $isUkHost || $isUkGoride;
+        $rawHost = request()->header('X-Forwarded-Host') ?: request()->getHost();
+        $cleanHost = strtolower(trim(preg_replace('/:\d+$/', '', explode(',', $rawHost)[0])));
+        $requestedHost = $cleanHost;
 
-        if ($requestedHost === 'uk.goride.run') {
+        $ukHosts = [
+            'uk.goride.run',
+            'www.uk.goride.run',
+            'goride.run',
+            'www.goride.run'
+        ];
+        $isUkHost = in_array($cleanHost, $ukHosts);
+        $loadUkTracking = $isUkHost;
+
+        if ($cleanHost === 'uk.goride.run' || $cleanHost === 'www.uk.goride.run') {
             $faviconUrl = 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp';
         } else {
             $faviconUrl = env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
@@ -33,7 +41,7 @@
     @include('partials.seo')
 
     {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
-    @if($requestedHost === 'uk.goride.run' || $requestedHost === 'in.goride.uk' || $requestedHost === 'www.goride.uk' || $requestedHost === 'goride.uk')
+    @if($requestedHost === 'uk.goride.run' || $requestedHost === 'www.uk.goride.run')
         <meta name="robots" content="noindex, nofollow">
     @endif
 

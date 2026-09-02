@@ -3,12 +3,20 @@
 
 <head>
     @php
-        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
-        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
-        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
-        $loadUkTracking = $isUkHost || $isUkGoride;
+        $rawHost = request()->header('X-Forwarded-Host') ?: request()->getHost();
+        $cleanHost = strtolower(trim(preg_replace('/:\d+$/', '', explode(',', $rawHost)[0])));
+        $requestedHost = $cleanHost;
 
-        $faviconUrl = ($requestedHost === 'uk.goride.run')
+        $ukHosts = [
+            'uk.goride.run',
+            'www.uk.goride.run',
+            'goride.run',
+            'www.goride.run'
+        ];
+        $isUkHost = in_array($cleanHost, $ukHosts);
+        $loadUkTracking = $isUkHost;
+
+        $faviconUrl = ($cleanHost === 'uk.goride.run' || $cleanHost === 'www.uk.goride.run')
             ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
             : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
     @endphp

@@ -53,14 +53,21 @@
     $currentHost = request()->getHost();
 @endphp
 @if(in_array($currentHost, $allowedClarityHosts))
-<!-- Clarity tracking script -->
+<!-- Clarity tracking script (Deferred) -->
 <script type="text/javascript">
     if (['goride.run', 'www.goride.run', 'uk.goride.run', 'www.uk.goride.run'].includes(window.location.hostname)) {
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "y5rcj0m8tw");
+        function initClarity() {
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "y5rcj0m8tw");
+        }
+        if (document.readyState === 'complete') {
+            setTimeout(initClarity, 800);
+        } else {
+            window.addEventListener('load', function() { setTimeout(initClarity, 800); });
+        }
     }
 </script>
 @endif

@@ -38,15 +38,32 @@
     @endif
 
     @if($loadUkTracking)
-        <!-- TikTok Pixel Code Start -->
+        <!-- TikTok Pixel Code Start (Non-blocking / Deferred) -->
         <script>
             !function (w, d, t) {
                 w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) {
                     for (
                         var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)ttq.setAndDefer(e, ttq.methods[n]); return e
                 }, ttq.load = function (e, n) {
-                    var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {}; n = document.createElement("script")
-                        ; n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t; e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(n, e)
+                    var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {};
+                    var inject = function () {
+                        var el = d.createElement("script");
+                        el.type = "text/javascript";
+                        el.async = true;
+                        el.src = r + "?sdkid=" + e + "&lib=" + t;
+                        el.onerror = function () { /* Silently catch ISP block / timeouts */ };
+                        var s = d.getElementsByTagName("script")[0];
+                        if (s && s.parentNode) {
+                            s.parentNode.insertBefore(el, s);
+                        } else {
+                            d.head.appendChild(el);
+                        }
+                    };
+                    if (d.readyState === "complete") {
+                        setTimeout(inject, 500);
+                    } else {
+                        w.addEventListener("load", function () { setTimeout(inject, 500); });
+                    }
                 };
                 ttq.load('DA8LRORC77U6VIRE33FG');
                 ttq.page();
@@ -55,26 +72,50 @@
         <!-- TikTok Pixel Code End -->
     @endif
 
-    <!-- Google Identity Services -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Stripe JS SDK v3 -->
-    <script src="https://js.stripe.com/v3/"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-        rel="stylesheet">
-    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Minus+Inlier+Sans&display=swap');
+    <!-- Performance Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://goride-media.s3.ap-south-1.amazonaws.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://goride-media.s3.ap-south-1.amazonaws.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
 
+    <!-- Preload Critical LCP Hero Image -->
+    <link rel="preload" as="image" href="https://goride-media.s3.ap-south-1.amazonaws.com/cus_app/images/day_6a561ea0b63e7.webp" fetchpriority="high">
+
+    <!-- Google Identity Services (Non-blocking) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Stripe JS SDK v3 (Deferred to unblock critical rendering) -->
+    <script src="https://js.stripe.com/v3/" defer></script>
+
+    <!-- Critical CSS: Bootstrap Framework -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Non-critical Stylesheets (Loaded asynchronously to unblock FCP) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/css/intlTelInput.css">
+    </noscript>
+
+    <link rel="shortcut icon" href="{{ $faviconUrl }}" />
+    <!-- Consolidated Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
         .btn-swap-locations {
             position: absolute;
             right: 15px;
@@ -9032,8 +9073,8 @@
                 <div class="modal-body help-modal-body text-center pt-2">
 
                     <div class="help-banner-wrapper">
-                        <img src="{{ asset('goride/img/support-call.png') }}" alt="Customer Support"
-                            class="help-banner-img">
+                        <img src="{{ asset('goride/img/support-call.webp') }}" alt="Customer Support"
+                            class="help-banner-img" loading="lazy" decoding="async">
                     </div>
 
                     <h5 class="help-subtitle">Need <span class="text-highlight">Assistance?</span></h5>

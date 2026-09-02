@@ -1217,7 +1217,7 @@
 
                     <!-- OFFER BANNER IMAGE -->
                     <div class="offer-banner-wrapper">
-                        <img src="{{ asset('goride/img/off-img2.png') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid">
+                        <img src="{{ asset('goride/img/off-img2.webp') }}" alt="Special Offer - £10 Off Your First Ride" class="offer-banner-img img-fluid" loading="lazy" decoding="async">
                     </div>
 
                     <!-- MOBILE TRUST BADGES -->
@@ -3037,7 +3037,7 @@
                         drivers at fixed prices.</p>
                 </div>
                 <img src="https://goride-media.s3.ap-south-1.amazonaws.com/cus_app/images/day_6a561ea0b63e7.webp"
-                    alt="Airport Transfer" class="hero-side-img">
+                    alt="Airport Transfer" class="hero-side-img" fetchpriority="high" decoding="async">
             </div>
             <div id="bookingMap" style="display: none; width: 100%; height: 100%; "></div>
             <div id="mapRouteBadge" class="map-route-badge" style="display: none;">
@@ -3645,7 +3645,7 @@
                 <div class="driver-app-media">
                     <div class="driver-app-circle-bg"></div>
                     <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/side-img.webp"
-                        alt="GoRide Driver App" class="driver-app-img">
+                        alt="GoRide Driver App" class="driver-app-img" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>

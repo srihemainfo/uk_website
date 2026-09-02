@@ -13,7 +13,7 @@
 <nav class="navbar-uber">
     <div class="navbar-brand-uber">
         <a href="{{ $headerHomeUrl }}">
-            <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo">
+            <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-darkk.png" alt="GoRide Logo" fetchpriority="high" decoding="async">
         </a>
     </div>
     <ul class="navbar-menu">

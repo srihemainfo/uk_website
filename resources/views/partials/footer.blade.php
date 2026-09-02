@@ -5,7 +5,7 @@
             <div class="col-12 col-md-4">
                 <div class="footer-logo-section">
                     <div class="footer-logo">
-                        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide Logo">
+                        <img src="{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/logo-lightt.png" alt="GoRide Logo" loading="lazy" decoding="async">
                     </div>
                     <p class="footer-tagline">Safe, affordable, and reliable ride booking for everyone.</p>
                 </div>

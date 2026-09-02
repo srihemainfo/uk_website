@@ -2,15 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @include('partials.seo')
     @php
-        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
+        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
+        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
+        $loadUkTracking = $isUkHost || $isUkGoride;
+
         $faviconUrl = ($requestedHost === 'uk.goride.run')
             ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
             : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
     @endphp
+
+    @if($loadUkTracking)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
+        <!-- End Google Tag Manager -->
+    @endif
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @include('partials.seo')
     <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -715,6 +732,12 @@
 </head>
 
 <body>
+    @if($loadUkTracking)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
 
     <div class="main-wrapper">
 

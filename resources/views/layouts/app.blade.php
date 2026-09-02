@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @include('partials.seo')
-
     @php
         // Checks the original domain requested by the browser
-        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
+        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
+        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
+        $loadUkTracking = $isUkHost || $isUkGoride;
+
         if ($requestedHost === 'uk.goride.run') {
             $faviconUrl = 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp';
         } else {
@@ -16,22 +16,44 @@
         }
     @endphp
 
+    @if($loadUkTracking)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
+        <!-- End Google Tag Manager -->
+    @endif
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @include('partials.seo')
+
     {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
     @if($requestedHost === 'uk.goride.run' || $requestedHost === 'in.goride.uk' || $requestedHost === 'www.goride.uk' || $requestedHost === 'goride.uk')
         <meta name="robots" content="noindex, nofollow">
     @endif
 
-    <!-- TikTok Pixel Code Start -->
-    <script>
-    !function (w, d, t) {
-      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-      var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-      ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-      ttq.load('DA8LRORC77U6VIRE33FG');
-      ttq.page();
-    }(window, document, 'ttq');
-    </script>
-    <!-- TikTok Pixel Code End -->
+    @if($loadUkTracking)
+        <!-- TikTok Pixel Code Start -->
+        <script>
+            !function (w, d, t) {
+                w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) {
+                    for (
+                        var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)ttq.setAndDefer(e, ttq.methods[n]); return e
+                }, ttq.load = function (e, n) {
+                    var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {}; n = document.createElement("script")
+                        ; n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t; e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(n, e)
+                };
+                ttq.load('DA8LRORC77U6VIRE33FG');
+                ttq.page();
+            }(window, document, 'ttq');
+        </script>
+        <!-- TikTok Pixel Code End -->
+    @endif
 
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -8115,18 +8137,24 @@
         }
 
         @keyframes cabBounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(-2px);
             }
+
             50% {
                 transform: translateY(3px);
             }
         }
 
         @keyframes cabBounceUp {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(2px);
             }
+
             50% {
                 transform: translateY(-3px);
             }
@@ -8813,9 +8841,12 @@
 
         /* Floating Bounce Animation */
         @keyframes waFloatBounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0);
             }
+
             50% {
                 transform: translateY(-8px);
             }
@@ -8823,15 +8854,21 @@
 
         /* Periodic Eye-Catching Wiggle Animation */
         @keyframes waWiggle {
-            0%, 80%, 100% {
+
+            0%,
+            80%,
+            100% {
                 transform: rotate(0deg);
             }
+
             85% {
                 transform: rotate(-14deg);
             }
+
             90% {
                 transform: rotate(14deg);
             }
+
             95% {
                 transform: rotate(-8deg);
             }
@@ -8843,7 +8880,9 @@
                 transform: scale(0.95);
                 opacity: 0.8;
             }
-            70%, 100% {
+
+            70%,
+            100% {
                 transform: scale(1.6);
                 opacity: 0;
             }
@@ -8859,6 +8898,12 @@
 </head>
 
 <body>
+    @if($loadUkTracking)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
     @if(request()->has('payment_intent') && request()->has('redirect_status'))
         <div id="paymentRedirectOverlay"
             style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">
@@ -8999,7 +9044,8 @@
 
                     <div class="help-cards-list">
                         <!-- WhatsApp Card -->
-                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0" target="_blank" class="help-card help-card-whatsapp">
+                        <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0"
+                            target="_blank" class="help-card help-card-whatsapp">
                             <div class="help-card-icon-box whatsapp-bg">
                                 <i class="fab fa-whatsapp"></i>
                             </div>
@@ -15462,28 +15508,28 @@
 
             if (!vehicle) {
                 btn.prop('disabled', true)
-                   .addClass('disabled-btn')
-                   .attr('title', 'Please select a vehicle to continue')
-                   .css({
-                       'opacity': '0.95',
-                       'cursor': 'not-allowed',
-                       'pointer-events': 'auto',
-                       'background': '#94a3b8',
-                       'border-color': '#94a3b8',
-                       'box-shadow': 'none'
-                   });
+                    .addClass('disabled-btn')
+                    .attr('title', 'Please select a vehicle to continue')
+                    .css({
+                        'opacity': '0.95',
+                        'cursor': 'not-allowed',
+                        'pointer-events': 'auto',
+                        'background': '#94a3b8',
+                        'border-color': '#94a3b8',
+                        'box-shadow': 'none'
+                    });
             } else {
                 btn.prop('disabled', false)
-                   .removeClass('disabled-btn')
-                   .removeAttr('title')
-                   .css({
-                       'opacity': '1',
-                       'cursor': 'pointer',
-                       'pointer-events': 'auto',
-                       'background': '',
-                       'border-color': '',
-                       'box-shadow': ''
-                   });
+                    .removeClass('disabled-btn')
+                    .removeAttr('title')
+                    .css({
+                        'opacity': '1',
+                        'cursor': 'pointer',
+                        'pointer-events': 'auto',
+                        'background': '',
+                        'border-color': '',
+                        'box-shadow': ''
+                    });
             }
         };
         function goBack(step) {
@@ -18967,11 +19013,8 @@
         }
     </script>
     <!-- Global Floating WhatsApp Button (Icon Only) -->
-    <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="global-whatsapp-btn"
-       aria-label="WhatsApp">
+    <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0"
+        target="_blank" rel="noopener noreferrer" class="global-whatsapp-btn" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
     <!-- Global Toast -->

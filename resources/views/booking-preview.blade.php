@@ -2,15 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @include('partials.seo')
     @php
-        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
+        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
+        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
+        $loadUkTracking = $isUkHost || $isUkGoride;
+
         $faviconUrl = ($requestedHost === 'uk.goride.run')
             ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
             : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
     @endphp
+
+    @if($loadUkTracking)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
+        <!-- End Google Tag Manager -->
+    @endif
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @include('partials.seo')
     <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -1358,6 +1375,12 @@
 </head>
 
 <body>
+    @if($loadUkTracking)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
 
     @php
         if (!isset($user_details) || $user_details == null) {
@@ -1529,37 +1552,37 @@
                         @endphp
 
                         @if(!$isJobCompletedOrCancelled)
-                        <div class="row g-2 align-items-center pb-2 mb-2 border-bottom">
-                            <div class="col-6">
-                                <div class="hero-sec-item-compact">
-                                    <div class="hero-sec-icon">
-                                        <i class="fa-solid fa-key"></i>
+                            <div class="row g-2 align-items-center pb-2 mb-2 border-bottom">
+                                <div class="col-6">
+                                    <div class="hero-sec-item-compact">
+                                        <div class="hero-sec-icon">
+                                            <i class="fa-solid fa-key"></i>
+                                        </div>
+                                        <div>
+                                            <div class="hero-sec-label">Ride OTP</div>
+                                            <div class="hero-sec-otp">
+                                                {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div class="hero-sec-label">Ride OTP</div>
-                                        <div class="hero-sec-otp">
-                                            {{ $otp ?? $job_otp ?? $user_details['otp'] ?? 'N/A' }}
+                                </div>
+                                <div class="col-6 d-none">
+                                    <div class="hero-sec-item-compact justify-content-end">
+                                        <div class="hero-sec-icon">
+                                            <i class="fa-solid fa-location-crosshairs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="hero-sec-label">
+                                                <span class="pulse-dot-sm"></span> Live Tracking
+                                            </div>
+                                            <a href="javascript:void(0)" onclick="openLiveTrackingModal(event)"
+                                                class="hero-btn-track" title="Track Ride Live">
+                                                <i class="fa-solid fa-location-dot"></i> Track
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 d-none">
-                                <div class="hero-sec-item-compact justify-content-end">
-                                    <div class="hero-sec-icon">
-                                        <i class="fa-solid fa-location-crosshairs"></i>
-                                    </div>
-                                    <div>
-                                        <div class="hero-sec-label">
-                                            <span class="pulse-dot-sm"></span> Live Tracking
-                                        </div>
-                                        <a href="javascript:void(0)" onclick="openLiveTrackingModal(event)"
-                                            class="hero-btn-track" title="Track Ride Live">
-                                            <i class="fa-solid fa-location-dot"></i> Track
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between pt-1">
@@ -1600,7 +1623,8 @@
                                 </div>
                                 @if(isset($extra_amount) && (float) $extra_amount > 0)
                                     <div class="fare-line-item">
-                                        <span>Extra @if(!empty($extra_amount_reason))<span style="font-size: 11px; color: #6b7280; font-weight: 400; text-transform: none;">({{ $extra_amount_reason }})</span>@endif</span>
+                                        <span>Extra @if(!empty($extra_amount_reason))<span
+                                        style="font-size: 11px; color: #6b7280; font-weight: 400; text-transform: none;">({{ $extra_amount_reason }})</span>@endif</span>
                                         <strong>£{{ number_format((float) $extra_amount, 2) }}</strong>
                                     </div>
                                 @endif
@@ -1647,9 +1671,12 @@
                                             <strong style="color:#4338ca;">£{{ $wallet_amt ?? 0 }}</strong>
                                         </div>
                                     @endif
-                                    <div class="fare-line-item fare-balance-item" style="font-size: 13.5px; padding-top: 5px; margin-top: 3px; border-top: 1px dashed #e5e7eb;">
-                                        <span style="font-weight: 700; color: #111827;">{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
-                                        <strong style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ (isset($balance_amt) && (float)$balance_amt == 0) ? '0' : (is_numeric($balance_amt) ? number_format((float)$balance_amt, 2) : ($balance_amt ?? 0)) }}</strong>
+                                    <div class="fare-line-item fare-balance-item"
+                                        style="font-size: 13.5px; padding-top: 5px; margin-top: 3px; border-top: 1px dashed #e5e7eb;">
+                                        <span
+                                            style="font-weight: 700; color: #111827;">{{ (isset($gateway) && $gateway == 'cash') ? 'Cash To Driver' : 'Balance Pay to Driver' }}</span>
+                                        <strong
+                                            style="color:#c2410c; font-size: 15px; font-weight: 800;">£{{ (isset($balance_amt) && (float) $balance_amt == 0) ? '0' : (is_numeric($balance_amt) ? number_format((float) $balance_amt, 2) : ($balance_amt ?? 0)) }}</strong>
                                     </div>
                                 @endif
                             </div>
@@ -2075,22 +2102,22 @@
 
                     {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
                     <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                        <div class="col-md-3 col-6">
-                            <div class="info-item-box">
-                                <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                                <div class="info-value">Meet & Greet Included</div>
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                                    <div class="info-value">Meet & Greet Included</div>
+                                </div>
                             </div>
-                        </div>
-                        @endif
+                            @endif
 
-                        @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                        <div class="col-md-3 col-6">
-                            <div class="info-item-box">
-                                <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                                <div class="info-value">Wheelchair Required</div>
+                            @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                            <div class="col-md-3 col-6">
+                                <div class="info-item-box">
+                                    <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                                    <div class="info-value">Wheelchair Required</div>
+                                </div>
                             </div>
-                        </div>
-                        @endif -->
+                            @endif -->
 
                     @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
                         <div class="col-md-6 col-12">

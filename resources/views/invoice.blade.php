@@ -2,15 +2,32 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoRide | Tax Invoice</title>
     @php
-        $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
+        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
+        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
+        $loadUkTracking = $isUkHost || $isUkGoride;
+
         $faviconUrl = ($requestedHost === 'uk.goride.run')
             ? 'https://uk.goride.run/goride/img/Go-Ride-fav-icon.webp'
             : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/Go-Ride-fav-icon.webp';
     @endphp
+
+    @if($loadUkTracking)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
+        <!-- End Google Tag Manager -->
+    @endif
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoRide | Tax Invoice</title>
     <link rel="shortcut icon" href="{{ $faviconUrl }}" />
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -429,7 +446,7 @@
 
             .summary-table td {
                 padding: 5px 8px;
-           
+
             }
         }
 
@@ -497,6 +514,12 @@
 </head>
 
 <body>
+    @if($loadUkTracking)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
 
     <div class="main-wrapper">
 
@@ -507,7 +530,8 @@
             <div class="invoice-top-contact">
                 <!-- Left Logo -->
                 <div class="invoice-logo-wrapper">
-                    <img src="https://www.goride.net.in/goride/img/logo-dark.png" alt="GoRide Logo" class="invoice-brand-logo">
+                    <img src="https://www.goride.net.in/goride/img/logo-dark.png" alt="GoRide Logo"
+                        class="invoice-brand-logo">
                 </div>
 
                 <!-- Center Title -->
@@ -531,7 +555,7 @@
                 <!-- Customer Details (Left) -->
                 <div class="customer-meta-box">
                     <div class="customer-name">James Wilson
-</div>
+                    </div>
                     <div class="customer-address">
                         444 Brixton Road,<br>
                         London, UK
@@ -577,15 +601,17 @@
                                 <div class="desc-row-item">
                                     <span class="desc-label">Passenger Name :</span>
                                     <span class="desc-value">James Wilson
-</span>
+                                    </span>
                                 </div>
                                 <div class="desc-row-item">
                                     <span class="desc-label">From :</span>
-                                    <span class="desc-value">Heathrow Airport Terminal 5, Terminal Drop-Off Zone, London, UK</span>
+                                    <span class="desc-value">Heathrow Airport Terminal 5, Terminal Drop-Off Zone,
+                                        London, UK</span>
                                 </div>
                                 <div class="desc-row-item">
                                     <span class="desc-label">To :</span>
-                                    <span class="desc-value">Hilton London Gatwick Airport, South Terminal, Crawley RH6 0LL, United Kingdom</span>
+                                    <span class="desc-value">Hilton London Gatwick Airport, South Terminal, Crawley RH6
+                                        0LL, United Kingdom</span>
                                 </div>
                                 <div class="desc-row-item">
                                     <span class="desc-label">Vehicle :</span>
@@ -632,7 +658,7 @@
             <!-- 5. Invoice Footer & Thank You Note -->
             <div class="invoice-footer-notes">
                 <div class="footer-thankyou">Thank you for choosing GoRide!</div>
-                
+
             </div>
 
         </div>

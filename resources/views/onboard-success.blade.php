@@ -2,16 +2,38 @@
 <html lang="en">
 
 <head>
+    @php
+        $requestedHost = strtolower(request()->header('X-Forwarded-Host', request()->getHost()));
+        $isUkHost = in_array($requestedHost, ['uk.goride.run', 'www.uk.goride.run']);
+        $isUkGoride = in_array($requestedHost, ['goride.run', 'www.goride.run']) && request()->is('uk', 'uk/*');
+        $loadUkTracking = $isUkHost || $isUkGoride;
+    @endphp
+
+    @if($loadUkTracking)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
+        <!-- End Google Tag Manager -->
+    @endif
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stripe Onboarding Complete | GoRide UK</title>
-    <meta name="description" content="Your Stripe account has been successfully connected to GoRide UK. Your fleet payout account is verified and ready for operations.">
-    
+    <meta name="description"
+        content="Your Stripe account has been successfully connected to GoRide UK. Your fleet payout account is verified and ready for operations.">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <!-- Font Awesome & Bootstrap 5 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
@@ -222,10 +244,12 @@
                 transform: scale(0.85);
                 opacity: 0.9;
             }
+
             70% {
                 transform: scale(1.18);
                 opacity: 0;
             }
+
             100% {
                 transform: scale(1.18);
                 opacity: 0;
@@ -253,6 +277,7 @@
                 transform: scale(0);
                 opacity: 0;
             }
+
             100% {
                 transform: scale(1);
                 opacity: 1;
@@ -284,8 +309,15 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
         }
 
         .hero-title {
@@ -419,13 +451,16 @@
             .hero-card {
                 padding: 44px 20px 32px;
             }
+
             .hero-title {
                 font-size: 26px;
             }
+
             .hero-subtitle {
                 font-size: 15px;
                 margin-bottom: 28px;
             }
+
             .quick-highlights-row {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
@@ -436,6 +471,12 @@
 </head>
 
 <body>
+    @if($loadUkTracking)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
     <!-- Celebratory Confetti Canvas -->
     <canvas id="confettiCanvas"></canvas>
 
@@ -447,7 +488,7 @@
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <a href="{{ route('home') }}" class="nav-brand-group">
                 <img src="{{ asset('goride/img/logo-darkk.png') }}" alt="GoRide Logo" class="nav-logo-img"
-                     onerror="this.onerror=null; this.src='https://www.goride.net.in/goride/img/logo-dark.png';">
+                    onerror="this.onerror=null; this.src='https://www.goride.net.in/goride/img/logo-dark.png';">
                 <span class="nav-badge-pill d-none d-sm-inline-flex">
                     <i class="fab fa-stripe"></i> Operator Connect
                 </span>
@@ -486,7 +527,7 @@
 
             <h1 class="hero-title">You're All Set to Receive Payouts!</h1>
             <p class="hero-subtitle">
-                Your Stripe Express merchant account is successfully linked with <strong>GoRide UK</strong>. 
+                Your Stripe Express merchant account is successfully linked with <strong>GoRide UK</strong>.
                 Your UK bank account is verified to receive direct GBP (£) fare payouts with automated settlements.
             </p>
 
@@ -556,10 +597,10 @@
             const canvas = document.getElementById('confettiCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            
+
             let width = canvas.width = window.innerWidth;
             let height = canvas.height = window.innerHeight;
-            
+
             window.addEventListener('resize', () => {
                 width = canvas.width = window.innerWidth;
                 height = canvas.height = window.innerHeight;
@@ -598,7 +639,7 @@
                     p.x += p.vx;
                     p.y += p.vy;
                     p.rotation += p.rotSpeed;
-                    
+
                     if (elapsed > 2000) {
                         p.opacity -= 0.015;
                     }

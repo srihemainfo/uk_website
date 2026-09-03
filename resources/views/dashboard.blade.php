@@ -1392,25 +1392,81 @@
     <div id="cancelJobModal" class="modal" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false"
         style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center;">
         <div class="modal-dialog" role="document"
-            style="background: white; border-radius: 20px; padding: 30px; max-width: 380px; width: 90%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center;">
+            style="background: white; border-radius: 20px; padding: 28px 24px; max-width: 420px; width: 92%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); text-align: center;">
             <div class="modal-content" style="border: none;">
                 <div
-                    style="width: 60px; height: 60px; background: #fff0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 24px;"></i>
+                    style="width: 56px; height: 56px; background: #fff0f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <i class="fas fa-exclamation-triangle" style="color: #dc3545; font-size: 22px;"></i>
                 </div>
-                <h4 style="margin: 0 0 10px; font-weight: 700; color: #333; font-size: 22px;">Cancel Job?</h4>
-                <p style="color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 15px;">
+                <h4 style="margin: 0 0 8px; font-weight: 700; color: #1f2937; font-size: 22px;">Cancel Job?</h4>
+                <p style="color: #64748b; font-size: 14.5px; line-height: 1.5; margin-bottom: 16px;">
                     Are you sure you want to cancel this booking? This action cannot be undone.
                 </p>
+
+                <!-- Dynamic Refund Banner & Options -->
+                <div id="cancelRefundSection" style="margin-bottom: 16px;">
+                    <!-- REFUND APPLICABLE STATE -->
+                    <div id="refundAvailableBox" style="display: none;">
+                        <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; text-align: left;">
+                            <div style="flex-shrink: 0; margin-top: 1px;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="11" fill="#22C55E"/>
+                                    <path d="M7.5 12.5L10.5 15.5L16.5 9.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; color: #166534; font-size: 15px; line-height: 1.35;">
+                                    Refund is applicable for this job.
+                                </div>
+                                <div style="font-size: 13px; color: #4B5563; margin-top: 3px; line-height: 1.4;">
+                                    The refund will be processed to your original payment method within 2-3 working days.
+                                </div>
+                            </div>
+                        </div>
+
+                        <label style="display: flex; align-items: center; gap: 12px; margin-top: 16px; cursor: pointer; text-align: left; user-select: none;">
+                            <input type="checkbox" id="cancelRefundCheckbox" onchange="toggleDashboardCancelBtn(this.checked)"
+                                style="width: 19px; height: 19px; min-width: 19px; border-radius: 4px; cursor: pointer; accent-color: #000;">
+                            <span style="font-size: 14.5px; color: #1F2937; font-weight: 600; line-height: 1.4;">
+                                I want a Refund.
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- NO REFUND STATE (Image 1) -->
+                    <div id="refundNoneBox" style="display: none;">
+                        <div style="background: #FFF8EB; border: 1px solid #FFE0B2; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; text-align: left;">
+                            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L1 21H23L12 2Z" fill="#F59E0B"/>
+                                    <path d="M12 9V14M12 17H12.01" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div style="font-weight: 600; color: #222222; font-size: 15px; line-height: 1.35;">
+                                No Refund will be provided for this job.
+                            </div>
+                        </div>
+
+                        <label style="display: flex; align-items: flex-start; gap: 12px; margin-top: 14px; cursor: pointer; text-align: left; user-select: none;">
+                            <input type="checkbox" id="cancelAckCheckbox" onchange="toggleDashboardCancelBtn(this.checked)"
+                                style="width: 19px; height: 19px; min-width: 19px; margin-top: 2px; border-radius: 4px; cursor: pointer; accent-color: #000;">
+                            <span style="font-size: 14px; color: #374151; line-height: 1.45; font-weight: 500;">
+                                I acknowledge that no refund will be provided for cancelling this job.
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
                 <textarea id="cancelJobReason" rows="3" placeholder="Reason for cancellation (optional)"
-                    style="width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin-bottom: 25px; font-family: inherit; font-size: 14px; resize: none; background: #fafafa;"></textarea>
+                    style="width: 100%; box-sizing: border-box; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 20px; font-family: inherit; font-size: 14px; resize: none; background: #f8fafc; outline: none;"></textarea>
+
                 <div style="display: flex; gap: 12px; justify-content: center;">
-                    <button type="button" onclick="confirmDashboardCancelJob(this)"
-                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
+                    <button type="button" id="btnConfirmDashboardCancelJob" onclick="confirmDashboardCancelJob(this)"
+                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: none; background: #dc3545; color: white; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 8px rgba(220,53,69,0.3); transition: all 0.2s;">
                         Yes, Cancel
                     </button>
                     <button type="button" onclick="hideDashboardCancelModal()"
-                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: 1px solid #ddd; background: #fff; color: #333; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+                        style="flex: 1; padding: 12px 0; border-radius: 10px; border: 1px solid #e2e8f0; background: #fff; color: #334155; font-weight: 600; font-size: 15px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
                         Keep It
                     </button>
                 </div>
@@ -1719,7 +1775,7 @@
                                                     ${trip.buttons.call ? `<a href="tel:${trip.driver.mobile}" class="btn-contact"><i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i></a>` : ''}
                                                     ${trip.buttons.chat ? `<a href="#" class="btn-contact"><i class="fas fa-comment-alt"></i></a>` : ''}
                                                 </div>
-                                                ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2" onclick="showDashboardCancelModal('${trip.booking_id || trip.job_id || ''}', '${trip.job_no || trip.job_no || ''}')">CANCEL TRIP</button>` : ''}
+                                                ${trip.buttons.cancel ? `<button class="btn-outline-dark-custom ms-2" onclick="showDashboardCancelModal('${trip.booking_id || trip.job_id || ''}', '${trip.job_no || ''}', ${trip.is_eligible_for_refund !== undefined ? trip.is_eligible_for_refund : 'null'}, '${trip.pickup_date || ''}', '${trip.pickup_time || ''}', '${trip.raw_pickup_date || ''}')">CANCEL TRIP</button>` : ''}
                                             </div>
                                         </div>
                                     </div>
@@ -1839,13 +1895,186 @@
             }
         }
 
+        function evaluateDashboardRefundEligibility(dateVal, timeVal, rawDateVal) {
+            try {
+                let year, month, day, hours = 0, minutes = 0;
+
+                const rawStr = String(rawDateVal || '').trim();
+                const cleanDateStr = String(dateVal || '').replace(/(\d+)(st|nd|rd|th)/gi, '$1').trim();
+                const cleanTimeStr = String(timeVal || '').trim();
+
+                const monthMap = {
+                    jan: 1, january: 1,
+                    feb: 2, february: 2,
+                    mar: 3, march: 3,
+                    apr: 4, april: 4,
+                    may: 5,
+                    jun: 6, june: 6,
+                    jul: 7, july: 7,
+                    aug: 8, august: 8,
+                    sep: 9, september: 9,
+                    oct: 10, october: 10,
+                    nov: 11, november: 11,
+                    dec: 12, december: 12
+                };
+
+                // Check rawStr for 'YYYY-MM-DD HH:mm:ss' or ISO
+                const isoMatch = rawStr.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s](\d{1,2}):(\d{1,2}))?/);
+                if (isoMatch && rawStr.includes('-') && isoMatch[1].length === 4) {
+                    year = parseInt(isoMatch[1], 10);
+                    month = parseInt(isoMatch[2], 10);
+                    day = parseInt(isoMatch[3], 10);
+                    if (isoMatch[4] !== undefined) hours = parseInt(isoMatch[4], 10);
+                    if (isoMatch[5] !== undefined) minutes = parseInt(isoMatch[5], 10);
+                }
+
+                // Check "3 Sep 2026" or "3 September 2026" or "Sep 3 2026"
+                if (!year) {
+                    const textMatch1 = cleanDateStr.match(/^(\d{1,2})\s+([a-zA-Z]+)\s+(\d{4})/);
+                    const textMatch2 = cleanDateStr.match(/^([a-zA-Z]+)\s+(\d{1,2}),?\s+(\d{4})/);
+
+                    if (textMatch1) {
+                        day = parseInt(textMatch1[1], 10);
+                        const mStr = textMatch1[2].toLowerCase();
+                        month = monthMap[mStr] || monthMap[mStr.slice(0, 3)] || 1;
+                        year = parseInt(textMatch1[3], 10);
+                    } else if (textMatch2) {
+                        const mStr = textMatch2[1].toLowerCase();
+                        month = monthMap[mStr] || monthMap[mStr.slice(0, 3)] || 1;
+                        day = parseInt(textMatch2[2], 10);
+                        year = parseInt(textMatch2[3], 10);
+                    }
+                }
+
+                // Check "DD/MM/YYYY" or "DD-MM-YYYY"
+                if (!year) {
+                    const dmyMatch = cleanDateStr.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+                    if (dmyMatch) {
+                        day = parseInt(dmyMatch[1], 10);
+                        month = parseInt(dmyMatch[2], 10);
+                        year = parseInt(dmyMatch[3], 10);
+                    }
+                }
+
+                // Check "YYYY-MM-DD"
+                if (!year) {
+                    const ymdMatch = cleanDateStr.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+                    if (ymdMatch) {
+                        year = parseInt(ymdMatch[1], 10);
+                        month = parseInt(ymdMatch[2], 10);
+                        day = parseInt(ymdMatch[3], 10);
+                    }
+                }
+
+                // Parse Time if not already from rawStr
+                if (cleanTimeStr) {
+                    const t12Match = cleanTimeStr.match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*(am|pm)?/i);
+                    if (t12Match) {
+                        let h = parseInt(t12Match[1], 10);
+                        const m = parseInt(t12Match[2], 10);
+                        const meridiem = t12Match[3] ? t12Match[3].toLowerCase() : null;
+                        if (meridiem === 'pm' && h < 12) h += 12;
+                        if (meridiem === 'am' && h === 12) h = 0;
+                        hours = h;
+                        minutes = m;
+                    }
+                }
+
+                if (!year || !month || !day) {
+                    console.warn('[DashboardRefundCheck] Could not parse date:', dateVal, timeVal, rawDateVal);
+                    return false;
+                }
+
+                // Scheduled pickup in Europe/London time as UTC representation
+                const pickupUtcMs = Date.UTC(year, month - 1, day, hours, minutes);
+
+                // Current time in Europe/London timezone
+                const londonParts = new Intl.DateTimeFormat('en-GB', {
+                    timeZone: 'Europe/London',
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: false
+                }).formatToParts(new Date());
+
+                const lp = {};
+                londonParts.forEach(p => { lp[p.type] = p.value; });
+
+                const nowLondonUtcMs = Date.UTC(
+                    parseInt(lp.year, 10),
+                    parseInt(lp.month, 10) - 1,
+                    parseInt(lp.day, 10),
+                    parseInt(lp.hour, 10),
+                    parseInt(lp.minute, 10)
+                );
+
+                const diffMinutes = (pickupUtcMs - nowLondonUtcMs) / (1000 * 60);
+
+                console.log('[DashboardRefundCheck] Pickup London:', `${year}-${month}-${day} ${hours}:${minutes}`, '| Now London:', `${lp.year}-${lp.month}-${lp.day} ${lp.hour}:${lp.minute}`, '| diffMinutes:', diffMinutes);
+
+                return diffMinutes >= 60;
+            } catch (e) {
+                console.warn('[DashboardRefundCheck] Error checking refund eligibility:', e);
+                return false;
+            }
+        }
+
         let currentCancelJobId = null;
         let currentCancelJobNo = null;
+        let isDashboardCancelEligibleForRefund = false;
 
-        function showDashboardCancelModal(jobId, jobNo) {
+        function toggleDashboardCancelBtn(isChecked) {
+            const btn = document.getElementById('btnConfirmDashboardCancelJob');
+            if (!btn) return;
+            if (isChecked) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+        }
+
+        function showDashboardCancelModal(jobId, jobNo, isEligible = null, pickupDate = '', pickupTime = '', rawPickupDate = '') {
             currentCancelJobId = jobId;
             currentCancelJobNo = jobNo || jobId;
             document.getElementById('cancelJobReason').value = '';
+
+            if (isEligible !== null && isEligible !== undefined) {
+                isDashboardCancelEligibleForRefund = Boolean(isEligible);
+            } else {
+                isDashboardCancelEligibleForRefund = evaluateDashboardRefundEligibility(pickupDate, pickupTime, rawPickupDate);
+            }
+
+            const availBox = document.getElementById('refundAvailableBox');
+            const noneBox = document.getElementById('refundNoneBox');
+            const refundCb = document.getElementById('cancelRefundCheckbox');
+            const ackCb = document.getElementById('cancelAckCheckbox');
+            const btn = document.getElementById('btnConfirmDashboardCancelJob');
+
+            if (refundCb) refundCb.checked = false;
+            if (ackCb) ackCb.checked = false;
+
+            // Both scenarios start with button disabled until checkbox is checked
+            if (btn) {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+            }
+
+            if (isDashboardCancelEligibleForRefund) {
+                if (availBox) availBox.style.display = 'block';
+                if (noneBox) noneBox.style.display = 'none';
+            } else {
+                if (availBox) availBox.style.display = 'none';
+                if (noneBox) noneBox.style.display = 'block';
+            }
+
             document.getElementById('cancelJobModal').style.display = 'flex';
         }
 
@@ -1859,6 +2088,28 @@
             if (!currentCancelJobId) {
                 alert('Job details are missing. Cannot cancel.');
                 return;
+            }
+
+            if (isDashboardCancelEligibleForRefund) {
+                const refundCb = document.getElementById('cancelRefundCheckbox');
+                if (!refundCb || !refundCb.checked) {
+                    if (typeof showToast === 'function') {
+                        showToast('Please confirm you want a refund to proceed.', 'error');
+                    } else {
+                        alert('Please confirm you want a refund to proceed.');
+                    }
+                    return;
+                }
+            } else {
+                const ackCb = document.getElementById('cancelAckCheckbox');
+                if (!ackCb || !ackCb.checked) {
+                    if (typeof showToast === 'function') {
+                        showToast('Please acknowledge that no refund will be provided to proceed.', 'error');
+                    } else {
+                        alert('Please acknowledge that no refund will be provided to proceed.');
+                    }
+                    return;
+                }
             }
 
             const payload = {

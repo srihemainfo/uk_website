@@ -24,18 +24,7 @@
         }
     @endphp
 
-    @if($loadUkTracking)
-        <!-- Google Tag Manager -->
-        <script>(function (w, d, s, l, i) {
-                w[l] = w[l] || []; w[l].push({
-                    'gtm.start':
-                        new Date().getTime(), event: 'gtm.js'
-                }); var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', 'GTM-5SR6M4VH');</script>
-        <!-- End Google Tag Manager -->
-    @endif
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include('partials.seo')
@@ -8947,12 +8936,7 @@
 </head>
 
 <body>
-    @if($loadUkTracking)
-        <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SR6M4VH" height="0" width="0"
-                style="display:none;visibility:hidden"></iframe></noscript>
-        <!-- End Google Tag Manager (noscript) -->
-    @endif
+
     @if(request()->has('payment_intent') && request()->has('redirect_status'))
         <div id="paymentRedirectOverlay"
             style="position: fixed; inset: 0; z-index: 9999999; background: #0a0f1d; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Manrope', 'Poppins', sans-serif; color: #ffffff; padding: 24px; text-align: center;">

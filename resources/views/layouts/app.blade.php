@@ -29,11 +29,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include('partials.seo')
 
-    {{-- Only add noindex if the user/bot actually typed uk.goride.run --}}
-    @if($requestedHost === 'uk.goride.run' || $requestedHost === 'www.uk.goride.run')
-        <meta name="robots" content="noindex, nofollow">
-    @endif
-
     @if($loadUkTracking)
         <!-- TikTok Pixel Code Start (Non-blocking / Deferred) -->
         <script>

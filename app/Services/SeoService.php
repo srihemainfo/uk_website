@@ -115,7 +115,16 @@ class SeoService
         $description = $merged['description'] ?? '';
         $keywords = $merged['keywords'] ?? '';
         $ogType = $merged['og_type'] ?? 'website';
-        $robots = $merged['robots'] ?? 'index, follow';
+
+        $rawHost = request()->header('X-Forwarded-Host') ?: request()->getHost();
+        $cleanHost = strtolower(trim(preg_replace('/:\d+$/', '', explode(',', $rawHost)[0])));
+        $isUkHost = ($cleanHost === 'uk.goride.run' || $cleanHost === 'www.uk.goride.run');
+
+        if ($isUkHost) {
+            $robots = 'noindex, nofollow';
+        } else {
+            $robots = $merged['robots'] ?? 'index, follow';
+        }
 
         // Base URL & Canonical formatting
         $websiteUrl = env('WEBSITE_APP_URL') ?: (env('WEB_APP_URL') ?: url('/'));

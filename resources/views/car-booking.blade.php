@@ -3712,60 +3712,6 @@
                     Are you sure you want to cancel this booking? This action cannot be undone.
                 </p>
 
-                <!-- Dynamic Refund Banner & Options -->
-                <div id="cancelRefundSection" style="margin-bottom: 16px;">
-                    <!-- REFUND APPLICABLE STATE -->
-                    <div id="refundAvailableBox" style="display: none;">
-                        <div style="background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 12px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; text-align: left;">
-                            <div style="flex-shrink: 0; margin-top: 1px;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="11" fill="#22C55E"/>
-                                    <path d="M7.5 12.5L10.5 15.5L16.5 9.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <div style="font-weight: 700; color: #166534; font-size: 15px; line-height: 1.35;">
-                                    Refund is applicable for this job.
-                                </div>
-                                <div style="font-size: 13px; color: #4B5563; margin-top: 3px; line-height: 1.4;">
-                                    The refund will be processed to your original payment method within 2-3 working days.
-                                </div>
-                            </div>
-                        </div>
-
-                        <label style="display: flex; align-items: center; gap: 12px; margin-top: 16px; cursor: pointer; text-align: left; user-select: none;">
-                            <input type="checkbox" id="cancelRefundCheckbox" onchange="toggleCancelBtn(this.checked)"
-                                style="width: 19px; height: 19px; min-width: 19px; border-radius: 4px; cursor: pointer; accent-color: #000;">
-                            <span style="font-size: 14.5px; color: #1F2937; font-weight: 600; line-height: 1.4;">
-                                I want a Refund.
-                            </span>
-                        </label>
-                    </div>
-
-                    <!-- NO REFUND STATE (Image 1) -->
-                    <div id="refundNoneBox" style="display: none;">
-                        <div style="background: #FFF8EB; border: 1px solid #FFE0B2; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; text-align: left;">
-                            <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L1 21H23L12 2Z" fill="#F59E0B"/>
-                                    <path d="M12 9V14M12 17H12.01" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div style="font-weight: 600; color: #222222; font-size: 15px; line-height: 1.35;">
-                                No Refund will be provided for this job.
-                            </div>
-                        </div>
-
-                        <label style="display: flex; align-items: flex-start; gap: 12px; margin-top: 14px; cursor: pointer; text-align: left; user-select: none;">
-                            <input type="checkbox" id="cancelAckCheckbox" onchange="toggleCancelBtn(this.checked)"
-                                style="width: 19px; height: 19px; min-width: 19px; margin-top: 2px; border-radius: 4px; cursor: pointer; accent-color: #000;">
-                            <span style="font-size: 14px; color: #374151; line-height: 1.45; font-weight: 500;">
-                                I acknowledge that no refund will be provided for cancelling this job.
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
                 <textarea id="cancelJobReason" rows="3" placeholder="Reason for cancellation (optional)"
                     style="width: 100%; box-sizing: border-box; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; margin-bottom: 20px; font-family: inherit; font-size: 14px; resize: none; background: #f8fafc; outline: none;"></textarea>
 
@@ -3948,51 +3894,15 @@
             }
         }
 
-        let isCancelEligibleForRefund = false;
+        function showCancelJobModal() {
+            const reasonInput = document.getElementById('cancelJobReason');
+            if (reasonInput) reasonInput.value = '';
 
-        function toggleCancelBtn(isChecked) {
             const btn = document.getElementById('btnConfirmCancelJob');
-            if (!btn) return;
-            if (isChecked) {
+            if (btn) {
                 btn.disabled = false;
                 btn.style.opacity = '1';
                 btn.style.cursor = 'pointer';
-            } else {
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
-                btn.style.cursor = 'not-allowed';
-            }
-        }
-
-        function showCancelJobModal() {
-            document.getElementById('cancelJobReason').value = '';
-
-            const state = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : (typeof bookingData !== 'undefined' ? bookingData : {});
-
-            isCancelEligibleForRefund = evaluateRefundEligibility(state.pickup_date || state.date, state.time, state.pickupAfter || 0);
-
-            const availBox = document.getElementById('refundAvailableBox');
-            const noneBox = document.getElementById('refundNoneBox');
-            const refundCb = document.getElementById('cancelRefundCheckbox');
-            const ackCb = document.getElementById('cancelAckCheckbox');
-            const btn = document.getElementById('btnConfirmCancelJob');
-
-            if (refundCb) refundCb.checked = false;
-            if (ackCb) ackCb.checked = false;
-
-            // Both scenarios start with button disabled until checkbox is checked
-            if (btn) {
-                btn.disabled = true;
-                btn.style.opacity = '0.5';
-                btn.style.cursor = 'not-allowed';
-            }
-
-            if (isCancelEligibleForRefund) {
-                if (availBox) availBox.style.display = 'block';
-                if (noneBox) noneBox.style.display = 'none';
-            } else {
-                if (availBox) availBox.style.display = 'none';
-                if (noneBox) noneBox.style.display = 'block';
             }
 
             document.getElementById('cancelJobModal').style.display = 'flex';
@@ -4003,29 +3913,7 @@
         }
 
         function confirmCancelJob(btn) {
-            const reason = document.getElementById('cancelJobReason').value.trim();
-
-            if (isCancelEligibleForRefund) {
-                const refundCb = document.getElementById('cancelRefundCheckbox');
-                if (!refundCb || !refundCb.checked) {
-                    if (typeof showToast === 'function') {
-                        showToast('Please confirm you want a refund to proceed.', 'error');
-                    } else {
-                        alert('Please confirm you want a refund to proceed.');
-                    }
-                    return;
-                }
-            } else {
-                const ackCb = document.getElementById('cancelAckCheckbox');
-                if (!ackCb || !ackCb.checked) {
-                    if (typeof showToast === 'function') {
-                        showToast('Please acknowledge that no refund will be provided to proceed.', 'error');
-                    } else {
-                        alert('Please acknowledge that no refund will be provided to proceed.');
-                    }
-                    return;
-                }
-            }
+            const reason = document.getElementById('cancelJobReason') ? document.getElementById('cancelJobReason').value.trim() : '';
 
             if (typeof bookingData === 'undefined' || !bookingData.jobId || !bookingData.bookingId) {
                 alert('Job details are missing. Cannot cancel.');

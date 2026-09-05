@@ -524,6 +524,42 @@
         flex-direction: column;
     }
 
+    .route-overview-cards-row {
+        align-items: stretch;
+    }
+
+    .route-overview-cards-row .benefit-item {
+        height: 100%;
+        min-height: 130px;
+        max-height: 155px;
+        padding: 20px;
+        justify-content: center;
+        border-radius: 18px;
+    }
+
+    .route-overview-cards-row .route-overview-img-card {
+        height: 100%;
+        min-height: 130px;
+        max-height: 155px;
+        border-radius: 18px;
+        border: 1px solid rgba(226, 226, 226, 0.7);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+        background: #f8f9fa;
+        display: block;
+    }
+
+    .route-overview-cards-row .route-overview-img-card img {
+        width: 100%;
+        height: 100%;
+        min-height: 130px;
+        max-height: 155px;
+        object-fit: cover;
+        object-position: center 75%;
+        display: block;
+        border-radius: 18px;
+    }
+
     .benefit-header {
         display: flex;
         align-items: center;
@@ -1113,11 +1149,11 @@
                                     <p class="large-text mb-4">{{ $sec['description'] }}</p>
                                 @endif
 
-                                <div class="row align-items-stretch g-3 mt-1">
+                                <div class="row g-3 mt-1 route-overview-cards-row">
                                     @if(!empty($sec['items']) && is_array($sec['items']))
                                         @foreach($sec['items'] as $item)
                                             <div class="{{ !empty($overviewImg) ? 'col-sm-6 col-lg-3' : 'col-md-6 col-lg-3' }}">
-                                                <div class="benefit-item h-100">
+                                                <div class="benefit-item">
                                                     <div class="benefit-header">
                                                         <div class="benefit-icon-box">
                                                             <i class="fas {{ $item['icon'] ?? 'fa-car' }}" aria-hidden="true"></i>
@@ -1132,8 +1168,8 @@
 
                                     @if(!empty($overviewImg))
                                         <div class="col-sm-6 col-lg-3">
-                                            <div class="benefit-item p-0 overflow-hidden h-100" style="border: 1px solid rgba(226, 226, 226, 0.7); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04); border-radius: 18px;">
-                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}" class="w-100 h-100" style="object-fit: cover; object-position: center 70%; min-height: 140px; display: block; border-radius: 18px;">
+                                            <div class="route-overview-img-card">
+                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}">
                                             </div>
                                         </div>
                                     @endif

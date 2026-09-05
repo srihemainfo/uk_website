@@ -1284,6 +1284,41 @@
                     </div>
                 </div>
             </section>
+
+        {{-- 9. POPULAR AREAS / PLACES TO VISIT --}}
+        @elseif($secType === 'places_showcase' || $secType === 'places')
+            <section class="content-section">
+                <div class="container">
+                    <div class="section-heading mb-4">
+                        <h2>{{ $sec['title'] ?? 'Popular Sutton Areas and Places to Visit' }}</h2>
+                        @if(!empty($sec['subtitle']))
+                            <p class="text-muted">{{ $sec['subtitle'] }}</p>
+                        @elseif(!empty($sec['description']))
+                            <p class="text-muted">{{ $sec['description'] }}</p>
+                        @endif
+                    </div>
+
+                    @if(!empty($sec['places']) && is_array($sec['places']))
+                        <div class="row g-4">
+                            @foreach($sec['places'] as $place)
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="place-card">
+                                        @if(!empty($place['image']))
+                                            <div class="place-image">
+                                                <img src="{{ $place['image'] }}" alt="{{ $place['title'] ?? '' }}">
+                                            </div>
+                                        @endif
+                                        <div class="place-content">
+                                            <h4>{{ $place['title'] ?? '' }}</h4>
+                                            <p>{{ $place['desc'] ?? ($place['description'] ?? '') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </section>
         @endif
 
     @endforeach
@@ -1346,6 +1381,56 @@
                             <li><i class="fas fa-circle-check" aria-hidden="true"></i><span>Airport transfers across London</span></li>
                             <li><i class="fas fa-circle-check" aria-hidden="true"></i><span>Family and group travel</span></li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Popular Sutton Areas Fallback --}}
+    <section class="content-section">
+        <div class="container">
+            <div class="section-heading mb-4">
+                <h2>Popular Sutton Areas and Places to Visit</h2>
+                <p class="text-muted">
+                    Sutton is part of South London and offers a mixture of parks, heritage locations, shopping areas and leisure facilities. The London Borough of Sutton manages more than 600 hectares of parks and open spaces, giving the borough a strong green-space character.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="place-card">
+                        <div class="place-image">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFpVqcaaCr7A_NAhydaVFpuKZ3CpTtJY3wP1WiOmv0SxMNj_tRqqvVHR1ZesXeDDhdWbIdBIau-5DUtegRiCacbIOoMgKG9GzXxrei98T7sfV8ZosRQda3E6RVpbh_QUhXDQVYYTvyG3rCm1tGtv69pFnfnMh5lQgvBdSeNx0fRpmKt-pToFKPCaMfdJGpx7i3ZLncRfGMslNS9BjtgFdP3X7YpKbMVVopO240U3btaq9qnuQ_67Ky" alt="Sutton Town Centre & High Street">
+                        </div>
+                        <div class="place-content">
+                            <h4>Sutton Town Centre &amp; High Street</h4>
+                            <p>A vibrant retail hub with modern pedestrianised streets and diverse shopping options.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="place-card">
+                        <div class="place-image">
+                            <img src="https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80" alt="Nonsuch Park & Cheam">
+                        </div>
+                        <div class="place-content">
+                            <h4>Nonsuch Park &amp; Cheam</h4>
+                            <p>Historic parkland featuring the site of Henry VIII's palace and beautiful mature landscapes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="place-card">
+                        <div class="place-image">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Carshalton Ponds & Heritage">
+                        </div>
+                        <div class="place-content">
+                            <h4>Carshalton Ponds &amp; Heritage</h4>
+                            <p>A serene conservation area with historic architecture, weeping willows, and the River Wandle.</p>
+                        </div>
                     </div>
                 </div>
             </div>

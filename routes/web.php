@@ -121,13 +121,16 @@ Route::prefix('uk')->name('uk.')->group(function () {
     Route::get('/blog', [BlogController::class, 'blogIndex'])->name('blog');
     Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
     Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
-    Route::get('/car-rental', [DynamicPageController::class, 'showCarRental'])->name('car-rental');
-    Route::get('/transfers/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('transfers.route');
     Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
 
     Route::get('/404', function () {
         return response()->view('errors.404', [], 404);
     })->name('404');
+
+    // Dynamic Landing Pages (e.g. /uk/car-rental, /uk/heathrow-to-sutton)
+    Route::get('/car-rental', [DynamicPageController::class, 'showCarRental'])->name('car-rental');
+    Route::get('/transfers/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('transfers.route');
+    Route::get('/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('dynamic-page');
 });
 
 Route::get('/404', function () {
@@ -135,6 +138,9 @@ Route::get('/404', function () {
 })->name('404');
 
 Route::post('/submit-contact', [UtilityController::class, 'submitContactForm'])->name('contact.submit');
+
+// Dynamic Pages root fallback (e.g. /car-rental, /heathrow-to-sutton)
+Route::get('/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('dynamic-page');
 
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);

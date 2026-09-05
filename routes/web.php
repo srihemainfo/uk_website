@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\DynamicPageController;
 
 Route::get('/cache-clear', function () {
     Artisan::call('optimize:clear');
@@ -69,6 +70,9 @@ Route::get('/stripe/onboard-status', function () {
     return view('onboard-expiry');
 })->name('onboard-expiry');
 
+Route::get('/car-rental', [DynamicPageController::class, 'showCarRental'])->name('car-rental');
+Route::get('/transfers/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('transfers.route');
+
 // Fare calculation route (requires Sanctum token via Authorization header)
 Route::get('/w-get-fares', [UtilityController::class, 'DistanceAndDurationAll']);
 
@@ -117,6 +121,8 @@ Route::prefix('uk')->name('uk.')->group(function () {
     Route::get('/blog', [BlogController::class, 'blogIndex'])->name('blog');
     Route::get('/blog/search', [BlogController::class, 'searchBlogs'])->name('blog.search');
     Route::get('/blog/{category}', [BlogController::class, 'categoryIndex'])->name('categoryIndex');
+    Route::get('/car-rental', [DynamicPageController::class, 'showCarRental'])->name('car-rental');
+    Route::get('/transfers/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('transfers.route');
     Route::get('/blog/{category}/{post}', [BlogController::class, 'blogDetails'])->name('blogDetails');
 
     Route::get('/404', function () {

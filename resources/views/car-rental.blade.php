@@ -1105,38 +1105,35 @@
                     <div class="row section-row">
                         <div class="col-lg-12">
                             <div class="content-card">
-                                <div class="row align-items-center g-4">
-                                    <div class="{{ !empty($overviewImg) ? 'col-lg-7' : 'col-lg-12' }}">
-                                        <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Route Overview & Journey Details' }}</h2>
-                                        @if(!empty($sec['subtitle']))
-                                            <p class="large-text text-muted mb-3">{{ $sec['subtitle'] }}</p>
-                                        @endif
-                                        @if(!empty($sec['description']))
-                                            <p class="large-text mb-4">{{ $sec['description'] }}</p>
-                                        @endif
+                                <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Route Overview & Journey Details' }}</h2>
+                                @if(!empty($sec['subtitle']))
+                                    <p class="large-text text-muted mb-3">{{ $sec['subtitle'] }}</p>
+                                @endif
+                                @if(!empty($sec['description']))
+                                    <p class="large-text mb-4">{{ $sec['description'] }}</p>
+                                @endif
 
-                                        @if(!empty($sec['items']) && is_array($sec['items']))
-                                            <div class="row g-3">
-                                                @foreach($sec['items'] as $item)
-                                                    <div class="{{ !empty($overviewImg) ? 'col-sm-6 col-md-4' : 'col-md-6 col-lg-3' }}">
-                                                        <div class="benefit-item h-100">
-                                                            <div class="benefit-header">
-                                                                <div class="benefit-icon-box">
-                                                                    <i class="fas {{ $item['icon'] ?? 'fa-car' }}" aria-hidden="true"></i>
-                                                                </div>
-                                                                <h4>{{ $item['title'] ?? '' }}</h4>
-                                                            </div>
-                                                            <p>{{ $item['desc'] ?? '' }}</p>
+                                <div class="row align-items-stretch g-3 mt-1">
+                                    @if(!empty($sec['items']) && is_array($sec['items']))
+                                        @foreach($sec['items'] as $item)
+                                            <div class="{{ !empty($overviewImg) ? 'col-sm-6 col-lg-3' : 'col-md-6 col-lg-3' }}">
+                                                <div class="benefit-item h-100">
+                                                    <div class="benefit-header">
+                                                        <div class="benefit-icon-box">
+                                                            <i class="fas {{ $item['icon'] ?? 'fa-car' }}" aria-hidden="true"></i>
                                                         </div>
+                                                        <h4>{{ $item['title'] ?? '' }}</h4>
                                                     </div>
-                                                @endforeach
+                                                    <p>{{ $item['desc'] ?? '' }}</p>
+                                                </div>
                                             </div>
-                                        @endif
-                                    </div>
+                                        @endforeach
+                                    @endif
+
                                     @if(!empty($overviewImg))
-                                        <div class="col-lg-5">
-                                            <div class="route-overview-image-wrapper text-center">
-                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}" class="img-fluid rounded-4 shadow-sm w-100" style="object-fit: cover; object-position: center 70%; height: 240px; max-height: 240px; width: 100%; border: 1px solid rgba(0,0,0,0.06);">
+                                        <div class="col-sm-6 col-lg-3">
+                                            <div class="benefit-item p-0 overflow-hidden h-100" style="border: 1px solid rgba(226, 226, 226, 0.7); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04); border-radius: 18px;">
+                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}" class="w-100 h-100" style="object-fit: cover; object-position: center 70%; min-height: 140px; display: block; border-radius: 18px;">
                                             </div>
                                         </div>
                                     @endif

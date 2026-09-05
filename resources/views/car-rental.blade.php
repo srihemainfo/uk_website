@@ -1136,7 +1136,7 @@
                                     @if(!empty($overviewImg))
                                         <div class="col-lg-5">
                                             <div class="route-overview-image-wrapper text-center">
-                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}" class="img-fluid rounded-4 shadow-sm w-100" style="object-fit: cover; max-height: 380px; width: 100%; border: 1px solid rgba(0,0,0,0.06);">
+                                                <img src="{{ $overviewImg }}" alt="{{ $sec['title'] ?? 'Route Journey Overview' }}" class="img-fluid rounded-4 shadow-sm w-100" style="object-fit: cover; object-position: center 70%; height: 240px; max-height: 240px; width: 100%; border: 1px solid rgba(0,0,0,0.06);">
                                             </div>
                                         </div>
                                     @endif

@@ -10532,6 +10532,9 @@
             }
             _updateVehicleSummaryUI(_restoredState);
             _updateDistanceDurationUI(_restoredState);
+            if (typeof _updateGuestAuthBanner === 'function') {
+                _updateGuestAuthBanner();
+            }
 
             // Invalidate location selections if user manually types/edits inputs
             $('#pickupInput').on('input keyup change', function () {
@@ -10631,6 +10634,17 @@
 
                     if (typeof updatePassengerForm === 'function') {
                         updatePassengerForm();
+                    }
+                    if (_restoredState.currentStep === 4) {
+                        if (typeof _updateGuestAuthBanner === 'function') {
+                            _updateGuestAuthBanner();
+                        }
+                        if (typeof _autoFillPassengerDetailsFromAuth === 'function') {
+                            _autoFillPassengerDetailsFromAuth();
+                        }
+                        if (typeof updateBookingSummary === 'function') {
+                            updateBookingSummary();
+                        }
                     }
                 }
             }
@@ -12262,6 +12276,9 @@
         }
 
         function updatePassengerForm() {
+            if (typeof _updateGuestAuthBanner === 'function') {
+                _updateGuestAuthBanner();
+            }
             const state = typeof BookingStore !== 'undefined' ? BookingStore.getState() : {};
             console.log('UpdatePassengerForm state:', state);
             const pickup = state.pickupType || (typeof bookingData !== 'undefined' ? bookingData.pickupType : null);
@@ -15511,6 +15528,12 @@
                 }
             }
 
+            if (stepNumber === 4) {
+                if (typeof _updateGuestAuthBanner === 'function') {
+                    _updateGuestAuthBanner();
+                }
+            }
+
             if (stepNumber === 8) {
                 if (typeof isAuthenticated === 'function' && !isAuthenticated()) {
                     $('#guestConfirmNote').show();
@@ -16529,6 +16552,9 @@
 
             // Show a user icon button in the navbar if there isn't one
             _showNavbarUserBtn(fullName, initials, avatar);
+            if (typeof _updateGuestAuthBanner === 'function') {
+                _updateGuestAuthBanner();
+            }
         }
 
         // Show the user icon/button in the navbar
@@ -18913,19 +18939,24 @@
                     }
                     currentLiveTrackingId = trackingId;
 
-                    // 1. Connect Customer to Socket Server
+                    // 1. Connect Customer or Guest to Socket Server (Option 1)
+                    let isAuth = false;
                     let token = '';
                     if (typeof getCookieValue === 'function') {
-                        token = getCookieValue('auth_token') || 'CUSTOMER_BEARER_TOKEN';
-                    } else {
-                        token = 'CUSTOMER_BEARER_TOKEN';
+                        token = getCookieValue('auth_token');
+                        if (token && token !== 'null' && token !== 'undefined' && String(token).trim() !== '') {
+                            isAuth = true;
+                        }
                     }
+
+                    const userType = isAuth ? "customer" : "guest";
+                    const authToken = isAuth ? token : (trackingId ? `guest_${trackingId}` : "guest");
 
                     liveTrackingSocket = io(url, {
                         transports: ['websocket', 'polling'],
                         auth: {
-                            token: token,
-                            user_type: "customer",
+                            token: authToken,
+                            user_type: userType,
                             platform: "{{ env('SOCKET_PLATFORM', 'development') }}"
                         }
                     });
@@ -18935,7 +18966,7 @@
 
                     // 2. Join the specific trip room after connecting
                     liveTrackingSocket.on("connect", () => {
-                        console.log('Customer connected to socket for trip:', formattedTripId);
+                        console.log(`[Socket] ${userType} connected to socket for trip:`, formattedTripId);
                         liveTrackingSocket.emit("join_trip", { trip_id: formattedTripId });
                     });
 

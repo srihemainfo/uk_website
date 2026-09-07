@@ -2784,12 +2784,21 @@
                     }
                     currentLiveTrackingId = trackingId;
 
+                    // 1. Connect Customer or Guest to Socket Server (Option 1)
+                    let rawToken = {!! json_encode($auth_token ?? $token ?? null) !!};
+                    if (!rawToken && typeof getCookieValue === 'function') {
+                        rawToken = getCookieValue('auth_token');
+                    }
+
+                    const isAuth = rawToken && rawToken !== 'null' && rawToken !== 'undefined' && String(rawToken).trim() !== '';
+                    const userType = isAuth ? "customer" : "guest";
+                    const authToken = isAuth ? rawToken : (trackingId ? `guest_${trackingId}` : "guest");
+
                     liveTrackingSocket = io(url, {
                         transports: ['websocket', 'polling'],
                         auth: {
-                            token: {!! json_encode($auth_token ?? $token ?? null) !!},
-                            user_type: "customer",
-                            user_id: {!! json_encode($user_details['id'] ?? $user_details['user_id'] ?? $user_id ?? null) !!},
+                            token: authToken,
+                            user_type: userType,
                             platform: "{{ env('SOCKET_PLATFORM', 'development') }}"
                         }
                     });
@@ -2798,7 +2807,7 @@
                     const formattedTripId = String(trackingId).startsWith(socketPlatform + '_') ? String(trackingId) : `${socketPlatform}_${trackingId}`;
 
                     liveTrackingSocket.on("connect", () => {
-                        console.log('Customer connected to tracking socket for trip:', formattedTripId);
+                        console.log(`[Socket] ${userType} connected to tracking socket for trip:`, formattedTripId);
                         liveTrackingSocket.emit("join_trip", { trip_id: formattedTripId });
                     });
 

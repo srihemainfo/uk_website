@@ -8750,9 +8750,59 @@
             margin-bottom: 0px;
         }
 
-        .auth-modal-terms a {
-            color: #777;
-            text-decoration: underline;
+        .auth-guest-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px 20px;
+            background: #ffffff;
+            color: #1e293b;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+
+        .auth-guest-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f172a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .auth-guest-btn:active {
+            transform: translateY(0);
+        }
+
+        .auth-guest-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 16px 0 8px;
+        }
+
+        .auth-guest-divider::before,
+        .auth-guest-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ebebeb;
+        }
+
+        .auth-guest-divider span {
+            font-size: 13px;
+            color: #888;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
     </style>
     <style>
@@ -10809,29 +10859,43 @@
                 }
             }
 
-            if (isPast) {
-                let targetDate = (!selectedDate || selectedDate < todayStr) ? todayStr : selectedDate;
+            let targetDate = (!selectedDate || selectedDate < todayStr) ? todayStr : selectedDate;
 
-                // Collect all valid future 30-min slots for targetDate
-                const futureSlots = [];
-                for (let hour = 0; hour < 24; hour++) {
-                    for (let minute = 0; minute < 60; minute += 30) {
-                        if (targetDate === todayStr) {
-                            if (hour < currentHours || (hour === currentHours && minute <= currentMinutes)) {
-                                continue;
-                            }
+            // Collect all valid future 30-min slots for targetDate
+            const futureSlots = [];
+            for (let hour = 0; hour < 24; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    if (targetDate === todayStr) {
+                        if (hour < currentHours || (hour === currentHours && minute <= currentMinutes)) {
+                            continue;
                         }
-                        const ampm = hour >= 12 ? 'PM' : 'AM';
-                        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-                        const displayMinute = minute === 0 ? '00' : '30';
-                        futureSlots.push(`${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`);
+                    }
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+                    const displayMinute = minute === 0 ? '00' : '30';
+                    futureSlots.push(`${String(displayHour).padStart(2, '0')}:${displayMinute} ${ampm}`);
+                }
+            }
+
+            // If selectedDate is today, ensure the selected time is not in the hidden top 2 slots
+            if (!isPast && selectedDate === todayStr) {
+                if (futureSlots.length < 3) {
+                    isPast = true;
+                } else {
+                    const normTime = selectedTime ? selectedTime.trim().replace(/^0/, '').toUpperCase() : '';
+                    const slot1Norm = futureSlots[0] ? futureSlots[0].replace(/^0/, '').toUpperCase() : '';
+                    const slot2Norm = futureSlots[1] ? futureSlots[1].replace(/^0/, '').toUpperCase() : '';
+                    if (normTime === slot1Norm || normTime === slot2Norm) {
+                        isPast = true;
                     }
                 }
+            }
 
+            if (isPast) {
                 let autoSelectedSlot = null;
                 if (targetDate === todayStr) {
-                    if (futureSlots.length < 2) {
-                        // If second slot is not available for current day, advance to next day
+                    if (futureSlots.length < 3) {
+                        // If third slot is not available for current day, advance to next day
                         const tomorrow = getUKDate();
                         tomorrow.setDate(tomorrow.getDate() + 1);
                         const tYr = tomorrow.getFullYear();
@@ -10841,8 +10905,8 @@
                         // For tomorrow, select the first slot (12:00 AM)
                         autoSelectedSlot = '12:00 AM';
                     } else {
-                        // Select the second slot for today
-                        autoSelectedSlot = futureSlots[1];
+                        // Select the third slot for today
+                        autoSelectedSlot = futureSlots[2];
                     }
                 } else {
                     // For future dates, select the first slot
@@ -10977,8 +11041,8 @@
                 }
             }
 
-            // If second slot is not available for current day (e.g. fewer than 2 slots remaining today), jump to next day
-            if (isToday && availableSlots.length < 2) {
+            // If third slot is not available for current day (e.g. fewer than 3 slots remaining today), jump to next day
+            if (isToday && availableSlots.length < 3) {
                 const tomorrow = getUKDate();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 const tYr = tomorrow.getFullYear();
@@ -10999,10 +11063,11 @@
                 return;
             }
 
-            // For today: Hide the 1st slot when 2nd slot is available, so options start directly from the 2nd slot
-            if (isToday && availableSlots.length >= 2) {
+            // For today: Hide/remove the top 2 slots when at least 3 slots are available, so options start directly from the 3rd slot
+            if (isToday && availableSlots.length >= 3) {
                 const hiddenFirstSlot = availableSlots.shift();
-                if (hiddenFirstSlot && hiddenFirstSlot.isCurrentSelected) {
+                const hiddenSecondSlot = availableSlots.shift();
+                if ((hiddenFirstSlot && hiddenFirstSlot.isCurrentSelected) || (hiddenSecondSlot && hiddenSecondSlot.isCurrentSelected)) {
                     foundCurrentTime = false;
                 }
             }
@@ -11028,7 +11093,7 @@
                 // Keep existing user-selected valid future time
                 selectTime(currentSelectedTime);
             } else if (availableSlots.length > 0) {
-                // Default auto-select to the first visible slot (which is the 2nd slot for today)
+                // Default auto-select to the first visible slot (which is the 3rd slot for today)
                 selectTime(availableSlots[0].timeValue);
             } else {
                 const item = document.createElement('div');
@@ -11385,6 +11450,9 @@
             if (typeof _resetGoogleBtn === 'function') {
                 _resetGoogleBtn();
             }
+            if (typeof _showPhoneUI === 'function') {
+                _showPhoneUI();
+            }
             const modal = document.getElementById('authLoginModal');
             if (modal) modal.classList.add('show');
         }
@@ -11395,6 +11463,17 @@
                 _resetGoogleBtn();
             }
         }
+        function handleContinueAsGuest() {
+            closeAuthModal();
+            if (typeof _pendingAfterAuth === 'function') {
+                const fn = _pendingAfterAuth;
+                _pendingAfterAuth = null;
+                fn();
+            } else if (typeof _doProceedToPassengerDetails === 'function') {
+                _doProceedToPassengerDetails();
+            }
+        }
+        window.handleContinueAsGuest = handleContinueAsGuest;
         // Store pending action so we can resume after login
         let _pendingAfterAuth = null;
 
@@ -12232,6 +12311,12 @@
             const vehicle = BookingStore.getState().vehicle;
             if (!vehicle) {
                 showToast('Please select a vehicle first', 'error');
+                return;
+            }
+
+            if (!isAuthenticated()) {
+                _pendingAfterAuth = _doProceedToPassengerDetails;
+                openAuthModal();
                 return;
             }
 
@@ -16126,6 +16211,12 @@
                 <button id="authContinueBtn" class="auth-continue-btn" onclick="handleAuthContinue()">
                     <i class="fas fa-arrow-right"></i> Continue
                 </button>
+
+                <!-- Continue as Guest -->
+                <div class="auth-guest-divider" id="authGuestDivider"><span>or</span></div>
+                <button type="button" id="authContinueAsGuestBtn" class="auth-guest-btn" onclick="handleContinueAsGuest()">
+                    <i class="fas fa-user-clock" style="color: #64748b; font-size: 15px;"></i> Continue as Guest
+                </button>
             </div>
 
             <!-- OTP Input Step (Hidden initially) -->
@@ -16198,6 +16289,12 @@
                         style="background: none; border: none; padding: 0; color: #111; font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 13px;">Resend
                         OTP</button>
                     <span id="authResendTimer" style="font-size: 12px; color: #888; display: none;"></span>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px dashed #e2e8f0;">
+                    <a href="javascript:void(0)" onclick="handleContinueAsGuest()" style="color: #64748b; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px;">
+                        <i class="fas fa-user-clock"></i> Or skip &amp; continue as guest <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                    </a>
                 </div>
             </div>
 

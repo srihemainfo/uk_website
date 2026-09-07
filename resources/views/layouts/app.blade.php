@@ -28,6 +28,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @include('partials.seo')
+    <script>
+        window.scrollToInputMobile = function(element) {
+            if (element && window.innerWidth <= 768) {
+                setTimeout(function () {
+                    try {
+                        var topPos = element.getBoundingClientRect().top + window.scrollY - 100;
+                        window.scrollTo({ top: topPos, behavior: 'smooth' });
+                    } catch (e) {}
+                }, 300);
+            }
+        };
+    </script>
 
     @if($loadUkTracking)
         <!-- TikTok Pixel Code Start (Non-blocking / Deferred) -->
@@ -11372,6 +11384,55 @@
         // Store pending action so we can resume after login
         let _pendingAfterAuth = null;
 
+        function getAuthHeaders(extraHeaders = {}) {
+            const headers = Object.assign({
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }, extraHeaders);
+            const token = typeof getCookieValue === 'function' ? getCookieValue('auth_token') : null;
+            if (token && token !== 'null' && token !== 'undefined' && String(token).trim() !== '') {
+                headers['Authorization'] = 'Bearer ' + token;
+            }
+            return headers;
+        }
+
+        function _updateGuestAuthBanner() {
+            const banner = document.getElementById('passengerAuthBanner');
+            if (!banner) return;
+
+            if (isAuthenticated()) {
+                let userName = 'Customer';
+                try {
+                    const userStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+                    if (userStr) {
+                        const u = JSON.parse(decodeURIComponent(userStr));
+                        userName = u.name || u.email || 'Customer';
+                    }
+                } catch(e) {}
+                banner.innerHTML = `
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; margin-bottom: 15px;">
+                        <span style="color: #166534; font-weight: 500;">
+                            <i class="fas fa-check-circle" style="color: #22c55e; margin-right: 6px;"></i> Signed in as <strong>${$('<div>').text(userName).html()}</strong>
+                        </span>
+                        <a href="javascript:void(0)" onclick="handleLogout()" style="color: #ef4444; font-weight: 600; text-decoration: none; font-size: 12px; margin-left: 10px;">
+                            <i class="fas fa-sign-out-alt"></i> Sign out
+                        </a>
+                    </div>
+                `;
+            } else {
+                banner.innerHTML = `
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 13px; margin-bottom: 15px;">
+                        <span style="color: #334155; font-weight: 500;">
+                            <i class="fas fa-user-clock" style="color: #64748b; margin-right: 6px;"></i> <strong>Booking as Guest</strong> &bull; Have an account?
+                        </span>
+                        <button type="button" onclick="_pendingAfterAuth = _doProceedToPassengerDetails; openAuthModal();" class="btn btn-sm" style="background: #111827; color: #ffffff; font-size: 12px; font-weight: 600; border-radius: 6px; padding: 5px 12px; border: none; cursor: pointer;">
+                            <i class="fas fa-sign-in-alt" style="margin-right: 4px;"></i> Sign in for faster checkout
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
         // ===== FORM NAVIGATION =====
         function proceedToTripDetails() {
             const pickupVal = $('#pickupInput').val() ? $('#pickupInput').val().trim() : '';
@@ -12160,18 +12221,14 @@
                 return;
             }
 
-            // ---- AUTH GATE ON CONTINUE BUTTON (AFTER CAR LIST SELECTION) ----
-            if (!isAuthenticated()) {
-                _pendingAfterAuth = _doProceedToPassengerDetails;
-                openAuthModal();
-                return;
-            }
-
             _doProceedToPassengerDetails();
         }
 
         function _doProceedToPassengerDetails() {
             _autoFillPassengerDetailsFromAuth();
+            if (typeof _updateGuestAuthBanner === 'function') {
+                _updateGuestAuthBanner();
+            }
             _updateVehicleSummaryUI(BookingStore.getState());
             updatePassengerForm();
             updateBookingSummary();
@@ -12659,11 +12716,7 @@
             try {
                 const response = await fetch(API_BASE_URL + '/stripe/payment-intent', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
-                    },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({
                         id: currentPaymentId,
                         payment_id: currentPaymentId,
@@ -12882,11 +12935,7 @@
 
                 fetch(API_BASE_URL + '/stripe/payment-confirm', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                    },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({
                         id: pId,
                         payment_id: pId,
@@ -12988,11 +13037,7 @@
 
                         const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                            },
+                            headers: getAuthHeaders(),
                             body: JSON.stringify({
                                 id: pId,
                                 payment_id: pId,
@@ -13133,11 +13178,7 @@
             try {
                 const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '')
-                    },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify({
                         id: pId,
                         payment_id: pId,
@@ -13734,12 +13775,7 @@
             // Using the user-provided API Route via the local controller proxy
             fetch(API_BASE_URL + '/w-book-notify-driver', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    // Assuming sanctum token is required for all these secure routes
-                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                },
+                headers: getAuthHeaders(),
                 body: JSON.stringify(payload)
             })
                 .then(response => response.json())
@@ -14204,11 +14240,7 @@
                                 console.log("Token expired. Fetching a new custom token...");
                                 fetch(API_BASE_URL + '/refresh-firebase-token', {
                                     method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Accept': 'application/json',
-                                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                                    },
+                                    headers: getAuthHeaders(),
                                     body: JSON.stringify({
                                         job_id: bookingData.jobId,
                                         c_mobile: bookingData.passengerPhone || ''
@@ -14733,10 +14765,7 @@
                 url: API_BASE_URL + '/driver-vehicle',
                 type: 'GET',
                 data: { user_id: driver.id },
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                },
+                headers: getAuthHeaders(),
                 success: function (res) {
                     if (res && res.status && res.data) {
                         const uid = driver.id;
@@ -14909,11 +14938,7 @@
             try {
                 const response = await fetch(API_BASE_URL + '/w-payment-break-down', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + getCookieValue('auth_token')
-                    },
+                    headers: getAuthHeaders(),
                     body: JSON.stringify(payload)
                 });
 
@@ -15483,6 +15508,14 @@
                 if (stepNumber === 3) {
                     $('#selectedCarSummary .edit-icon-btn').hide();
                     $('#mcsCarDetails .edit-icon-btn').hide();
+                }
+            }
+
+            if (stepNumber === 8) {
+                if (typeof isAuthenticated === 'function' && !isAuthenticated()) {
+                    $('#guestConfirmNote').show();
+                } else {
+                    $('#guestConfirmNote').hide();
                 }
             }
             $('.hero-form-section').scrollTop(0);

@@ -123,9 +123,12 @@ class UtilityController extends Controller
                 }
             }
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $payload);
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $payload);
 
             return response()->json($response->json(), $response->status());
 
@@ -148,9 +151,12 @@ class UtilityController extends Controller
             $token = $request->bearerToken();
             $apiUrl = env('API_URL') . '/book';
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $request->all());
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $request->all());
 
             return response()->json($response->json(), $response->status());
 
@@ -202,9 +208,12 @@ class UtilityController extends Controller
             $token = $request->bearerToken();
             $apiUrl = env('API_URL') . '/w-payment-break-down';
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $request->all());
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $request->all());
 
             return response()->json($response->json(), $response->status());
 
@@ -228,9 +237,12 @@ class UtilityController extends Controller
             $token = $request->bearerToken();
             $apiUrl = env('API_URL') . '/w-cash-payment';
 
-            $response = Http::withToken($token)
-                ->acceptJson()
-                ->post($apiUrl, $request->all());
+            $http = Http::acceptJson();
+            if (!empty($token) && $token !== 'null' && $token !== 'undefined') {
+                $http = $http->withToken($token);
+            }
+
+            $response = $http->post($apiUrl, $request->all());
 
             return response()->json($response->json(), $response->status());
 

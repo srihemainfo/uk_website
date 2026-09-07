@@ -1177,7 +1177,7 @@
                                 <div class="location-input-wrapper" id="pickupWrapper">
 
                                     <input type="text" id="pickupInput" placeholder="Enter pickup location"
-                                        class="location-input-field" autocomplete="off" onfocus="scrollToInputMobile(this)"
+                                        class="location-input-field" autocomplete="off" onfocus="if(typeof scrollToInputMobile==='function')scrollToInputMobile(this)"
                                         onkeyup="handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'pickupSuggestions', 'pickup', 'pickupWrapper')">
                                     <div class="location-suggestions" id="pickupSuggestions"></div>
@@ -1191,7 +1191,7 @@
                                 <div class="location-input-wrapper" id="dropoffWrapper">
 
                                     <input type="text" id="dropoffInput" placeholder="Enter dropoff location"
-                                        class="location-input-field" autocomplete="off" onfocus="scrollToInputMobile(this)"
+                                        class="location-input-field" autocomplete="off" onfocus="if(typeof scrollToInputMobile==='function')scrollToInputMobile(this)"
                                         onkeyup="handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')"
                                         onclick="if(this.value.length>=2) handleLocationSearch(this.value, 'dropoffSuggestions', 'dropoff', 'dropoffWrapper')">
                                     <div class="location-suggestions" id="dropoffSuggestions"></div>
@@ -2233,6 +2233,7 @@
                         <div class="booking-section-title">
                             Personal Info
                         </div>
+                        <div id="passengerAuthBanner"></div>
                         <div class="booking-form-grid">
                             <div class="form-group-uber booking-form-group">
                                 <label>Full Name</label>
@@ -3008,9 +3009,14 @@
                             </div>
                         </div>
                         <p class="confirm-info-text"
-                            style="text-align: center; color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 25px;">
+                            style="text-align: center; color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px;">
                             Your booking has been successfully confirmed.
                         </p>
+                        <div id="guestConfirmNote" style="display: none; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 20px; text-align: center;">
+                            <p style="margin: 0; font-size: 13px; color: #475569;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 4px;"></i> A confirmation summary and live tracking link have been sent to your email and phone.
+                            </p>
+                        </div>
                     </div>
                     <div class="btn-group-uber step-bottom-btns"
                         style="display: flex; gap: 12px; margin-top: auto; padding-top: 15px;">

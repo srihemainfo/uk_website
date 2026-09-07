@@ -1682,33 +1682,59 @@
         <!-- Passenger & Driver Details Card -->
         <div class="preview-card">
             <div class="row g-3">
-                <!-- Passenger Details -->
+                <!-- Passenger / Booked By Details -->
                 <div class="col-md-6">
                     <div class="person-box">
+                        @php
+                            $isOther = !empty($user_details['c_is_other']);
+                        @endphp
+
                         <div class="card-heading border-0 pb-0 mb-2">
-                            <i class="fa-solid fa-user"></i> Passenger Details
+                            <i class="fa-solid fa-user"></i> {{ $isOther ? 'Booked By Details' : 'Passenger Details' }}
                         </div>
+
                         <div class="person-info-item">
                             <span>Name</span>
                             <strong>{{ !empty($name) ? ucwords(strtolower($name)) : '' }}</strong>
                         </div>
-                        @if(!empty($user_details['c_booked_for']) || !empty($booked_for))
-                            <div class="person-info-item">
-                                <span>Booked For</span>
-                                <strong>{{ ucwords(strtolower($user_details['c_booked_for'] ?? $booked_for ?? '')) }}</strong>
-                            </div>
-                        @endif
+
                         <div class="person-info-item">
                             <span>Mobile Number</span>
                             <strong>
                                 <a href="tel:{{ $mobile ?? '' }}">{{ $mobile ?? '' }}</a>
                             </strong>
                         </div>
+
                         @if(!empty($email))
                             <div class="person-info-item">
                                 <span>Email</span>
                                 <strong>{{ $email }}</strong>
                             </div>
+                        @endif
+
+                        {{-- If booked for someone else, show "Booked For" details below --}}
+                        @if($isOther)
+                            <hr class="my-2 border-secondary opacity-25">
+                            <div class="card-heading border-0 pb-0 mb-2 text-muted" style="font-size: 13px;">
+                                <i class="fa-solid fa-user-tag"></i> Booked For (Passenger)
+                            </div>
+
+                            @if(!empty($user_details['c_pass_name']))
+                                <div class="person-info-item">
+                                    <span>Passenger Name</span>
+                                    <strong>{{ ucwords(strtolower($user_details['c_pass_name'])) }}</strong>
+                                </div>
+                            @endif
+
+                            @if(!empty($user_details['c_pass_mobile']))
+                                <div class="person-info-item">
+                                    <span>Passenger Mobile</span>
+                                    <strong>
+                                        <a
+                                            href="tel:{{ $user_details['c_pass_mobile'] }}">{{ $user_details['c_pass_mobile'] }}</a>
+                                    </strong>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -1731,7 +1757,7 @@
                                     <img src="{{ !empty($driver_image) ? $driver_image : env('WEBSITE_APP_URL') . env('COUNTRY_SLUG_II') . '/goride/img/driver-dummy.png' }}"
                                         style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;"
                                         onerror="this.src='{{ env('WEBSITE_APP_URL') }}{{ env('COUNTRY_SLUG_II') }}/goride/img/driver-dummy.png'">
-                                    <strong>{{ !empty($driver_name) ? ucwords(strtolower($driver_name)) : '' }}</strong>
+                                    <strong>{{ ucwords(strtolower($driver_name)) }}</strong>
                                 </div>
                             </div>
                             @if(!empty($cab_type) || !empty($vehicle_model))
@@ -2094,22 +2120,22 @@
 
                     {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
                     <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                            <div class="col-md-3 col-6">
-                                <div class="info-item-box">
-                                    <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                                    <div class="info-value">Meet & Greet Included</div>
-                                </div>
-                            </div>
-                            @endif
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-item-box">
+                                                    <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                                                    <div class="info-value">Meet & Greet Included</div>
+                                                </div>
+                                            </div>
+                                            @endif
 
-                            @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                            <div class="col-md-3 col-6">
-                                <div class="info-item-box">
-                                    <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                                    <div class="info-value">Wheelchair Required</div>
-                                </div>
-                            </div>
-                            @endif -->
+                                            @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                                            <div class="col-md-3 col-6">
+                                                <div class="info-item-box">
+                                                    <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                                                    <div class="info-value">Wheelchair Required</div>
+                                                </div>
+                                            </div>
+                                            @endif -->
 
                     @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
                         <div class="col-md-6 col-12">

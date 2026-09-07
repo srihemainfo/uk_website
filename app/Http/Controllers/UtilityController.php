@@ -52,9 +52,18 @@ class UtilityController extends Controller
                 'way_type'     => $request->way_type,
             ];
 
-            // if ($token) {
-            //     $payload['sanctum_token'] = $token;
-            // }
+            if ($request->filled('user_id')) {
+                $payload['user_id'] = $request->user_id;
+            } elseif ($request->hasCookie('auth_user')) {
+                try {
+                    $userCookie = json_decode(urldecode($request->cookie('auth_user')), true);
+                    if (!empty($userCookie['id'])) {
+                        $payload['user_id'] = $userCookie['id'];
+                    }
+                } catch (\Throwable $e) {
+                    // Ignore cookie parse errors
+                }
+            }
 
             $response = Http::withToken($token)
                 ->acceptJson()

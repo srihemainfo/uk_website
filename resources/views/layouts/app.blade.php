@@ -11491,12 +11491,30 @@
 
             const pickupDatetime = pickupDate + ' ' + pickupTime;
 
-            const params = new URLSearchParams({
+            let userId = null;
+            try {
+                const userStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
+                if (userStr) {
+                    const parsedUser = JSON.parse(decodeURIComponent(userStr));
+                    if (parsedUser && parsedUser.id) {
+                        userId = parsedUser.id;
+                    }
+                }
+            } catch (e) {
+                // Ignore parse error
+            }
+
+            const queryParams = {
                 from_place: bookingData.pickup,
                 to_place: bookingData.dropoff,
                 pickup_date: pickupDatetime,
                 way_type: bookingData.returnTrip ? 'roundtrip' : 'oneway',
-            });
+            };
+            if (userId) {
+                queryParams.user_id = userId;
+            }
+
+            const params = new URLSearchParams(queryParams);
 
             const headers = {
                 'Accept': 'application/json'

@@ -9635,7 +9635,10 @@
                 },
 
                 clear() {
-                    try { sessionStorage.removeItem(_STORAGE_KEY); } catch (e) { }
+                    try {
+                        sessionStorage.removeItem(_STORAGE_KEY);
+                        sessionStorage.clear();
+                    } catch (e) { }
                     _state = Object.assign({}, initial);
                     _subscribers.forEach(fn => { try { fn(_state, {}); } catch (e) { } });
                 }
@@ -9755,6 +9758,94 @@
             get(_, key) { return BookingStore.getState()[key]; },
             set(_, key, val) { BookingStore.setState({ [key]: val }); return true; }
         });
+
+        function clearAllBookingSessionData(clearDomInputs = true) {
+            try {
+                sessionStorage.removeItem('gorideBookingState_v2');
+                sessionStorage.clear();
+            } catch (e) { }
+
+            if (typeof bookingExpirationTimer !== 'undefined' && bookingExpirationTimer) {
+                clearInterval(bookingExpirationTimer);
+                bookingExpirationTimer = null;
+            }
+            if (typeof driversListener === 'function') {
+                try { driversListener(); } catch (e) { }
+                driversListener = null;
+            }
+            if (typeof existingRenderedDrivers !== 'undefined' && existingRenderedDrivers.clear) {
+                existingRenderedDrivers.clear();
+            }
+
+            if (typeof BookingStore !== 'undefined' && BookingStore.clear) {
+                BookingStore.clear();
+            }
+
+            window.selectedStripePaymentType = null;
+            window.paymentId = null;
+            window.transactionId = null;
+            window.stripeElements = null;
+            window.stripeCardElement = null;
+
+            if (clearDomInputs) {
+                $('#pickupInput').val('');
+                $('#dropoffInput').val('');
+                $('#pickupPlaceId').val('');
+                $('#dropoffPlaceId').val('');
+                $('#pickupInputWrapper').removeClass('has-value');
+                $('#dropoffInputWrapper').removeClass('has-value');
+
+                $('#flightNumber').val('');
+                $('#comingFrom').val('');
+                $('#dropoffAddress').val('');
+                $('#pickupAfterLandingSelect').val('45');
+                $('#ferryName').val('');
+                $('#seaportArrivalTime').val('');
+                $('#comingFromPort').val('');
+                $('#dropoffAddressSeaport').val('');
+                $('#normalJourneyDate').val('');
+                $('#normalJourneyTime').val('');
+                $('#flightArrivingTime').val('');
+
+                $('#passengerFirstName').val('');
+                $('#passengerLastName').val('');
+                $('#passengerEmail').val('');
+                $('#passengerPhone').val('');
+                $('#passengerCount').val('1');
+                $('#passengerCountDisplay').text('1');
+                $('#luggageCount').val('0');
+                $('#luggageCountDisplay').text('0');
+                $('#handLuggageCount').val('0');
+                $('#handLuggageCountDisplay').text('0');
+
+                $('#otherPassengerName').val('');
+                $('#otherPassengerPhone').val('');
+                $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Book for myself');
+                $('#forMeDetails').hide().text('');
+                $('#forMeRadioMe').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
+                $('#forMeRadioOther').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
+                $('#otherRiderDetailsForm').hide();
+
+                $('#specialRequirements').val('').hide();
+                $('#specialReqCheckbox').prop('checked', false);
+                $('#carSeatCheckbox').prop('checked', false);
+                $('#childSeatCount').val('0');
+                $('#meetAndGreetCheckbox').prop('checked', false);
+                $('#wheelchairCheckbox').prop('checked', false);
+                $('.child-seat-pill').removeClass('active');
+
+                $('.vehicle-card').removeClass('selected');
+                $('#selectedCarSummary').hide();
+                $('#mcsCarDetails').hide();
+                $('#enteredDetailsSummary').hide();
+                $('#mcsEnteredDetails').hide();
+
+                if (typeof clearMapRoute === 'function') {
+                    clearMapRoute();
+                }
+                $('#mapRouteBadge').hide();
+            }
+        }
         const vehicles = [{
             id: 1,
             name: "Standard",
@@ -10455,46 +10546,51 @@
                 }
             }
 
-            // If there are saved locations, restore them into the form inputs
-            if (_restoredState.pickup) { $('#pickupInput').val(_restoredState.pickup); }
-            if (_restoredState.dropoff) { $('#dropoffInput').val(_restoredState.dropoff); }
-            if (_restoredState.date) { /* flatpickr will be set after init below */ }
-            if (_restoredState.flightNumber) { $('#flightNumber').val(_restoredState.flightNumber); }
-            if (_restoredState.comingFrom) { $('#comingFrom').val(_restoredState.comingFrom); }
-            if (_restoredState.dropoffAddress) { $('#dropoffAddress').val(_restoredState.dropoffAddress); }
-            if (_restoredState.pickAfterTime) { $('#pickupAfterLandingSelect').val(_restoredState.pickAfterTime); }
-            if (_restoredState.ferryName) { $('#ferryName').val(_restoredState.ferryName); }
-            if (_restoredState.dockingTime) { $('#seaportArrivalTime').val(_restoredState.dockingTime); }
-            if (_restoredState.comingFromPort) { $('#comingFromPort').val(_restoredState.comingFromPort); }
-            if (_restoredState.dropoffAddressSeaport) { $('#dropoffAddressSeaport').val(_restoredState.dropoffAddressSeaport); }
-            if (_restoredState.normalJourneyDate) { $('#normalJourneyDate').val(_restoredState.normalJourneyDate); }
-            if (_restoredState.normalJourneyTime) { $('#normalJourneyTime').val(_restoredState.normalJourneyTime); }
+            const isFinishedBooking = (_restoredState.currentStep === 8);
+            if (isFinishedBooking) {
+                clearAllBookingSessionData(true);
+            } else {
+                // If there are saved locations, restore them into the form inputs
+                if (_restoredState.pickup) { $('#pickupInput').val(_restoredState.pickup); }
+                if (_restoredState.dropoff) { $('#dropoffInput').val(_restoredState.dropoff); }
+                if (_restoredState.date) { /* flatpickr will be set after init below */ }
+                if (_restoredState.flightNumber) { $('#flightNumber').val(_restoredState.flightNumber); }
+                if (_restoredState.comingFrom) { $('#comingFrom').val(_restoredState.comingFrom); }
+                if (_restoredState.dropoffAddress) { $('#dropoffAddress').val(_restoredState.dropoffAddress); }
+                if (_restoredState.pickAfterTime) { $('#pickupAfterLandingSelect').val(_restoredState.pickAfterTime); }
+                if (_restoredState.ferryName) { $('#ferryName').val(_restoredState.ferryName); }
+                if (_restoredState.dockingTime) { $('#seaportArrivalTime').val(_restoredState.dockingTime); }
+                if (_restoredState.comingFromPort) { $('#comingFromPort').val(_restoredState.comingFromPort); }
+                if (_restoredState.dropoffAddressSeaport) { $('#dropoffAddressSeaport').val(_restoredState.dropoffAddressSeaport); }
+                if (_restoredState.normalJourneyDate) { $('#normalJourneyDate').val(_restoredState.normalJourneyDate); }
+                if (_restoredState.normalJourneyTime) { $('#normalJourneyTime').val(_restoredState.normalJourneyTime); }
 
-            if (_restoredState.passengerFirstName) { $('#passengerFirstName').val(_restoredState.passengerFirstName); }
-            if (_restoredState.passengerLastName) { $('#passengerLastName').val(_restoredState.passengerLastName); }
-            if (_restoredState.passengerEmail) { $('#passengerEmail').val(_restoredState.passengerEmail); }
-            if (_restoredState.passengerPhone) { $('#passengerPhone').val(_restoredState.passengerPhone); }
-            if (_restoredState.passengerCount) { $('#passengerCount').val(_restoredState.passengerCount); }
-            if (_restoredState.luggageCount) { $('#luggageCount').val(_restoredState.luggageCount); }
-            if (_restoredState.handLuggageCount) { $('#handLuggageCount').val(_restoredState.handLuggageCount); }
+                if (_restoredState.passengerFirstName) { $('#passengerFirstName').val(_restoredState.passengerFirstName); }
+                if (_restoredState.passengerLastName) { $('#passengerLastName').val(_restoredState.passengerLastName); }
+                if (_restoredState.passengerEmail) { $('#passengerEmail').val(_restoredState.passengerEmail); }
+                if (_restoredState.passengerPhone) { $('#passengerPhone').val(_restoredState.passengerPhone); }
+                if (_restoredState.passengerCount) { $('#passengerCount').val(_restoredState.passengerCount); }
+                if (_restoredState.luggageCount) { $('#luggageCount').val(_restoredState.luggageCount); }
+                if (_restoredState.handLuggageCount) { $('#handLuggageCount').val(_restoredState.handLuggageCount); }
 
-            if (_restoredState.rideFor === 'other' && _restoredState.otherPassengerData) {
-                $('#otherPassengerName').val(_restoredState.otherPassengerData.name || '');
-                $('#otherPassengerPhone').val(_restoredState.otherPassengerData.phone || '');
-                $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Booked for ' + _restoredState.otherPassengerData.name);
-                if (_restoredState.otherPassengerData.phone) {
-                    $('#forMeDetails').text(_restoredState.otherPassengerData.phone).show();
-                } else {
-                    $('#forMeDetails').hide().text('');
+                if (_restoredState.rideFor === 'other' && _restoredState.otherPassengerData) {
+                    $('#otherPassengerName').val(_restoredState.otherPassengerData.name || '');
+                    $('#otherPassengerPhone').val(_restoredState.otherPassengerData.phone || '');
+                    $('#forMeTitle, #mobileRiderTitle, #mobileHeaderRiderTitle').text('Booked for ' + _restoredState.otherPassengerData.name);
+                    if (_restoredState.otherPassengerData.phone) {
+                        $('#forMeDetails').text(_restoredState.otherPassengerData.phone).show();
+                    } else {
+                        $('#forMeDetails').hide().text('');
+                    }
+                    $('#forMeRadioMe').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
+                    $('#forMeRadioOther').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
                 }
-                $('#forMeRadioMe').attr('class', 'far fa-circle for-me-radio').css('color', '#999');
-                $('#forMeRadioOther').attr('class', 'fas fa-dot-circle for-me-radio').css('color', '#000');
-            }
 
-            if (_restoredState.specialRequirements) { $('#specialRequirements').val(_restoredState.specialRequirements); }
-            if (_restoredState.isSpecialReq) {
-                $('#specialReqCheckbox').prop('checked', true);
-                $('#specialRequirements').show();
+                if (_restoredState.specialRequirements) { $('#specialRequirements').val(_restoredState.specialRequirements); }
+                if (_restoredState.isSpecialReq) {
+                    $('#specialReqCheckbox').prop('checked', true);
+                    $('#specialRequirements').show();
+                }
             }
 
             // ---- Register view-updater subscribers ----
@@ -10644,17 +10740,16 @@
                         }
                     });
                 }
-            } else if (_restoredState.currentStep >= 3) {
+            } else if (!isFinishedBooking && _restoredState.currentStep >= 3) {
                 // If we are on step 3+ but have no fare data, refetch it
                 proceedToVehicles();
             }
 
-            // Restore the user's current step (if they refreshed the page)
-            if (_restoredState.currentStep && _restoredState.currentStep > 1) {
-                if (_restoredState.currentStep === 8) {
-                    BookingStore.clear();
-                    showStep(1);
-                } else if (_restoredState.currentStep === 5) {
+            if (isFinishedBooking) {
+                clearAllBookingSessionData(true);
+                showStep(1);
+            } else if (_restoredState.currentStep && _restoredState.currentStep > 1) {
+                if (_restoredState.currentStep === 5) {
                     showStep(5);
                     if (typeof renderPaymentBreakdownUI === 'function') {
                         renderPaymentBreakdownUI(_restoredState.paymentBreakdown);
@@ -14129,10 +14224,7 @@
         });
 
         function resetToNewBooking() {
-            try {
-                sessionStorage.clear();
-                sessionStorage.removeItem('gorideBookingState_v2');
-            } catch (e) { }
+            clearAllBookingSessionData(true);
             window.location.href = '/';
         }
 

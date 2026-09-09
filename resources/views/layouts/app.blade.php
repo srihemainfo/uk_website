@@ -475,40 +475,7 @@
             margin-top: 4px;
         }
 
-        .location-suggestions {
-            position: absolute;
-            top: calc(100% + 5px);
-            left: 0;
-            right: 0;
-            background: #fff;
-            border-radius: 8px;
-            max-height: 280px;
-            overflow-y: auto;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
-            display: none;
-            z-index: 10000;
-            border: 1px solid #eee;
-        }
 
-        .location-suggestions.show {
-            display: block;
-        }
-
-        .suggestion-item {
-            padding: 6px 15px;
-            cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 17px;
-        }
-
-        .suggestion-item:hover {
-            background: #f5f5f5;
-            padding-left: 20px;
-        }
 
         .payment-summary {
             background: #f5f5f5;
@@ -1071,48 +1038,249 @@
 
         .location-suggestions {
             position: absolute;
-            top: calc(100% + 5px);
+            top: calc(100% + 6px);
             left: 0;
             right: 0;
-            background: #fff;
-            border-radius: 8px;
-            max-height: 280px;
+            background: #ffffff;
+            border-radius: 12px;
+            max-height: 380px;
             overflow-y: auto;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .15);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
             display: none;
             z-index: 10000;
-            border: 1px solid #eee;
+            border: 1px solid #e2e8f0;
+            padding: 4px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 transparent;
+        }
+
+        .location-suggestions::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .location-suggestions::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
         }
 
         .location-suggestions.show {
             display: block;
-            animation: slideDown 0.3s ease;
+            animation: locSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes locSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .suggestion-item {
-            padding: 10px 15px;
+            padding: 9px 14px;
             cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
-            transition: all 0.2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.15s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 17px;
+            justify-content: space-between;
+            gap: 12px;
+            text-align: left;
         }
 
         .suggestion-item:last-child {
             border-bottom: none;
         }
 
-        .suggestion-item:hover {
-            background: #f5f5f5;
-            padding-left: 20px;
+        .suggestion-item:hover,
+        .suggestion-item.active {
+            background: #f8fafc;
         }
 
-        .suggestion-item i {
-            color: #000;
-            font-size: 14px;
-            width: 18px;
+        .suggestion-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-icon-wrap {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .item-icon-wrap.airport { background: #e0e7ff; color: #4338ca; }
+        .item-icon-wrap.terminal { background: #f3e8ff; color: #7e22ce; }
+        .item-icon-wrap.station { background: #dcfce7; color: #15803d; }
+        .item-icon-wrap.seaport { background: #ccfbf1; color: #0f766e; }
+        .item-icon-wrap.postcode { background: #f1f5f9; color: #334155; }
+        .item-icon-wrap.address { background: #f8fafc; color: #64748b; }
+        .item-icon-wrap.attraction { background: #fef3c7; color: #b45309; }
+
+        .item-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-primary-text {
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-secondary-text {
+            font-size: 12.5px;
+            color: #64748b;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .type-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+            flex-shrink: 0;
+        }
+
+        .type-badge-pill.terminal { background: #f3e8ff; color: #7e22ce; }
+        .type-badge-pill.airport { background: #e0e7ff; color: #3730a3; }
+        .type-badge-pill.station { background: #dcfce7; color: #166534; }
+        .type-badge-pill.seaport { background: #ccfbf1; color: #115e59; }
+        .type-badge-pill.postcode { background: #f1f5f9; color: #475569; }
+        .type-badge-pill.address { background: #f8fafc; color: #64748b; }
+        .type-badge-pill.attraction { background: #fef3c7; color: #92400e; }
+        .type-badge-pill.location { background: #f1f5f9; color: #475569; }
+
+        .drilldown-btn-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11.5px;
+            font-weight: 600;
+            background: #eef2ff;
+            color: #4f46e5;
+            border: 1px solid #c7d2fe;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+        }
+
+        .drilldown-btn-pill:hover {
+            background: #4f46e5;
+            color: #ffffff;
+            border-color: #4f46e5;
+        }
+
+        .drilldown-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .drilldown-header:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .drilldown-back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #4f46e5;
+            font-weight: 600;
+        }
+
+        .drilldown-header-title {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50%;
+        }
+
+        .suggestion-skeleton {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .suggestion-skeleton .sk-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+            background-size: 200% 100%;
+            animation: skPulse 1.2s infinite ease-in-out;
+        }
+
+        .suggestion-skeleton .sk-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            flex: 1;
+        }
+
+        .suggestion-skeleton .sk-line {
+            height: 12px;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+            background-size: 200% 100%;
+            animation: skPulse 1.2s infinite ease-in-out;
+        }
+
+        .suggestion-skeleton .sk-line.long { width: 75%; }
+        .suggestion-skeleton .sk-line.medium { width: 55%; }
+        .suggestion-skeleton .sk-line.short { width: 35%; height: 10px; }
+
+        @keyframes skPulse {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .time-dropdown-wrapper {
@@ -9433,6 +9601,8 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/intlTelInput.min.js"></script>
 
     <script>
+        window.API_BASE_URL = '{{ env("API_URL") }}';
+
         function scrollToInputMobile(element) {
             if (window.innerWidth <= 768) {
                 setTimeout(() => {
@@ -9463,23 +9633,41 @@
         function normalizeLocationType(type) {
             if (!type) return 'address';
             const t = type.toLowerCase();
+            if (t.includes('terminal')) return 'terminal';
             if (t.includes('airport')) return 'airport';
-            if (t.includes('seaport')) return 'seaport';
-            if (t.includes('railway_station') || t.includes('train')) return 'railway_station';
+            if (t.includes('seaport') || t.includes('port') || t.includes('harbour')) return 'seaport';
+            if (t.includes('railway_station') || t.includes('train') || t.includes('station')) return 'railway_station';
+            if (t.includes('postcode')) return 'postcode';
             if (t.includes('hotel')) return 'hotel';
             if (t.includes('mall') || t.includes('shopping')) return 'mall';
             if (t.includes('hospital')) return 'hospital';
             if (t.includes('university')) return 'university';
             if (t.includes('school')) return 'school';
+            if (t.includes('attraction')) return 'attraction';
             if (t.includes('landmark') || t.includes('point_of_interest')) return 'landmark';
             return type;
+        }
+
+        function getBadgeClassForType(type, typeLabel) {
+            const label = (typeLabel || '').toLowerCase();
+            const t = (type || '').toLowerCase();
+            if (label.includes('terminal') || t === 'terminal') return 'terminal';
+            if (label.includes('airport') || t === 'airport') return 'airport';
+            if (label.includes('station') || label.includes('train') || t.includes('railway')) return 'station';
+            if (label.includes('seaport') || label.includes('port') || t === 'seaport') return 'seaport';
+            if (label.includes('postcode') || t === 'postcode') return 'postcode';
+            if (label.includes('attraction') || t === 'attraction') return 'attraction';
+            if (label.includes('address') || t === 'address') return 'address';
+            return 'location';
         }
 
         function getIconForType(type) {
             const normalized = normalizeLocationType(type);
             switch (normalized) {
-                case 'airport':
+                case 'terminal':
                     return 'plane-departure';
+                case 'airport':
+                    return 'plane';
                 case 'railway_station':
                     return 'train';
                 case 'hotel':
@@ -9495,52 +9683,109 @@
                 case 'landmark':
                     return 'location-dot';
                 case 'city':
-                    return 'city';
                 case 'area':
                     return 'city';
                 case 'seaport':
                     return 'anchor';
+                case 'postcode':
+                    return 'envelope';
+                case 'attraction':
+                    return 'flag';
                 default:
                     return 'map-marker-alt';
             }
         }
-        let searchAbortController = null;
-        async function handleLocationSearch(query, containerId, target, wrapperId) {
+
+        function getIconForLocation(loc) {
+            if (loc && loc.icon) {
+                let ic = loc.icon;
+                if (ic.startsWith('fa-')) ic = ic.replace('fa-', '');
+                if (ic.startsWith('fas fa-')) ic = ic.replace('fas fa-', '');
+                return ic;
+            }
+            return getIconForType(loc ? loc.types : '');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        let searchAbortControllers = {};
+        let searchTimeouts = {};
+        window._locSearchHistory = window._locSearchHistory || {};
+
+        async function handleLocationSearch(query, containerId, target, wrapperId, filters = '', parentLabel = '') {
             const suggestions = document.getElementById(containerId);
             const wrapper = wrapperId ? document.getElementById(wrapperId) : null;
-            if (!query || query.length < 2) {
-                if (searchAbortController) {
-                    searchAbortController.abort();
-                    searchAbortController = null;
+
+            if (!filters && (!query || query.length < 2)) {
+                if (searchAbortControllers[containerId]) {
+                    searchAbortControllers[containerId].abort();
+                    delete searchAbortControllers[containerId];
                 }
-                clearTimeout(searchTimeout);
-                suggestions.classList.remove('show');
+                if (searchTimeouts[containerId]) {
+                    clearTimeout(searchTimeouts[containerId]);
+                }
+                if (suggestions) suggestions.classList.remove('show');
                 if (wrapper) wrapper.classList.remove('is-loading');
                 return;
             }
 
-            // Cancel any previous pending API search request
-            if (searchAbortController) {
-                searchAbortController.abort();
+            // Save active root search query to enable Back button in drill-down mode
+            if (!filters) {
+                window._locSearchHistory[containerId] = {
+                    query: query,
+                    target: target,
+                    wrapperId: wrapperId
+                };
             }
-            searchAbortController = new AbortController();
-            const signal = searchAbortController.signal;
 
-            // Show skeleton immediately for visual feedback
-            const skeletonHtml = `
-                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line long"></div></div>
-                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line medium"></div></div>
-                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line short"></div></div>
-                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-line long"></div></div>
+            // Abort previous in-flight request for this container
+            if (searchAbortControllers[containerId]) {
+                searchAbortControllers[containerId].abort();
+            }
+            searchAbortControllers[containerId] = new AbortController();
+            const signal = searchAbortControllers[containerId].signal;
+
+            // Skeleton placeholders
+            const skeletonItems = `
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-text-wrap"><div class="sk-line long"></div><div class="sk-line short"></div></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-text-wrap"><div class="sk-line medium"></div><div class="sk-line short"></div></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-text-wrap"><div class="sk-line long"></div><div class="sk-line short"></div></div></div>
+                <div class="suggestion-skeleton"><div class="sk-icon"></div><div class="sk-text-wrap"><div class="sk-line medium"></div><div class="sk-line short"></div></div></div>
             `;
-            suggestions.innerHTML = skeletonHtml;
-            suggestions.classList.add('show');
+
+            if (suggestions) {
+                if (filters && parentLabel) {
+                    suggestions.innerHTML = `
+                        <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
+                            <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
+                            <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
+                        </div>
+                        ${skeletonItems}
+                    `;
+                } else {
+                    suggestions.innerHTML = skeletonItems;
+                }
+                suggestions.classList.add('show');
+            }
             if (wrapper) wrapper.classList.add('is-loading');
 
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(async () => {
+            if (searchTimeouts[containerId]) {
+                clearTimeout(searchTimeouts[containerId]);
+            }
+
+            const debounceDelay = filters ? 0 : 250;
+
+            searchTimeouts[containerId] = setTimeout(async () => {
                 try {
-                    const authToken = getCookieValue('auth_token');
+                    const authToken = (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '') || '';
                     const headers = {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
@@ -9548,38 +9793,165 @@
                     if (authToken && authToken !== 'null' && authToken !== 'undefined' && authToken.trim() !== '') {
                         headers['Authorization'] = 'Bearer ' + authToken;
                     }
-                    const response = await fetch(API_BASE_URL + '/web-get-location?search=' + encodeURIComponent(query), {
+
+                    let url = (window.API_BASE_URL || '{{ env("API_URL") }}') + '/web-get-location?search=' + encodeURIComponent(query || filters);
+                    if (filters) {
+                        url += '&filters=' + encodeURIComponent(filters);
+                    }
+
+                    const response = await fetch(url, {
                         method: 'GET',
                         signal: signal,
                         headers: headers
                     });
                     const result = await response.json();
                     if (wrapper) wrapper.classList.remove('is-loading');
-                    if (result.status === 200 && result.data.length > 0) {
-                        let clickFunction = '';
-                        if (target === 'pickup') clickFunction = 'selectPickup';
-                        else if (target === 'dropoff') clickFunction = 'selectDropoff';
-                        const html = result.data.map(loc => `
-                        <div class="suggestion-item" onclick="${clickFunction}('${loc.name.replace(/'/g, "\\'")}', '${loc.types}')">
-                            <i class="fas fa-${getIconForType(loc.types)}"></i>
-                            <span>${loc.name}</span>
-                        </div>
-                    `).join('');
-                        suggestions.innerHTML = html;
-                        suggestions.classList.add('show');
+
+                    if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
+                        let clickFnName = '';
+                        if (target === 'pickup') clickFnName = 'selectPickup';
+                        else if (target === 'dropoff') clickFnName = 'selectDropoff';
+                        else if (target === 'returnPickup') clickFnName = 'selectReturnPickup';
+                        else if (target === 'returnDropoff') clickFnName = 'selectReturnDropoff';
+                        else if (target && target.startsWith('via_')) {
+                            const viaIdx = target.replace('via_', '');
+                            clickFnName = `selectViaPointCustom.bind(null, ${viaIdx})`;
+                        } else {
+                            clickFnName = 'selectPickup';
+                        }
+
+                        let html = '';
+
+                        if (filters && parentLabel) {
+                            html += `
+                                <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
+                                    <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
+                                    <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
+                                </div>
+                            `;
+                        }
+
+                        html += result.data.map(loc => {
+                            const badgeClass = getBadgeClassForType(loc.types, loc.type_label);
+                            const iconName = getIconForLocation(loc);
+                            const safeName = (loc.name || '').replace(/'/g, "\\'");
+                            const safePrimary = escapeHtml(loc.primary_text || loc.name || '');
+                            const safeSecondary = escapeHtml(loc.secondary_text || '');
+                            const badgeLabel = escapeHtml(loc.type_label || (loc.types ? loc.types.replace('_', ' ') : 'Location'));
+                            const hasChildren = ((loc.children && loc.children > 0) || (loc.filters && loc.filters.length > 0)) && !filters;
+
+                            if (hasChildren) {
+                                const filterVal = (loc.filters || loc.primary_text || loc.name).replace(/'/g, "\\'");
+                                const childCountText = loc.children ? `${loc.children} addresses` : 'Addresses';
+                                return `
+                                    <div class="suggestion-item" onclick="drillDownLocation(event, '${filterVal}', '${containerId}', '${target}', '${wrapperId || ''}', '${safeName}')">
+                                        <div class="suggestion-main">
+                                            <div class="item-icon-wrap ${badgeClass}">
+                                                <i class="fas fa-${iconName}"></i>
+                                            </div>
+                                            <div class="item-content">
+                                                <span class="item-primary-text">${safePrimary}</span>
+                                                ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
+                                            </div>
+                                        </div>
+                                        <span class="drilldown-btn-pill" title="View door numbers in this area">
+                                            ${childCountText} <i class="fas fa-chevron-right ms-1"></i>
+                                        </span>
+                                    </div>
+                                `;
+                            }
+
+                            if (filters) {
+                                return `
+                                    <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
+                                        <div class="suggestion-main">
+                                            <div class="item-icon-wrap ${badgeClass}">
+                                                <i class="fas fa-${iconName}"></i>
+                                            </div>
+                                            <div class="item-content" style="justify-content: center;">
+                                                <span class="item-primary-text" style="font-weight: 500; font-size: 13.5px;">${safeName}</span>
+                                            </div>
+                                        </div>
+                                        <span class="type-badge-pill ${badgeClass}">
+                                            ${badgeLabel}
+                                        </span>
+                                    </div>
+                                `;
+                            }
+
+                            return `
+                                <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
+                                    <div class="suggestion-main">
+                                        <div class="item-icon-wrap ${badgeClass}">
+                                            <i class="fas fa-${iconName}"></i>
+                                        </div>
+                                        <div class="item-content">
+                                            <span class="item-primary-text">${safePrimary}</span>
+                                            ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
+                                        </div>
+                                    </div>
+                                    <span class="type-badge-pill ${badgeClass}">
+                                        ${badgeLabel}
+                                    </span>
+                                </div>
+                            `;
+                        }).join('');
+
+                        if (suggestions) {
+                            suggestions.innerHTML = html;
+                            suggestions.classList.add('show');
+                        }
                     } else {
-                        suggestions.innerHTML = `<div class="suggestion-skeleton" style="justify-content:center; color:#999; font-size:13px;">No results found</div>`;
+                        if (suggestions) {
+                            let emptyHtml = '';
+                            if (filters && parentLabel) {
+                                emptyHtml += `
+                                    <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
+                                        <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
+                                        <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
+                                    </div>
+                                `;
+                            }
+                            emptyHtml += `<div class="p-3 text-center" style="color:#94a3b8; font-size:13px;"><i class="fas fa-info-circle me-1"></i> No matching UK locations found</div>`;
+                            suggestions.innerHTML = emptyHtml;
+                            suggestions.classList.add('show');
+                        }
                     }
                 } catch (error) {
-                    if (error.name === 'AbortError') {
-                        // Silently drop aborted requests
-                        return;
-                    }
+                    if (error.name === 'AbortError') return;
                     if (wrapper) wrapper.classList.remove('is-loading');
-                    console.error(error);
-                    suggestions.classList.remove('show');
+                    console.error('Location search error:', error);
+                    if (suggestions) suggestions.classList.remove('show');
                 }
-            }, 300);
+            }, debounceDelay);
+        }
+
+        function drillDownLocation(e, filterVal, containerId, target, wrapperId, parentName) {
+            if (e) {
+                if (typeof e.stopPropagation === 'function') e.stopPropagation();
+                if (typeof e.preventDefault === 'function') e.preventDefault();
+            }
+            handleLocationSearch('', containerId, target, wrapperId, filterVal, parentName);
+        }
+
+        function backToMainSearch(e, containerId) {
+            if (e) {
+                if (typeof e.stopPropagation === 'function') e.stopPropagation();
+                if (typeof e.preventDefault === 'function') e.preventDefault();
+            }
+            const hist = window._locSearchHistory ? window._locSearchHistory[containerId] : null;
+            if (hist && hist.query) {
+                handleLocationSearch(hist.query, containerId, hist.target, hist.wrapperId);
+            } else {
+                const sugg = document.getElementById(containerId);
+                if (sugg) sugg.classList.remove('show');
+            }
+        }
+
+        function selectViaPointCustom(idx, location, type) {
+            if (typeof selectViaPoint === 'function') {
+                selectViaPoint(idx, location);
+            }
         }
         // ============================================================
         // BOOKING STATE MANAGEMENT
@@ -10837,6 +11209,7 @@
                 $('#seaportTimeDropdownBtn').removeClass('active');
             }
             if (!$(e.target).closest('.location-input-field').length && !$(e.target).closest('.location-suggestions').length) {
+                if (e.target && !document.body.contains(e.target)) return;
                 $('.location-suggestions').removeClass('show');
             }
         });
@@ -14369,6 +14742,29 @@
                 const collectionName = '{{ env("FIREBASE_COLLECTION", "uk_dev_jobs") }}';
                 console.log(`[Firebase] Attaching listener to collection: "${collectionName}", doc: "${targetJobNo}"`);
 
+                let isHandledCancellation = false;
+
+                function handleJobCancelledOrMissing() {
+                    if (isHandledCancellation) return;
+                    isHandledCancellation = true;
+
+                    if (driversListener) {
+                        try { driversListener(); } catch (e) { }
+                        driversListener = null;
+                    }
+                    if (typeof bookingExpirationTimer !== 'undefined' && bookingExpirationTimer) {
+                        clearInterval(bookingExpirationTimer);
+                        bookingExpirationTimer = null;
+                    }
+
+                    showToast('Job not found or Job cancelled', 'error');
+                    clearAllBookingSessionData(true);
+
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                }
+
                 driversListener = db.collection(collectionName).doc(targetJobNo)
                     .onSnapshot((doc) => {
                         console.log(`[Firebase] Snapshot received for doc: "${doc.id}", exists: ${doc.exists}`);
@@ -14392,24 +14788,20 @@
                                 });
                             }
 
-                            if (data.status === 'cancel' || data.status === 'cancelled') {
-                                if (BookingStore.getState().currentStep < 5) {
-                                    showToast('Booking already cancelled or no more', 'error');
-                                    setTimeout(() => { window.location.reload(); }, 2000);
-                                }
+                            if (data.status === 'cancel' || data.status === 'cancelled' || data.status === 'cancel_job' || data.status === 'job_cancelled') {
+                                handleJobCancelledOrMissing();
                                 return;
                             }
                             renderRealtimeDrivers(data.bids_details || {});
                         } else {
                             console.warn(`[Firebase] Document "${targetJobNo}" does not exist in collection "${collectionName}".`);
-                            renderRealtimeDrivers({});
-                            if (BookingStore.getState().currentStep < 5) {
-                                showToast('Booking already cancelled or no more', 'error');
-                                setTimeout(() => { window.location.reload(); }, 2000);
-                            }
+                            handleJobCancelledOrMissing();
                         }
                     }, (error) => {
                         console.error("[Firebase] Error listening to bids: ", error);
+                        if (error && (error.code === 'permission-denied' || error.code === 'not-found')) {
+                            handleJobCancelledOrMissing();
+                        }
                     });
             }
 

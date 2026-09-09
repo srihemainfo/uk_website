@@ -1,0 +1,172 @@
+================================================================================
+GORIDE UK - DYNAMIC SEO SYSTEM DOCUMENTATION
+================================================================================
+
+1. OVERVIEW
+--------------------------------------------------------------------------------
+This system dynamically manages and renders SEO metadata (Meta Titles,
+Descriptions, Keywords, Canonical URLs, Open Graph tags, Twitter Cards,
+and JSON-LD Structured Data Schema) from a single JSON configuration file.
+
+Whenever a user visits any page (e.g. /uk, /uk/about, /about, /uk/contact, etc.),
+the system automatically matches the current URL or route name, fetches the 
+metadata from `seo.json`, and outputs valid SEO HTML tags in the `<head>` section.
+
+
+2. FILE STRUCTURE
+--------------------------------------------------------------------------------
+The dynamic SEO implementation consists of the following files:
+
+1. Metadata JSON File:
+   -> resources/data/seo.json
+   Contains all SEO configurations (titles, descriptions, keywords, images, slugs).
+
+2. SEO Service Class:
+   -> app/Services/SeoService.php
+   The PHP service that reads the JSON file, detects the current route/URL,
+   handles fallback rules, and prepares OpenGraph and Schema data.
+
+3. Blade Partial:
+   -> resources/views/partials/seo.blade.php
+   The Blade template that renders <title>, <meta>, <link rel="canonical">, 
+   Open Graph, Twitter Card, and JSON-LD <script> tags.
+
+4. Main App Layout:
+   -> resources/views/layouts/app.blade.php
+   Includes `@include('partials.seo')` inside the HTML <head> section.
+
+5. Route Definitions:
+   -> routes/web.php
+   Configures both standard paths (/) and /uk paths (/uk/about, /uk/contact, etc.).
+
+
+3. HOW THE JSON CONFIGURATION WORKS
+--------------------------------------------------------------------------------
+File: resources/data/seo.json
+
+Each page entry contains:
+- "slug": The primary URL path for this page (e.g., "/uk/about")
+- "route_names": Array of route names matching this entry (e.g., ["about", "uk.about"])
+- "paths": Array of request paths matching this page (e.g., ["/about", "/uk/about"])
+- "title": Meta Title
+- "description": Meta Description
+- "keywords": Comma-separated Meta Keywords
+- "og_type": OpenGraph type ("website", "article", or "blog")
+- "og_image": Relative or absolute URL of the preview image
+
+Example Entry:
+--------------------------------------------------------------------------------
+"about": {
+    "slug": "/uk/about",
+    "route_names": ["about", "uk.about"],
+    "paths": ["/about", "/uk/about", "about", "uk/about"],
+    "title": "About GoRide UK – Taxi & Private Hire Booking Platform",
+    "description": "Learn about GoRide UK, a convenient taxi and private hire booking platform connecting passengers with reliable transport services across the UK.",
+    "keywords": "GoRide UK, about GoRide, UK taxi platform, private hire UK, taxi booking platform, cab booking UK, transport services UK",
+    "og_type": "website",
+    "og_image": "/goride/img/logo-dark.png"
+}
+
+
+4. HOW DYNAMIC DETECTION WORKS (SeoService.php)
+--------------------------------------------------------------------------------
+When a page loads, `App\Services\SeoService::get()` resolves the metadata using
+the following priority order:
+
+Step 1: Direct Key Match
+  If a custom key is passed (e.g., SeoService::get('contact')), it uses that entry.
+
+Step 2: Route Name Match
+  Checks `Route::currentRouteName()`. If the route is 'about' or 'uk.about',
+  it loads the 'about' metadata.
+
+Step 3: Exact URL / Path Match
+  Checks `request()->path()` or `request()->getRequestUri()`.
+  Matches paths like '/uk/contact', '/contact', etc.
+
+Step 4: Normalized UK Prefix Fallback
+  If a URL has or lacks the 'uk/' prefix (e.g. 'uk/privacy' or 'privacy'),
+  it automatically normalizes and finds the right entry.
+
+Step 5: Default Fallback
+  If no match is found, it safely falls back to the Home page configuration.
+
+
+5. OUTPUT GENERATED IN THE HTML HEAD
+--------------------------------------------------------------------------------
+For every page load, `resources/views/partials/seo.blade.php` generates:
+
+1. Primary Meta Tags:
+   <title>...</title>
+   <meta name="title" content="...">
+   <meta name="description" content="...">
+   <meta name="keywords" content="...">
+   <meta name="robots" content="index, follow">
+   <link rel="canonical" href="https://example.com/uk/about">
+
+2. Social Media Open Graph (Facebook / WhatsApp / LinkedIn):
+   <meta property="og:type" content="website">
+   <meta property="og:url" content="http://uk-website.127.0.0.1.nip.io/uk/about">
+   <meta property="og:title" content="...">
+   <meta property="og:description" content="...">
+   <meta property="og:image" content="http://uk-website.127.0.0.1.nip.io/uk/goride/img/logo-dark.png">
+   <meta property="og:site_name" content="GoRide UK">
+   <meta property="og:locale" content="en_GB">
+
+   Note: `og:image` automatically prefixes with `env('WEBSITE_APP_URL')` and `env('COUNTRY_SLUG_II')` (e.g. `http://.../uk/goride/img/...`).
+
+3. Twitter Card:
+   <meta name="twitter:card" content="summary_large_image">
+   <meta name="twitter:url" content="...">
+   <meta name="twitter:title" content="...">
+   <meta name="twitter:description" content="...">
+   <meta name="twitter:image" content="...">
+
+4. Google Structured Data (JSON-LD Schema):
+   <script type="application/ld+json">
+   {
+       "@context": "https://schema.org",
+       "@graph": [
+           { "@type": "Organization", "name": "GoRide UK", ... },
+           { "@type": "WebSite", "name": "GoRide UK", ... },
+           { "@type": "WebPage", "name": "...", "description": "...", ... }
+       ]
+   }
+   </script>
+
+
+6. HOW TO ADD OR EDIT META DATA IN THE FUTURE
+--------------------------------------------------------------------------------
+To update any page's meta title, description, or keywords:
+1. Open `resources/data/seo.json`.
+2. Find the page key (e.g., "about", "contact", "blog", "privacy", "terms", "home").
+3. Update the text values.
+4. Save the file. The changes will immediately reflect on the website.
+
+To add a new page (e.g. "faq"):
+1. Add a new JSON block inside `resources/data/seo.json`:
+   "faq": {
+       "slug": "/uk/faq",
+       "route_names": ["faq", "uk.faq"],
+       "paths": ["/faq", "/uk/faq"],
+       "title": "GoRide UK FAQ – Frequently Asked Questions",
+       "description": "Find answers to frequently asked questions about GoRide UK rides and bookings.",
+       "keywords": "GoRide FAQ, UK taxi questions, booking help",
+       "og_type": "website",
+       "og_image": "/goride/img/logo-dark.png"
+   }
+2. Define the route in `routes/web.php`.
+
+
+7. HOW TO OVERRIDE METADATA FOR A SPECIFIC BLADE VIEW (OPTIONAL)
+--------------------------------------------------------------------------------
+If you ever want a specific Blade template to override the default JSON values
+(e.g., a specific blog post details page):
+
+In your Blade file (e.g., `blog-details.blade.php`):
+@section('meta_title', 'My Custom Blog Post Title - GoRide UK')
+@section('meta_description', 'Custom blog description here...')
+@section('meta_keywords', 'custom, keywords, here')
+
+The `partials/seo.blade.php` template will automatically prioritize these sections.
+================================================================================

@@ -1,0 +1,62 @@
+{
+    "home": {
+        "slug": "/uk",
+        "route_names": ["home", "uk.home"],
+        "paths": ["/", "/uk", "uk"],
+        "title": "GoRide UK - Taxi, Cab & Airport Transfer Booking",
+        "description": "Book reliable taxis, cabs and airport transfers across the UK with GoRide. Get competitive fares, choose your preferred vehicle and book your ride online with ease.",
+        "keywords": "GoRide UK, taxi booking UK, cab booking UK, airport transfer UK, UK taxi service, private hire taxi, airport taxi UK, online taxi booking",
+        "og_type": "website",
+        "og_image": "/goride/img/logo-dark.png"
+    },
+    "about": {
+        "slug": "/uk/about",
+        "route_names": ["about", "uk.about"],
+        "paths": ["/about", "/uk/about", "about", "uk/about"],
+        "title": "About GoRide UK - Taxi & Private Hire Booking Platform",
+        "description": "Learn about GoRide UK, a convenient taxi and private hire booking platform connecting passengers with reliable transport services across the UK.",
+        "keywords": "GoRide UK, about GoRide, UK taxi platform, private hire UK, taxi booking platform, cab booking UK, transport services UK",
+        "og_type": "website",
+        "og_image": "/goride/img/logo-dark.png"
+    },
+    "contact": {
+        "slug": "/uk/contact",
+        "route_names": ["contact", "uk.contact"],
+        "paths": ["/contact", "/uk/contact", "contact", "uk/contact"],
+        "title": "Contact GoRide UK - Taxi & Cab Booking Support",
+        "description": "Contact GoRide UK for assistance with taxi bookings, airport transfers, private hire services and general enquiries. Our team is here to help.",
+        "keywords": "GoRide contact, GoRide UK contact, taxi booking support UK, cab booking support, airport transfer support, private hire support UK",
+        "og_type": "website",
+        "og_image": "/goride/img/logo-dark.png"
+    },
+    "blog": {
+        "slug": "/uk/blog",
+        "route_names": ["blog", "uk.blog"],
+        "paths": ["/blog", "/uk/blog", "blog", "uk/blog"],
+        "title": "GoRide UK Blog - Taxi, Travel & Transport Tips",
+        "description": "Explore the GoRide UK blog for taxi booking tips, airport transfer guides, travel advice, UK transport updates and useful information for passengers and drivers.",
+        "keywords": "GoRide UK blog, UK taxi blog, taxi travel tips, airport transfer tips, UK travel guide, transport tips UK, taxi booking guide",
+        "og_type": "blog",
+        "og_image": "/goride/img/blog-main-banner.webp"
+    },
+    "privacy": {
+        "slug": "/uk/privacy",
+        "route_names": ["privacy", "uk.privacy"],
+        "paths": ["/privacy", "/uk/privacy", "privacy", "uk/privacy"],
+        "title": "GoRide UK Privacy Policy - Your Data & Privacy",
+        "description": "Read the GoRide UK Privacy Policy to understand how we collect, use, store and protect your personal information when you use our website and services.",
+        "keywords": "GoRide privacy policy, GoRide UK privacy, taxi app privacy policy, data protection UK, passenger data privacy",
+        "og_type": "website",
+        "og_image": "/goride/img/logo-dark.png"
+    },
+    "terms": {
+        "slug": "/uk/terms",
+        "route_names": ["terms", "uk.terms"],
+        "paths": ["/terms", "/uk/terms", "terms", "uk/terms"],
+        "title": "GoRide UK Terms & Conditions - Taxi Booking Services",
+        "description": "Read the GoRide UK Terms and Conditions covering taxi bookings, private hire services, payments, cancellations, customer responsibilities and use of the GoRide platform.",
+        "keywords": "GoRide terms, GoRide UK terms, taxi booking terms UK, private hire terms, taxi service terms, booking terms and conditions",
+        "og_type": "website",
+        "og_image": "/goride/img/logo-dark.png"
+    }
+}

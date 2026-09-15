@@ -1193,6 +1193,21 @@
             border-color: #4f46e5;
         }
 
+        .postcode-inline-street {
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 768px) {
+            .postcode-inline-street {
+                display: none !important;
+            }
+        }
+
         .drilldown-header {
             display: flex;
             align-items: center;
@@ -9710,6 +9725,116 @@
         let searchAbortControllers = {};
         let searchTimeouts = {};
         window._locSearchHistory = window._locSearchHistory || {};
+        window._locClientCache = window._locClientCache || {};
+
+        function renderLocationSuggestions(data, containerId, target, wrapperId, filters = '', parentLabel = '') {
+            const suggestions = document.getElementById(containerId);
+            const wrapper = wrapperId ? document.getElementById(wrapperId) : null;
+            if (wrapper) wrapper.classList.remove('is-loading');
+            if (!suggestions) return;
+
+            if (Array.isArray(data) && data.length > 0) {
+                let clickFnName = '';
+                if (target === 'pickup') clickFnName = 'selectPickup';
+                else if (target === 'dropoff') clickFnName = 'selectDropoff';
+                else if (target === 'returnPickup') clickFnName = 'selectReturnPickup';
+                else if (target === 'returnDropoff') clickFnName = 'selectReturnDropoff';
+                else if (target && target.startsWith('via_')) {
+                    const viaIdx = target.replace('via_', '');
+                    clickFnName = `selectViaPointCustom.bind(null, ${viaIdx})`;
+                } else {
+                    clickFnName = 'selectPickup';
+                }
+
+                let html = '';
+
+                if (filters && parentLabel) {
+                    html += `
+                        <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
+                            <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
+                            <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
+                        </div>
+                    `;
+                }
+
+                html += data.map(loc => {
+                    const badgeClass = getBadgeClassForType(loc.types, loc.type_label);
+                    const iconName = getIconForLocation(loc);
+                    const safeName = (loc.name || '').replace(/'/g, "\\'");
+                    const safePrimary = escapeHtml(loc.primary_text || loc.name || '');
+                    const safeSecondary = escapeHtml(loc.secondary_text || '');
+                    const hasChildren = ((loc.children && loc.children > 0) || (loc.filters && loc.filters.length > 0)) && !filters;
+
+                    if (hasChildren) {
+                        const filterVal = (loc.filters || loc.primary_text || loc.name).replace(/'/g, "\\'");
+                        const childCountText = loc.children ? `${loc.children} addresses` : 'Addresses';
+                        return `
+                            <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'postcode'}')">
+                                <div class="suggestion-main">
+                                    <div class="item-icon-wrap ${badgeClass}">
+                                        <i class="fas fa-${iconName}"></i>
+                                    </div>
+                                    <div class="item-content">
+                                        <div style="display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden;">
+                                            <span class="item-primary-text">${safePrimary}</span>
+                                            ${safeSecondary ? `<span class="item-secondary-text postcode-inline-street" style="font-size: 13px; font-weight: 500; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${safeSecondary}</span>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="drilldown-btn-pill" onclick="event.stopPropagation(); drillDownLocation(event, '${filterVal}', '${containerId}', '${target}', '${wrapperId || ''}', '${safeName}')" title="View door numbers in this area">
+                                    ${childCountText} <i class="fas fa-chevron-right ms-1"></i>
+                                </span>
+                            </div>
+                        `;
+                    }
+
+                    if (filters) {
+                        return `
+                            <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
+                                <div class="suggestion-main">
+                                    <div class="item-icon-wrap ${badgeClass}">
+                                        <i class="fas fa-${iconName}"></i>
+                                    </div>
+                                    <div class="item-content" style="justify-content: center;">
+                                        <span class="item-primary-text" style="font-weight: 500; font-size: 13.5px;">${safeName}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    return `
+                        <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
+                            <div class="suggestion-main">
+                                <div class="item-icon-wrap ${badgeClass}">
+                                    <i class="fas fa-${iconName}"></i>
+                                </div>
+                                <div class="item-content">
+                                    <span class="item-primary-text">${safePrimary}</span>
+                                    ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                suggestions.innerHTML = html;
+                suggestions.classList.add('show');
+            } else {
+                let emptyHtml = '';
+                if (filters && parentLabel) {
+                    emptyHtml += `
+                        <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
+                            <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
+                            <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
+                        </div>
+                    `;
+                }
+                emptyHtml += `<div class="p-3 text-center" style="color:#94a3b8; font-size:13px;"><i class="fas fa-info-circle me-1"></i> No matching UK locations found</div>`;
+                suggestions.innerHTML = emptyHtml;
+                suggestions.classList.add('show');
+            }
+        }
 
         async function handleLocationSearch(query, containerId, target, wrapperId, filters = '', parentLabel = '') {
             const suggestions = document.getElementById(containerId);
@@ -9735,6 +9860,19 @@
                     target: target,
                     wrapperId: wrapperId
                 };
+            }
+
+            // Instant Client-Side Cache Hit (0ms)
+            const clientCacheKey = filters ? ('f:' + filters.trim()) : ('q:' + (query || '').toLowerCase().trim());
+            if (window._locClientCache[clientCacheKey]) {
+                if (searchTimeouts[containerId]) {
+                    clearTimeout(searchTimeouts[containerId]);
+                }
+                if (searchAbortControllers[containerId]) {
+                    searchAbortControllers[containerId].abort();
+                }
+                renderLocationSuggestions(window._locClientCache[clientCacheKey], containerId, target, wrapperId, filters, parentLabel);
+                return;
             }
 
             // Abort previous in-flight request for this container
@@ -9772,137 +9910,32 @@
                 clearTimeout(searchTimeouts[containerId]);
             }
 
-            const debounceDelay = filters ? 0 : 250;
+            // 120ms debounce for rapid typing, 0ms for drill-down filters
+            const debounceDelay = filters ? 0 : 120;
 
             searchTimeouts[containerId] = setTimeout(async () => {
                 try {
-                    const authToken = (typeof getCookieValue === 'function' ? getCookieValue('auth_token') : '') || '';
-                    const headers = {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    };
-                    if (authToken && authToken !== 'null' && authToken !== 'undefined' && authToken.trim() !== '') {
-                        headers['Authorization'] = 'Bearer ' + authToken;
-                    }
-
                     let url = (window.API_BASE_URL || '{{ env("API_URL") }}') + '/web-get-location?search=' + encodeURIComponent(query || filters);
                     if (filters) {
                         url += '&filters=' + encodeURIComponent(filters);
                     }
 
+                    // Simple CORS GET: Omit custom Content-Type & Authorization headers to eliminate browser OPTIONS preflight check
                     const response = await fetch(url, {
                         method: 'GET',
                         signal: signal,
-                        headers: headers
+                        headers: {
+                            'Accept': 'application/json'
+                        }
                     });
                     const result = await response.json();
                     if (wrapper) wrapper.classList.remove('is-loading');
 
-                    if (result.status === 200 && Array.isArray(result.data) && result.data.length > 0) {
-                        let clickFnName = '';
-                        if (target === 'pickup') clickFnName = 'selectPickup';
-                        else if (target === 'dropoff') clickFnName = 'selectDropoff';
-                        else if (target === 'returnPickup') clickFnName = 'selectReturnPickup';
-                        else if (target === 'returnDropoff') clickFnName = 'selectReturnDropoff';
-                        else if (target && target.startsWith('via_')) {
-                            const viaIdx = target.replace('via_', '');
-                            clickFnName = `selectViaPointCustom.bind(null, ${viaIdx})`;
-                        } else {
-                            clickFnName = 'selectPickup';
-                        }
-
-                        let html = '';
-
-                        if (filters && parentLabel) {
-                            html += `
-                                <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
-                                    <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
-                                    <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
-                                </div>
-                            `;
-                        }
-
-                        html += result.data.map(loc => {
-                            const badgeClass = getBadgeClassForType(loc.types, loc.type_label);
-                            const iconName = getIconForLocation(loc);
-                            const safeName = (loc.name || '').replace(/'/g, "\\'");
-                            const safePrimary = escapeHtml(loc.primary_text || loc.name || '');
-                            const safeSecondary = escapeHtml(loc.secondary_text || '');
-                            const badgeLabel = escapeHtml(loc.type_label || (loc.types ? loc.types.replace('_', ' ') : 'Location'));
-                            const hasChildren = ((loc.children && loc.children > 0) || (loc.filters && loc.filters.length > 0)) && !filters;
-
-                            if (hasChildren) {
-                                const filterVal = (loc.filters || loc.primary_text || loc.name).replace(/'/g, "\\'");
-                                const childCountText = loc.children ? `${loc.children} addresses` : 'Addresses';
-                                return `
-                                    <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'postcode'}')">
-                                        <div class="suggestion-main">
-                                            <div class="item-icon-wrap ${badgeClass}">
-                                                <i class="fas fa-${iconName}"></i>
-                                            </div>
-                                            <div class="item-content">
-                                                <div style="display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden;">
-                                                    <span class="item-primary-text">${safePrimary}</span>
-                                                    ${safeSecondary ? `<span class="item-secondary-text" style="font-size: 13px; font-weight: 500; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${safeSecondary}</span>` : ''}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="drilldown-btn-pill" onclick="event.stopPropagation(); drillDownLocation(event, '${filterVal}', '${containerId}', '${target}', '${wrapperId || ''}', '${safeName}')" title="View door numbers in this area">
-                                            ${childCountText} <i class="fas fa-chevron-right ms-1"></i>
-                                        </span>
-                                    </div>
-                                `;
-                            }
-
-                            if (filters) {
-                                return `
-                                    <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
-                                        <div class="suggestion-main">
-                                            <div class="item-icon-wrap ${badgeClass}">
-                                                <i class="fas fa-${iconName}"></i>
-                                            </div>
-                                            <div class="item-content" style="justify-content: center;">
-                                                <span class="item-primary-text" style="font-weight: 500; font-size: 13.5px;">${safeName}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                `;
-                            }
-
-                            return `
-                                <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'address'}')">
-                                    <div class="suggestion-main">
-                                        <div class="item-icon-wrap ${badgeClass}">
-                                            <i class="fas fa-${iconName}"></i>
-                                        </div>
-                                        <div class="item-content">
-                                            <span class="item-primary-text">${safePrimary}</span>
-                                            ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('');
-
-                        if (suggestions) {
-                            suggestions.innerHTML = html;
-                            suggestions.classList.add('show');
-                        }
+                    if (result.status === 200 && Array.isArray(result.data)) {
+                        window._locClientCache[clientCacheKey] = result.data;
+                        renderLocationSuggestions(result.data, containerId, target, wrapperId, filters, parentLabel);
                     } else {
-                        if (suggestions) {
-                            let emptyHtml = '';
-                            if (filters && parentLabel) {
-                                emptyHtml += `
-                                    <div class="drilldown-header" onclick="backToMainSearch(event, '${containerId}')">
-                                        <div class="drilldown-back-btn"><i class="fas fa-chevron-left"></i> Back to search results</div>
-                                        <span class="drilldown-header-title">${escapeHtml(parentLabel)}</span>
-                                    </div>
-                                `;
-                            }
-                            emptyHtml += `<div class="p-3 text-center" style="color:#94a3b8; font-size:13px;"><i class="fas fa-info-circle me-1"></i> No matching UK locations found</div>`;
-                            suggestions.innerHTML = emptyHtml;
-                            suggestions.classList.add('show');
-                        }
+                        renderLocationSuggestions([], containerId, target, wrapperId, filters, parentLabel);
                     }
                 } catch (error) {
                     if (error.name === 'AbortError') return;

@@ -1159,16 +1159,7 @@
         }
 
         .type-badge-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            white-space: nowrap;
-            letter-spacing: 0.2px;
-            flex-shrink: 0;
+            display: none !important;
         }
 
         .type-badge-pill.terminal { background: #f3e8ff; color: #7e22ce; }
@@ -9872,9 +9863,6 @@
                                                 <span class="item-primary-text" style="font-weight: 500; font-size: 13.5px;">${safeName}</span>
                                             </div>
                                         </div>
-                                        <span class="type-badge-pill ${badgeClass}">
-                                            ${badgeLabel}
-                                        </span>
                                     </div>
                                 `;
                             }
@@ -9890,9 +9878,6 @@
                                             ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
                                         </div>
                                     </div>
-                                    <span class="type-badge-pill ${badgeClass}">
-                                        ${badgeLabel}
-                                    </span>
                                 </div>
                             `;
                         }).join('');

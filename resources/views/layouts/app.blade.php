@@ -9835,17 +9835,19 @@
                                 const filterVal = (loc.filters || loc.primary_text || loc.name).replace(/'/g, "\\'");
                                 const childCountText = loc.children ? `${loc.children} addresses` : 'Addresses';
                                 return `
-                                    <div class="suggestion-item" onclick="drillDownLocation(event, '${filterVal}', '${containerId}', '${target}', '${wrapperId || ''}', '${safeName}')">
+                                    <div class="suggestion-item" onclick="${clickFnName}('${safeName}', '${loc.types || 'postcode'}')">
                                         <div class="suggestion-main">
                                             <div class="item-icon-wrap ${badgeClass}">
                                                 <i class="fas fa-${iconName}"></i>
                                             </div>
                                             <div class="item-content">
-                                                <span class="item-primary-text">${safePrimary}</span>
-                                                ${safeSecondary ? `<span class="item-secondary-text">${safeSecondary}</span>` : ''}
+                                                <div style="display: flex; align-items: baseline; gap: 8px; min-width: 0; overflow: hidden;">
+                                                    <span class="item-primary-text">${safePrimary}</span>
+                                                    ${safeSecondary ? `<span class="item-secondary-text" style="font-size: 13px; font-weight: 500; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${safeSecondary}</span>` : ''}
+                                                </div>
                                             </div>
                                         </div>
-                                        <span class="drilldown-btn-pill" title="View door numbers in this area">
+                                        <span class="drilldown-btn-pill" onclick="event.stopPropagation(); drillDownLocation(event, '${filterVal}', '${containerId}', '${target}', '${wrapperId || ''}', '${safeName}')" title="View door numbers in this area">
                                             ${childCountText} <i class="fas fa-chevron-right ms-1"></i>
                                         </span>
                                     </div>

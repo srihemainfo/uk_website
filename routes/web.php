@@ -127,6 +127,14 @@ Route::prefix('uk')->name('uk.')->group(function () {
         return response()->view('errors.404', [], 404);
     })->name('404');
 
+    Route::get('/maintenance', function () {
+        return response()->view('errors.503', [], 503);
+    })->name('maintenance');
+
+    Route::get('/under-maintenance', function () {
+        return response()->view('errors.503', [], 503);
+    })->name('under-maintenance');
+
     // Dynamic Landing Pages (e.g. /uk/car-rental, /uk/heathrow-to-sutton)
     Route::get('/car-rental', [DynamicPageController::class, 'showCarRental'])->name('car-rental');
     Route::get('/transfers/{slug}', [DynamicPageController::class, 'showTransferRoute'])->name('transfers.route');
@@ -136,6 +144,14 @@ Route::prefix('uk')->name('uk.')->group(function () {
 Route::get('/404', function () {
     return response()->view('errors.404', [], 404);
 })->name('404');
+
+Route::get('/maintenance', function () {
+    return response()->view('errors.503', [], 503);
+})->name('maintenance');
+
+Route::get('/under-maintenance', function () {
+    return response()->view('errors.503', [], 503);
+})->name('under-maintenance');
 
 Route::post('/submit-contact', [UtilityController::class, 'submitContactForm'])->name('contact.submit');
 

@@ -686,25 +686,22 @@
         transition: all 0.3s ease;
     }
 
-    .faq-question:focus {
-        outline: none;
-    }
+    .faq-question:focus,
+.faq-question:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+   .faq-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    color: #000000;
+}
 
-    .faq-icon {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 24px;
-        height: 24px;
-        font-size: 14px;
-        color: #000000;
-        transition: transform 0.3s ease;
-    }
-
-    .faq-question.active .faq-icon {
-        transform: rotate(180deg);
-    }
 
     .faq-answer {
         max-height: 0;
@@ -1513,18 +1510,33 @@
 @endif
 
 <script>
-    function toggleFaq(button) {
-        const faqItem = button.parentElement;
-        const faqAnswer = button.nextElementSibling;
-        const allItems = document.querySelectorAll('.faq-item');
-        allItems.forEach(item => {
-            if (item !== faqItem) {
-                item.querySelector('.faq-question').classList.remove('active');
-                item.querySelector('.faq-answer').classList.remove('show');
-            }
-        });
-        button.classList.toggle('active');
-        faqAnswer.classList.toggle('show');
+   function toggleFaq(button) {
+    const faqItem = button.parentElement;
+    const faqAnswer = button.nextElementSibling;
+    const faqIcon = button.querySelector('.faq-icon i');
+    const allItems = document.querySelectorAll('.faq-item');
+
+    allItems.forEach(item => {
+        if (item !== faqItem) {
+            item.querySelector('.faq-question').classList.remove('active');
+            item.querySelector('.faq-answer').classList.remove('show');
+
+            const icon = item.querySelector('.faq-icon i');
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    });
+
+    const isOpen = button.classList.toggle('active');
+    faqAnswer.classList.toggle('show');
+
+    if (isOpen) {
+        faqIcon.classList.remove('fa-chevron-down');
+        faqIcon.classList.add('fa-chevron-up');
+    } else {
+        faqIcon.classList.remove('fa-chevron-up');
+        faqIcon.classList.add('fa-chevron-down');
     }
+}
 </script>
 @endsection

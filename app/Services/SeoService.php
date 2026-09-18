@@ -118,7 +118,15 @@ class SeoService
 
         $rawHost = request()->header('X-Forwarded-Host') ?: request()->getHost();
         $cleanHost = strtolower(trim(preg_replace('/:\d+$/', '', explode(',', $rawHost)[0])));
-        $isUkHost = ($cleanHost === 'uk.goride.run' || $cleanHost === 'www.uk.goride.run');
+        $ukHosts = [
+            'uk.goride.run',
+            'www.uk.goride.run',
+            'goride.uk',
+            'www.goride.uk',
+            'in.goride.uk',
+            'www.in.goride.uk',
+        ];
+        $isUkHost = in_array($cleanHost, $ukHosts, true);
 
         if ($isUkHost) {
             $robots = 'noindex, nofollow';

@@ -1284,7 +1284,7 @@
                             <div class="faq-item">
                                 <button class="faq-question {{ $fIdx === 0 ? 'active' : '' }}" onclick="toggleFaq(this)">
                                     {{ $faq['q'] ?? '' }}
-                                    <span class="faq-icon"><i class="fas fa-chevron-up"></i></span>
+                                   <span class="faq-icon"><i class="fas {{ $fIdx === 0 ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
                                 </button>
                                 <div class="faq-answer {{ $fIdx === 0 ? 'show' : '' }}">
                                     {{ $faq['a'] ?? '' }}

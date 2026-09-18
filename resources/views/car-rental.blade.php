@@ -691,7 +691,7 @@
     outline: none !important;
     box-shadow: none !important;
 }
-   .faq-icon {
+.faq-icon {
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -702,6 +702,10 @@
     color: #000000;
 }
 
+.faq-icon i {
+    transform: none !important;
+    transition: none !important;
+}
 
     .faq-answer {
         max-height: 0;
@@ -1510,32 +1514,41 @@
 @endif
 
 <script>
-   function toggleFaq(button) {
+  function toggleFaq(button) {
     const faqItem = button.parentElement;
     const faqAnswer = button.nextElementSibling;
     const faqIcon = button.querySelector('.faq-icon i');
-    const allItems = document.querySelectorAll('.faq-item');
 
-    allItems.forEach(item => {
+    // Close all other FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
         if (item !== faqItem) {
-            item.querySelector('.faq-question').classList.remove('active');
-            item.querySelector('.faq-answer').classList.remove('show');
+            const otherButton = item.querySelector('.faq-question');
+            const otherAnswer = item.querySelector('.faq-answer');
+            const otherIcon = item.querySelector('.faq-icon i');
 
-            const icon = item.querySelector('.faq-icon i');
-            icon.classList.remove('fa-chevron-up');
-            icon.classList.add('fa-chevron-down');
+            otherButton.classList.remove('active');
+            otherAnswer.classList.remove('show');
+
+            // Always show DOWN arrow for closed FAQ
+            otherIcon.className = 'fas fa-chevron-down';
         }
     });
 
-    const isOpen = button.classList.toggle('active');
-    faqAnswer.classList.toggle('show');
+    // Open / close current FAQ
+    const isOpen = !faqAnswer.classList.contains('show');
 
     if (isOpen) {
-        faqIcon.classList.remove('fa-chevron-down');
-        faqIcon.classList.add('fa-chevron-up');
+        faqAnswer.classList.add('show');
+        button.classList.add('active');
+
+        // OPEN = UP arrow
+        faqIcon.className = 'fas fa-chevron-up';
     } else {
-        faqIcon.classList.remove('fa-chevron-up');
-        faqIcon.classList.add('fa-chevron-down');
+        faqAnswer.classList.remove('show');
+        button.classList.remove('active');
+
+        // CLOSED = DOWN arrow
+        faqIcon.className = 'fas fa-chevron-down';
     }
 }
 </script>

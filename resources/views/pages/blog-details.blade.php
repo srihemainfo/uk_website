@@ -1571,7 +1571,7 @@ input#exampleInputEmail1 {
                     <i class="fab fa-facebook-f text-white"></i>
                 </a>
                 <a href="#" class="twitter share-btn" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-x-twitter text-white"></i>
+                    <span style="font-weight: 800; font-size: 18px; color: white;">𝕏</span>
                 </a>
                 <a href="#" class="instagram share-btn native-share" rel="noopener noreferrer">
                     <i class="fab fa-instagram text-white"></i>

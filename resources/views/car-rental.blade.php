@@ -707,22 +707,17 @@
     transition: none !important;
 }
 
-    .faq-answer {
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-        background: #f9f9f9;
-        color: #504533;
-        font-size: 15px;
-        line-height: 24px;
-    }
+  .faq-answer {
+    display: none;
+    color: #504533;
+    font-size: 15px;
+    line-height: 24px;
+    padding: 0;
+}
 
-    .faq-answer.show {
-        max-height: 500px;
-        opacity: 1;
-        padding: 0px;
-    }
+.faq-answer.show {
+    display: block;
+}
 
     @media (max-width: 991px) {
 
@@ -1289,7 +1284,7 @@
                             <div class="faq-item">
                                 <button class="faq-question {{ $fIdx === 0 ? 'active' : '' }}" onclick="toggleFaq(this)">
                                     {{ $faq['q'] ?? '' }}
-                                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                                    <span class="faq-icon"><i class="fas fa-chevron-up"></i></span>
                                 </button>
                                 <div class="faq-answer {{ $fIdx === 0 ? 'show' : '' }}">
                                     {{ $faq['a'] ?? '' }}
@@ -1514,42 +1509,41 @@
 @endif
 
 <script>
-  function toggleFaq(button) {
-    const faqItem = button.parentElement;
-    const faqAnswer = button.nextElementSibling;
-    const faqIcon = button.querySelector('.faq-icon i');
+function toggleFaq(button) {
+
+    const faqItem = button.closest('.faq-item');
+    const answer = faqItem.querySelector('.faq-answer');
+    const icon = faqItem.querySelector('.faq-icon i');
+
+    // If this FAQ is already open → CLOSE it
+    if (answer.classList.contains('show')) {
+
+        answer.classList.remove('show');
+        button.classList.remove('active');
+
+        icon.className = 'fas fa-chevron-down';
+
+        return;
+    }
 
     // Close all other FAQs
     document.querySelectorAll('.faq-item').forEach(item => {
-        if (item !== faqItem) {
-            const otherButton = item.querySelector('.faq-question');
-            const otherAnswer = item.querySelector('.faq-answer');
-            const otherIcon = item.querySelector('.faq-icon i');
 
-            otherButton.classList.remove('active');
-            otherAnswer.classList.remove('show');
+        const otherButton = item.querySelector('.faq-question');
+        const otherAnswer = item.querySelector('.faq-answer');
+        const otherIcon = item.querySelector('.faq-icon i');
 
-            // Always show DOWN arrow for closed FAQ
-            otherIcon.className = 'fas fa-chevron-down';
-        }
+        otherAnswer.classList.remove('show');
+        otherButton.classList.remove('active');
+        otherIcon.className = 'fas fa-chevron-down';
+
     });
 
-    // Open / close current FAQ
-    const isOpen = !faqAnswer.classList.contains('show');
+    // Open clicked FAQ
+    answer.classList.add('show');
+    button.classList.add('active');
 
-    if (isOpen) {
-        faqAnswer.classList.add('show');
-        button.classList.add('active');
-
-        // OPEN = UP arrow
-        faqIcon.className = 'fas fa-chevron-up';
-    } else {
-        faqAnswer.classList.remove('show');
-        button.classList.remove('active');
-
-        // CLOSED = DOWN arrow
-        faqIcon.className = 'fas fa-chevron-down';
-    }
+    icon.className = 'fas fa-chevron-up';
 }
 </script>
 @endsection

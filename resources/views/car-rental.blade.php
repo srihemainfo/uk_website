@@ -278,7 +278,7 @@
 
     .content-card h2 {
         margin-top: 0;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
 
         font-size: 32px;
 
@@ -644,7 +644,7 @@
 
     .faq-section {
         background: #f9f9f9;
-        padding: 60px 0;
+        padding: 30px 0;
     }
 
     .faq-section .container {
@@ -702,9 +702,13 @@
     color: #000000;
 }
 
-.faq-icon i {
-    transform: none !important;
-    transition: none !important;
+.faq-icon i, .faq-icon svg {
+    transition: transform 0.3s ease !important;
+}
+
+.faq-question.active .faq-icon i,
+.faq-question.active .faq-icon svg {
+    transform: rotate(180deg) !important;
 }
 
   .faq-answer {
@@ -1019,9 +1023,9 @@
 .cta-banner-section {
     background: #000000;
     color: #ffffff;
-    padding: 60px 0;
+    padding: 40px 0;
     border-radius: 24px;
-    margin: 40px auto;
+    margin: 25px auto;
 }
 .cta-banner-section h2 {
     color: #ffffff;
@@ -1054,7 +1058,7 @@
 .step-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 24px;
+    padding: 20px;
     border: 1px solid rgba(226, 226, 226, 0.7);
     height: 100%;
     position: relative;
@@ -1097,7 +1101,7 @@
                                 @if(!empty($sec['badge']))
                                     <span class="section-label">{{ $sec['badge'] }}</span>
                                 @endif
-                                <h2>{{ $sec['title'] ?? 'Heathrow Airport to Sutton – Taxi, Transfer & Cab Booking' }}</h2>
+                                <h1>{{ $sec['title'] ?? 'Heathrow Airport to Sutton – Taxi, Transfer & Cab Booking' }}</h1>
                             </div>
                             <div class="hero-description">
                                 <p>{{ $sec['subtitle'] ?? 'Planning a journey from Heathrow Airport to Sutton? Enjoy stress-free travel with upfront fixed pricing.' }}</p>
@@ -1108,7 +1112,7 @@
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                                 @if(!empty($sec['stat_badge']))
-                                    <span class="badge bg-light text-dark border px-3 py-2 fs-6">
+                                    <span class="badge bg-light text-dark border px-3 py-3 fs-6">
                                         <i class="fas fa-stopwatch me-1"></i> {{ $sec['stat_badge'] }}
                                     </span>
                                 @endif
@@ -1180,7 +1184,7 @@
         @elseif($secType === 'fleet_pricing')
             <section class="content-section">
                 <div class="container">
-                    <div class="section-heading text-center mb-5">
+                    <div class="section-heading text-center mb-2">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Transparent Fleet Options & Pricing' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1216,7 +1220,7 @@
         @elseif($secType === 'why_choose')
             <section class="content-section section-light">
                 <div class="container">
-                    <div class="section-heading text-center mb-5">
+                    <div class="section-heading text-center mb-2">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Why Choose GoRide UK' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1247,7 +1251,7 @@
         @elseif($secType === 'booking_steps')
             <section class="content-section">
                 <div class="container">
-                    <div class="section-heading text-center mb-5">
+                    <div class="section-heading text-center mb-2">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'How to Book in Simple Steps' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1259,8 +1263,11 @@
                             @foreach($sec['steps'] as $idx => $st)
                                 <div class="col-md-4">
                                     <div class="step-card">
-                                        <div class="step-badge">{{ $st['step'] ?? ($idx + 1) }}</div>
-                                        <h4 class="fw-bold mb-2">{{ $st['title'] ?? '' }}</h4>
+                                       <div class="d-flex align-items-center gap-3 mb-2">
+                                            <div class="step-badge mb-0">{{ $st['step'] ?? ($idx + 1) }}</div>
+                                            <h4 class="fw-bold mb-0">{{ $st['title'] ?? '' }}</h4>
+                                        </div>
+
                                         <p class="text-muted small mb-0">{{ $st['desc'] ?? '' }}</p>
                                     </div>
                                 </div>
@@ -1284,7 +1291,7 @@
                             <div class="faq-item">
                                <button type="button" class="faq-question {{ $fIdx === 0 ? 'active' : '' }}" onclick="toggleFaq(this)">
                                     {{ $faq['q'] ?? '' }}
-                                   <span class="faq-icon"><i class="fas {{ $fIdx === 0 ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
+                                   <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                                 </button>
                                 <div class="faq-answer {{ $fIdx === 0 ? 'show' : '' }}">
                                     {{ $faq['a'] ?? '' }}
@@ -1307,7 +1314,7 @@
                             <i class="fas fa-arrow-right"></i>
                         </a>
                         @if(!empty($sec['phone']))
-                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $sec['phone']) }}" class="btn btn-outline-light px-4 py-2 rounded-3 fw-bold">
+                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $sec['phone']) }}" class="btn btn-light d-flex justify-content-center align-items-center px-4 py-2 rounded-3 fw-bold">
                                 <i class="fas fa-phone me-2"></i> {{ $sec['phone'] }}
                             </a>
                         @endif
@@ -1379,7 +1386,7 @@
                 <div class="col-lg-6 hero-content">
                     <div class="hero-heading">
                         <span class="section-label">Premium Transfer Service</span>
-                        <h2>Heathrow Airport to Sutton – Taxi, Transfer &amp; Cab Booking</h2>
+                        <h1>Heathrow Airport to Sutton – Taxi, Transfer &amp; Cab Booking</h1>
                     </div>
                     <div class="hero-description">
                         <p>
@@ -1485,12 +1492,12 @@
 
     <section class="faq-section">
         <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
+            <h2 class="section-title">Frequently Asked Questiouns</h2>
             <div class="faq-item">
                     <button type="button" class="faq-question active" onclick="toggleFaq(this)">
                         How far is Heathrow Airport from Sutton?
                         <span class="faq-icon">
-                            <i class="fas fa-chevron-up"></i>
+                            <i class="fas fa-chevron-down"></i>
                         </span>
                     </button>
 
@@ -1529,7 +1536,6 @@ function toggleFaq(button) {
     if (!faqItem) return;
     
     const answer = faqItem.querySelector('.faq-answer');
-    const icon = button.querySelector('.faq-icon i') || button.querySelector('.faq-icon svg');
 
     // Check if it is currently open before closing all
     const isOpen = answer && answer.classList.contains('show');
@@ -1538,26 +1544,15 @@ function toggleFaq(button) {
     document.querySelectorAll('.faq-item').forEach(function(item) {
         const otherButton = item.querySelector('.faq-question');
         const otherAnswer = item.querySelector('.faq-answer');
-        const otherIcon = item.querySelector('.faq-icon i') || item.querySelector('.faq-icon svg');
 
         if (otherAnswer) otherAnswer.classList.remove('show');
         if (otherButton) otherButton.classList.remove('active');
-        
-        if (otherIcon) {
-            otherIcon.classList.remove('fa-chevron-up');
-            otherIcon.classList.add('fa-chevron-down');
-        }
     });
 
     // If it was already open, we leave it closed. If it was closed, we open it.
     if (!isOpen) {
         if (answer) answer.classList.add('show');
         if (button) button.classList.add('active');
-
-        if (icon) {
-            icon.classList.remove('fa-chevron-down');
-            icon.classList.add('fa-chevron-up');
-        }
     }
 }
 </script>

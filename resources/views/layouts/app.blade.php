@@ -538,6 +538,15 @@
             display: block;
         }
 
+        .faq-icon i, .faq-icon svg {
+            transition: transform 0.3s ease !important;
+        }
+
+        .faq-question.active .faq-icon i,
+        .faq-question.active .faq-icon svg {
+            transform: rotate(180deg) !important;
+        }
+
         .account-dropdown {
             display: none;
             position: absolute;
@@ -16243,10 +16252,19 @@
         }
         function toggleFaq(el) {
             const answer = $(el).next();
+            
+            // Close other answers and remove active class from other buttons
             $('.faq-answer').each(function () {
                 if (!$(this).is(answer)) $(this).removeClass('show');
             });
+            
+            $('.faq-question').each(function () {
+                if (this !== el) $(this).removeClass('active');
+            });
+            
+            // Toggle current answer and button state
             answer.toggleClass('show');
+            $(el).toggleClass('active');
         }
         function saveOtherPassenger() {
             let name = $('#otherPassengerName').val().trim();

@@ -106,14 +106,11 @@
     }
 
     .hero-heading h1 {
-        margin: 0;
-
-        font-size: 48px;
-        line-height: 1.17;
-
-        letter-spacing: -0.02em;
-
-        font-weight: 800;
+            /* margin: 0; */
+    font-size: 32px;
+    line-height: 1.2;
+    /* letter-spacing: -0.02em; */
+    font-weight: 600;
     }
 
     .hero-description {
@@ -438,6 +435,7 @@
         object-fit: cover;
         border-radius: 14px;
         transition: transform 0.5s ease;
+        cursor:pointer;
     }
 
     .place-card:hover .place-image img {
@@ -1107,7 +1105,7 @@
                                 <p>{{ $sec['subtitle'] ?? 'Planning a journey from Heathrow Airport to Sutton? Enjoy stress-free travel with upfront fixed pricing.' }}</p>
                             </div>
                             <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
-                                <a href="{{ $sec['btn_url'] ?? '/#booking' }}" class="btn-primary-custom">
+                                <a href="{{ $sec['btn_url'] ?? 'https://uk.goride.run/' }}" class="btn-primary-custom">
                                     {{ $sec['btn_text'] ?? 'Get a Quote Now' }}
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
@@ -1184,7 +1182,7 @@
         @elseif($secType === 'fleet_pricing')
             <section class="content-section">
                 <div class="container">
-                    <div class="section-heading text-center mb-2">
+                    <div class="section-heading text-center mb-4">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Transparent Fleet Options & Pricing' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1205,7 +1203,7 @@
                                             </div>
                                             <p class="text-muted small mb-4">{{ $v['desc'] ?? 'Comfortable, air-conditioned vehicle' }}</p>
                                         </div>
-                                        <a href="/#booking" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
+                                        <a href="https://uk.goride.run/" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
                                             Book This Vehicle
                                         </a>
                                     </div>
@@ -1220,7 +1218,7 @@
         @elseif($secType === 'why_choose')
             <section class="content-section section-light">
                 <div class="container">
-                    <div class="section-heading text-center mb-2">
+                    <div class="section-heading text-center mb-4">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Why Choose GoRide UK' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1251,7 +1249,7 @@
         @elseif($secType === 'booking_steps')
             <section class="content-section">
                 <div class="container">
-                    <div class="section-heading text-center mb-2">
+                    <div class="section-heading text-center mb-4">
                         <h2>{{ !empty($sec['title']) ? $sec['title'] : 'How to Book in Simple Steps' }}</h2>
                         @if(!empty($sec['subtitle']))
                             <p class="text-muted">{{ $sec['subtitle'] }}</p>
@@ -1309,7 +1307,7 @@
                     <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Ready for a Stress-Free Airport Transfer?' }}</h2>
                     <p>{{ $sec['subtitle'] ?? 'Book your ride in under 2 minutes with guaranteed fixed prices.' }}</p>
                     <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a href="{{ $sec['btn_url'] ?? '/#booking' }}" class="btn-cta-light">
+                        <a href="{{ $sec['btn_url'] ?? 'https://uk.goride.run/' }}" class="btn-cta-light">
                             {{ $sec['btn_text'] ?? 'Book Your Ride Now' }}
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -1400,7 +1398,7 @@
                         </p>
                     </div>
                     <div class="hero-button-wrapper">
-                        <a href="/#booking" class="btn-primary-custom">
+                        <a href="https://uk.goride.run/" class="btn-primary-custom">
                             Get a Quote Now
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>

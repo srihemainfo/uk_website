@@ -1162,7 +1162,7 @@ color: #504533 !important;
 }
 
 .route-links {
-    background: #ffffff;
+    background: #f7f7f7;
 
     border-top: 1px solid #e5e5e5;
 
@@ -1201,7 +1201,7 @@ color: #504533 !important;
     color: #000;
 }
 .route-links a:hover {
-    background: rgb(187 186 184 / 12%);
+    background: white;
     color: #000;
     padding: 5px;
     border-radius: 6px;
@@ -1742,7 +1742,7 @@ color: #504533 !important;
                         </span>
 
                         <span class="route-title">
-                            Heathrow Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                            Heathrow Airport Taxi / Cab / Pick Up and Drop Taxi
                         </span>
 
                         <span class="route-arrow">
@@ -1751,24 +1751,15 @@ color: #504533 !important;
                     </summary>
 
                     <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            London Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Birmingham Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Manchester Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Liverpool Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Leeds Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Sheffield Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Bristol Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Edinburgh Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
-                            Glasgow Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to London Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Birmingham Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Manchester Airport Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Liverpool Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Leeds Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Sheffield Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Bristol Limo Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Edinburgh Airport Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to Glasgow Limo Transfer</a>
                     </div>
                 </details>
             </div>
@@ -1781,7 +1772,7 @@ color: #504533 !important;
                         </span>
 
                         <span class="route-title">
-                            London Call Taxis / Cab / Pick Up and Drop Taxi
+                            London Taxi / Cab / Pick Up and Drop Taxi
                         </span>
 
                         <span class="route-arrow">
@@ -1789,25 +1780,17 @@ color: #504533 !important;
                         </span>
                     </summary>
 
-                    <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Heathrow
-                            Airport Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Gatwick
-                            Airport Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Oxford Street
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Birmingham
-                            Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Manchester
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Liverpool
-                            Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Bristol
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Leeds Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Edinburgh
-                            Cab</a>
-                    </div>
+                 <div class="route-links">
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Heathrow Airport Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Gatwick Airport Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Oxford Street Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Birmingham Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Manchester Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Liverpool Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Bristol Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Leeds Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Edinburgh Cab Transfer</a>
+                </div>
                 </details>
             </div>
 
@@ -1827,25 +1810,45 @@ color: #504533 !important;
                         </span>
                     </summary>
 
+                   <div class="route-links">
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to London Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Heathrow Airport Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Birmingham Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Manchester Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Liverpool Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Bristol Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Leeds Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Sheffield Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Edinburgh Cab Transfer</a>
+                </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            Luton Airport Taxi / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
                     <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            London Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Heathrow Airport Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Birmingham Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Manchester Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Liverpool Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Bristol Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Leeds
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Sheffield Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
-                            Edinburgh Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to London Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Birmingham Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Manchester Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Liverpool Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Leeds Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Sheffield Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Bristol Cab Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Edinburgh Taxi Transfer</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Glasgow Cab Transfer</a>
                     </div>
                 </details>
             </div>
@@ -1858,34 +1861,24 @@ color: #504533 !important;
                         </span>
 
                         <span class="route-title">
-                            Luton Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                            Stansted Airport Taxi / Cab / Pick Up and Drop Taxi
                         </span>
 
                         <span class="route-arrow">
                             <i class="fas fa-chevron-down"></i>
                         </span>
                     </summary>
-
-                    <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to London
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
-                            Birmingham Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
-                            Manchester Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
-                            Liverpool Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Leeds
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
-                            Sheffield Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Bristol
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
-                            Edinburgh Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Glasgow
-                            Cab</a>
-                    </div>
+                  <div class="route-links">
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to London Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Heathrow Airport Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Birmingham Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Manchester Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Liverpool Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Leeds Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Sheffield Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Edinburgh Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to Glasgow Cab Transfer</a>
+                </div>
                 </details>
             </div>
 
@@ -1897,7 +1890,7 @@ color: #504533 !important;
                         </span>
 
                         <span class="route-title">
-                            Stansted Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                            City Airport Taxi / Cab / Pick Up and Drop Taxi
                         </span>
 
                         <span class="route-arrow">
@@ -1905,93 +1898,59 @@ color: #504533 !important;
                         </span>
                     </summary>
                     <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            London Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Heathrow Airport Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Birmingham Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Manchester Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Liverpool Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Leeds Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Sheffield Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Edinburgh Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
-                            Glasgow Cab</a>
-                    </div>
-                </details>
-            </div>
-
-            <div class="col-md-6">
-                <details class="route-item">
-                    <summary>
-                        <span class="route-icon">
-                            <i class="fas fa-route"></i>
-                        </span>
-
-                        <span class="route-title">
-                            City Airport Call Taxis / Cab / Pick Up and Drop Taxi
-                        </span>
-
-                        <span class="route-arrow">
-                            <i class="fas fa-chevron-down"></i>
-                        </span>
-                    </summary>
-                    <div class="route-links">
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to London
-                            Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Heathrow
-                            Airport Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
-                            Birmingham Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
-                            Manchester Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
-                            Liverpool Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Leeds
-                            Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
-                            Sheffield Cab</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
-                            Edinburgh Taxi</a>
-                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Glasgow
-                            Cab</a>
-                    </div>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to London Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Heathrow Airport Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Birmingham Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Manchester Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Liverpool Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Leeds Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Sheffield Cab Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Edinburgh Taxi Transfer</a>
+                    <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Glasgow Cab Transfer</a>
+                </div>
                 </details>
             </div>
         </div>
     </div>
 </section>
-
 <script>
-function toggleFaq(button) {
-    const faqItem = button.closest('.faq-item');
-    if (!faqItem) return;
-    
-    const answer = faqItem.querySelector('.faq-answer');
+$(document).ready(function () {
 
-    // Check if it is currently open before closing all
-    const isOpen = answer && answer.classList.contains('show');
+    // FAQ Accordion
+    window.toggleFaq = function (button) {
 
-    // Close all FAQ items securely
-    document.querySelectorAll('.faq-item').forEach(function(item) {
-        const otherButton = item.querySelector('.faq-question');
-        const otherAnswer = item.querySelector('.faq-answer');
+        var $faqItem = $(button).closest('.faq-item');
 
-        if (otherAnswer) otherAnswer.classList.remove('show');
-        if (otherButton) otherButton.classList.remove('active');
+        if (!$faqItem.length) return;
+
+        var $answer = $faqItem.find('.faq-answer');
+        var isOpen = $answer.hasClass('show');
+
+        // Close all FAQ items
+        $('.faq-item').each(function () {
+            $(this).find('.faq-answer').removeClass('show');
+            $(this).find('.faq-question').removeClass('active');
+        });
+
+        // Open clicked FAQ if it was closed
+        if (!isOpen) {
+            $answer.addClass('show');
+            $(button).addClass('active');
+        }
+    };
+
+
+    // Popular Routes Accordion
+    $('.popular-routes-section').on('click', '.route-item > summary', function () {
+
+        var $current = $(this).closest('.route-item');
+
+        $('.popular-routes-section .route-item')
+            .not($current)
+            .removeAttr('open');
+
     });
 
-    // If it was already open, we leave it closed. If it was closed, we open it.
-    if (!isOpen) {
-        if (answer) answer.classList.add('show');
-        if (button) button.classList.add('active');
-    }
-}
+});
 </script>
 @endsection

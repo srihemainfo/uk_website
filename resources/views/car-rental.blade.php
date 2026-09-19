@@ -211,7 +211,7 @@
 
     .section-heading h2 {
         font-size: 32px;
-        font-weight: 700;
+        /* font-weight: 700; */
         color: #000;
         margin: 0;
         line-height: 1.3;
@@ -651,7 +651,6 @@ color: #504533 !important;
 
     .section-title {
         font-size: 32px;
-        font-weight: 700;
         text-align: center;
         margin-bottom: 40px;
         color: #000000;
@@ -1073,6 +1072,204 @@ color: #504533 !important;
     justify-content: center;
     margin-bottom: 14px;
 }
+
+.popular-routes-section {
+    width: 100%;
+    padding: 45px 0;
+    background: #ffffff;
+}
+
+.popular-routes-section .container {
+    width: 100%;
+}
+
+.route-item {
+    width: 100%;
+    margin: 0;
+    background: #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.route-item summary {
+    min-height: 48px;
+    padding: 7px 12px 7px 8px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+
+.route-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.route-item summary::marker {
+    display: none;
+}
+
+.route-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #000000;
+    color: #ffffff;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+}
+
+.route-title {
+    flex: 1;
+
+    color: #171717;
+
+    font-size: 15px;
+    line-height: 18px;
+
+    font-weight: 600;
+}
+
+.route-arrow {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #111111;
+
+    font-size: 11px;
+
+    transition: transform 0.25s ease;
+}
+
+.route-item[open] .route-arrow {
+    transform: rotate(180deg);
+}
+
+.route-links {
+    background: #ffffff;
+
+    border-top: 1px solid #e5e5e5;
+
+    padding: 12px;
+}
+
+.route-links a {
+    position: relative;
+
+    display: block;
+
+    padding: 5px 0 5px 16px;
+
+    color: #5b5360;
+
+    font-size: 14px;
+    line-height: 20px;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.route-links a {
+    display: block;
+    padding: 5px 0;
+    color: #5b5360;
+    font-size: 14px;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.route-links i {
+    margin-right: 6px;
+    font-size: 11px;
+    color: #000;
+}
+.route-links a:hover {
+    background: rgb(187 186 184 / 12%);
+    color: #000;
+    padding: 5px;
+    border-radius: 6px;
+}
+@media (max-width: 991px) {
+
+    .popular-routes-section {
+        padding: 40px 0;
+    }
+
+   
+
+}
+
+@media (max-width: 767px) {
+
+    .popular-routes-section {
+        padding: 35px 0;
+    }
+
+  
+
+    .route-item summary {
+        padding: 7px 10px 7px 7px;
+        gap: 10px;
+    }
+
+    .route-icon {
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+    }
+
+    .route-title {
+        font-size: 11px;
+        line-height: 17px;
+    }
+
+    .route-links {
+        padding: 10px 12px 12px 40px;
+    }
+
+    .route-links a {
+        font-size: 11px;
+        line-height: 19px;
+    }
+
+}
+
+@media (max-width: 575px) {
+
+    .popular-routes-section {
+        padding: 30px 0;
+    }
+
+   
+
+    .route-title {
+        font-size: 11px;
+    }
+
+    .route-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+}
 </style>
 
 
@@ -1307,7 +1504,7 @@ color: #504533 !important;
                     <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Ready for a Stress-Free Airport Transfer?' }}</h2>
                     <p>{{ $sec['subtitle'] ?? 'Book your ride in under 2 minutes with guaranteed fixed prices.' }}</p>
                     <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a href="{{ $sec['btn_url'] ?? 'https://www.goride.run/uk/' }}" class="btn-cta-light">
+                        <a href="https://www.goride.run/uk/" class="btn-cta-light">
                             {{ $sec['btn_text'] ?? 'Book Your Ride Now' }}
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -1527,6 +1724,249 @@ color: #504533 !important;
         </div>
     </section>
 @endif
+
+<section class="popular-routes-section">
+    <div class="container">
+
+        <div class="section-heading">
+            <h2>Most Popular Taxi & Transfer Routes
+            </h2>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            Heathrow Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            London Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Birmingham Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Manchester Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Liverpool Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Leeds Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Sheffield Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Bristol Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Edinburgh Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Heathrow Airport to
+                            Glasgow Cab</a>
+                    </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            London Call Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Heathrow
+                            Airport Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Gatwick
+                            Airport Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Oxford Street
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot " aria-hidden="true"></i> London to Birmingham
+                            Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Manchester
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Liverpool
+                            Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Bristol
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Leeds Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> London to Edinburgh
+                            Cab</a>
+                    </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            Gatwick Airport Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            London Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Heathrow Airport Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Birmingham Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Manchester Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Liverpool Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Bristol Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to Leeds
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Sheffield Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Gatwick Airport to
+                            Edinburgh Cab</a>
+                    </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            Luton Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to London
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
+                            Birmingham Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
+                            Manchester Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
+                            Liverpool Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Leeds
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
+                            Sheffield Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Bristol
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to
+                            Edinburgh Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Luton Airport to Glasgow
+                            Cab</a>
+                    </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            Stansted Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            London Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Heathrow Airport Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Birmingham Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Manchester Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Liverpool Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Leeds Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Sheffield Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Edinburgh Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Stansted Airport to
+                            Glasgow Cab</a>
+                    </div>
+                </details>
+            </div>
+
+            <div class="col-md-6">
+                <details class="route-item">
+                    <summary>
+                        <span class="route-icon">
+                            <i class="fas fa-route"></i>
+                        </span>
+
+                        <span class="route-title">
+                            City Airport Call Taxis / Cab / Pick Up and Drop Taxi
+                        </span>
+
+                        <span class="route-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </summary>
+                    <div class="route-links">
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to London
+                            Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Heathrow
+                            Airport Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
+                            Birmingham Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
+                            Manchester Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
+                            Liverpool Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Leeds
+                            Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
+                            Sheffield Cab</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to
+                            Edinburgh Taxi</a>
+                        <a href="#"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> City Airport to Glasgow
+                            Cab</a>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
 function toggleFaq(button) {

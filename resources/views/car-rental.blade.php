@@ -221,7 +221,7 @@
         margin: 0;
         font-size: 16px;
         line-height: 28px;
-
+color: #504533 !important;
         font-weight: 400;
     }
 
@@ -1105,7 +1105,7 @@
                                 <p>{{ $sec['subtitle'] ?? 'Planning a journey from Heathrow Airport to Sutton? Enjoy stress-free travel with upfront fixed pricing.' }}</p>
                             </div>
                             <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
-                                <a href="{{ $sec['btn_url'] ?? 'https://uk.goride.run/' }}" class="btn-primary-custom">
+                                <a href="{{ $sec['btn_url'] ?? 'https://www.goride.run/uk/' }}" class="btn-primary-custom">
                                     {{ $sec['btn_text'] ?? 'Get a Quote Now' }}
                                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
@@ -1203,7 +1203,7 @@
                                             </div>
                                             <p class="text-muted small mb-4">{{ $v['desc'] ?? 'Comfortable, air-conditioned vehicle' }}</p>
                                         </div>
-                                        <a href="https://uk.goride.run/" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
+                                        <a href="https://www.goride.run/uk/" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
                                             Book This Vehicle
                                         </a>
                                     </div>
@@ -1307,7 +1307,7 @@
                     <h2>{{ !empty($sec['title']) ? $sec['title'] : 'Ready for a Stress-Free Airport Transfer?' }}</h2>
                     <p>{{ $sec['subtitle'] ?? 'Book your ride in under 2 minutes with guaranteed fixed prices.' }}</p>
                     <div class="d-flex flex-wrap justify-content-center gap-3">
-                        <a href="{{ $sec['btn_url'] ?? 'https://uk.goride.run/' }}" class="btn-cta-light">
+                        <a href="{{ $sec['btn_url'] ?? 'https://www.goride.run/uk/' }}" class="btn-cta-light">
                             {{ $sec['btn_text'] ?? 'Book Your Ride Now' }}
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -1398,7 +1398,7 @@
                         </p>
                     </div>
                     <div class="hero-button-wrapper">
-                        <a href="https://uk.goride.run/" class="btn-primary-custom">
+                        <a href="https://www.goride.run/uk/" class="btn-primary-custom">
                             Get a Quote Now
                             <i class="fas fa-arrow-right" aria-hidden="true"></i>
                         </a>

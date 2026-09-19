@@ -1026,7 +1026,7 @@
 .cta-banner-section h2 {
     color: #ffffff;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 600;
     margin-bottom: 12px;
 }
 .cta-banner-section p {
@@ -1282,7 +1282,7 @@
                     @if(!empty($sec['faqs']) && is_array($sec['faqs']))
                         @foreach($sec['faqs'] as $fIdx => $faq)
                             <div class="faq-item">
-                                <button class="faq-question {{ $fIdx === 0 ? 'active' : '' }}" onclick="toggleFaq(this)">
+                               <button type="button" class="faq-question {{ $fIdx === 0 ? 'active' : '' }}" onclick="toggleFaq(this)">
                                     {{ $faq['q'] ?? '' }}
                                    <span class="faq-icon"><i class="fas {{ $fIdx === 0 ? 'fa-chevron-up' : 'fa-chevron-down' }}"></i></span>
                                 </button>
@@ -1487,14 +1487,29 @@
         <div class="container">
             <h2 class="section-title">Frequently Asked Questions</h2>
             <div class="faq-item">
-                <button class="faq-question active" onclick="toggleFaq(this)">
-                    How far is Heathrow Airport from Sutton?
-                    <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                </button>
-                <div class="faq-answer show">
-                    The road distance is approximately 22–26 miles, depending on the Heathrow terminal and the route taken via the M25 and A217.
+                    <button type="button" class="faq-question active" onclick="toggleFaq(this)">
+                        How far is Heathrow Airport from Sutton?
+                        <span class="faq-icon">
+                            <i class="fas fa-chevron-up"></i>
+                        </span>
+                    </button>
+
+                    <div class="faq-answer show">
+                        The road distance is approximately 22–26 miles, depending on the Heathrow terminal and the route taken via the M25 and A217.
+                    </div>
                 </div>
-            </div>
+                <div class="faq-item">
+                    <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                        How long does Heathrow to Sutton take?
+                        <span class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </span>
+                    </button>
+
+                    <div class="faq-answer">
+                        Travel time averages 45 to 60 minutes depending on traffic and time of day.
+                    </div>
+                </div>
             <div class="faq-item">
                 <button class="faq-question" onclick="toggleFaq(this)">
                     How long does Heathrow to Sutton take?
@@ -1510,40 +1525,40 @@
 
 <script>
 function toggleFaq(button) {
-
     const faqItem = button.closest('.faq-item');
     const answer = faqItem.querySelector('.faq-answer');
-    const icon = faqItem.querySelector('.faq-icon i');
+    const icon = button.querySelector('.faq-icon i');
 
-    // If this FAQ is already open → CLOSE it
+    // If clicked FAQ is already open → close it
     if (answer.classList.contains('show')) {
-
         answer.classList.remove('show');
         button.classList.remove('active');
 
-        icon.className = 'fas fa-chevron-down';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
 
         return;
     }
 
-    // Close all other FAQs
-    document.querySelectorAll('.faq-item').forEach(item => {
-
+    // Close all FAQ items
+    document.querySelectorAll('.faq-item').forEach(function(item) {
         const otherButton = item.querySelector('.faq-question');
         const otherAnswer = item.querySelector('.faq-answer');
         const otherIcon = item.querySelector('.faq-icon i');
 
         otherAnswer.classList.remove('show');
         otherButton.classList.remove('active');
-        otherIcon.className = 'fas fa-chevron-down';
 
+        otherIcon.classList.remove('fa-chevron-up');
+        otherIcon.classList.add('fa-chevron-down');
     });
 
     // Open clicked FAQ
     answer.classList.add('show');
     button.classList.add('active');
 
-    icon.className = 'fas fa-chevron-up';
+    icon.classList.remove('fa-chevron-down');
+    icon.classList.add('fa-chevron-up');
 }
 </script>
 @endsection

@@ -1526,39 +1526,39 @@
 <script>
 function toggleFaq(button) {
     const faqItem = button.closest('.faq-item');
+    if (!faqItem) return;
+    
     const answer = faqItem.querySelector('.faq-answer');
-    const icon = button.querySelector('.faq-icon i');
+    const icon = button.querySelector('.faq-icon i') || button.querySelector('.faq-icon svg');
 
-    // If clicked FAQ is already open → close it
-    if (answer.classList.contains('show')) {
-        answer.classList.remove('show');
-        button.classList.remove('active');
+    // Check if it is currently open before closing all
+    const isOpen = answer && answer.classList.contains('show');
 
-        icon.classList.remove('fa-chevron-up');
-        icon.classList.add('fa-chevron-down');
-
-        return;
-    }
-
-    // Close all FAQ items
+    // Close all FAQ items securely
     document.querySelectorAll('.faq-item').forEach(function(item) {
         const otherButton = item.querySelector('.faq-question');
         const otherAnswer = item.querySelector('.faq-answer');
-        const otherIcon = item.querySelector('.faq-icon i');
+        const otherIcon = item.querySelector('.faq-icon i') || item.querySelector('.faq-icon svg');
 
-        otherAnswer.classList.remove('show');
-        otherButton.classList.remove('active');
-
-        otherIcon.classList.remove('fa-chevron-up');
-        otherIcon.classList.add('fa-chevron-down');
+        if (otherAnswer) otherAnswer.classList.remove('show');
+        if (otherButton) otherButton.classList.remove('active');
+        
+        if (otherIcon) {
+            otherIcon.classList.remove('fa-chevron-up');
+            otherIcon.classList.add('fa-chevron-down');
+        }
     });
 
-    // Open clicked FAQ
-    answer.classList.add('show');
-    button.classList.add('active');
+    // If it was already open, we leave it closed. If it was closed, we open it.
+    if (!isOpen) {
+        if (answer) answer.classList.add('show');
+        if (button) button.classList.add('active');
 
-    icon.classList.remove('fa-chevron-down');
-    icon.classList.add('fa-chevron-up');
+        if (icon) {
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        }
+    }
 }
 </script>
 @endsection

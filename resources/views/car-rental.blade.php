@@ -1474,6 +1474,7 @@ color: #504533 !important;
 
         {{-- 6. FAQS SECTION --}}
         @elseif($secType === 'faqs')
+            @include('partials.serving-locations')
             <section class="faq-section">
                 <div class="container">
                     <h2 class="section-title">{{ !empty($sec['title']) ? $sec['title'] : 'Frequently Asked Questions' }}</h2>

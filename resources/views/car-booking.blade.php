@@ -3656,6 +3656,10 @@
             </div>
         </div>
     </section>
+    
+    <!-- Our Serving Locations -->
+    @include('partials.serving-locations')
+
     <section class="faq-section section-padding" id="faq">
         <div class="container" style="max-width: 700px;">
             <h2 class="section-title">Frequently Asked Questions</h2>

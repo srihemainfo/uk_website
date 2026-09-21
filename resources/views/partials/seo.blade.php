@@ -50,43 +50,46 @@
 
 {{-- GoRide UK Home Page LocalBusiness Schema --}}
 @if(request()->is('/') || request()->is('uk') || request()->routeIs('home') || request()->routeIs('uk.home'))
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "GoRide UK",
-  "image": "https://www.goride.run/uk/goride/img/logo-darkk.png",
-  "@id": "https://www.goride.run/uk",
-  "url": "https://www.goride.run/uk",
-  "telephone": "+44 20 8337 3777",
-  "priceRange": "0-9999",
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "UK"
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
+@php
+$homeLocalBusinessSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "LocalBusiness",
+    "name" => "GoRide UK",
+    "image" => "https://www.goride.run/uk/goride/img/logo-darkk.png",
+    "@id" => "https://www.goride.run/uk",
+    "url" => "https://www.goride.run/uk",
+    "telephone" => "+44 20 8337 3777",
+    "priceRange" => "0-9999",
+    "address" => [
+        "@type" => "PostalAddress",
+        "addressCountry" => "UK"
     ],
-    "opens": "00:00",
-    "closes": "23:59"
-  },
-  "sameAs": [
-    "https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0",
-    "https://www.facebook.com/people/Goride-Run/61591600963177/",
-    "https://x.com/Goride_UK",
-    "https://www.instagram.com/goride.run_uk/",
-    "https://www.youtube.com/@Goride_UK",
-    "https://www.goride.run/uk"
-  ]
-}
+    "openingHoursSpecification" => [
+        "@type" => "OpeningHoursSpecification",
+        "dayOfWeek" => [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        "opens" => "00:00",
+        "closes" => "23:59"
+    ],
+    "sameAs" => [
+        "https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20a%20cab.%20Could%20you%20help%20me%20book%20one%3F&type=phone_number&app_absent=0",
+        "https://www.facebook.com/people/Goride-Run/61591600963177/",
+        "https://x.com/Goride_UK",
+        "https://www.instagram.com/goride.run_uk/",
+        "https://www.youtube.com/@Goride_UK",
+        "https://www.goride.run/uk"
+    ]
+];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($homeLocalBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
 </script>
 @endif
 

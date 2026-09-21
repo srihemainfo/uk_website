@@ -1011,14 +1011,13 @@ color: #504533 !important;
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
-    background: #f8fafc;
+    background: #ffffff;
     border-radius: 12px;
     padding: 10px;
     overflow: hidden;
-    transition: background-color 0.2s ease;
 }
 .fleet-card:hover .fleet-image-wrap {
-    background: #f1f5f9;
+    background: #ffffff;
 }
 .fleet-card-img {
     max-height: 100px;

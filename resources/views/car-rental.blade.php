@@ -992,7 +992,7 @@ color: #504533 !important;
 .fleet-card {
     background: #ffffff;
     border-radius: 16px;
-    padding: 24px;
+    padding: 18px 16px 18px;
     border: 1px solid rgba(226, 226, 226, 0.7);
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
     height: 100%;
@@ -1006,21 +1006,21 @@ color: #504533 !important;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 .fleet-image-wrap {
-    height: 120px;
+    height: 95px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     background: #ffffff;
-    border-radius: 12px;
-    padding: 10px;
+    border-radius: 10px;
+    padding: 4px;
     overflow: hidden;
 }
 .fleet-card:hover .fleet-image-wrap {
     background: #ffffff;
 }
 .fleet-card-img {
-    max-height: 105px;
+    max-height: 85px;
     max-width: 95%;
     object-fit: contain;
     mix-blend-mode: multiply;
@@ -1030,16 +1030,22 @@ color: #504533 !important;
     transform: scale(1.06);
 }
 .fleet-price {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
     color: #1a1c1c;
 }
 .fleet-specs {
     display: flex;
-    gap: 16px;
-    font-size: 14px;
+    gap: 14px;
+    font-size: 13px;
     color: #504533;
-    margin: 12px 0;
+    margin: 8px 0;
+}
+.fleet-desc {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #64748b;
+    margin-bottom: 16px;
 }
 .cta-banner-section {
     background: #000000;
@@ -1463,7 +1469,7 @@ color: #504533 !important;
                                                 <span><i class="fas fa-user-group me-1"></i> {{ $v['passengers'] ?? '4' }} Seats</span>
                                                 <span><i class="fas fa-suitcase me-1"></i> {{ $v['luggage'] ?? '2' }} Bags</span>
                                             </div>
-                                            <p class="text-muted small mb-4">{{ $v['desc'] ?? 'Comfortable, air-conditioned vehicle' }}</p>
+                                            <p class="fleet-desc">{{ $v['desc'] ?? 'Comfortable, air-conditioned vehicle' }}</p>
                                         </div>
                                         <a href="https://www.goride.run/uk/" class="btn btn-dark w-100 py-2 rounded-3 fw-semibold">
                                             Book This Vehicle

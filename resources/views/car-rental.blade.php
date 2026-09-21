@@ -1005,8 +1005,33 @@ color: #504533 !important;
     transform: translateY(-4px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
+.fleet-image-wrap {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 10px;
+    overflow: hidden;
+    transition: background-color 0.2s ease;
+}
+.fleet-card:hover .fleet-image-wrap {
+    background: #f1f5f9;
+}
+.fleet-card-img {
+    max-height: 100px;
+    max-width: 95%;
+    object-fit: contain;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+}
+.fleet-card:hover .fleet-card-img {
+    transform: scale(1.06);
+}
 .fleet-price {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     color: #1a1c1c;
 }
@@ -1387,14 +1412,55 @@ color: #504533 !important;
                     </div>
 
                     @if(!empty($sec['vehicles']) && is_array($sec['vehicles']))
+                        @php
+                            $requestedHost = request()->header('X-Forwarded-Host', request()->getHost());
+                            $imgBase = ($requestedHost === 'uk.goride.run')
+                                ? 'https://uk.goride.run/goride/img/'
+                                : (env('WEBSITE_APP_URL') ? rtrim(env('WEBSITE_APP_URL'), '/') . env('COUNTRY_SLUG_II', '') . '/goride/img/' : '/goride/img/');
+                        @endphp
                         <div class="row g-4">
                             @foreach($sec['vehicles'] as $v)
+                                @php
+                                    $vName = trim($v['name'] ?? 'Saloon');
+                                    $n = strtolower($vName);
+
+                                    if (!empty($v['image'])) {
+                                        $vImgUrl = $v['image'];
+                                    } elseif (str_contains($n, '8') && (str_contains($n, 'lux') || str_contains($n, '8l'))) {
+                                        $vImgUrl = $imgBase . 'mpv8l.webp';
+                                    } elseif (str_contains($n, '8') || str_contains($n, '8 seater') || str_contains($n, '8-seater') || str_contains($n, '8seater')) {
+                                        $vImgUrl = $imgBase . 'mpv8.webp';
+                                    } elseif (str_contains($n, '7') && (str_contains($n, 'lux') || str_contains($n, '7l'))) {
+                                        $vImgUrl = $imgBase . 'mpv7l.webp';
+                                    } elseif (str_contains($n, '7') || str_contains($n, '7 seater') || str_contains($n, '7-seater') || str_contains($n, '7seater')) {
+                                        $vImgUrl = $imgBase . 'mpv7.webp';
+                                    } elseif (str_contains($n, '6') && (str_contains($n, 'lux') || str_contains($n, '6l'))) {
+                                        $vImgUrl = $imgBase . 'mpv6l.webp';
+                                    } elseif (str_contains($n, '6') || str_contains($n, '6 seater') || str_contains($n, '6-seater') || str_contains($n, '6seater')) {
+                                        $vImgUrl = $imgBase . 'mpv6.webp';
+                                    } elseif (str_contains($n, 'estate')) {
+                                        $vImgUrl = $imgBase . 'estate.webp';
+                                    } elseif (str_contains($n, 'exec') || str_contains($n, 'mercedes') || str_contains($n, 'chauffeur') || str_contains($n, 'e-class') || str_contains($n, 'e class')) {
+                                        $vImgUrl = $imgBase . 'executive.webp';
+                                    } elseif (str_contains($n, 'mpv') || str_contains($n, 'carrier') || str_contains($n, 'people')) {
+                                        $vImgUrl = $imgBase . 'mpv.webp';
+                                    } elseif (str_contains($n, 'saloon') || str_contains($n, 'standard') || str_contains($n, 'sedan')) {
+                                        $vImgUrl = $imgBase . 'standard.webp';
+                                    } else {
+                                        $vImgUrl = $imgBase . 'standard.webp';
+                                    }
+                                @endphp
                                 <div class="col-md-6 col-lg-3">
-                                    <div class="fleet-card">
+                                    <div class="fleet-card text-center">
                                         <div>
-                                            <h4 class="fw-bold mb-1">{{ $v['name'] ?? 'Saloon' }}</h4>
-                                            <div class="fleet-price mb-2">{{ $v['price'] ?? 'Fixed Quote' }}</div>
-                                            <div class="fleet-specs">
+                                            <div class="fleet-image-wrap">
+                                                <img src="{{ $vImgUrl }}" alt="{{ $vName }}" class="fleet-card-img" loading="lazy" onerror="this.onerror=null; this.src='{{ $imgBase }}standard.webp';">
+                                            </div>
+                                            <h4 class="fw-bold mb-1 fs-5">{{ $vName }}</h4>
+                                            @if(!empty($v['price']))
+                                                <div class="fleet-price mb-2">{{ $v['price'] }}</div>
+                                            @endif
+                                            <div class="fleet-specs justify-content-center">
                                                 <span><i class="fas fa-user-group me-1"></i> {{ $v['passengers'] ?? '4' }} Seats</span>
                                                 <span><i class="fas fa-suitcase me-1"></i> {{ $v['luggage'] ?? '2' }} Bags</span>
                                             </div>

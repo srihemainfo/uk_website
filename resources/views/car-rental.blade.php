@@ -1047,6 +1047,54 @@ color: #504533 !important;
     color: #64748b;
     margin-bottom: 16px;
 }
+/* Skeleton Placeholder for empty highlight items */
+.skeleton-benefit-item {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    position: relative;
+    overflow: hidden;
+    min-height: 125px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.skeleton-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: skeleton-shimmer-anim 1.6s infinite ease-in-out;
+}
+@keyframes skeleton-shimmer-anim {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+.skeleton-box {
+    background: #e2e8f0;
+    border-radius: 6px;
+}
+.skeleton-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+.skeleton-title-box {
+    width: 60%;
+    height: 16px;
+}
+.skeleton-desc-line1 {
+    width: 90%;
+    height: 12px;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+.skeleton-desc-line2 {
+    width: 65%;
+    height: 12px;
+}
 .cta-banner-section {
     background: #000000;
     color: #ffffff;
@@ -1359,7 +1407,8 @@ color: #504533 !important;
         {{-- 2. ROUTE OVERVIEW & HIGHLIGHTS --}}
         @elseif($secType === 'overview')
             @php
-                $overviewImg = !empty($sec['image']) ? $sec['image'] : 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=900&q=80';
+                $rawImg = trim($sec['image'] ?? '');
+                $overviewImg = (!empty($rawImg) && !str_contains($rawImg, 'photo-1549399542-7e3f8b79c341')) ? $rawImg : null;
             @endphp
             <section class="content-section section-light">
                 <div class="container">
@@ -1377,16 +1426,33 @@ color: #504533 !important;
                                 <div class="row g-3 mt-1 route-overview-cards-row">
                                     @if(!empty($sec['items']) && is_array($sec['items']))
                                         @foreach($sec['items'] as $item)
+                                            @php
+                                                $itemTitle = trim($item['title'] ?? '');
+                                                $itemDesc = trim($item['desc'] ?? '');
+                                                $isEmptyItem = empty($itemTitle) && empty($itemDesc);
+                                            @endphp
                                             <div class="{{ !empty($overviewImg) ? 'col-sm-6 col-lg-3' : 'col-md-6 col-lg-3' }}">
-                                                <div class="benefit-item">
-                                                    <div class="benefit-header">
-                                                        <div class="benefit-icon-box">
-                                                            <i class="fas {{ $item['icon'] ?? 'fa-car' }}" aria-hidden="true"></i>
+                                                @if($isEmptyItem)
+                                                    <div class="benefit-item skeleton-benefit-item" title="Placeholder Item">
+                                                        <div class="skeleton-shimmer"></div>
+                                                        <div class="benefit-header" style="margin-bottom: 0;">
+                                                            <div class="skeleton-box skeleton-icon-box"></div>
+                                                            <div class="skeleton-box skeleton-title-box"></div>
                                                         </div>
-                                                        <h4>{{ $item['title'] ?? '' }}</h4>
+                                                        <div class="skeleton-box skeleton-desc-line1"></div>
+                                                        <div class="skeleton-box skeleton-desc-line2"></div>
                                                     </div>
-                                                    <p>{{ $item['desc'] ?? '' }}</p>
-                                                </div>
+                                                @else
+                                                    <div class="benefit-item">
+                                                        <div class="benefit-header">
+                                                            <div class="benefit-icon-box">
+                                                                <i class="fas {{ $item['icon'] ?? 'fa-car' }}" aria-hidden="true"></i>
+                                                            </div>
+                                                            <h4>{{ $itemTitle }}</h4>
+                                                        </div>
+                                                        <p>{{ $itemDesc }}</p>
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endforeach
                                     @endif

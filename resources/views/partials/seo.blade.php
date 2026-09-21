@@ -48,6 +48,16 @@
 </script>
 @endif
 
+@if(!empty($page->schema_markup))
+    @if(str_contains($page->schema_markup, '<script'))
+{!! $page->schema_markup !!}
+    @else
+<script type="application/ld+json">
+{!! $page->schema_markup !!}
+</script>
+    @endif
+@endif
+
 @php
     $allowedClarityHosts = ['goride.run', 'www.goride.run', 'uk.goride.run', 'www.uk.goride.run'];
     $currentHost = request()->getHost();

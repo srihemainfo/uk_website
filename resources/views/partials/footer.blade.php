@@ -1,10 +1,8 @@
-<footer>
-    <div class="container">
 @php
     $servingLocations = collect([]);
     try {
         if (\Illuminate\Support\Facades\Schema::hasTable('dynamic_pages')) {
-            $servingLocations = \Illuminate\Support\Facades\Cache::remember('footer_serving_locations_v1', 300, function () {
+            $servingLocations = \Illuminate\Support\Facades\Cache::remember('footer_serving_locations_v2', 300, function () {
                 return \Illuminate\Support\Facades\DB::table('dynamic_pages')
                     ->where('is_published', 1)
                     ->select('id', 'page_title', 'slug')
@@ -29,38 +27,51 @@
     $baseLandingUrl = rtrim(env('WEBSITE_APP_URL') ?: url('/'), '/') . '/' . trim(env('COUNTRY_SLUG_II') ?: (env('COUNTRY_SLUG') ?: 'uk'), '/') . '/';
 @endphp
 
-        <!-- Our Serving Locations Section -->
-        <div class="footer-serving-locations">
-            <div class="footer-locations-header">
-                <div class="footer-locations-title-group">
-                    <span class="footer-locations-tag">
-                        <i class="fas fa-location-dot me-1"></i> UK Coverage
-                    </span>
-                    <h3 class="footer-locations-heading">Our Serving Locations</h3>
+<!-- Our Serving Locations (Light Theme Section) -->
+<section class="serving-locations-section">
+    <div class="container">
+        <div class="locations-header-row">
+            <div>
+                <div class="locations-badge">
+                    <span class="locations-pulse-dot"></span>
+                    <i class="fas fa-location-dot me-1 text-warning"></i> UK Coverage
                 </div>
-                <p class="footer-locations-lead">
-                    Explore top UK airport transfers, city routes, and private hire destinations
+                <h3 class="locations-main-title">Our Serving Locations</h3>
+                <p class="locations-main-subtitle">
+                    Explore top UK airport transfers, fixed-fare city cabs, and chauffeured private hire routes
                 </p>
-            </div>
-
-            <div class="footer-locations-grid">
-                @foreach($servingLocations as $location)
-                    @php
-                        $locUrl = $baseLandingUrl . ltrim($location->slug, '/');
-                    @endphp
-                    <a href="{{ $locUrl }}" class="footer-location-card" title="{{ $location->page_title }}">
-                        <span class="footer-location-icon-wrapper">
-                            <i class="fas fa-car-side"></i>
-                        </span>
-                        <span class="footer-location-text">{{ $location->page_title }}</span>
-                        <i class="fas fa-arrow-right footer-location-chevron"></i>
-                    </a>
-                @endforeach
             </div>
         </div>
 
-        <div class="footer-locations-divider"></div>
+        <div class="locations-cards-grid">
+            @foreach($servingLocations as $location)
+                @php
+                    $locUrl = $baseLandingUrl . ltrim($location->slug, '/');
+                @endphp
+                <a href="{{ $locUrl }}" class="location-card-light" title="{{ $location->page_title }}">
+                    <div class="location-card-left">
+                        <span class="location-card-icon">
+                            <i class="fas fa-car-side"></i>
+                        </span>
+                        <div class="location-card-info">
+                            <h4 class="location-card-title">{{ $location->page_title }}</h4>
+                            <span class="location-card-meta">
+                                <i class="fas fa-check-circle text-success me-1"></i> Fixed Fare &bull; 24/7 Available
+                            </span>
+                        </div>
+                    </div>
+                    <span class="location-card-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+            @endforeach
+        </div>
+    </div>
+</section>
 
+<!-- Standard Footer -->
+<footer>
+    <div class="container">
         <div class="row d-flex justify-content-between">
             <!-- Logo & Tagline -->
             <div class="col-12 col-md-4">
@@ -117,9 +128,7 @@
                     <div class="footer-links-list">
                         <div class="footer-phone">
                             <i class="fas fa-phone footer-contact-icon"></i>
-
                             <a href="tel:+442083373777">+44 20 8337 3777</a>
-
                         </div>
                         <a href="mailto:support.uk@goride.run">
                             <i class="fas fa-envelope footer-contact-icon"></i>
@@ -168,158 +177,217 @@
 </footer>
 
 <style>
-    /* Our Serving Locations - Premium Theme Styles */
-    .footer-serving-locations {
-        margin-bottom: 36px;
-        padding-top: 10px;
+    /* Serving Locations - Modern Light Theme */
+    .serving-locations-section {
+        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 54px 0 50px;
+        position: relative;
     }
 
-    .footer-locations-header {
-        margin-bottom: 22px;
+    .locations-header-row {
+        margin-bottom: 26px;
     }
 
-    .footer-locations-title-group {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 6px;
-        flex-wrap: wrap;
-    }
-
-    .footer-locations-tag {
+    .locations-badge {
         display: inline-flex;
         align-items: center;
-        background: rgba(253, 184, 19, 0.12);
-        color: #fdb813;
-        border: 1px solid rgba(253, 184, 19, 0.28);
+        gap: 6px;
+        background: #fffbeb;
+        color: #b45309;
+        border: 1px solid #fef08a;
         border-radius: 20px;
-        padding: 3px 11px;
-        font-size: 11.5px;
+        padding: 4px 12px;
+        font-size: 12px;
         font-weight: 700;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.4px;
         text-transform: uppercase;
+        margin-bottom: 10px;
     }
 
-    .footer-locations-heading {
-        font-size: 22px;
+    .locations-pulse-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #f59e0b;
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+        animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+        }
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+        }
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+        }
+    }
+
+    .locations-main-title {
+        font-size: 26px;
         font-weight: 800;
-        color: #ffffff;
-        margin: 0;
-        letter-spacing: -0.3px;
+        color: #0f172a;
+        margin: 0 0 6px;
+        letter-spacing: -0.4px;
     }
 
-    .footer-locations-lead {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.65);
+    .locations-main-subtitle {
+        font-size: 15px;
+        color: #64748b;
         margin: 0;
         line-height: 1.5;
+        max-width: 780px;
     }
 
-    .footer-locations-grid {
+    .locations-cards-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
+        gap: 16px;
     }
 
     @media (max-width: 1199px) {
-        .footer-locations-grid {
+        .locations-cards-grid {
             grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
         }
     }
 
     @media (max-width: 991px) {
-        .footer-locations-grid {
+        .locations-cards-grid {
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 12px;
         }
-        .footer-locations-heading {
-            font-size: 20px;
+        .locations-main-title {
+            font-size: 22px;
+        }
+        .serving-locations-section {
+            padding: 42px 0 38px;
         }
     }
 
     @media (max-width: 575px) {
-        .footer-locations-grid {
+        .locations-cards-grid {
             grid-template-columns: 1fr;
-            gap: 8px;
+            gap: 10px;
         }
-        .footer-locations-heading {
-            font-size: 18px;
+        .locations-main-title {
+            font-size: 20px;
         }
-        .footer-locations-lead {
-            font-size: 13px;
+        .locations-main-subtitle {
+            font-size: 13.5px;
         }
     }
 
-    .footer-location-card {
+    .location-card-light {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        padding: 11px 14px;
-        color: rgba(255, 255, 255, 0.88);
+        gap: 12px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 14px 16px;
+        color: #1e293b;
         text-decoration: none;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(4px);
+        box-shadow: 0 2px 5px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(15, 23, 42, 0.02);
     }
 
-    .footer-location-card:hover {
-        background: rgba(253, 184, 19, 0.1);
+    .location-card-light:hover {
+        background: #ffffff;
         border-color: #fdb813;
-        color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35), 0 0 12px rgba(253, 184, 19, 0.15);
+        color: #0f172a;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(253, 184, 19, 0.22);
     }
 
-    .footer-location-icon-wrapper {
+    .location-card-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .location-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 10px;
+        background: #fffbeb;
+        color: #d97706;
+        border: 1px solid #fef3c7;
+        font-size: 14px;
+        transition: all 0.25s ease;
+    }
+
+    .location-card-light:hover .location-card-icon {
+        background: #fdb813;
+        color: #000000;
+        border-color: #fdb813;
+        transform: scale(1.06);
+    }
+
+    .location-card-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .location-card-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0 0 3px;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.2s ease;
+    }
+
+    .location-card-light:hover .location-card-title {
+        color: #000000;
+    }
+
+    .location-card-meta {
+        font-size: 11.5px;
+        color: #64748b;
+        font-weight: 500;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .location-card-arrow {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 30px;
         height: 30px;
         min-width: 30px;
-        border-radius: 8px;
-        background: rgba(253, 184, 19, 0.12);
-        color: #fdb813;
-        font-size: 12.5px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        color: #64748b;
+        font-size: 12px;
         transition: all 0.25s ease;
+        margin-left: 4px;
     }
 
-    .footer-location-card:hover .footer-location-icon-wrapper {
+    .location-card-light:hover .location-card-arrow {
         background: #fdb813;
         color: #000000;
-        transform: scale(1.05);
-    }
-
-    .footer-location-text {
-        flex: 1;
-        font-size: 13.5px;
-        font-weight: 600;
-        line-height: 1.35;
-        color: inherit;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .footer-location-chevron {
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.35);
-        transition: all 0.25s ease;
-        margin-left: auto;
-    }
-
-    .footer-location-card:hover .footer-location-chevron {
-        color: #fdb813;
         transform: translateX(3px);
-    }
-
-    .footer-locations-divider {
-        height: 1px;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.14) 50%, rgba(255, 255, 255, 0.03) 100%);
-        margin: 32px 0 38px;
     }
 </style>

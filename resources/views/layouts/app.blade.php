@@ -39,6 +39,27 @@
                 }, 300);
             }
         };
+
+        // Global Smooth Scroll for Anchor Links
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a[href^="#"]:not([href="#"]):not([href="#!"]):not([data-bs-toggle])').forEach(function (anchor) {
+                anchor.addEventListener('click', function (e) {
+                    var hash = this.getAttribute('href');
+                    if (hash && hash.length > 1) {
+                        try {
+                            var target = document.querySelector(hash);
+                            if (target) {
+                                e.preventDefault();
+                                var header = document.querySelector('.navbar-uber') || document.querySelector('header');
+                                var offset = header ? header.offsetHeight + 15 : 80;
+                                var targetPos = target.getBoundingClientRect().top + window.scrollY - offset;
+                                window.scrollTo({ top: targetPos, behavior: 'smooth' });
+                            }
+                        } catch (err) {}
+                    }
+                });
+            });
+        });
     </script>
 
     @if($loadUkTracking)
@@ -120,6 +141,16 @@
     <!-- Consolidated Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto !important;
+            }
+        }
+
         .btn-swap-locations {
             position: absolute;
             right: 15px;

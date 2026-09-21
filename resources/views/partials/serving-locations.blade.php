@@ -41,7 +41,7 @@
                 @php
                     $locUrl = $baseLandingUrl . ltrim($location->slug, '/');
                 @endphp
-                <a href="{{ $locUrl }}" class="classic-location-item" title="{{ $location->page_title }}">
+                <a href="{{ $locUrl }}" target="_blank" rel="noopener noreferrer" class="classic-location-item" title="{{ $location->page_title }}">
                     <div class="classic-item-content">
                         <span class="classic-item-icon">
                             <i class="fas fa-car-side"></i>

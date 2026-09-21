@@ -2120,22 +2120,22 @@
 
                     {{-- ================= SPECIAL REQUIREMENTS & ADD-ONS ================= --}}
                     <!-- @if(!empty($user_details['c_meet_and_greet']) && $user_details['c_meet_and_greet'] == '1')
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-item-box">
-                                                    <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
-                                                    <div class="info-value">Meet & Greet Included</div>
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-item-box">
+                                                        <div class="info-label"><i class="fa-solid fa-handshake"></i> Service</div>
+                                                        <div class="info-value">Meet & Greet Included</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @endif
+                                                @endif
 
-                                            @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
-                                            <div class="col-md-3 col-6">
-                                                <div class="info-item-box">
-                                                    <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
-                                                    <div class="info-value">Wheelchair Required</div>
+                                                @if(!empty($user_details['c_wheel_chair']) && $user_details['c_wheel_chair'] == '1')
+                                                <div class="col-md-3 col-6">
+                                                    <div class="info-item-box">
+                                                        <div class="info-label"><i class="fa-solid fa-wheelchair"></i> Accessibility</div>
+                                                        <div class="info-value">Wheelchair Required</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @endif -->
+                                                @endif -->
 
                     @if(!empty($user_details['c_special_require']) && strtolower($user_details['c_special_require']) !== 'none')
                         <div class="col-md-6 col-12">
@@ -2202,7 +2202,7 @@
                     <ul class="policy-list">
                         <li>Parking charges will be charged at actuals.</li>
                         <li>Road tolls, Congestion Charge, and ULEZ charges (where applicable).</li>
-                        <li>Any government or local authority charges, if applicable.</li>
+                        <li>Any local authority charges, if appicable.</li>
                         <li>Additional mileage and waiting charges beyond the included limits.</li>
                     </ul>
                 </div>

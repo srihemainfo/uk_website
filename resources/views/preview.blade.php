@@ -1087,7 +1087,7 @@
                     <ul class="policy-list">
                         <li>Parking charges will be charged at actuals.</li>
                         <li>Road tolls, Congestion Charge, and ULEZ charges (where applicable).</li>
-                        <li>Any government or local authority charges, if applicable.</li>
+                        <li>Any local authority charges, if appicable.</li>
                         <li>Additional mileage and waiting charges beyond the included limits.</li>
                     </ul>
                 </div>

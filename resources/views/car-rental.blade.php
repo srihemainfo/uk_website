@@ -1020,11 +1020,11 @@ color: #504533 !important;
     background: #ffffff;
 }
 .fleet-card-img {
-    max-height: 100px;
+    max-height: 105px;
     max-width: 95%;
     object-fit: contain;
+    mix-blend-mode: multiply;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
 }
 .fleet-card:hover .fleet-card-img {
     transform: scale(1.06);
@@ -1791,7 +1791,7 @@ color: #504533 !important;
     </section>
 @endif
 
-<section class="popular-routes-section">
+<!-- <section class="popular-routes-section">
     <div class="container">
 
         <div class="section-heading">
@@ -1978,7 +1978,7 @@ color: #504533 !important;
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <script>
 $(document).ready(function () {
 

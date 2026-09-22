@@ -10707,9 +10707,9 @@
         function _updatePassengerSummaryUI(state) {
             function _fmtPhone(val) {
                 if (!val) return '';
-                const clean = val.trim();
-                if (clean.startsWith('+')) return clean;
-                return '+44 ' + clean;
+                const clean = String(val).trim().replace(/\D/g, '');
+                if (!clean) return '';
+                return '+' + clean;
             }
 
             // Passenger name
@@ -11000,7 +11000,14 @@
                 if (_restoredState.passengerFirstName) { $('#passengerFirstName').val(_restoredState.passengerFirstName); }
                 if (_restoredState.passengerLastName) { $('#passengerLastName').val(_restoredState.passengerLastName); }
                 if (_restoredState.passengerEmail) { $('#passengerEmail').val(_restoredState.passengerEmail); }
-                if (_restoredState.passengerPhone) { $('#passengerPhone').val(_restoredState.passengerPhone); }
+                if (_restoredState.passengerPhone) {
+                    const cleanPhone = String(_restoredState.passengerPhone).replace(/\D/g, '');
+                    if (window.passengerPhoneIti) {
+                        window.passengerPhoneIti.setNumber('+' + cleanPhone);
+                    } else {
+                        $('#passengerPhone').val(cleanPhone);
+                    }
+                }
                 if (_restoredState.passengerCount) { $('#passengerCount').val(_restoredState.passengerCount); }
                 if (_restoredState.luggageCount) { $('#luggageCount').val(_restoredState.luggageCount); }
                 if (_restoredState.handLuggageCount) { $('#handLuggageCount').val(_restoredState.handLuggageCount); }
@@ -12981,6 +12988,39 @@
             inputEl.value = v;
         }
 
+        function getPassengerPhoneWithDialCode() {
+            const phoneEl = document.getElementById('passengerPhone');
+            if (!phoneEl) return (BookingStore.getState().passengerPhone || '').replace(/\D/g, '');
+            const rawVal = phoneEl.value.trim();
+            if (!rawVal) {
+                if (document.activeElement === phoneEl) {
+                    return '';
+                }
+                return (BookingStore.getState().passengerPhone || '').replace(/\D/g, '');
+            }
+
+            let result = '';
+            if (window.passengerPhoneIti) {
+                const fullNumber = window.passengerPhoneIti.getNumber();
+                if (fullNumber && fullNumber.startsWith('+')) {
+                    result = fullNumber;
+                } else {
+                    const countryData = window.passengerPhoneIti.getSelectedCountryData();
+                    const dialCode = countryData && countryData.dialCode ? String(countryData.dialCode) : '';
+                    if (dialCode) {
+                        const cleanDigits = rawVal.replace(/\D/g, '').replace(/^0+/, '');
+                        result = dialCode + cleanDigits;
+                    } else {
+                        result = rawVal;
+                    }
+                }
+            } else {
+                result = rawVal;
+            }
+
+            return result.replace(/\D/g, '');
+        }
+
         function formatEmailAddress(inputEl) {
             if (!inputEl) return;
             let v = inputEl.value;
@@ -13062,7 +13102,7 @@
 
             bookingData.passengerName = firstName;
             bookingData.passengerEmail = email;
-            bookingData.passengerPhone = phoneEl.value.trim();
+            bookingData.passengerPhone = getPassengerPhoneWithDialCode();
 
             // Check if user is logged in but missing mobile number
             const userStr = typeof getCookieValue === 'function' ? getCookieValue('auth_user') : null;
@@ -13072,7 +13112,7 @@
                     const userPhone = user.mobile || user.mobile_number || user.phone || '';
                     if (!userPhone) {
                         // User is logged in but has no mobile. We must verify this new phone number.
-                        _startBookingOtpVerification(phoneEl.value.trim(), firstName, email);
+                        _startBookingOtpVerification(bookingData.passengerPhone, firstName, email);
                         return; // Stop here until OTP is done
                     }
                 } catch (e) { console.error('Error parsing auth_user', e); }
@@ -13091,13 +13131,14 @@
         }
 
         async function _startBookingOtpVerification(rawPhone, name, email) {
-            let mobileNumber = rawPhone;
+            let mobileNumber = (rawPhone || '').replace(/\D/g, '');
             let dialCode = '91';
             if (window.passengerPhoneIti) {
                 const countryData = window.passengerPhoneIti.getSelectedCountryData();
                 dialCode = countryData && countryData.dialCode ? String(countryData.dialCode) : '91';
-                const rawVal = rawPhone.replace(/\D/g, '');
-                mobileNumber = '+' + dialCode + rawVal;
+                if (!mobileNumber.startsWith(dialCode)) {
+                    mobileNumber = dialCode + mobileNumber.replace(/^0+/, '');
+                }
             }
 
             // Find the Step 4 continue button
@@ -13338,7 +13379,7 @@
 
             const email = document.getElementById('passengerEmail')?.value.trim() || bookingData.passengerEmail || '';
             const name = document.getElementById('passengerFirstName')?.value.trim() || bookingData.passengerFirstName || '';
-            const phone = document.getElementById('passengerPhone')?.value.trim() || bookingData.passengerPhone || '';
+            const phone = bookingData.passengerPhone || getPassengerPhoneWithDialCode() || document.getElementById('passengerPhone')?.value.trim() || '';
             const jobId = bookingData.jobId || bookingData.job_id || '';
             const jobNo = bookingData.job_no || bookingData.bookingId || '';
             const currentPaymentId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
@@ -13502,7 +13543,7 @@
             const state = BookingStore.getState();
             let email = document.getElementById('passengerEmail').value.trim();
             let name = document.getElementById('passengerFirstName').value.trim();
-            let phone = document.getElementById('passengerPhone').value.trim();
+            let phone = getPassengerPhoneWithDialCode() || state.passengerPhone || '';
 
             // Restore from state if empty due to page reload
             if (!email && state.passengerEmail) {
@@ -13514,8 +13555,13 @@
                 document.getElementById('passengerFirstName').value = name;
             }
             if (!phone && state.passengerPhone) {
-                phone = state.passengerPhone;
-                document.getElementById('passengerPhone').value = phone;
+                const cleanPhone = String(state.passengerPhone).replace(/\D/g, '');
+                phone = cleanPhone;
+                if (window.passengerPhoneIti) {
+                    window.passengerPhoneIti.setNumber('+' + cleanPhone);
+                } else {
+                    document.getElementById('passengerPhone').value = cleanPhone;
+                }
             }
 
             if (!name) {
@@ -14234,7 +14280,7 @@
             BookingStore.setState({
                 passengerFirstName: $('#passengerFirstName').val() || '',
                 passengerLastName: $('#passengerLastName').val() || '',
-                passengerPhone: $('#passengerPhone').val() || '',
+                passengerPhone: getPassengerPhoneWithDialCode(),
                 passengerEmail: $('#passengerEmail').val() || '',
                 passengerCount: $('#passengerCount').val() || 1,
                 luggageCount: $('#luggageCount').val() || 0,
@@ -14381,7 +14427,7 @@
                 c_id: 0,
                 c_name: bookingData.passengerFirstName + ' ' + bookingData.passengerLastName,
                 c_email: bookingData.passengerEmail || '',
-                c_mobile: bookingData.passengerPhone || '',
+                c_mobile: bookingData.passengerPhone || getPassengerPhoneWithDialCode() || '',
                 isDriver: 'no',
                 c_pick_after_time: bookingData.pickAfterTime || '',
                 c_luggage: bookingData.luggageCount || '0',
@@ -15804,7 +15850,7 @@
             });
 
             // Bind input change events to update the store + booking summary live
-            $(document).on('input change',
+            $(document).on('input change countrychange',
                 '#passengerFirstName, #passengerPhone, #passengerEmail, #passengerCount, #luggageCount, #handLuggageCount, #carSeatCheckbox, #childSeatCount, .carSeatTypeSelect, #flightNumber, #flightArrivingTime, #meetAndGreet, #meetAndGreetSeaport, #wheelchairOptionAirport, #wheelchairOptionSeaport, #wheelchairOptionNormal, .meet-and-greet-cb, .wheelchair-option-cb, #pickupAfterLanding, #pickupAfterLandingSelect, #comingFrom, #dropoffAddress, #ferryName, #seaportArrivalDate, #seaportArrivalTime, #comingFromPort, #dropoffAddressSeaport, #normalJourneyDate, #normalJourneyTime, #specialReqCheckbox, #specialRequirements',
                 function () {
                     // gatherAllBookingData does a single batch setState, which fires
@@ -16713,6 +16759,25 @@
                     import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.1/build/js/utils.js")
             });
             window.passengerPhoneIti = iti;
+
+            try {
+                const existingPhone = (typeof BookingStore !== 'undefined') ? BookingStore.getState().passengerPhone : null;
+                if (existingPhone) {
+                    const cleanPhone = String(existingPhone).replace(/\D/g, '');
+                    if (cleanPhone) {
+                        iti.setNumber('+' + cleanPhone);
+                    }
+                }
+            } catch (e) { }
+
+            phoneInput.addEventListener('countrychange', function () {
+                if (typeof gatherAllBookingData === 'function') {
+                    gatherAllBookingData();
+                }
+                if (typeof updateBookingSummary === 'function') {
+                    updateBookingSummary();
+                }
+            });
         }
     </script>
 

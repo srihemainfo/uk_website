@@ -253,11 +253,52 @@
             .driver-item.driver-card .driver-bid-box {
                 display: flex !important;
                 flex-direction: row !important;
-                justify-content: end !important;
+                justify-content: space-between !important;
                 align-items: center !important;
                 width: 100% !important;
-                margin-top: 0 !important;
-                gap: 26px !important;
+                margin-top: 10px !important;
+                padding-top: 10px !important;
+                border-top: 1px dashed #e2e8f0 !important;
+                gap: 8px !important;
+            }
+
+            .driver-item.driver-card .driver-price-col {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                justify-content: center !important;
+                flex: 1 1 auto !important;
+                min-width: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            .driver-item.driver-card .driver-discount-top-row {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                gap: 6px !important;
+                margin-bottom: 2px !important;
+            }
+
+            .driver-item.driver-card .original-price {
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                color: #64748b !important;
+                text-decoration: line-through !important;
+                text-decoration-color: #059669 !important;
+            }
+
+            .driver-item.driver-card .discount-badge {
+                font-size: 10px !important;
+                font-weight: 700 !important;
+                padding: 1px 6px !important;
+                border-radius: 9999px !important;
+                background: #059669 !important;
+                color: #ffffff !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.3px !important;
+                line-height: 1.3 !important;
+                white-space: nowrap !important;
             }
 
             .driver-item.driver-card .driver-price-row {
@@ -267,17 +308,154 @@
             }
 
             .driver-item.driver-card .bid-amount {
-                font-size: 20px !important;
-                font-weight: 700 !important;
+                font-size: 22px !important;
+                font-weight: 800 !important;
                 color: #0f172a !important;
+                line-height: 1.1 !important;
+            }
+
+            .driver-item.driver-card .driver-offer-applied-row {
+                margin-bottom: 0 !important;
+                margin-top: 3px !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .driver-item.driver-card .offer-applied-badge {
+                background: #ecfdf5 !important;
+                color: #047857 !important;
+                border: 1px solid #a7f3d0 !important;
+                font-size: 11px !important;
+                font-weight: 600 !important;
+                padding: 2px 7px !important;
+                border-radius: 9999px !important;
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+                line-height: 1.3 !important;
             }
 
             .driver-item.driver-card .driver-accept-btn {
                 margin-top: 0px !important;
+                width: auto !important;
+                padding: 8px 14px !important;
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                border-radius: 8px !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
+                background: #0f172a !important;
+                color: #ffffff !important;
             }
 
             .driver-item.driver-card .driver-accept-btn:hover {
                 background-color: #1e293b !important;
+            }
+        }
+
+        /* Desktop Driver Card Styling Enhancements */
+        @media (min-width: 769px) {
+            .driver-item.driver-card {
+                position: relative !important;
+                padding: 10px 16px !important;
+                border-radius: 16px !important;
+                box-sizing: border-box !important;
+            }
+
+            .driver-item.driver-card .driver-bid-box {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-end !important;
+                justify-content: center !important;
+                flex-shrink: 0 !important;
+                min-width: 155px !important;
+                text-align: right !important;
+            }
+
+            .driver-item.driver-card .driver-price-col {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-end !important;
+                justify-content: flex-end !important;
+                width: 100% !important;
+                padding-top: 0 !important;
+            }
+
+            .driver-item.driver-card.has-tax-ribbon .driver-bid-box {
+                padding-top: 16px !important;
+            }
+
+            .driver-item.driver-card.has-tax-ribbon .driver-price-col {
+                padding-top: 0 !important;
+            }
+
+            .driver-item.driver-card .driver-discount-top-row {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
+                gap: 6px !important;
+                margin-bottom: 2px !important;
+            }
+
+            .driver-item.driver-card .original-price {
+                font-size: 15px !important;
+                font-weight: 600 !important;
+                color: #64748b !important;
+                text-decoration: line-through !important;
+                text-decoration-color: #059669 !important;
+            }
+
+            .driver-item.driver-card .discount-badge {
+                background: #059669 !important;
+                color: #ffffff !important;
+                font-size: 11px !important;
+                font-weight: 700 !important;
+                padding: 2px 8px !important;
+                border-radius: 9999px !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.3px !important;
+                line-height: 1.4 !important;
+                white-space: nowrap !important;
+            }
+
+            .driver-item.driver-card .bid-amount {
+                font-size: 26px !important;
+                font-weight: 800 !important;
+                color: #0f172a !important;
+                line-height: 1.1 !important;
+            }
+
+            .driver-item.driver-card .offer-applied-badge {
+                background: #ecfdf5 !important;
+                color: #047857 !important;
+                border: 1px solid #a7f3d0 !important;
+                font-size: 11px !important;
+                font-weight: 600 !important;
+                padding: 2px 9px !important;
+                border-radius: 9999px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+                line-height: 1.4 !important;
+                white-space: nowrap !important;
+            }
+
+            .driver-item.driver-card .driver-accept-btn {
+                width: 100% !important;
+                margin-top: 8px !important;
+                padding: 6px 14px !important;
+                font-size: 13px !important;
+                font-weight: 600 !important;
+                border-radius: 8px !important;
+                white-space: nowrap !important;
+                box-sizing: border-box !important;
+                background: #0f172a !important;
+                color: #ffffff !important;
+            }
+
+            .driver-item.driver-card .driver-accept-btn:hover {
+                background: #1e293b !important;
             }
         }
 
@@ -2889,14 +3067,22 @@
                                 </div>
                             </div>
 
-                            <div class="rc-bid-card">
-                                <div class="rc-bid-top">
+                            <div class="rc-bid-card" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: center;">
+                                <div class="rc-bid-top" style="display: flex; flex-direction: column; align-items: flex-end; width: 100%;">
                                     <div class="rc-card-subtitle">BIDDED AMOUNT</div>
-                                    <!-- <div class="rc-bid-badge"><i class="fas fa-check-circle"></i> Includes all fees</div> -->
+                                    <div id="rcDiscountRow" style="display: none; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 2px;">
+                                        <span id="rcOriginalFare" style="text-decoration: line-through; text-decoration-color: #059669; color: #64748b; font-size: 14px; font-weight: 600;"></span>
+                                        <span id="rcDiscountBadge" style="background: #059669; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 9999px; text-transform: uppercase;"></span>
+                                    </div>
                                 </div>
-                                <div class="rc-bid-bottom">
+                                <div class="rc-bid-bottom" style="display: flex; flex-direction: column; align-items: flex-end; width: 100%; margin-top: 1px;">
                                     <div class="rc-bid-amount">
-                                        <strong id="rcFareAmount">£0</strong>
+                                        <strong id="rcFareAmount" style="font-size: 24px; font-weight: 800; color: #0f172a;">£0</strong>
+                                    </div>
+                                    <div id="rcOfferAppliedRow" style="display: none; margin-top: 3px;">
+                                        <span id="rcOfferAppliedBadge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;">
+                                            <i class="fas fa-tag" style="font-size: 10px; color: #059669;"></i> <span id="rcOfferAppliedText"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

@@ -14469,7 +14469,8 @@
                             jobId: cleanJobId,     // DB numeric ID
                             job_id: cleanJobId,
                             firebaseConfig: data.firebase || null,
-                            firebaseCustomToken: data.firebase_custom_token || null
+                            firebaseCustomToken: data.firebase_custom_token || null,
+                            firstAmt: (data.firstAmt !== undefined && data.firstAmt !== null) ? (parseFloat(data.firstAmt) || 0) : ((data.data?.firstAmt !== undefined && data.data?.firstAmt !== null) ? (parseFloat(data.data.firstAmt) || 0) : (BookingStore.getState().firstAmt || null))
                         });
 
                         updateBookingSummary();
@@ -14894,11 +14895,19 @@
                                 });
                             }
 
+                            if (data.firstAmt !== undefined && data.firstAmt !== null) {
+                                const parsedFirstAmt = parseFloat(data.firstAmt) || 0;
+                                if (parsedFirstAmt > 0) {
+                                    BookingStore.setState({ firstAmt: parsedFirstAmt });
+                                    bookingData.firstAmt = parsedFirstAmt;
+                                }
+                            }
+
                             if (data.status === 'cancel' || data.status === 'cancelled' || data.status === 'cancel_job' || data.status === 'job_cancelled') {
                                 handleJobCancelledOrMissing();
                                 return;
                             }
-                            renderRealtimeDrivers(data.bids_details || {});
+                            renderRealtimeDrivers(data.bids_details || {}, data.firstAmt);
                         } else {
                             console.warn(`[Firebase] Document "${targetJobNo}" does not exist in collection "${collectionName}".`);
                             handleJobCancelledOrMissing();
@@ -14976,10 +14985,47 @@
             }
         }
 
-        function renderRealtimeDrivers(bidsDetails) {
+        function renderRealtimeDrivers(bidsDetails, jobFirstAmt) {
             bidsDetails = bidsDetails || {};
             const grid = $('#driverList');
             const incomingKeys = new Set(Object.keys(bidsDetails));
+            const firstAmtVal = parseFloat(jobFirstAmt !== undefined && jobFirstAmt !== null ? jobFirstAmt : (BookingStore.getState().firstAmt || bookingData.firstAmt || 0));
+
+            function getDriverPriceColHtml(bidAmount, isTax) {
+                const finalBidNum = parseFloat(bidAmount) || 0;
+                if (firstAmtVal > 0) {
+                    const originalFare = finalBidNum + firstAmtVal;
+                    const discountText = Number.isInteger(firstAmtVal) ? firstAmtVal : firstAmtVal.toFixed(2);
+                    const taxPaddingStyle = '';
+                    return `
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; ${taxPaddingStyle}">
+                <div class="driver-discount-top-row" style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-bottom: 2px;">
+                    <span class="original-price" style="text-decoration: line-through; text-decoration-color: #059669; color: #64748b; font-size: 15px; font-weight: 600; letter-spacing: -0.2px;">£${originalFare.toFixed(2)}</span>
+                    <span class="discount-badge" style="background: #059669; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.4; white-space: nowrap;">£${discountText} OFF</span>
+                </div>
+                <div class="driver-price-row" style="margin-bottom: 2px;">
+                    <div class="bid-amount" style="font-size: 26px; font-weight: 800; color: #0f172a; line-height: 1.1;">
+                        £${finalBidNum.toFixed(2)}
+                    </div>
+                </div>
+                <div class="driver-offer-applied-row" style="margin-bottom: 6px;">
+                    <span class="offer-applied-badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px; line-height: 1.4; white-space: nowrap;">
+                        <i class="fas fa-tag" style="font-size: 10px; color: #059669;"></i> £${discountText} Offer Applied
+                    </span>
+                </div>
+            </div>`;
+                } else {
+                    const taxPaddingStyle = '';
+                    return `
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; ${taxPaddingStyle}">
+                <div class="driver-price-row" style="margin-bottom: 0;">
+                    <div class="bid-amount">
+                        £${bidAmount}
+                    </div>
+                </div>
+            </div>`;
+                }
+            }
 
             // Remove drivers whose bids were deleted/removed from Firebase
             existingRenderedDrivers.forEach(key => {
@@ -15064,7 +15110,7 @@
                     const rawExclusions = fare.excluded_list || fare.exclusions || fare.excluded || [];
                     const exclusionsList = Array.isArray(rawExclusions)
                         ? rawExclusions
-                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawExclusions]; } })() : []);
+                        : (typeof rawExclusions === 'string' ? (() => { try { return JSON.parse(rawExclusions); } catch (e) { return [rawInclusions]; } })() : []);
 
                     const exclusionsHtml = (exclusionsList && exclusionsList.length > 0) ?
                         exclusionsList.map(exc => {
@@ -15083,7 +15129,7 @@
                     ` : '';
 
                     const html = `
-<div class="driver-item driver-card" id="driver-bid-${key}" style="display:none; margin-bottom:15px; position:relative;">
+<div class="driver-item driver-card ${d.isTax ? 'has-tax-ribbon' : ''}" id="driver-bid-${key}" style="display:none; margin-bottom:15px; position:relative;">
     ${taxHtml}
     <div class="driver-info">
         <div class="driver-details">
@@ -15117,13 +15163,7 @@
             </div>
         </div>
         <div class="driver-bid-box">
-            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
-                <div class="driver-price-row" style="margin-bottom: 0;">
-                    <div class="bid-amount">
-                        £${d.bid}
-                    </div>
-                </div>
-            </div>
+            ${getDriverPriceColHtml(d.bid, d.isTax)}
          
             <button onclick="acceptDriverFromList(${driverJson}, this)" class="driver-accept-btn">
     <i class="fas fa-check me-1"></i>Review & Pay
@@ -15164,8 +15204,20 @@
                     if (driverElem.length) {
                         const newAmount = bid.show_amount || 0;
                         const currentAmountText = driverElem.find('.bid-amount').text().trim();
-                        if (currentAmountText !== '£' + newAmount) {
-                            driverElem.find('.bid-amount').text('£' + newAmount);
+                        const finalBidNum = parseFloat(newAmount) || 0;
+                        const expectedAmountText = firstAmtVal > 0 ? '£' + finalBidNum.toFixed(2) : '£' + newAmount;
+
+                        if (currentAmountText !== expectedAmountText) {
+                            if (firstAmtVal > 0) {
+                                const originalFare = finalBidNum + firstAmtVal;
+                                const discountText = Number.isInteger(firstAmtVal) ? firstAmtVal : firstAmtVal.toFixed(2);
+                                driverElem.find('.original-price').text('£' + originalFare.toFixed(2));
+                                driverElem.find('.discount-badge').text(`£${discountText} OFF`);
+                                driverElem.find('.bid-amount').text('£' + finalBidNum.toFixed(2));
+                                driverElem.find('.offer-applied-badge').html(`<i class="fas fa-tag" style="font-size: 10px; color: #059669;"></i> £${discountText} Offer Applied`);
+                            } else {
+                                driverElem.find('.bid-amount').text('£' + newAmount);
+                            }
 
                             const d = {
                                 id: key,
@@ -15278,8 +15330,47 @@
                 }).join('') :
                 `<li class="tab-point-item" style="grid-column: 1 / -1; color: #6b7280;"><i class="fas fa-info-circle point-icon" style="color: #6b7280;"></i><div>No extra exclusions specified for this fare.</div></li>`;
 
+            const firstAmtVal = parseFloat(BookingStore.getState().firstAmt || bookingData.firstAmt || 0);
             drivers.forEach(d => {
                 const driverJson = JSON.stringify(d).replace(/"/g, '&quot;');
+                const finalBidNum = parseFloat(d.bid) || 0;
+                let priceColHtml = '';
+                const taxPaddingStyle = '';
+                if (firstAmtVal > 0) {
+                    const originalFare = finalBidNum + firstAmtVal;
+                    const discountText = Number.isInteger(firstAmtVal) ? firstAmtVal : firstAmtVal.toFixed(2);
+                    priceColHtml = `
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; ${taxPaddingStyle}">
+                <div class="driver-discount-top-row" style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-bottom: 2px;">
+                    <span class="original-price" style="text-decoration: line-through; text-decoration-color: #059669; color: #64748b; font-size: 15px; font-weight: 600; letter-spacing: -0.2px;">£${originalFare.toFixed(2)}</span>
+                    <span class="discount-badge" style="background: #059669; color: #ffffff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.3px; line-height: 1.4; white-space: nowrap;">£${discountText} OFF</span>
+                </div>
+                <div class="driver-price-row" style="margin-bottom: 2px;">
+                    <div class="bid-amount" style="font-size: 26px; font-weight: 800; color: #0f172a; line-height: 1.1;">
+                        £${finalBidNum.toFixed(2)}
+                    </div>
+                </div>
+                <div class="driver-offer-applied-row" style="margin-bottom: 6px;">
+                    <span class="offer-applied-badge" style="background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 4px; line-height: 1.4; white-space: nowrap;">
+                        <i class="fas fa-tag" style="font-size: 10px; color: #059669;"></i> £${discountText} Offer Applied
+                    </span>
+                </div>
+            </div>`;
+                } else {
+                    const fallbackTaxPadding = '';
+                    priceColHtml = `
+            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; ${fallbackTaxPadding}">
+                <div class="driver-price-row" style="margin-bottom: 0;">
+                    <div class="bid-amount">
+                        £${d.bid}
+                    </div>
+                </div>
+                <div class="bid-eta" style="margin-top: 0;">
+                    <i class="fas fa-clock"></i>
+                    ${d.eta} away
+                </div>
+            </div>`;
+                }
 
                 const taxHtml = d.isTax ? `
         <div class="tax-ribbon-wrapper">
@@ -15291,7 +15382,7 @@
                 ` : '';
 
                 const html = `
-<div class="driver-item driver-card" style="position:relative;">
+<div class="driver-item driver-card ${d.isTax ? 'has-tax-ribbon' : ''}" style="position:relative;">
     ${taxHtml}
     <!-- Car Banner -->
     <div class="driver-info">
@@ -15324,17 +15415,7 @@
             </div>
         </div>
         <div class="driver-bid-box">
-            <div class="driver-price-col" style="display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end;">
-                <div class="driver-price-row" style="margin-bottom: 0;">
-                    <div class="bid-amount">
-                        £${d.bid}
-                    </div>
-                </div>
-                <div class="bid-eta" style="margin-top: 0;">
-                    <i class="fas fa-clock"></i>
-                    ${d.eta} away
-                </div>
-            </div>
+            ${priceColHtml}
             <button onclick="acceptDriverFromList(${driverJson}, this)" style="width:100%;     padding: 6px 10px; background:#111; color:#fff; border:none; border-radius:6px; font-size:14px; font-weight:600;cursor:pointer;" onmouseover="this.style.background='#000'" onmouseout="this.style.background='#111'"><i class="fas fa-check me-1"></i> Accept</button>
         </div>
     </div>
@@ -15409,7 +15490,22 @@
                 $('#rcDriverBadge').hide();
             }
             $('#rcCarImage').attr('src', vehicleImg);
-            $('#rcFareAmount').text('£' + (driver.bid || vehiclePrice));
+            const firstAmt = parseFloat(BookingStore.getState().firstAmt || bookingData.firstAmt || 0);
+            const rawFare = parseFloat(driver.bid || vehiclePrice || 0);
+            if (firstAmt > 0) {
+                const originalFare = rawFare + firstAmt;
+                const firstAmtText = Number.isInteger(firstAmt) ? firstAmt : firstAmt.toFixed(2);
+                $('#rcOriginalFare').text('£' + originalFare.toFixed(2));
+                $('#rcDiscountBadge').text(`£${firstAmtText} OFF`);
+                $('#rcFareAmount').text('£' + rawFare.toFixed(2));
+                $('#rcOfferAppliedText').text(`£${firstAmtText} Offer Applied`);
+                $('#rcDiscountRow').css('display', 'flex');
+                $('#rcOfferAppliedRow').show();
+            } else {
+                $('#rcDiscountRow').hide();
+                $('#rcOfferAppliedRow').hide();
+                $('#rcFareAmount').text('£' + (driver.bid || vehiclePrice));
+            }
             $('.rc-vehicle-name-block h4').text(vehicleName);
             $('#rcPassengerCapacity').text(driver.carCapacity || vehicle?.capacity || 8);
             $('#rcLuggageCapacity').text(driver.carLuggage || vehicle?.luggage || 8);

@@ -346,10 +346,11 @@
                 &copy; {{ date('Y') }} Operated by Goride Plus Ltd. All rights reserved.
             </div>
             <div class="footer-help">
-                <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20help%20booking%20a%20cab%20on%20GoRide.&type=phone_number&app_absent=0" target="_blank">
+                <!-- <a href="https://api.whatsapp.com/send/?phone=447950323242&text=Hi%2C%20I%20need%20help%20booking%20a%20cab%20on%20GoRide.&type=phone_number&app_absent=0" target="_blank"> -->
+                <a href="https://api.whatsapp.com/send/?phone=447922608080&text=Hi%2C%20I%20need%20help%20booking%20a%20cab%20on%20GoRide.&type=phone_number&app_absent=0" target="_blank">
                     <i class="fab fa-whatsapp"></i> WhatsApp Dispatch
                 </a>
-                <a href="tel:+442083373777">
+                <a href="tel:+442083373777" class="d-none">
                     <i class="fas fa-phone"></i> +44 208 337 3777
                 </a>
                 <a href="{{ $contactUrl }}">

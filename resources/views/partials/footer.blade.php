@@ -54,7 +54,7 @@
                 <div class="footer-section">
                     <div class="footer-section-title">Contact</div>
                     <div class="footer-links-list">
-                        <div class="footer-phone">
+                        <div class="footer-phone d-none">
                             <i class="fas fa-phone footer-contact-icon"></i>
                             <a href="tel:+442083373777">+44 20 8337 3777</a>
                         </div>

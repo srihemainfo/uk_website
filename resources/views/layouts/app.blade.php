@@ -9363,7 +9363,7 @@
                         </a>
 
                         <!-- Call Card -->
-                        <div class="help-card help-card-call">
+                        <div class="help-card help-card-call d-none">
                             <div class="help-card-icon-box call-bg">
                                 <i class="fas fa-phone-alt" style="transform: rotate(90deg);"></i>
                             </div>

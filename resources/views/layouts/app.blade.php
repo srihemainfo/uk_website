@@ -10241,6 +10241,14 @@
                 $('#pickupInputWrapper').removeClass('has-value');
                 $('#dropoffInputWrapper').removeClass('has-value');
 
+                $('#confirmNum').text('');
+                $('#confirmPickup').text('—');
+                $('#confirmDropoff').text('—');
+                $('#confirmDateTime').text('—').parent().hide();
+                $('#confirmVehicle').text('—');
+                $('#confirmDistance').text('—');
+                $('#confirmDuration').text('—');
+
                 $('#flightNumber').val('');
                 $('#comingFrom').val('');
                 $('#dropoffAddress').val('');
@@ -10995,6 +11003,21 @@
             const isFinishedBooking = (_restoredState.currentStep === 8);
             if (isFinishedBooking) {
                 clearAllBookingSessionData(true);
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+                $('.form-section').removeClass('active side-by-side');
+                $('#step1').addClass('active');
+                $('.hero-form-section').removeClass('col-md-8 three-column-mode').addClass('col-md-5');
+                $('.hero-map-section').removeClass('col-md-4').addClass('col-md-7');
+                $('#step2Buttons').hide();
+                $('#bookingMap, #mapRouteBadge').hide();
+                $('#bookingImage').show();
+                $('#selectedCarSummary').hide();
+                $('#enteredDetailsSummary').hide();
+                $('#riderSelectCard').show();
+                $('#tripRouteMetaContainer').hide();
+                if (typeof updateStepperHeader === 'function') updateStepperHeader(1);
             } else {
                 // If there are saved locations, restore them into the form inputs
                 if (_restoredState.pickup) { $('#pickupInput').val(_restoredState.pickup); }
@@ -11199,7 +11222,6 @@
             }
 
             if (isFinishedBooking) {
-                clearAllBookingSessionData(true);
                 showStep(1);
             } else if (_restoredState.currentStep && _restoredState.currentStep > 1) {
                 if (_restoredState.currentStep === 5) {
@@ -13549,7 +13571,177 @@
             }
         };
 
+        function isAllowedBookingAnalyticsHost() {
+            try {
+                const host = (window.location.hostname || '').toLowerCase();
+                const path = (window.location.pathname || '').toLowerCase();
+
+                // 1. uk.goride.run (including www.uk.goride.run)
+                const isUkSubdomain = host === 'uk.goride.run' || host === 'www.uk.goride.run';
+
+                // 2. goride.run/uk (including www.goride.run/uk)
+                const isGorideRunUk = (host === 'goride.run' || host === 'www.goride.run') &&
+                    (path === '/uk' || path.startsWith('/uk/'));
+
+                return isUkSubdomain || isGorideRunUk;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function renderBookingConfirmationScreen(data, stateSnapshot) {
+            stateSnapshot = stateSnapshot || (typeof BookingStore !== 'undefined' ? BookingStore.getState() : {}) || {};
+            const resData = (data && data.data) ? data.data : {};
+            const rideInfo = resData.ride_info || {};
+
+            const confirmedJobNo = data?.job_no || resData.job_no || data?.booking_no || resData.booking_no || data?.jobNo || resData.jobNo || stateSnapshot.job_no || stateSnapshot.bookingId || (typeof data?.data === 'string' && isNaN(data.data) ? data.data : null) || '';
+            if (confirmedJobNo) {
+                $('#confirmNum').text(confirmedJobNo);
+            }
+
+            const previewHash = resData.preview_hash || data?.preview_hash || resData.booking_key || data?.booking_key || confirmedJobNo || stateSnapshot.preview_hash;
+            if (previewHash) {
+                window.currentBookingPreviewHash = previewHash;
+                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
+            } else {
+                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
+            }
+
+            const finalPickup = stateSnapshot.pickup || resData.from_place || rideInfo.from_place || '';
+            const finalDropoff = stateSnapshot.dropoff || resData.to_place || rideInfo.to_place || '';
+            const finalDate = stateSnapshot.date || (resData.pickup_date ? resData.pickup_date.split(' ')[0] : '');
+            const finalTime = stateSnapshot.time || (resData.pickup_date ? resData.pickup_date.split(' ')[1] : '');
+            const finalVehicleName = stateSnapshot.vehicle?.name || resData.cab_name || rideInfo.cab_name || '';
+
+            let rawDist = stateSnapshot.apiDistance || stateSnapshot.vehicle?.fareBreakdown?.distance || resData.distance || rideInfo.distance || '—';
+            let formattedDist = (typeof formatTripDistance === 'function' && rawDist !== '—') ? formatTripDistance(rawDist) : rawDist;
+            const finalDuration = stateSnapshot.apiDuration || stateSnapshot.vehicle?.fareBreakdown?.duration || resData.duration || rideInfo.duration || '—';
+
+            $('#confirmPickup').text(finalPickup || '—');
+            $('#confirmDropoff').text(finalDropoff || '—');
+
+            if (finalDate && finalTime) {
+                $('#confirmDateTime').text(`${finalDate} | ${finalTime}`);
+                $('#confirmDateTime').parent().show();
+            } else if (finalDate || finalTime) {
+                $('#confirmDateTime').text(finalDate || finalTime);
+                $('#confirmDateTime').parent().show();
+            } else {
+                $('#confirmDateTime').parent().hide();
+            }
+
+            $('#confirmVehicle').text(finalVehicleName || '—');
+            $('#confirmDistance').text(formattedDist || '—');
+            $('#confirmDuration').text(finalDuration || '—');
+
+            // Merge everything into BookingStore state so it stays 100% synchronized and persists
+            const confirmedState = Object.assign({}, stateSnapshot, {
+                currentStep: 8,
+                bookingId: confirmedJobNo,
+                job_no: confirmedJobNo,
+                preview_hash: previewHash,
+                pickup: finalPickup,
+                dropoff: finalDropoff,
+                date: finalDate,
+                time: finalTime,
+                apiDistance: formattedDist,
+                apiDuration: finalDuration
+            });
+            if (finalVehicleName && !confirmedState.vehicle) {
+                confirmedState.vehicle = { name: finalVehicleName };
+            }
+
+            BookingStore.setState(confirmedState);
+
+            // Update all sidebar cards and summaries
+            if (typeof _updateLocationUI === 'function') _updateLocationUI(confirmedState);
+            if (typeof _updateDateTimeUI === 'function') _updateDateTimeUI(confirmedState);
+            if (typeof _updateDistanceDurationUI === 'function') _updateDistanceDurationUI(confirmedState);
+            if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(confirmedState);
+            if (typeof _updatePassengerSummaryUI === 'function') _updatePassengerSummaryUI(confirmedState);
+            if (typeof _updateJourneySummaryUI === 'function') _updateJourneySummaryUI(confirmedState);
+            if (typeof updateBookingSummary === 'function') updateBookingSummary();
+
+            if (formattedDist !== '—' || finalDuration !== '—') {
+                $('#leftTripDistance').text(formattedDist);
+                $('#leftTripDuration').text(finalDuration);
+                $('#tripRouteMetaContainer').show();
+            }
+
+            showStep(8);
+
+            // Dispatch booking_complete Analytics Event
+            try {
+                if (isAllowedBookingAnalyticsHost()) {
+                    const trackingKey = confirmedJobNo || (previewHash || 'confirmed');
+                    window.__trackedBookingCompleteIds = window.__trackedBookingCompleteIds || new Set();
+
+                    if (!window.__trackedBookingCompleteIds.has(trackingKey)) {
+                        window.__trackedBookingCompleteIds.add(trackingKey);
+
+                        const totalAmount = parseFloat(
+                            resData.total_fare ||
+                            resData.actual_total_fare ||
+                            rideInfo.total_fare ||
+                            stateSnapshot.paymentBreakdown?.total_fare ||
+                            stateSnapshot.paymentBreakdown?.actual_total_fare ||
+                            stateSnapshot.total_fare ||
+                            window.paymentTotalFare ||
+                            stateSnapshot.vehicle?.price ||
+                            0
+                        ) || 0;
+
+                        const eventPayload = {
+                            event: 'booking_complete',
+                            booking_id: confirmedJobNo || '',
+                            value: totalAmount,
+                            currency: 'GBP',
+                            vehicle_type: finalVehicleName || '',
+                            pickup_location: finalPickup || '',
+                            dropoff_location: finalDropoff || '',
+                            distance: formattedDist !== '—' ? formattedDist : '',
+                            duration: finalDuration !== '—' ? finalDuration : ''
+                        };
+
+                        // Push to Google Tag Manager dataLayer
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push(eventPayload);
+
+                        // Push to Google Analytics gtag if initialized
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'booking_complete', {
+                                transaction_id: confirmedJobNo || '',
+                                value: totalAmount,
+                                currency: 'GBP',
+                                items: [{
+                                    item_id: confirmedJobNo || '',
+                                    item_name: finalVehicleName || 'Ride Booking',
+                                    price: totalAmount
+                                }],
+                                pickup_location: finalPickup || '',
+                                dropoff_location: finalDropoff || ''
+                            });
+                        }
+
+                        console.log('[Analytics] booking_complete event dispatched:', eventPayload);
+                    }
+                }
+            } catch (analyticsErr) {
+                console.warn('[Analytics] booking_complete event error:', analyticsErr);
+            }
+        }
+
         function proceedToConfirmation() {
+            // Unsubscribe from Firebase bidding listener now that we are paying/confirming
+            if (typeof driversListener === 'function') {
+                try { driversListener(); } catch (e) { }
+                driversListener = null;
+            }
+            if (typeof bookingExpirationTimer !== 'undefined' && bookingExpirationTimer) {
+                clearInterval(bookingExpirationTimer);
+                bookingExpirationTimer = null;
+            }
+
             // Stripe is the default and only active payment method
             bookingData.paymentMethod = 'stripe';
             $('#paymentMethod').val('stripe');
@@ -13607,21 +13799,24 @@
             if (!$('#handLuggageCount').val() && state.handLuggageCount) $('#handLuggageCount').val(state.handLuggageCount);
 
             gatherAllBookingData();
+            const bookingSnapshot = Object.assign({}, BookingStore.getState());
 
             // Loading state
             const btn = document.querySelector('#step5 .btn-search-uber') || document.querySelector('#personalInfoBtns .btn-search-uber');
-            const originalBtnContent = btn.innerHTML;
+            const originalBtnContent = btn ? btn.innerHTML : 'Pay';
 
             // STRIPE PAYMENT FLOW
             // If PaymentIntent was already terminal (succeeded), directly call /stripe/payment-confirm
             if (window.isPaymentAlreadyTerminal) {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
-                btn.disabled = true;
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing Booking...';
+                    btn.disabled = true;
+                }
 
-                const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || 0);
-                const txnId = window.transactionId || state.transaction_id || '';
-                const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
-                const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
+                const pId = parseInt(window.paymentId || bookingSnapshot.paymentId || bookingSnapshot.id || bookingSnapshot.payment_id || 0);
+                const txnId = window.transactionId || bookingSnapshot.transaction_id || '';
+                const cleanJobId = bookingData.jobId || bookingData.job_id || bookingSnapshot.jobId || bookingSnapshot.job_id || '';
+                const cleanJobNo = bookingData.job_no || bookingData.bookingId || bookingSnapshot.job_no || bookingSnapshot.bookingId || '';
 
                 fetch(API_BASE_URL + '/stripe/payment-confirm', {
                     method: 'POST',
@@ -13639,32 +13834,7 @@
                     .then(res => res.json())
                     .then(data => {
                         if (data.status || data.success) {
-                            const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
-                            $('#confirmNum').text(confirmedJobNo);
-                            const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
-                            if (previewHash) {
-                                window.currentBookingPreviewHash = previewHash;
-                                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
-                            } else {
-                                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
-                            }
-                            $('#confirmPickup').text(bookingData.pickup || '—');
-                            $('#confirmDropoff').text(bookingData.dropoff || '—');
-                            if (bookingData.date && bookingData.time) {
-                                $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
-                                $('#confirmDateTime').parent().show();
-                            } else {
-                                $('#confirmDateTime').parent().hide();
-                            }
-                            $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
-                            let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
-                            if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
-                                finalDistance = formatTripDistance(finalDistance);
-                            }
-                            const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
-                            $('#confirmDistance').text(finalDistance);
-                            $('#confirmDuration').text(finalDuration);
-                            showStep(8);
+                            renderBookingConfirmationScreen(data, bookingSnapshot);
                         } else {
                             showToast(data.message || 'Confirmation failed', 'error');
                         }
@@ -13674,22 +13844,24 @@
                         showToast('Server connection error', 'error');
                     })
                     .finally(() => {
-                        btn.innerHTML = originalBtnContent;
-                        btn.disabled = false;
+                        if (btn) {
+                            btn.innerHTML = originalBtnContent;
+                            btn.disabled = false;
+                        }
                     });
                 return;
             }
 
             // Phase 1: If Stripe Elements is NOT initialized yet, trigger payment-intent and show card UI
             if (!window.stripeElements) {
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Secure Session...';
-                btn.disabled = true;
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Secure Session...';
+                    btn.disabled = true;
+                }
 
                 initStripePaymentElement().then(success => {
-                    if (!success) {
+                    if (btn) {
                         btn.innerHTML = originalBtnContent;
-                        btn.disabled = false;
-                    } else {
                         btn.disabled = false;
                     }
                 });
@@ -13697,8 +13869,10 @@
             }
 
             // Phase 2: If Stripe Elements IS ALREADY initialized and visible, process card/redirect payment confirmation
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
-            btn.disabled = true;
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing Payment...';
+                btn.disabled = true;
+            }
 
             const returnUrl = window.location.origin + window.location.pathname;
 
@@ -13716,14 +13890,16 @@
                         msgBox.textContent = result.error.message;
                         msgBox.style.display = 'block';
                     }
-                    btn.innerHTML = originalBtnContent;
-                    btn.disabled = false;
+                    if (btn) {
+                        btn.innerHTML = originalBtnContent;
+                        btn.disabled = false;
+                    }
                 } else if (result.paymentIntent && (result.paymentIntent.status === 'succeeded' || result.paymentIntent.status === 'processing')) {
                     try {
-                        const pId = parseInt(window.paymentId || state.paymentId || state.id || state.payment_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
-                        const txnId = window.transactionId || state.transaction_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.transaction_id : '') || '';
-                        const cleanJobId = bookingData.jobId || bookingData.job_id || state.jobId || state.job_id || '';
-                        const cleanJobNo = bookingData.job_no || bookingData.bookingId || state.job_no || state.bookingId || '';
+                        const pId = parseInt(window.paymentId || bookingSnapshot.paymentId || bookingSnapshot.id || bookingSnapshot.payment_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.payment_id : 0) || 0);
+                        const txnId = window.transactionId || bookingSnapshot.transaction_id || (result.paymentIntent && result.paymentIntent.metadata ? result.paymentIntent.metadata.transaction_id : '') || '';
+                        const cleanJobId = bookingData.jobId || bookingData.job_id || bookingSnapshot.jobId || bookingSnapshot.job_id || '';
+                        const cleanJobNo = bookingData.job_no || bookingData.bookingId || bookingSnapshot.job_no || bookingSnapshot.bookingId || '';
 
                         const confirmResp = await fetch(API_BASE_URL + '/stripe/payment-confirm', {
                             method: 'POST',
@@ -13743,34 +13919,7 @@
                         });
                         const data = await confirmResp.json();
                         if (data.status || data.success) {
-                            const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || bookingData.job_no || (typeof data.data === 'string' && isNaN(data.data) ? data.data : null) || bookingData.bookingId;
-                            $('#confirmNum').text(confirmedJobNo);
-
-                            const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || bookingData.job_no || bookingData.bookingId;
-                            if (previewHash) {
-                                window.currentBookingPreviewHash = previewHash;
-                                $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
-                            } else {
-                                $('#viewBookingPreviewBtn').css('display', 'inline-flex');
-                            }
-
-                            $('#confirmPickup').text(bookingData.pickup || '—');
-                            $('#confirmDropoff').text(bookingData.dropoff || '—');
-                            if (bookingData.date && bookingData.time) {
-                                $('#confirmDateTime').text(`${bookingData.date} | ${bookingData.time}`);
-                                $('#confirmDateTime').parent().show();
-                            } else {
-                                $('#confirmDateTime').parent().hide();
-                            }
-                            $('#confirmVehicle').text(bookingData.vehicle?.name || '—');
-                            let finalDistance = bookingData.apiDistance || bookingData.vehicle?.fareBreakdown?.distance || '—';
-                            if (typeof formatTripDistance === 'function' && finalDistance !== '—') {
-                                finalDistance = formatTripDistance(finalDistance);
-                            }
-                            const finalDuration = bookingData.apiDuration || bookingData.vehicle?.fareBreakdown?.duration || '—';
-                            $('#confirmDistance').text(finalDistance);
-                            $('#confirmDuration').text(finalDuration);
-                            showStep(8);
+                            renderBookingConfirmationScreen(data, bookingSnapshot);
                         } else {
                             showToast('Payment Confirmation Error: ' + (data.message || 'Unknown error'), 'error');
                         }
@@ -13778,15 +13927,19 @@
                         console.error('Payment confirm error:', err);
                         showToast('Server connection error during payment confirmation.', 'error');
                     } finally {
-                        btn.innerHTML = originalBtnContent;
-                        btn.disabled = false;
+                        if (btn) {
+                            btn.innerHTML = originalBtnContent;
+                            btn.disabled = false;
+                        }
                     }
                 }
             }).catch(function (err) {
                 console.error('Stripe error:', err);
                 showToast('An unexpected error occurred with Stripe.', 'error');
-                btn.innerHTML = originalBtnContent;
-                btn.disabled = false;
+                if (btn) {
+                    btn.innerHTML = originalBtnContent;
+                    btn.disabled = false;
+                }
             });
         }
 
@@ -13884,39 +14037,7 @@
 
                 const data = await confirmResp.json();
                 if (data.status === true || data.success === true) {
-                    const confirmedJobNo = data.job_no || data.data?.job_no || data.booking_no || data.data?.booking_no || data.jobNo || data.data?.jobNo || state.job_no || state.bookingId || jobNo;
-                    $('#confirmNum').text(confirmedJobNo);
-
-                    const previewHash = data.data?.preview_hash || data.preview_hash || data.data?.booking_key || data.booking_key || confirmedJobNo || state.job_no || state.bookingId;
-                    if (previewHash) {
-                        window.currentBookingPreviewHash = previewHash;
-                        $('#viewBookingPreviewBtn').attr('href', '/booking-preview/' + encodeURIComponent(previewHash)).css('display', 'inline-flex');
-                    } else {
-                        $('#viewBookingPreviewBtn').css('display', 'inline-flex');
-                    }
-
-                    $('#confirmPickup').text(state.pickup || '—');
-                    $('#confirmDropoff').text(state.dropoff || '—');
-                    if (state.date && state.time) {
-                        $('#confirmDateTime').text(`${state.date} | ${state.time}`);
-                        $('#confirmDateTime').parent().show();
-                    } else {
-                        $('#confirmDateTime').parent().hide();
-                    }
-                    $('#confirmVehicle').text(state.vehicle?.name || '—');
-                    $('#confirmDistance').text(finalDistance);
-                    $('#confirmDuration').text(finalDuration);
-
-                    // Re-run all UI updaters to ensure every card and sidebar is completely populated
-                    if (typeof _updateLocationUI === 'function') _updateLocationUI(state);
-                    if (typeof _updateDateTimeUI === 'function') _updateDateTimeUI(state);
-                    if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(state);
-                    if (typeof _updatePassengerSummaryUI === 'function') _updatePassengerSummaryUI(state);
-                    if (typeof _updateJourneySummaryUI === 'function') _updateJourneySummaryUI(state);
-                    if (typeof updateBookingSummary === 'function') updateBookingSummary();
-
-                    // Switch directly to Step 8 (Booking Confirmed)
-                    showStep(8);
+                    renderBookingConfirmationScreen(data, state);
 
                     // Remove/Fade out the black loading overlay
                     const $overlay = $('#paymentRedirectOverlay');
@@ -14866,6 +14987,16 @@
                 let isHandledCancellation = false;
 
                 function handleJobCancelledOrMissing() {
+                    const currentStepNow = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? (BookingStore.getState().currentStep || 1) : 1;
+                    if (currentStepNow >= 5) {
+                        console.log(`[Firebase] Document "${targetJobNo}" was deleted or missing, but user is on step ${currentStepNow} (payment/confirmation). Ignoring cancellation.`);
+                        if (driversListener) {
+                            try { driversListener(); } catch (e) { }
+                            driversListener = null;
+                        }
+                        return;
+                    }
+
                     if (isHandledCancellation) return;
                     isHandledCancellation = true;
 
@@ -15712,6 +15843,16 @@
         };
 
         async function proceedToPaymentWithDriver(driver, btnElement) {
+            // Unsubscribe from Firebase bidding listener now that a driver has been chosen
+            if (typeof driversListener === 'function') {
+                try { driversListener(); } catch (e) { }
+                driversListener = null;
+            }
+            if (typeof bookingExpirationTimer !== 'undefined' && bookingExpirationTimer) {
+                clearInterval(bookingExpirationTimer);
+                bookingExpirationTimer = null;
+            }
+
             bookingData.selectedDriver = driver;
 
             if (typeof resetStripePayment === 'function') {
@@ -15894,6 +16035,16 @@
             $('#confirmDuration').text(finalDuration);
             $('#confirmBaseFare').text('\u00a3' + baseFare.toFixed(2));
             $('#confirmTotalFare').text('\u00a3' + total.toFixed(2));
+
+            const curState = (typeof BookingStore !== 'undefined' && BookingStore.getState) ? BookingStore.getState() : {};
+            if (typeof _updateLocationUI === 'function') _updateLocationUI(curState);
+            if (typeof _updateDateTimeUI === 'function') _updateDateTimeUI(curState);
+            if (typeof _updateDistanceDurationUI === 'function') _updateDistanceDurationUI(curState);
+            if (typeof _updateVehicleSummaryUI === 'function') _updateVehicleSummaryUI(curState);
+            if (typeof _updatePassengerSummaryUI === 'function') _updatePassengerSummaryUI(curState);
+            if (typeof _updateJourneySummaryUI === 'function') _updateJourneySummaryUI(curState);
+            if (typeof updateBookingSummary === 'function') updateBookingSummary();
+
             showStep(8);
         }
         function showDriverConfirmation(driver) {
@@ -16229,8 +16380,8 @@
                 toggleTripSummary();
             }
 
-            // Prevent going back to pre-bidding steps if already in bidding or beyond
-            if (currentStep >= 5 && stepNumber < 5) {
+            // Prevent going back to pre-bidding steps if already in bidding or beyond (unless resetting to step 1)
+            if (currentStep >= 5 && stepNumber < 5 && stepNumber !== 1) {
                 return;
             }
 
